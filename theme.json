@@ -1,0 +1,12 @@
+{
+	"light": {
+		"navBgColor": "#f0f0f0",
+		"navTxtStyle": "black",
+		"elementuitheme": "./elementui/light/theme/index.css"
+	},
+	"dark": {
+		"navBgColor": "#292929",
+		"navTxtStyle": "white",
+		"elementuitheme": "./elementui/dark/theme/index.css"
+	}
+}

@@ -1,0 +1,50 @@
+{
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true,
+				"onReachBottonDistance": 100,
+				"app-plus": {
+					"pullToRefresh": {
+						"support": true,
+						"style": "circle",
+						"color": "#00897B",
+						"offset": "10%"
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/my/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/player/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "@navTxtStyle",
+		"navigationBarTitleText": "iwara",
+		"navigationBarBackgroundColor": "@navBgColor",
+		"backgroundColor": "@navBgColor",
+		"app-plus": {
+			"titleNView": false,
+			"background": "@navBgColor"
+		}
+	}
+}
