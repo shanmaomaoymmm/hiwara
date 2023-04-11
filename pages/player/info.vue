@@ -2,11 +2,11 @@
 	<view class="info">
 		<view style="display: flex;">
 			<view>
-				<image class="author
+				<image class="avatar
 " :src="data.avatar"></image>
 			</view>
 			<view style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
-				<text style="font-size: 1.1rem;">{{data.author}}</text>
+				<text style="font-size: 1rem;">{{data.author}}</text>
 			</view>
 			<view>
 				<button size="mini" class="concern"><text>{{data.following?"已关注":"＋ 关注"}}</text></button>
@@ -36,26 +36,30 @@
 				<text>{{data.synopsis}}</text>
 			</view>
 		</view>
-		<view style="display: flex;text-align: center;">
+		<view style="display: flex;text-align: center;overflow: hidden;">
 			<view class="opt">
 				<image class="icon" :src="data.liked?'/static/icon/a_like.png':'/static/icon/like.png'"></image>
-				<br>
-				<text>{{data.liked?'已喜欢':'喜欢'}}</text>
+				<view :style="{height:allinfo?'1rem':0}" style="overflow: hidden;">
+					<text>{{data.liked?'已喜欢':'喜欢'}}</text>
+				</view>
 			</view>
 			<view class="opt">
 				<image class="icon" src="@/static/icon/share-one.png"></image>
-				<br>
-				<text>分享</text>
+				<view :style="{height:allinfo?'1rem':0}" style="overflow: hidden;">
+					<text>分享</text>
+				</view>
 			</view>
 			<view class="opt">
 				<image class="icon" src="@/static/icon/download-four.png"></image>
-				<br>
-				<text>缓存</text>
+				<view :style="{height:allinfo?'1rem':0}" style="overflow: hidden;">
+					<text>缓存</text>
+				</view>
 			</view>
 			<view class="opt" @click="copyLinkButton=!copyLinkButton">
 				<image class="icon" src="@/static/icon/copy-link.png"></image>
-				<br>
-				<text>复制链接</text>
+				<view :style="{height:allinfo?'1rem':0}" style="overflow: hidden;">
+					<text>复制链接</text>
+				</view>
 			</view>
 		</view>
 		<view style="overflow: hidden;text-align: center" :style="{height:copyLinkButton?'3.2rem':0}">
@@ -67,7 +71,7 @@
 				</view>
 			</view>
 		</view>
-		<view style="font-size: 1.1rem;">
+		<view>
 			<text>该作者的其他作品</text>
 			<lists :data="authorOpus"></lists>
 			<text>相关作品</text>
@@ -192,7 +196,7 @@
 		position: relative;
 	}
 
-	.author {
+	.avatar {
 		width: 2rem;
 		height: 2rem;
 		box-shadow: 0 0 0.125rem #000a;
@@ -209,7 +213,7 @@
 	}
 
 	.title {
-		font-size: 1.3rem;
+		font-size: 1.1rem;
 		padding-top: 0.5rem;
 		overflow: hidden;
 	}
@@ -219,17 +223,18 @@
 		right: 1rem;
 		font-size: 0.5rem;
 		transform: rotate(0deg);
-		transition: transform ease 200ms;
+		transition: transform ease 100ms;
 	}
 
 	.status {
 		padding: 0.5rem 0;
-		font-size: 0.9rem;
+		font-size: 0.85rem;
 	}
 
 	.synopsis {
 		overflow: hidden;
 		word-wrap: break-word;
+		font-size: 0.9rem;
 	}
 
 	.synopsis,
@@ -238,17 +243,19 @@
 	}
 
 	.icon {
-		width: 1.5rem;
-		height: 1.5rem;
+		width: 1.6rem;
+		height: 1.6rem;
 	}
 
 	.opt {
 		padding: 0.5rem 0;
 		flex: 1;
+		font-size: 0.8rem;
+		color: #616161
 	}
 
 	* {
-		transition: height ease 200ms;
+		transition: height ease 100ms;
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -256,6 +263,10 @@
 		.synopsis,
 		.status {
 			color: #BDBDBD
+		}
+
+		.opt {
+			color: #BDBDBD;
 		}
 	}
 </style>

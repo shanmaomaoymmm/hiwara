@@ -1,15 +1,15 @@
 <template>
 	<view class="item" @click="gotoPage(item.id,item.uid)">
-		<img class="img" :src="item.img" />
+		<image class="img" :src="item.img"> </image>
 		<view style="width: 9.6rem;overflow: hidden;text-overflow: ellipsis;">
-			<text style="font-weight: bold;font-size: 1.1rem;">{{item.label}}</text>
+			<text style="font-weight: bold;font-size: 1rem;">{{item.label}}</text>
 		</view>
 		<view style="display: flex;width: 9.6rem">
 			<view>
 				<img class="avatar" :src="item.avatar" />
 			</view>
 			<view
-				style="flex: 1;font-size: 0.7rem;padding: 0 0.3rem;line-height: 1rem;overflow: hidden;text-overflow: ellipsis;">
+				style="flex: 1;font-size: 0.8rem;padding: 0 0.3rem;line-height: 1rem;overflow: hidden;text-overflow: ellipsis;">
 				<text>{{item.author}}</text>
 				<br>
 				<text>{{item.date}}</text>
@@ -21,16 +21,18 @@
 <script>
 	export default {
 		data() {
-			return {
-
-			}
+			return {}
 		},
-		props: ['item'],
+		props: ['item', 'type'],
 		methods: {
 			gotoPage(id, uid) {
-				uni.navigateTo({
-					url: '/pages/player/index?id=' + id + '&uid=' + uid
-				});
+				if (this.type == 'video') {
+					uni.navigateTo({
+						url: '/pages/player/index?id=' + id + '&uid=' + uid,
+						animationType: 'slide-in-right',
+						animationDuration: 100
+					});
+				}
 			}
 		}
 	}
@@ -41,7 +43,7 @@
 		text-align: left;
 		white-space: nowrap;
 		display: inline-block;
-		margin:0.5rem 0;
+		margin: 0.5rem 0;
 	}
 
 	.img {

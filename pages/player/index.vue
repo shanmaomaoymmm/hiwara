@@ -3,7 +3,7 @@
 		<view v-show="loading" style="text-align: center;padding-top: 40vh;">
 			<image class="loading" src="../../static/icon/loading.png"></image>
 			<br>
-			<text>加载中……</text>
+			<text>资源加载中……</text>
 		</view>
 		<view v-show="!loading">
 			<view v-show="error" class="error">
@@ -24,9 +24,6 @@
 			</view>
 			<view v-show="!error">
 				<view class="top">
-					<view class="back">
-						<i class="fas fa-angle-left"></i>
-					</view>
 					<video class="player" :src="src" :title="data.title" :mobilenet-hint-type="1" :vslide-gesture="true"> </video>
 					<view class="tabs">
 						<view style="flex: 1;">
@@ -126,7 +123,13 @@
 				if (v == 1) {
 					this.tab = 1
 				} else if (v == 2) {
-					this.tab = 0
+					if (this.tab == 1) {
+						this.tab = 0
+					} else {
+						uni.navigateBack({
+							delta: 1
+						});
+					}
 				}
 			}
 		},
@@ -173,26 +176,30 @@
 				let currentY = event.changedTouches[0].pageY;
 				let tx = currentX - this.lastX;
 				let ty = currentY - this.lastY;
+				let sensitivity = 10
 
-				//左右方向滑动
-				if (Math.abs(tx) > Math.abs(ty)) {
-					if (tx < 0) {
-						// 向左滑动
-						this.flag = 1;
+				//调节灵敏度
+				if (Math.abs(tx) > sensitivity || Math.abs(ty) > sensitivity) {
+					//左右方向滑动
+					if (Math.abs(tx) > Math.abs(ty)) {
+						if (tx < 0) {
+							// 向左滑动
+							this.flag = 1;
 
-					} else if (tx > 0) {
-						//向右滑动 
-						this.flag = 2;
+						} else if (tx > 0) {
+							//向右滑动 
+							this.flag = 2;
+						}
 					}
-				}
-				//上下方向滑动
-				else {
-					if (ty < 0) {
-						//向上滑动
-						this.flag = 3;
-					} else if (ty > 0) {
-						//向下滑动
-						this.flag = 4;
+					//上下方向滑动
+					else {
+						if (ty < 0) {
+							//向上滑动
+							this.flag = 3;
+						} else if (ty > 0) {
+							//向下滑动
+							this.flag = 4;
+						}
 					}
 				}
 				//将当前坐标进行保存以进行下一次计算
@@ -212,16 +219,6 @@
 </script>
 
 <style scoped>
-	.back {
-		color: #f5f5f5;
-		text-shadow: 0 0 0.125rem #000a;
-		font-size: 1.5rem;
-		position: absolute;
-		top: 0;
-		left: 0;
-		padding: 0.75rem;
-	}
-
 	.player {
 		width: 100vw;
 		height: 56.25vw;
@@ -264,7 +261,7 @@
 		display: flex;
 		width: 200vw;
 		position: relative;
-		transition: left 200ms ease;
+		transition: left 100ms ease;
 	}
 
 	.info {
@@ -278,7 +275,7 @@
 	}
 
 	.definitionButton {
-		padding: 0.5rem 1.5rem 0.875rem 1.5rem;
+		padding: 0.5rem 1rem 0.875rem 1rem;
 		display: inline-block;
 		color: #616161;
 	}
@@ -308,7 +305,7 @@
 	.loading {
 		width: 4rem;
 		height: 4rem;
-		animation: rotate 800ms linear infinite;
+		animation: rotate 350ms linear infinite;
 	}
 
 	@keyframes rotate {

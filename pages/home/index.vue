@@ -2,11 +2,12 @@
 	<view class="panel">
 		<top-bar class="topBar"></top-bar>
 		<view v-show="!err" class="main">
-			<lists :data="pageData"></lists>
+			<lists :data="pageData">
+			</lists>
 			<uni-load-more :status="loading?'loading':'no-more'" icon-type="circle"></uni-load-more>
 		</view>
 		<error v-show="err"></error>
-		<float-bar class="floatBar" @alter="mode=$event"></float-bar>
+		<float-bar ref="floatBar" class="floatBar" @alter="mode=$event"></float-bar>
 	</view>
 </template>
 
@@ -62,7 +63,7 @@
 			mode(nv, ov) {
 				if ([0, 1, 2].includes(nv))
 					uni.startPullDownRefresh()
-			}
+			},
 		},
 		methods: {
 			// 页面绘制
@@ -129,7 +130,7 @@
 									.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
 								watch: rs.numViews,
 								like: rs.numLikes,
-								uid:rs.user.id
+								uid: rs.user.id
 							})
 						}
 					} else if (type == 1) {
@@ -170,7 +171,7 @@
 					t = year + '年' + month + '月' + day + '日'
 				}
 				return t
-			}
+			},
 		},
 	};
 </script>

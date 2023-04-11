@@ -25,6 +25,7 @@
 		background-color: #f5f5f5;
 		color: #333;
 		height: 100%;
+		font-size: 1rem;
 	}
 
 	* {

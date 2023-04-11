@@ -2,7 +2,7 @@
 	<view class="lists">
 		<view v-for="c in col" style="flex: 1;">
 			<view v-for="item,i in data">
-				<item v-if="(i-c+1)%col==0" :item="item"></item>
+				<item v-if="(i-c+1)%col==0" :item="item" type="video"></item>
 			</view>
 		</view>
 	</view>
