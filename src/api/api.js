@@ -1,4 +1,4 @@
-var CryptoJS = require('@/common/crypto-js-4.1.1/crypto-js.js')
+var CryptoJS = require('crypto-js')
 
 var xVersion = '5nFp9kmbNnHdAFhaqMvt'
 var token = null
@@ -12,6 +12,7 @@ getStorage('token', (res) => {
 })
 
 function ajax(url, data, header, method, cb) {
+	console.log(header)
 	uni.request({
 		url: url,
 		data: data,
@@ -42,11 +43,11 @@ function parseGET(a) {
 }
 
 export function setStorage(key, data, expire) {
-	if (typeof(expire) != 'undefined') {
+	if (typeof (expire) != 'undefined') {
 		let d = new Date()
 		uni.setStorage({
 			key: key,
-			data: data + '|' + (d + expire),
+			data: data + '|' + (d + expire).toString(),
 		})
 	} else {
 		uni.setStorage({
@@ -191,7 +192,7 @@ export function getVideo(id, cb) {
 				author: res.user.name,
 				avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
 					.id + '/' + res.user
-					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+						.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
 				synopsis: res.body,
 				date: res.createdAt,
 				numView: res.numViews,

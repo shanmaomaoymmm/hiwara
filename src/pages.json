@@ -1,5 +1,6 @@
 {
-	"pages": [{
+	"pages": [
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "",
@@ -38,13 +39,12 @@
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "@navTxtStyle",
-		"navigationBarTitleText": "iwara",
-		"navigationBarBackgroundColor": "@navBgColor",
-		"backgroundColor": "@navBgColor",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
 		"app-plus": {
-			"titleNView": false,
-			"background": "@navBgColor"
+			"titleNView": false
 		}
 	}
 }
