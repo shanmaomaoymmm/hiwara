@@ -2,6 +2,7 @@
 node_modules/
 unpackage/
 dist/
+.hbuilderx/
 
 # local env files
 .env.local

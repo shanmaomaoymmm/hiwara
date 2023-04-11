@@ -14,7 +14,7 @@ export default {
 
 <style>
 /*每个页面公共css */
-/* @import "@fontawesome-free/css/all.css"; */
+
 page {
   background-color: #f5f5f5;
   color: #333;
@@ -34,3 +34,6 @@ page {
   }
 }
 </style>
+
+<style src="@fortawesome/fontawesome-free/css/all.min.css"></style>
+<style src="@/common/elementui/light/theme/index.css"></style>

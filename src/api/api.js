@@ -12,7 +12,6 @@ getStorage('token', (res) => {
 })
 
 function ajax(url, data, header, method, cb) {
-	console.log(header)
 	uni.request({
 		url: url,
 		data: data,
@@ -72,7 +71,7 @@ export function getStorage(key, cb) {
 						key: key
 					})
 				} else {
-					cb(res.data)
+					cb(res.data.slice(0, res.data.indexOf('|')))
 				}
 			}
 		},

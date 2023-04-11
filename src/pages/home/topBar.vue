@@ -1,7 +1,7 @@
 <template>
 	<view class="topBar">
 		<view style="margin:0.5rem 0.25rem;">
-			<image style="width: 1.5rem;height: 1.5rem;" src="../../static/icon/system.png"></image>
+			<image style="width: 1.5rem;height: 1.5rem;" src="@/static/icon/system.png"></image>
 		</view>
 		<view style="flex: 1"><input class="input" placeholder="搜索" /></view>
 		<view style="margin:0.25rem;">
@@ -13,7 +13,7 @@
 <script>
 	import {
 		getStorage
-	} from '../../api/api.js'
+	} from '@/api/api.js'
 	export default {
 		data() {
 			return {

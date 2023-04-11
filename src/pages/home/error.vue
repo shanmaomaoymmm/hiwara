@@ -1,6 +1,6 @@
 <template>
 	<view class="error">
-		<image style="width: 5rem;height: 5rem;" src="../../static/icon/game.png"></image>
+		<image style="width: 5rem;height: 5rem;" src="@/static/icon/game.png"></image>
 	</view>
 </template>
 
