@@ -1,0 +1,32 @@
+[
+  {
+    "global": {
+      "$--color-primary": "#00897B",
+      "$--color-success": "#039BE5",
+      "$--color-warning": "#5C6BC0",
+      "$--color-danger": "#F57F17",
+      "$--color-info": "#66BB6A"
+    },
+    "local": {}
+  },
+  {
+    "global": {
+      "$--color-primary": "#009688",
+      "$--color-success": "#039BE5",
+      "$--color-warning": "#5C6BC0",
+      "$--color-danger": "#F57F17",
+      "$--color-info": "#43A047",
+      "$--color-white": "#000000",
+      "$--color-black": "#FFFFFF",
+      "$--color-text-placeholder": "#303133",
+      "$--color-text-secondary": "#606266",
+      "$--color-text-regular": "#909399",
+      "$--color-text-primary": "#C0C4CC",
+      "$--border-color-base": "#232019",
+      "$--border-color-light": "#1B1812",
+      "$--border-color-lighter": "#14110A",
+      "$--border-color-extra-light": "#0D0903"
+    },
+    "local": {}
+  }
+]
