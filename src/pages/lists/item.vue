@@ -1,19 +1,23 @@
 <template>
 	<view class="item" @click="gotoPage(item.id, item.uid)">
 		<el-image class="img" :src="item.img">
-			<view slot="placeholder">
+			<view slot="placeholder" style="text-align: center;line-height: 6.4rem;font-size: 2rem;color:#00897b;">
 				<i class="fa-solid fa-circle-notch fa-spin"></i>
 			</view>
 			<view slot="error">
-				<i class="el-icon-picture-outline"></i>
+				<img src="@/static/img/not-img.jpg" alt="" style="width: 100%;height: 100%;">
 			</view>
 		</el-image>
 		<view style="width: 9.6rem;overflow: hidden;text-overflow: ellipsis;">
 			<text style="font-weight: bold;font-size: 1rem;">{{ item.label }}</text>
 		</view>
-		<view style="display: flex;width: 9.6rem">
+		<view style="display: flex;width: 9.6rem;padding: 0.1rem 0;">
 			<view>
-				<el-avatar class="avatar" :src="item.avatar"></el-avatar>
+				<el-avatar class="avatar" :src="item.avatar">
+					<view style="line-height: 2rem;">
+						<i class="fa-solid fa-user"></i>
+					</view>
+				</el-avatar>
 			</view>
 			<view
 				style="flex: 1;font-size: 0.8rem;padding: 0 0.3rem;line-height: 1rem;overflow: hidden;text-overflow: ellipsis;">

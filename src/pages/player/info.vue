@@ -8,7 +8,7 @@
 				<text style="font-size: 1rem;">{{ data.author }}</text>
 			</view>
 			<view>
-				<button size="mini" class="concern"><text>{{ data.following ? "已关注" : "＋ 关注" }}</text></button>
+				<el-button type="primary" size="small"><text>{{ data.following ? "已关注" : "＋ 关注" }}</text></el-button>
 			</view>
 		</view>
 		<view @click="allinfo = !allinfo" class="title" :style="{ height: allinfo ? height.title2 : height.title1 }">
@@ -205,10 +205,6 @@ export default {
 button {
 	background-color: #00897b;
 	color: #f0f0f0;
-}
-
-.concern {
-	width: 4.9rem;
 }
 
 .title {

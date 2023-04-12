@@ -21,7 +21,11 @@ export default {
 	},
 	props: ['data'],
 	mounted() { },
-	methods: {}
+	methods: {
+		load() {
+			console.log('load')
+		}
+	}
 }
 </script>
 
