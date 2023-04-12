@@ -76,7 +76,7 @@ export default {
 							rs.thumbnail.id +
 							"/" +
 							rs.thumbnail.name
-							: "/static/img/nachoneko.jpg",
+							: null,
 					date: this.formatDate(rs.createdAt),
 					author: rs.user.name,
 					avatar:
@@ -108,7 +108,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .loading {
 	width: 4rem;
 	height: 4rem;

@@ -71,9 +71,13 @@
 			</view>
 		</view>
 		<view>
-			<text>该作者的其他作品</text>
+			<view style="padding:0.5rem 0">
+				<text>该作者的其他作品</text>
+			</view>
 			<lists :data="authorOpus"></lists>
-			<text>相关作品</text>
+			<view style="padding:0.5rem 0">
+				<text>相关作品</text>
+			</view>
 			<lists :data="relatedOpus"></lists>
 		</view>
 	</view>
@@ -84,7 +88,8 @@ import lists from '@/pages/lists/index.vue'
 import {
 	formatDate,
 	getVideoListForPlayInfoUser,
-	getVideoListForPlayInfoRelated
+	getVideoListForPlayInfoRelated,
+	fill0
 } from '@/api/api.js'
 export default {
 	components: {
@@ -138,7 +143,7 @@ export default {
 					id: rs.id,
 					label: rs.title,
 					img: rs.file != null ? 'https://i.iwara.tv/image/thumbnail/' + rs.file.id +
-						'/thumbnail-00.jpg' : '/static/img/nachoneko.jpg',
+						'/thumbnail-' + fill0(rs.thumbnail, 1) + '.jpg' : '/static/img/nachoneko.jpg',
 					date: this.formatDate(rs.createdAt),
 					author: rs.user.name,
 					avatar: rs.user.avatar != null ? 'https://i.iwara.tv/image/avatar/' + rs.user.avatar
@@ -157,7 +162,7 @@ export default {
 					id: rs.id,
 					label: rs.title,
 					img: rs.file != null ? 'https://i.iwara.tv/image/thumbnail/' + rs.file.id +
-						'/thumbnail-00.jpg' : '/static/img/nachoneko.jpg',
+						'/thumbnail-' + fill0(rs.thumbnail, 1) + '.jpg' : '/static/img/nachoneko.jpg',
 					date: this.formatDate(rs.createdAt),
 					author: rs.user.name,
 					avatar: rs.user.avatar != null ? 'https://i.iwara.tv/image/avatar/' + rs.user.avatar
@@ -184,7 +189,7 @@ export default {
 		},
 		formatDate(t) {
 			return formatDate(t)
-		}
+		},
 	}
 }
 </script>

@@ -18,7 +18,7 @@
 
 <script>
 import lists from "@/pages/lists/index.vue";
-import { getVideoList } from "@/api/api.js";
+import { getVideoList, fill0 } from "@/api/api.js";
 export default {
 	components: {
 		lists,
@@ -74,7 +74,7 @@ export default {
 						rs.file != null
 							? "https://i.iwara.tv/image/thumbnail/" +
 							rs.file.id +
-							"/thumbnail-00.jpg"
+							"/thumbnail-" + fill0(rs.thumbnail, 1) + ".jpg"
 							: null,
 					date: this.formatDate(rs.createdAt),
 					author: rs.user.name,
@@ -108,7 +108,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .loading {
 	width: 4rem;
 	height: 4rem;

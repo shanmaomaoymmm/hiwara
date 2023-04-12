@@ -1,7 +1,8 @@
 <template>
 	<view class="floatBar">
-		<view class="item" :class="{ active: i == mode }" v-for="item, i in item" :key="item.label" @click="clickTab(i)">
-			<image class="icon" :src="i == mode ? item.icon[1] : item.icon[0]"></image>
+		<view class="item" :class="{ active: i == tab }" v-for="item, i in item" :key="item.label" @click="clickTab(i)">
+			<image class="icon" v-if="i == tab" :src="item.icon[1]"></image>
+			<image class="icon" v-else :src="item.icon[0]"></image>
 			<br>
 			{{ item.label }}
 		</view>
@@ -39,25 +40,25 @@ export default {
 									],
 								}, */
 			],
-			mode: 0
+			tab: 0
 		}
 	},
 	methods: {
 		clickTab(i) {
-			if (i != this.mode) {
+			if (i != this.tab) {
 				this.$emit('alter', i)
 				switch (i) {
 					case 0:
-						this.mode = 0
+						this.tab = 0
 						break
 					case 1:
-						this.mode = 1
+						this.tab = 1
 						break
 					case 2:
-						this.mode = 2
+						this.tab = 2
 						break
 					case 3:
-						this.mode = 3
+						this.tab = 3
 						break
 					default:
 						break
@@ -87,10 +88,6 @@ export default {
 }
 
 .active {
-	color: #00897B;
-}
-
-.active .icon {
 	color: #00897B;
 }
 

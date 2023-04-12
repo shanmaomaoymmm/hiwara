@@ -97,6 +97,20 @@ export function formatDate(t) {
 	}
 }
 
+// 填零
+export function fill0(v, l) {
+	let a = Math.pow(10, l)
+	if (v < a) {
+		let b = ''
+		for (let i = 0; i < l; i++) {
+			b = b + '0'
+		}
+		return b + v
+	} else {
+		return v
+	}
+}
+
 // 登录
 export function login(username, passwd, cb) {
 	let data = {

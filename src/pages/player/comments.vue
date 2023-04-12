@@ -1,23 +1,28 @@
 <template>
-	<view class="comments">
-		<view v-show="data.length == 0" style="text-align: center;padding: 20vh 0;">
-			<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
-			<br>
-			<text>还没有评论</text>
-		</view>
-		<view class="comment" v-for="item, i in data" :key="'comment' + i">
-			<view style="display: flex;">
-				<view>
-					<image class="avatar" :src="item.avatar"></image>
+	<view>
+		<view class="comments">
+			<view v-show="data.length == 0" style="text-align: center;padding-top: 20vh;">
+				<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
+				<br>
+				<text>还没有评论</text>
+			</view>
+			<view v-show="data.length > 0" class="comment" v-for="item, i in data" :key="'comment' + i">
+				<view style="display: flex;">
+					<view>
+						<el-avatar class="avatar" :src="data.avatar"></el-avatar>
+					</view>
+					<view style="flex:1" class="user">{{ item.user }}</view>
 				</view>
-				<view style="flex:1" class="user">{{ item.user }}</view>
+				<view class="content">{{ item.content }}</view>
+				<view class="date">
+					<text>
+						<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+					</text>
+				</view>
 			</view>
-			<view class="content">{{ item.content }}</view>
-			<view class="date">
-				<text>
-					<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
-				</text>
-			</view>
+		</view>
+		<view class="addComment">
+			<input class="input" placeholder="添加你的评论" />
 		</view>
 	</view>
 </template>
@@ -58,7 +63,7 @@ export default {
 
 <style scoped>
 .comments {
-	padding: 0 1rem;
+	padding: 0 1rem 5rem 1rem;
 }
 
 .comment {
@@ -88,6 +93,20 @@ export default {
 	border-radius: 2rem;
 }
 
+.addComment {
+	background-color: #f5f5f5;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	box-shadow: 0 -0.25rem 0.25rem #E0E0E0;
+}
+
+.input {
+	margin: 0.5rem;
+	padding: 0.5rem;
+	border-bottom: solid 2px #00897b;
+}
+
 @media (prefers-color-scheme: dark) {
 	.date {
 		color: #BDBDBD
@@ -95,6 +114,11 @@ export default {
 
 	.comment {
 		border-color: #616161;
+	}
+
+	.addComment {
+		background-color: #101010;
+		box-shadow: 0 -0.25rem 0.25rem #232323;
 	}
 }
 </style>
