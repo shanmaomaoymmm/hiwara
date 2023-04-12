@@ -1,30 +1,16 @@
 # hiwara
 
-iwara for uniapp
+基于uniapp的iwara应用
 
-这是一条懒狗，readme不想写
+兼容新版iwara客户端，支持Android，iOS和Web端
 
-还在开发中，想拿来玩玩的话下hbuilder编译就行
+正在开发中，目前还不提供安装包
 
-还有，需要梯子
+如果想拿来玩玩的话下hbuilder编译就行
+
+友情提示，需要梯子
+
+具体运行方法参考uniapp官方文档
 
 
-# hiwara
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<https://uniapp.dcloud.net.cn/quickstart-cli.html>
