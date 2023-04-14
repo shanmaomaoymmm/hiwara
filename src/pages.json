@@ -1,4 +1,11 @@
 {
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			// uni-ui 规则如下配置
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
 	"pages": [
 		{
 			"path": "pages/index/index",
@@ -45,6 +52,7 @@
 		"backgroundColor": "#F8F8F8",
 		"app-plus": {
 			"titleNView": false
-		}
+		},
+		"pageOrientation":"portrait"
 	}
 }

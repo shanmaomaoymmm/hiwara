@@ -24,7 +24,8 @@
 			</view>
 			<view v-show="!error">
 				<view class="top">
-					<video class="player" :src="src" :title="data.title" :mobilenet-hint-type="1" :vslide-gesture="true">
+					<video id="videoPlayer" class="player" :src="src" :title="data.title" :mobilenet-hint-type="1"
+						:vslide-gesture="true">
 					</video>
 					<view class="tabs">
 						<view style="flex: 1;">
@@ -32,19 +33,9 @@
 							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
 						</view>
 						<view style="flex: 1;text-align: right;">
-							<!-- <text class="definitionButton" @click="definitionPopup=true">
+							<span class="definitionButton" @click="$refs.definitionPopup.open()">
 								<i class="fa-solid fa-film fa-fw"></i>{{ ' ' }}{{ definition }}
-							</text> -->
-							<el-dropdown trigger="click" @command="definitionSelect">
-								<span class="definitionButton">
-									<i class="fa-solid fa-film fa-fw"></i>{{ ' ' }}{{ definition }}
-								</span>
-								<el-dropdown-menu slot="dropdown">
-									<el-dropdown-item v-for="item in data.sources" :command="item">
-										{{ item.name }}
-									</el-dropdown-item>
-								</el-dropdown-menu>
-							</el-dropdown>
+							</span>
 						</view>
 					</view>
 				</view>
@@ -62,6 +53,20 @@
 				</view>
 			</view>
 		</view>
+		<uni-popup ref="definitionPopup" type="bottom">
+			<view class="definitionPopup">
+				<view class="definitionTitle">
+					<text>画质</text>
+				</view>
+				<view v-for="item, i in data.sources" :key="'definition' + i"
+					:class="{ definitionButtonSelect: item.name == definition }" style="padding:0.75rem 0;"
+					@click="definitionSelect(item)">
+					{{ item.name }}
+					<br>
+					{{ item.src }}
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -99,11 +104,11 @@ export default {
 				sources: []
 			},
 			definition: null,
-			definitionPopup: false,
 			//滑动
 			flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
 			lastX: 0,
-			lastY: 0
+			lastY: 0,
+			videoContex: null
 		}
 	},
 	onLoad: function (opt) {
@@ -128,7 +133,7 @@ export default {
 						delta: 1
 					});
 				}
-			}
+			} 
 		}
 	},
 	mounted() {
@@ -153,6 +158,11 @@ export default {
 			}
 		})
 	},
+	// onReady: function (res) {
+	// 	this.videoContext = uni.createVideoContext('videoPlayer')
+	// 	// this.videoContext.exitFullScreen()
+	// 	this.videoContext.requestFullScreen()
+	// },
 	methods: {
 		initializeVideo(sources) {
 			for (let i = 0; i < sources.length; i++) {
@@ -175,7 +185,6 @@ export default {
 			let tx = currentX - this.lastX;
 			let ty = currentY - this.lastY;
 			let sensitivity = 10
-
 			//调节灵敏度
 			if (Math.abs(tx) > sensitivity || Math.abs(ty) > sensitivity) {
 				//左右方向滑动

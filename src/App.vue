@@ -36,4 +36,3 @@ page {
 </style>
 
 <style src="@fortawesome/fontawesome-free/css/all.min.css"></style>
-<style src="@/common/elementui/theme/index.css"></style>

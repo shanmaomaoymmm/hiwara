@@ -1,12 +1,15 @@
 <template>
   <view class="panel">
-    <top-bar class="topBar"></top-bar>
+    <top-bar class="topBar" @left="$refs.showLeft.open()"></top-bar>
     <view style="padding:5rem 0">
       <subscribe ref="subscribe" v-if="tab == 0"></subscribe>
       <video-page ref="video" v-else-if="tab == 1"></video-page>
       <picture-page ref="picture" v-else-if="tab == 2"></picture-page>
     </view>
     <float-bar ref="floatBar" class="floatBar" @alter="tab = $event"></float-bar>
+    <uni-drawer ref="showLeft" mode="left" :width="200">
+      <show-left></show-left>
+    </uni-drawer>
   </view>
 </template>
 
@@ -16,13 +19,15 @@ import floatBar from "./floatBar.vue"
 import subscribe from "@/pages/subscribe/index.vue"
 import videoPage from "@/pages/video/index.vue"
 import picturePage from "@/pages/picture/index.vue"
+import showLeft from "./showLeft.vue"
 export default {
   components: {
     topBar,
     floatBar,
     subscribe,
     videoPage,
-    picturePage
+    picturePage,
+    showLeft,
   },
   data() {
     return {
@@ -54,9 +59,9 @@ export default {
         case 1:
           refs = this.$refs.video
           break
-        case 2: 
-        refs = this.$refs.picture        
-        break
+        case 2:
+          refs = this.$refs.picture
+          break
         default:
           refs = null
           cb()
@@ -80,16 +85,14 @@ export default {
         break
       case 2:
         refs = this.$refpictureo
-        
-      break
+
+        break
       default:
         refs = null
-        cb()
         break
     }
     if (refs) {
       refs.getData(() => {
-        cb()
       })
     }
   }

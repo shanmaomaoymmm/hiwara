@@ -2,14 +2,27 @@ var CryptoJS = require('crypto-js')
 
 var xVersion = '5nFp9kmbNnHdAFhaqMvt'
 var token = null
+var accessToken = null
 
-getStorage('token', (res) => {
-	if (res) {
-		token = res
-	} else {
-		token = null
-	}
-})
+var files = '/files'
+var api = '/api'
+
+/*#ifdef APP-PLUS*/
+files = 'https://files.iwara.tv'
+api = 'https://api.iwara.tv'
+/*#endif*/
+
+
+/*#ifdef H5*/
+files = '/files'
+api = '/api'
+/*#endif*/
+
+
+/*#ifdef MP*/
+files = 'https://files.iwara.tv'
+api = 'https://api.iwara.tv'
+/*#endif*/
 
 function ajax(url, data, header, method, cb) {
 	uni.request({
@@ -81,6 +94,29 @@ export function getStorage(key, cb) {
 	})
 }
 
+// 获取accessToken
+export function getAccessToken(cb) {
+	getStorage('token', (res) => {
+		if (res) {
+			token = res
+			let header = {
+				authorization: 'Bearer ' + token
+			}
+			ajax(api + '/user/token', null, header, 'POST', (res, code) => {
+				if (code == 200) {
+					accessToken = res.accessToken
+					cb()
+				} else {
+					cb()
+				}
+			})
+		} else {
+			token = null
+			cb()
+		}
+	})
+}
+
 // 时间格式化
 export function formatDate(t) {
 	if (t) {
@@ -117,12 +153,16 @@ export function login(username, passwd, cb) {
 		email: username,
 		password: passwd
 	}
-	ajax('https://api.iwara.tv/user/login', data, null, 'POST', (res, code) => {
+	ajax(api + '/user/login', data, null, 'POST', (res, code) => {
 		if (code == 200) {
 			token = res.token
 			setStorage('token', res.token, 24 * 3600 * 1000)
+			getAccessToken(() => {
+				cb(res, code)
+			})
+		} else {
+			cb(res, code)
 		}
-		cb(res, code)
 	})
 }
 
@@ -136,12 +176,12 @@ export function getSubscribeList(index, cb) {
 	let header
 	if (token) {
 		header = {
-			authorization: 'Bearer ' + token
+			authorization: 'Bearer ' + accessToken
 		}
 	} else {
 		header = null
 	}
-	ajax('https://api.iwara.tv/videos', data, header, 'GET', (res, code) => {
+	ajax(api + '/videos', data, header, 'GET', (res, code) => {
 		cb(res, code)
 	})
 }
@@ -156,12 +196,12 @@ export function getVideoList(index, cb) {
 	let header
 	if (token) {
 		header = {
-			authorization: 'Bearer ' + token
+			authorization: 'Bearer ' + accessToken
 		}
 	} else {
 		header = null
 	}
-	ajax('https://api.iwara.tv/videos', data, header, 'GET', (res, code) => {
+	ajax(api + '/videos', data, header, 'GET', (res, code) => {
 		cb(res, code)
 	})
 }
@@ -176,12 +216,12 @@ export function getPictureList(index, cb) {
 	let header
 	if (token) {
 		header = {
-			authorization: 'Bearer ' + token
+			authorization: 'Bearer ' + accessToken
 		}
 	} else {
 		header = null
 	}
-	ajax('https://api.iwara.tv/images', data, header, 'GET', (res, code) => {
+	ajax(api + '/images', data, header, 'GET', (res, code) => {
 		cb(res, code)
 	})
 }
@@ -191,13 +231,13 @@ export function getVideo(id, cb) {
 	let header
 	if (token) {
 		header = {
-			authorization: 'Bearer ' + token
+			authorization: 'Bearer ' + accessToken
 		}
 	} else {
 		header = null
 	}
 	let resData
-	ajax('https://api.iwara.tv/video/' + id, null, header, 'GET', (res, code) => {
+	ajax(api + '/video/' + id, null, header, 'GET', (res, code) => {
 		if (code == 200) {
 			resData = {
 				id: res.id,
@@ -219,7 +259,7 @@ export function getVideo(id, cb) {
 				header = {
 					'x-version': CryptoJS.SHA1(res.file.id + '_' + fileUrlParse.expires + '_' + xVersion).toString()
 				}
-				ajax(res.fileUrl, null, header, 'GET', (res, code) => {
+				ajax(files + res.fileUrl.slice(22), null, header, 'GET', (res, code) => {
 					resData.sources = []
 					if (code == 200) {
 						for (let i = 0; i < res.length; i++) {
@@ -251,14 +291,14 @@ export function getVideoListForPlayInfoUser(id, uid, cb) {
 		exclude: id,
 		limit: 6
 	}
-	ajax('https://api.iwara.tv/videos', data, null, 'GET', (res, code) => {
+	ajax(api + '/videos', data, null, 'GET', (res, code) => {
 		cb(res, code)
 	})
 }
 
 // 获取详情页相关作品视频列表
 export function getVideoListForPlayInfoRelated(id, cb) {
-	ajax('https://api.iwara.tv/video/' + id + '/related', null, null, 'GET', (res, code) => {
+	ajax(api + '/video/' + id + '/related', null, null, 'GET', (res, code) => {
 		cb(res, code)
 	})
 }
@@ -271,10 +311,39 @@ export function getVideoListForPlayInfoComments(id, page, cb) {
 	let header = null
 	if (token) {
 		header = {
-			authorization: 'Bearer ' + token
+			authorization: 'Bearer ' + accessToken
 		}
 	}
-	ajax('https://api.iwara.tv/video/' + id + '/comments', data, header, 'GET', (res, code) => {
+	ajax(api + '/video/' + id + '/comments', data, header, 'GET', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 添加评论
+export function addComment(id, body, cb) {
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	let data = {
+		body: body
+	}
+	ajax(api + '/video/' + id + '/comments', data, header, 'POST', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 关注用户
+export function followers(uid, opt, cb) {
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	let method
+	if (opt == 0) {
+		method = 'DELETE'
+	} else if (opt == 1) {
+		method = 'POST'
+	}
+	ajax(api + '/user/' + uid + '/followers', null, header, method, (res, code) => {
 		cb(res, code)
 	})
 }

@@ -9,7 +9,7 @@
 			<view v-show="data.length > 0" class="comment" v-for="item, i in data" :key="'comment' + i">
 				<view style="display: flex;">
 					<view>
-						<el-avatar class="avatar" :src="data.avatar"></el-avatar>
+						<image class="avatar" :src="data.avatar"></image>
 					</view>
 					<view style="flex:1" class="user">{{ item.user }}</view>
 				</view>
@@ -22,7 +22,15 @@
 			</view>
 		</view>
 		<view class="addComment">
-			<input class="input" placeholder="添加你的评论" />
+			<view style="flex: 1;">
+				<input class="input" v-model="text" placeholder="添加你的评论" @focus="commentButton = true"
+					@blur="commentButton = false" />
+			</view>
+			<view style="overflow: hidden;white-space: nowrap;transition: width ease 100ms;"
+				:style="{ width: commentButton ? '4.5rem' : 0 }">
+				<button size="mini" style="background-color:#00897b;color: #f0f0f0;margin-top: 0.9rem"
+					@click="addComment()">评论</button>
+			</view>
 		</view>
 	</view>
 </template>
@@ -30,32 +38,56 @@
 <script>
 import {
 	formatDate,
-	getVideoListForPlayInfoComments
+	getVideoListForPlayInfoComments,
+	addComment
 } from '@/api/api.js'
 export default {
 	data() {
 		return {
-			data: []
+			data: [],
+			text: null,
+			commentButton: false
 		}
 	},
 	props: ['id'],
 	mounted() {
-		getVideoListForPlayInfoComments(this.id, 0, (res) => {
-			for (let i = 0; i < res.results.length; i++) {
-				this.data.push({
-					user: res.results[i].user.name,
-					content: res.results[i].body,
-					date: res.results[i].createdAt,
-					avatar: res.results[i].user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.results[i].user.avatar
-						.id + '/' + res.results[i].user
-							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg'
-				})
-			}
-		})
+		this.getVideoListForPlayInfoComments()
 	},
 	methods: {
 		formatDate(t) {
 			return formatDate(t)
+		},
+		getVideoListForPlayInfoComments() {
+			getVideoListForPlayInfoComments(this.id, 0, (res) => {
+				for (let i = 0; i < res.results.length; i++) {
+					this.data.push({
+						user: res.results[i].user.name,
+						content: res.results[i].body,
+						date: res.results[i].createdAt,
+						avatar: res.results[i].user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.results[i].user.avatar
+							.id + '/' + res.results[i].user
+								.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg'
+					})
+				}
+			})
+		},
+		addComment() {
+			addComment(this.id, this.text, (res, code) => {
+				if (code == 201) {
+					uni.showToast({
+						title: "评论发表成功",
+						icon: "none",
+						duration: 3000,
+					})
+					this.getVideoListForPlayInfoComments()
+				} else {
+					uni.showToast({
+						title: "评论发表失败",
+						icon: "none",
+						duration: 3000,
+					})
+				}
+			})
 		}
 	}
 }
@@ -99,6 +131,7 @@ export default {
 	bottom: 0;
 	width: 100%;
 	box-shadow: 0 -0.25rem 0.25rem #E0E0E0;
+	display: flex;
 }
 
 .input {

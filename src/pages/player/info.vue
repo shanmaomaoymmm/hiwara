@@ -2,13 +2,14 @@
 	<view class="info">
 		<view style="display: flex;">
 			<view>
-				<el-avatar class="avatar" :src="data.avatar"></el-avatar>
+				<image class="avatar" :src="data.avatar"></image>
 			</view>
 			<view style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
 				<text style="font-size: 1rem;">{{ data.author }}</text>
 			</view>
 			<view>
-				<el-button type="primary" size="small"><text>{{ data.following ? "已关注" : "＋ 关注" }}</text></el-button>
+				<button size="mini" @click="followers"><text>{{ data.following ? "已关注" : "＋ 关注"
+				}}</text></button>
 			</view>
 		</view>
 		<view @click="allinfo = !allinfo" class="title" :style="{ height: allinfo ? height.title2 : height.title1 }">
@@ -64,7 +65,7 @@
 		<view style="overflow: hidden;text-align: center" :style="{ height: copyLinkButton ? '3.2rem' : 0 }">
 			<view style="padding: 0.5rem 0;display: flex;">
 				<view v-for="item, i in data.sources" style="flex: 1;">
-					<button size="mini">
+					<button size="mini" @click="copyLink('https:' + item.download)">
 						<i class="fa-solid fa-link fa-fw"></i>{{ ' ' }}{{ item.name }}
 					</button>
 				</view>
@@ -89,7 +90,8 @@ import {
 	formatDate,
 	getVideoListForPlayInfoUser,
 	getVideoListForPlayInfoRelated,
-	fill0
+	fill0,
+	followers
 } from '@/api/api.js'
 export default {
 	components: {
@@ -190,6 +192,55 @@ export default {
 		formatDate(t) {
 			return formatDate(t)
 		},
+		copyLink(val) {
+			uni.setClipboardData({
+				data: val,
+				success: function () {
+					uni.showToast({
+						title: "已复制",
+						icon: "none",
+						duration: 3000,
+					})
+				}
+			});
+		},
+		followers() {
+			if (this.data.following) {
+				followers(this.uid, 0, (res, code) => {
+					if (code == 204) {
+						uni.showToast({
+							title: "已取消关注",
+							icon: "none",
+							duration: 3000,
+						})
+						this.data.following = !this.data.following
+					} else {
+						uni.showToast({
+							title: "操作失败",
+							icon: "none",
+							duration: 3000,
+						})
+					}
+				})
+			} else {
+				followers(this.uid, 1, (res, code) => {
+					if (code == 201) {
+						uni.showToast({
+							title: "关注成功！！！",
+							icon: "none",
+							duration: 3000,
+						})
+						this.data.following = !this.data.following
+					} else {
+						uni.showToast({
+							title: "操作失败",
+							icon: "none",
+							duration: 3000,
+						})
+					}
+				})
+			}
+		}
 	}
 }
 </script>
