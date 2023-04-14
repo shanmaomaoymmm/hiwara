@@ -6,11 +6,38 @@
 
 正在开发中，目前还不提供安装包
 
-如果想拿来玩玩的话下hbuilder编译就行
+如果想拿来玩玩的话下HBuilderX编译就行
 
 友情提示，需要梯子
 
-具体运行方法参考uniapp官方文档
+## 环境搭建
 
+```
+npm install
+```
+
+## H5端运行
+
+```
+npm run dev:h5
+```
+
+## Android端运行
+
+1.安卓手机设备信息点5下版本号打开开发者模式，打开通过USB调试（小米手机需要插SIM卡同时打开通过USB安装），连接数据线至电脑；  
+2.使用HBuilderX打开本项目，左上角菜单运行->运行到手机或模拟器->运行到Android App基座；  
+3.手机上勾选一律通过此计算机调试，弹出的权限全部允许。
+
+其他具体运行方法参考uniapp官方文档
 
 <https://uniapp.dcloud.net.cn/quickstart-cli.html>
+
+## 其他
+
+如何直接上i站？
+
+答：
+
+```
+IyMgaXdhcmEKMjYwNjo0NzAwOjIwOjphYzQzOjQ3OWEgaXdhcmEudHYKMjYwNjo0NzAwOjIwOjphYzQzOjQ3OWEgaS5pd2FyYS50dgoyNjA2OjQ3MDA6MjA6OjY4MWE6ZDYwIHd3dy5pd2FyYS50dgo2Ni4yMDYuMTUuNTAgZWNjaGkuaXdhcmEudHYKNjYuMjA2LjE1LjUxIGFwaS5pd2FyYS50dgo3Mi41Mi44My4xMDAgaGltZS5pd2FyYS50dgoxNjMuMTcyLjQwLjE0NSBha3UuaXdhcmEudHYKMTYzLjE3Mi40Mi4xNzUgc3Vrb25lLml3YXJhLnR2CjE2My4xNzIuODEuMTcgeGluLml3YXJhLnR2CjE2My4xNzIuNDAuMTIzIHV0YS5pd2FyYS50dgo3Mi41Mi44My45OSAgbWlrb3RvLml3YXJhLnR2CjE2My4xNzIuNDQuMTUzIG1pa2kuaXdhcmEudHYKNjYuMTY1LjI0MC4xOTQgZmlsZXMuaXdhcmEudHYKNTEuMTUuMTYyLjE5OCBhLml3YXJhLnR2Cjg1LjE4Ny4xMjguNjAgc2VydmljZS5pd2FyYS50dgoxNjMuMTcyLjgwLjMxIHVuaS5pd2FyYS50dgoxNjMuMTcyLjM5LjIyNyBjdWwuaXdhcmEudHYKMTYzLjE3Mi42Mi44OSBtb21vLml3YXJhLnR2CjE2My4xNzIuNDAuMTIzIHV0YS5pd2FyYS50dgoxNjMuMTcyLjYxLjE5MyBydWtvLml3YXJhLnR2CjE2My4xNzIuNTYuODcgeXVrYXJpLml3YXJhLnR2CjE2My4xNzIuNTcuMyBwaWtvLml3YXJhLnR2CjE2My4xNzIuNjEuMTU5IG1lcmxpLml3YXJhLnR2CjE2My4xNzIuNDIuMTc1IHN1a29uZS5pd2FyYS50dgoxNjMuMTcyLjQwLjgxIHRlaS5pd2FyYS50dgoyNjA2OjQ3MDA6OjY4MTI6MzNmIHd3dy5lcm9sYWJzLmNvbQoyNjA2OjQ3MDA6OjY4MTI6OWNhIHd3dy5lcm8tbGFicy5jb20KIyMgaXdhcmE=
+```
