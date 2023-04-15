@@ -130,7 +130,7 @@ export default {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	box-shadow: 0 -0.25rem 0.25rem #E0E0E0;
+	box-shadow: 0 -0.25rem 0.25rem #0002;
 	display: flex;
 }
 
@@ -151,7 +151,7 @@ export default {
 
 	.addComment {
 		background-color: #101010;
-		box-shadow: 0 -0.25rem 0.25rem #232323;
+		box-shadow: 0 -0.25rem 0.25rem #fff2;
 	}
 }
 </style>

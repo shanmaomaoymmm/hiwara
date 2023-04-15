@@ -5,50 +5,50 @@
 		</view>
 		<view style="flex: 1"><input class="input" placeholder="搜索" /></view>
 		<view style="margin:0.25rem;">
-			<image class="avatar" src="https://avatars.githubusercontent.com/u/39371540?v=4"></image>
+			<image class="avatar" :src="avatar"></image>
 		</view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
+export default {
+	data() {
+		return {
+			avatar: 'https://www.iwara.tv/images/default-avatar.jpg'
+		}
+	},
+	methods: {
+		users() {
 
-			}
 		},
-		methods: {
-			users() {
-
-			},
-			left(){
-				this.$emit('left')
-			}
-		},
-	}
+		left() {
+			this.$emit('left')
+		}
+	},
+}
 </script>
 
 <style scoped>
-	.topBar {
-		display: flex;
-	}
+.topBar {
+	display: flex;
+}
 
-	.input {
-		margin: 0 0.5rem;
-		padding: 0.5rem;
-		border-bottom: solid 2px #00897b;
-	}
+.input {
+	margin: 0 0.5rem;
+	padding: 0.5rem;
+	border-bottom: solid 2px #00897b;
+}
 
+.avatar {
+	width: 2rem;
+	height: 2rem;
+	box-shadow: 0 0 0.125rem #000a;
+	border-radius: 2rem;
+}
+
+@media (prefers-color-scheme: dark) {
 	.avatar {
-		width: 2rem;
-		height: 2rem;
-		box-shadow: 0 0 0.125rem #000a;
-		border-radius: 2rem;
+		box-shadow: 0 0 0.125rem #fffa;
 	}
-
-	@media (prefers-color-scheme: dark) {
-		.avatar {
-			box-shadow: 0 0 0.125rem #fffa;
-		}
-	}
+}
 </style>

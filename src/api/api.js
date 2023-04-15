@@ -347,3 +347,13 @@ export function followers(uid, opt, cb) {
 		cb(res, code)
 	})
 }
+
+// 获取本用户信息
+export function getSelfData(cb) {
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	ajax(api + '/user', null, header, 'GET', (res, code) => {
+		cb(res, code)
+	})
+}

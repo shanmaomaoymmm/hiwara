@@ -40,7 +40,16 @@
 					</view>
 				</view>
 				<view class="bottom" @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
-					<view class="bottom1">
+					<!-- <view class="bottom"> -->
+					<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100vw' }">
+						<view class="bottom2">
+							<info :id="id" :uid="uid" ref="info"></info>
+						</view>
+						<view class="bottom2">
+							<comments :id="id"></comments>
+						</view>
+					</view>
+					<!-- <view class="bottom1">
 						<view class="bottom2" :style="{ left: tab == 0 ? 0 : '-100vw' }">
 							<view class="info">
 								<info v-show="tab == 0" :id="id" :uid="uid" ref="info"></info>
@@ -49,7 +58,7 @@
 								<comments v-show="tab == 1" :id="id"></comments>
 							</view>
 						</view>
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -75,7 +84,8 @@ import info from './info.vue'
 import comments from './comments.vue'
 import {
 	getVideo,
-	getStorage
+	getStorage,
+	setStorage
 } from '@/api/api.js'
 export default {
 	components: {
@@ -133,7 +143,7 @@ export default {
 						delta: 1
 					});
 				}
-			} 
+			}
 		}
 	},
 	mounted() {
@@ -158,6 +168,9 @@ export default {
 			}
 		})
 	},
+	onHide: function () {
+		uni.createVideoContext('videoPlayer').pause()
+	},
 	// onReady: function (res) {
 	// 	this.videoContext = uni.createVideoContext('videoPlayer')
 	// 	// this.videoContext.exitFullScreen()
@@ -174,6 +187,7 @@ export default {
 		definitionSelect(item) {
 			this.definition = item.name
 			this.src = item.view
+			setStorage('definition', item.name)
 		},
 		handletouchmove: function (event) {
 			// console.log(event)
@@ -239,7 +253,7 @@ export default {
 
 
 .tabs {
-	box-shadow: 0 0.25rem 0.25rem #E0E0E0;
+	box-shadow: 0 0.25rem 0.25rem #0002;
 	padding: 0 1rem;
 	display: flex;
 }
@@ -259,26 +273,17 @@ export default {
 }
 
 .bottom1 {
-	height: calc(100vh - 56.25vw - 3rem);
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-
-.bottom2 {
 	display: flex;
 	width: 200vw;
 	position: relative;
+	left: 0;
 	transition: left 100ms ease;
 }
 
-.info {
+.bottom2 {
 	flex: 1;
-	overflow: hidden;
-}
-
-.comments {
-	flex: 1;
-	overflow: hidden;
+	height: calc(100vh - 56.25vw - 3rem);
+	overflow: auto;
 }
 
 .definitionButton {
@@ -359,12 +364,11 @@ export default {
 	}
 
 	.tabs {
-		box-shadow: 0 0.25rem 0.25rem #232323;
+		box-shadow: 0 0.25rem 0.25rem #fff2;
 	}
 
 	.definitionButton,
 	.definitionTitle {
 		color: #BDBDBD
 	}
-}
-</style>
+}</style>
