@@ -6,7 +6,7 @@
 			<text>资源加载中……</text>
 		</view>
 		<view v-else>
-			<lists :data="data"></lists>
+			<lists :data="data" type="image"></lists>
 			<view style="text-align: center;padding: 0.5rem;">
 				<text v-show="loading">
 					<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}正在加载数据……
@@ -88,6 +88,7 @@ export default {
 							: "https://www.iwara.tv/images/default-avatar.jpg",
 					watch: rs.numViews,
 					like: rs.numLikes,
+					uid: rs.user.id,
 				});
 			}
 		},

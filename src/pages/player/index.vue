@@ -23,6 +23,10 @@
 				</view>
 			</view>
 			<view v-show="!error">
+				<view class="back">
+					<i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
+					<i @click="back(0)" class="fa-solid fa-house backButton"></i>
+				</view>
 				<view class="top">
 					<video id="videoPlayer" class="player" :src="src" :title="data.title" :mobilenet-hint-type="1"
 						:vslide-gesture="true">
@@ -40,7 +44,6 @@
 					</view>
 				</view>
 				<view class="bottom" @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
-					<!-- <view class="bottom"> -->
 					<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100vw' }">
 						<view class="bottom2">
 							<info :id="id" :uid="uid" ref="info"></info>
@@ -49,16 +52,6 @@
 							<comments :id="id"></comments>
 						</view>
 					</view>
-					<!-- <view class="bottom1">
-						<view class="bottom2" :style="{ left: tab == 0 ? 0 : '-100vw' }">
-							<view class="info">
-								<info v-show="tab == 0" :id="id" :uid="uid" ref="info"></info>
-							</view>
-							<view class="comments">
-								<comments v-show="tab == 1" :id="id"></comments>
-							</view>
-						</view>
-					</view> -->
 				</view>
 			</view>
 		</view>
@@ -139,9 +132,7 @@ export default {
 				if (this.tab == 1) {
 					this.tab = 0
 				} else {
-					uni.navigateBack({
-						delta: 1
-					});
+					this.back(1)
 				}
 			}
 		}
@@ -171,11 +162,6 @@ export default {
 	onHide: function () {
 		uni.createVideoContext('videoPlayer').pause()
 	},
-	// onReady: function (res) {
-	// 	this.videoContext = uni.createVideoContext('videoPlayer')
-	// 	// this.videoContext.exitFullScreen()
-	// 	this.videoContext.requestFullScreen()
-	// },
 	methods: {
 		initializeVideo(sources) {
 			for (let i = 0; i < sources.length; i++) {
@@ -189,6 +175,17 @@ export default {
 			this.src = item.view
 			setStorage('definition', item.name)
 		},
+		back(v) {
+			if (v == 0) {
+				uni.reLaunch({
+					url: '/pages/home/index'
+				});
+			} else if (v == 1) {
+				uni.navigateBack({
+					delta: 1
+				});
+			}
+		},
 		handletouchmove: function (event) {
 			// console.log(event)
 			if (this.flag !== 0) {
@@ -200,7 +197,7 @@ export default {
 			let ty = currentY - this.lastY;
 			let sensitivity = 10
 			//调节灵敏度
-			if (Math.abs(tx) > sensitivity || Math.abs(ty) > sensitivity) {
+			if (Math.abs(tx) > Math.abs(ty) + sensitivity) {
 				//左右方向滑动
 				if (Math.abs(tx) > Math.abs(ty)) {
 					if (tx < 0) {
@@ -245,8 +242,19 @@ export default {
 	height: 56.25vw;
 }
 
+.back {
+	font-size: 1rem;
+	padding: 1.8rem 0.5rem 0 0.5rem;
+	background-color: #000;
+	color: #f0f0f0;
+}
+
+.backButton {
+	padding: 0.7rem 0.8rem;
+	display: inline-block;
+}
+
 .top {
-	position: fixed;
 	background-color: #f5f5f5;
 	z-index: 10;
 }
@@ -266,9 +274,8 @@ export default {
 }
 
 .bottom {
-	padding-top: calc(56.25vw + 3rem);
 	width: 100vw;
-	height: calc(100vh - 56.25vw - 3rem);
+	height: calc(100vh - 56.25vw - 7.2rem);
 	overflow: hidden;
 }
 
@@ -282,7 +289,7 @@ export default {
 
 .bottom2 {
 	flex: 1;
-	height: calc(100vh - 56.25vw - 3rem);
+	height: calc(100vh - 56.25vw - 7.2rem);
 	overflow: auto;
 }
 
@@ -347,8 +354,6 @@ export default {
 	padding-top: 38vh;
 }
 
-
-
 @media (prefers-color-scheme: dark) {
 
 	.top {
@@ -371,4 +376,5 @@ export default {
 	.definitionTitle {
 		color: #BDBDBD
 	}
-}</style>
+}
+</style>

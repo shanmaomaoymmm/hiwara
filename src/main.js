@@ -13,6 +13,8 @@ const app = new Vue({
 	...App
 })
 
+console.log('hello')
+
 getAccessToken(() => {
 	app.$mount()
 })

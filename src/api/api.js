@@ -24,16 +24,40 @@ files = 'https://files.iwara.tv'
 api = 'https://api.iwara.tv'
 /*#endif*/
 
-function ajax(url, data, header, method, cb) {
+function ajax(url, data, header, method, cb, num) {
+	if (typeof (num) == 'undefined') {
+		num = 0
+	}
+	console.log(url)
+	console.log(data)
+	console.log(header)
+	console.log(method)
 	uni.request({
 		url: url,
 		data: data,
 		header: header,
 		method: method,
 		success: res => {
-			cb(res.data, res.statusCode)
+			console.log(res.data)
+			console.log(res.statusCode)
+			if (res.statusCode == 200) {
+				cb(res.data, res.statusCode)
+			} else if (res.statusCode == (403 || 429)) {
+				// 403、429暴力重连
+				if (num < 16) {
+					num++
+					ajax(url, data, header, method, (res, code) => {
+						cb(res, code)
+					}, num)
+				} else {
+					cb(res, code)
+				}
+			} else {
+				cb(res.data, res.statusCode)
+			}
 		},
 		fail: (res) => {
+			console.log(res)
 			cb(res, 408)
 		}
 	})
@@ -59,7 +83,7 @@ export function setStorage(key, data, expire) {
 		let d = new Date()
 		uni.setStorage({
 			key: key,
-			data: data + '|' + (d + expire).toString(),
+			data: data + '|' + (d.getTime() + expire).toString(),
 		})
 	} else {
 		uni.setStorage({
@@ -76,6 +100,7 @@ export function getStorage(key, cb) {
 			if (res.data.indexOf('|') == -1) {
 				cb(res.data)
 			} else {
+				console.log(res.data)
 				let d = new Date()
 				let expire = parseInt(res.data.slice(res.data.indexOf('|') + 1))
 				if (d.getTime() > expire) {
@@ -94,8 +119,18 @@ export function getStorage(key, cb) {
 	})
 }
 
+export function removeStorage(key, cb) {
+	uni.removeStorage({
+		key: key,
+		success: function (res) {
+			cb()
+		}
+	})
+}
+
 // 获取accessToken
 export function getAccessToken(cb) {
+	console.log('getAccessToken')
 	getStorage('token', (res) => {
 		if (res) {
 			token = res
@@ -174,7 +209,7 @@ export function getSubscribeList(index, cb) {
 		page: index
 	}
 	let header
-	if (token) {
+	if (accessToken) {
 		header = {
 			authorization: 'Bearer ' + accessToken
 		}
@@ -194,7 +229,7 @@ export function getVideoList(index, cb) {
 		page: index
 	}
 	let header
-	if (token) {
+	if (accessToken) {
 		header = {
 			authorization: 'Bearer ' + accessToken
 		}
@@ -214,7 +249,7 @@ export function getPictureList(index, cb) {
 		page: index
 	}
 	let header
-	if (token) {
+	if (accessToken) {
 		header = {
 			authorization: 'Bearer ' + accessToken
 		}
@@ -229,7 +264,7 @@ export function getPictureList(index, cb) {
 // 获取视频地址
 export function getVideo(id, cb) {
 	let header
-	if (token) {
+	if (accessToken) {
 		header = {
 			authorization: 'Bearer ' + accessToken
 		}
@@ -284,6 +319,37 @@ export function getVideo(id, cb) {
 	})
 }
 
+// 获取图片地址
+export function getPicture(id, cb) {
+	let header
+	if (accessToken) {
+		header = {
+			authorization: 'Bearer ' + accessToken
+		}
+	} else {
+		header = null
+	}
+	ajax(api + '/image/' + id, null, header, 'GET', (res, code) => {
+		let resData = {
+			title: res.title,
+			body: res.body,
+			author: res.user.name,
+			createdAt: res.createdAt,
+			numLikes: res.numLikes,
+			numViews: res.numViews,
+			following:res.user.following,
+			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
+				.id + '/' + res.user
+					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+			files: []
+		}
+		for (let i = 0; i < res.files.length; i++) {
+			resData.files.push('https://i.iwara.tv/image/large/' + res.files[i].id + '/' + res.files[i].name)
+		}
+		cb(resData, code)
+	})
+}
+
 // 获取详情页视频该作者视频列表
 export function getVideoListForPlayInfoUser(id, uid, cb) {
 	let data = {
@@ -309,7 +375,7 @@ export function getVideoListForPlayInfoComments(id, page, cb) {
 		page: page
 	}
 	let header = null
-	if (token) {
+	if (accessToken) {
 		header = {
 			authorization: 'Bearer ' + accessToken
 		}

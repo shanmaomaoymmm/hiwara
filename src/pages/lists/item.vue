@@ -32,6 +32,12 @@ export default {
 					animationType: 'slide-in-right',
 					animationDuration: 100
 				});
+			} else if (this.type == 'image') {
+				uni.navigateTo({
+					url: '/pages/image/index?id=' + id + '&uid=' + uid,
+					animationType: 'slide-in-right',
+					animationDuration: 100
+				});
 			}
 		}
 	}

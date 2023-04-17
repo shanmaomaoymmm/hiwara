@@ -13,14 +13,17 @@
 				{{ user.user.name }}
 			</view>
 			<view class="profileBody">
-				{{ user.profile.body || "这用户很神秘，啥也没有写。" }}
+				<i>
+					{{ user.profile.body || "该用户是个神秘人，不喜欢被人围观。" }}
+				</i>
 			</view>
 		</view>
-		<view class="button">退出登录</view>
+		<view @click="logout" class="button">退出登录</view>
 	</view>
 </template>
 
 <script>
+import { removeStorage } from '@/api/api'
 export default {
 	data() {
 		return {}
@@ -30,7 +33,13 @@ export default {
 
 	},
 	methods: {
-
+		logout() {
+			removeStorage('token', () => {
+				uni.reLaunch({
+					url: '/'
+				});
+			})
+		}
 	}
 }
 </script>
@@ -38,6 +47,7 @@ export default {
 <style scoped>
 .showLeft {
 	background-color: #f5f5f5;
+	height: 100%;
 }
 
 .user {
@@ -71,7 +81,6 @@ export default {
 @media (prefers-color-scheme: dark) {
 	.showLeft {
 		background-color: #101010;
-		height: 100%;
 	}
 
 	.button {

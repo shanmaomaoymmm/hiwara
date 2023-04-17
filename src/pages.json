@@ -43,6 +43,13 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/image/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
@@ -53,6 +60,6 @@
 		"app-plus": {
 			"titleNView": false
 		},
-		"pageOrientation":"portrait"
+		"pageOrientation": "portrait"
 	}
 }

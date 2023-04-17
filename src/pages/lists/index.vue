@@ -2,7 +2,7 @@
 	<view class="lists">
 		<view v-for="c in col" style="flex: 1;">
 			<view v-for="item, i in data">
-				<item v-if="(i - c + 1) % col == 0" :item="item" type="video"></item>
+				<item v-if="(i - c + 1) % col == 0" :item="item" :type="type"></item>
 			</view>
 		</view>
 	</view>
@@ -19,7 +19,7 @@ export default {
 			col: 2
 		}
 	},
-	props: ['data'],
+	props: ['data','type'],
 	mounted() { },
 	methods: {
 		load() {
