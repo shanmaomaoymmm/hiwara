@@ -9,7 +9,7 @@
 			<view v-show="data.length > 0" class="comment" v-for="item, i in data" :key="'comment' + i">
 				<view style="display: flex;">
 					<view>
-						<image class="avatar" :src="data.avatar"></image>
+						<image class="avatar" :src="item.avatar"></image>
 					</view>
 					<view style="flex:1" class="user">{{ item.user }}</view>
 				</view>
@@ -29,7 +29,7 @@
 			<view style="overflow: hidden;white-space: nowrap;transition: width ease 100ms;"
 				:style="{ width: commentButton ? '4.5rem' : 0 }">
 				<button size="mini" style="background-color:#00897b;color: #f0f0f0;margin-top: 0.9rem"
-					@click="addComment()">评论</button>
+					@click="addComment()">发布</button>
 			</view>
 		</view>
 	</view>
@@ -39,7 +39,7 @@
 import {
 	formatDate,
 	getVideoListForPlayInfoComments,
-	addComment
+	addCommentForVideo
 } from '@/api/api.js'
 export default {
 	data() {
@@ -49,7 +49,7 @@ export default {
 			commentButton: false
 		}
 	},
-	props: ['id'],
+	props: ['vid'],
 	mounted() {
 		this.getVideoListForPlayInfoComments()
 	},
@@ -58,7 +58,7 @@ export default {
 			return formatDate(t)
 		},
 		getVideoListForPlayInfoComments() {
-			getVideoListForPlayInfoComments(this.id, 0, (res) => {
+			getVideoListForPlayInfoComments(this.vid, 0, (res) => {
 				for (let i = 0; i < res.results.length; i++) {
 					this.data.push({
 						user: res.results[i].user.name,
@@ -72,7 +72,7 @@ export default {
 			})
 		},
 		addComment() {
-			addComment(this.id, this.text, (res, code) => {
+			addCommentForVideo(this.vid, this.text, (res, code) => {
 				if (code == 201) {
 					uni.showToast({
 						title: "评论发表成功",

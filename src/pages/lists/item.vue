@@ -1,19 +1,21 @@
 <template>
 	<view class="item" @click="gotoPage(item.id, item.uid)">
 		<img :src="item.img || '/static/img/not-img.jpg'" class="img" />
-		<view
-			style="overflow: hidden;text-overflow: ellipsis;font-weight: bold;font-size: 1rem;width:calc(100vw / 2 - 0.375rem)">
-			<text>{{ item.label }}</text>
-		</view>
-		<view style="display: flex;width: calc(100vw / 2 - 0.375rem);padding: 0.1rem 0;">
-			<view>
-				<image class="avatar" :src="item.avatar"></image>
-			</view>
+		<view style="padding:0.25rem">
 			<view
-				style="flex: 1;font-size: 0.8rem;padding: 0 0.3rem;line-height: 1rem;overflow: hidden;text-overflow: ellipsis;">
-				<text>{{ item.author }}</text>
-				<br>
-				<text>{{ item.date }}</text>
+				style="overflow: hidden;text-overflow: ellipsis;font-weight: bold;font-size: 1rem;width:calc(100vw / 2 - 0.875rem);padding: 0.25rem 0;">
+				<text>{{ item.label }}</text>
+			</view>
+			<view style="display: flex;width: calc(100vw / 2 - 0.875rem);padding: 0.1rem 0;">
+				<view>
+					<image class="avatar" :src="item.avatar"></image>
+				</view>
+				<view
+					style="flex: 1;font-size: 0.8rem;padding: 0 0.3rem;line-height: 1rem;overflow: hidden;text-overflow: ellipsis;">
+					<text>{{ item.author }}</text>
+					<br>
+					<text>{{ item.date }}</text>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -47,14 +49,17 @@ export default {
 
 <style scoped>
 .item {
-	padding: 0.125rem;
+	margin: 0.35rem 0.125rem;
 	white-space: nowrap;
+	box-shadow: 0 0 0.125rem #0004;
+	border-radius: 0.25rem;
+	background-color: #fff;
+	overflow: hidden;
 }
 
 .img {
 	width: calc(100vw / 2 - 0.375rem);
 	height: calc((100vw / 2 - 0.375rem) * 2 / 3);
-	box-shadow: 0 0 0.125rem #000a;
 }
 
 .avatar {
@@ -65,8 +70,11 @@ export default {
 }
 
 @media (prefers-color-scheme: dark) {
+	.item {
+		background-color: #1c1c1c;
+		box-shadow: 0 0 0.125rem #fffa;
+	}
 
-	.img,
 	.avatar {
 		box-shadow: 0 0 0.125rem #fffa;
 	}

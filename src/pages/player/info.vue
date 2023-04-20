@@ -1,85 +1,87 @@
 <template>
 	<view class="info">
-		<view style="display: flex;">
-			<view>
-				<image class="avatar" :src="data.avatar"></image>
-			</view>
-			<view style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
-				<text style="font-size: 1rem;">{{ data.author }}</text>
-			</view>
-			<view>
-				<button size="mini" @click="followers"><text>{{ data.following ? "已关注" : "＋ 关注"
-				}}</text></button>
-			</view>
-		</view>
-		<view @click="allinfo = !allinfo" class="title" :style="{ height: allinfo ? height.title2 : height.title1 }">
-			<i class="fas fa-chevron-down titletip" :style="{ transform: allinfo ? 'rotate(180deg)' : 'rotate(0deg)' }"></i>
-			<view id="title1" v-show="!allinfo"
-				style="whiteSpace:nowrap;overflow: hidden;text-overflow: ellipsis;margin-bottom: 2rem;">
-				<text>{{ data.title }}</text>
-			</view>
-			<view id="title2">
-				<text>{{ data.title }}</text>
-			</view>
-		</view>
-		<view class="status">
-			<text decode="true">
-				<i class="fa-regular fa-circle-play fa-fw"></i>{{ ' ' }}{{ data.numView }}
-				<i style="width: 0.8rem;display: inline-block;"></i>
-				<i class="fa-regular fa-heart fa-fw"></i>{{ ' ' }}{{ data.numLikes }}
-				<i style="width: 0.8rem;display: inline-block;"></i>
-				<text>{{ formatDate(data.date) }}</text>
-			</text>
-		</view>
-		<view class="synopsis" :style="{ height: allinfo ? height.synopsis : '0px' }">
-			<view id="synopsis">
-				<text>{{ data.synopsis }}</text>
-			</view>
-		</view>
-		<view style="display: flex;text-align: center;overflow: hidden;">
-			<view class="opt">
-				<image class="icon" :src="data.liked ? '/static/icon/a_like.png' : '/static/icon/like.png'"></image>
-				<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-					<text>{{ data.liked ? '已喜欢' : '喜欢' }}</text>
+		<view style="padding:0 1rem;">
+			<view style="display: flex;">
+				<view>
+					<image class="avatar" :src="data.avatar"></image>
+				</view>
+				<view style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
+					<text style="font-size: 1rem;">{{ data.author }}</text>
+				</view>
+				<view>
+					<button size="mini" @click="followers"><text>{{ data.following ? "已关注" : "＋ 关注"
+					}}</text></button>
 				</view>
 			</view>
-			<view class="opt">
-				<image class="icon" src="@/static/icon/share-one.png"></image>
-				<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-					<text>分享</text>
+			<view @click="allinfo = !allinfo" class="title" :style="{ height: allinfo ? height.title2 : height.title1 }">
+				<i class="fas fa-chevron-down titletip" :style="{ transform: allinfo ? 'rotate(180deg)' : 'rotate(0deg)' }"></i>
+				<view id="title1" v-show="!allinfo"
+					style="whiteSpace:nowrap;overflow: hidden;text-overflow: ellipsis;margin-bottom: 2rem;">
+					<text>{{ data.title }}</text>
+				</view>
+				<view id="title2">
+					<text>{{ data.title }}</text>
 				</view>
 			</view>
-			<view class="opt">
-				<image class="icon" src="@/static/icon/download-four.png"></image>
-				<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-					<text>缓存</text>
+			<view class="status">
+				<text decode="true">
+					<i class="fa-regular fa-circle-play fa-fw"></i>{{ ' ' }}{{ data.numView }}
+					<i style="width: 0.8rem;display: inline-block;"></i>
+					<i class="fa-regular fa-heart fa-fw"></i>{{ ' ' }}{{ data.numLikes }}
+					<i style="width: 0.8rem;display: inline-block;"></i>
+					<text>{{ formatDate(data.date) }}</text>
+				</text>
+			</view>
+			<view class="synopsis" :style="{ height: allinfo ? height.synopsis : '0px' }">
+				<view id="synopsis">
+					<text>{{ data.synopsis }}</text>
 				</view>
 			</view>
-			<view class="opt" @click="copyLinkButton = !copyLinkButton">
-				<image class="icon" src="@/static/icon/copy-link.png"></image>
-				<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-					<text>复制链接</text>
+			<view style="display: flex;text-align: center;overflow: hidden;">
+				<view class="opt" @click="like()">
+					<image class="icon" :src="data.liked ? '/static/icon/a_like.png' : '/static/icon/like.png'"></image>
+					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
+						<text>{{ data.liked ? '已点赞' : '点赞' }}</text>
+					</view>
+				</view>
+				<view class="opt">
+					<image class="icon" src="@/static/icon/share-one.png"></image>
+					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
+						<text>分享</text>
+					</view>
+				</view>
+				<view class="opt">
+					<image class="icon" src="@/static/icon/download-four.png"></image>
+					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
+						<text>缓存</text>
+					</view>
+				</view>
+				<view class="opt" @click="copyLinkButton = !copyLinkButton">
+					<image class="icon" src="@/static/icon/copy-link.png"></image>
+					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
+						<text>复制链接</text>
+					</view>
 				</view>
 			</view>
-		</view>
-		<view style="overflow: hidden;text-align: center" :style="{ height: copyLinkButton ? '3.2rem' : 0 }">
-			<view style="padding: 0.5rem 0;display: flex;">
-				<view v-for="item, i in data.sources" style="flex: 1;">
-					<button size="mini" @click="copyLink('https:' + item.download)">
-						<i class="fa-solid fa-link fa-fw"></i>{{ ' ' }}{{ item.name }}
-					</button>
+			<view style="overflow: hidden;text-align: center" :style="{ height: copyLinkButton ? '3.2rem' : 0 }">
+				<view style="padding: 0.5rem 0;display: flex;">
+					<view v-for="item, i in data.sources" style="flex: 1;">
+						<button size="mini" @click="copyLink('https:' + item.download)">
+							<i class="fa-solid fa-link fa-fw"></i>{{ ' ' }}{{ item.name }}
+						</button>
+					</view>
 				</view>
 			</view>
 		</view>
 		<view>
-			<view style="padding:0.5rem 0">
+			<view style="padding:0.5rem 1rem">
 				<text>该作者的其他作品</text>
 			</view>
-			<lists :data="authorOpus"></lists>
-			<view style="padding:0.5rem 0">
+			<lists :data="authorOpus" type="video"></lists>
+			<view style="padding:0.5rem 1rem">
 				<text>相关作品</text>
 			</view>
-			<lists :data="relatedOpus"></lists>
+			<lists :data="relatedOpus" type="video"></lists>
 		</view>
 	</view>
 </template>
@@ -91,7 +93,8 @@ import {
 	getVideoListForPlayInfoUser,
 	getVideoListForPlayInfoRelated,
 	fill0,
-	followers
+	followers,
+	likeVideo
 } from '@/api/api.js'
 export default {
 	components: {
@@ -123,7 +126,7 @@ export default {
 			relatedOpus: [],
 		}
 	},
-	props: ['id', 'uid'],
+	props: ['vid', 'uid'],
 	watch: {
 		data: {
 			handler() {
@@ -138,7 +141,7 @@ export default {
 		console.log('onBackPress')
 	},
 	mounted() {
-		getVideoListForPlayInfoUser(this.id, this.uid, (res) => {
+		getVideoListForPlayInfoUser(this.vid, this.uid, (res) => {
 			for (let i = 0; i < res.results.length; i++) {
 				let rs = res.results[i]
 				this.authorOpus.push({
@@ -157,7 +160,7 @@ export default {
 				})
 			}
 		})
-		getVideoListForPlayInfoRelated(this.id, (res) => {
+		getVideoListForPlayInfoRelated(this.vid, (res) => {
 			for (let i = 0; i < res.results.length; i++) {
 				let rs = res.results[i]
 				this.relatedOpus.push({
@@ -240,6 +243,43 @@ export default {
 					}
 				})
 			}
+		},
+		like() {
+			if (this.data.liked) {
+				likeVideo(this.vid, 0, (res, code) => {
+					if (code == 204) {
+						uni.showToast({
+							title: "已取消点赞",
+							icon: "none",
+							duration: 3000,
+						})
+						this.data.liked = !this.data.liked
+					} else {
+						uni.showToast({
+							title: "操作失败",
+							icon: "none",
+							duration: 3000,
+						})
+					}
+				})
+			} else {
+				likeVideo(this.vid, 1, (res, code) => {
+					if (code == 201) {
+						uni.showToast({
+							title: "点赞成功！！！",
+							icon: "none",
+							duration: 3000,
+						})
+						this.data.liked = !this.data.liked
+					} else {
+						uni.showToast({
+							title: "操作失败",
+							icon: "none",
+							duration: 3000,
+						})
+					}
+				})
+			}
 		}
 	}
 }
@@ -247,7 +287,7 @@ export default {
 
 <style scoped>
 .info {
-	padding: 1rem;
+	padding: 1rem 0;
 	position: relative;
 }
 

@@ -281,6 +281,11 @@ export function getVideo(id, cb) {
 				avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
 					.id + '/' + res.user
 						.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+				preview: res.file != null
+					? "https://i.iwara.tv/image/thumbnail/" +
+					res.file.id +
+					"/thumbnail-" + fill0(res.thumbnail, 1) + ".jpg"
+					: null,
 				synopsis: res.body,
 				date: res.createdAt,
 				numView: res.numViews,
@@ -319,37 +324,6 @@ export function getVideo(id, cb) {
 	})
 }
 
-// 获取图片地址
-export function getPicture(id, cb) {
-	let header
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	} else {
-		header = null
-	}
-	ajax(api + '/image/' + id, null, header, 'GET', (res, code) => {
-		let resData = {
-			title: res.title,
-			body: res.body,
-			author: res.user.name,
-			createdAt: res.createdAt,
-			numLikes: res.numLikes,
-			numViews: res.numViews,
-			following:res.user.following,
-			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
-				.id + '/' + res.user
-					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-			files: []
-		}
-		for (let i = 0; i < res.files.length; i++) {
-			resData.files.push('https://i.iwara.tv/image/large/' + res.files[i].id + '/' + res.files[i].name)
-		}
-		cb(resData, code)
-	})
-}
-
 // 获取详情页视频该作者视频列表
 export function getVideoListForPlayInfoUser(id, uid, cb) {
 	let data = {
@@ -369,7 +343,7 @@ export function getVideoListForPlayInfoRelated(id, cb) {
 	})
 }
 
-// 获取详情页评论
+// 获取视频详情页评论
 export function getVideoListForPlayInfoComments(id, page, cb) {
 	let data = {
 		page: page
@@ -385,8 +359,8 @@ export function getVideoListForPlayInfoComments(id, page, cb) {
 	})
 }
 
-// 添加评论
-export function addComment(id, body, cb) {
+// 添加视频评论
+export function addCommentForVideo(id, body, cb) {
 	let header = {
 		authorization: 'Bearer ' + accessToken
 	}
@@ -394,6 +368,22 @@ export function addComment(id, body, cb) {
 		body: body
 	}
 	ajax(api + '/video/' + id + '/comments', data, header, 'POST', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 点赞视频
+export function likeVideo(id, opt, cb) {
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	let method
+	if (opt == 0) {
+		method = 'DELETE'
+	} else if (opt == 1) {
+		method = 'POST'
+	}
+	ajax(api + '/video/' + id + '/like', null, header, method, (res, code) => {
 		cb(res, code)
 	})
 }
@@ -420,6 +410,104 @@ export function getSelfData(cb) {
 		authorization: 'Bearer ' + accessToken
 	}
 	ajax(api + '/user', null, header, 'GET', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 获取图片地址
+export function getPicture(id, cb) {
+	let header
+	if (accessToken) {
+		header = {
+			authorization: 'Bearer ' + accessToken
+		}
+	} else {
+		header = null
+	}
+	ajax(api + '/image/' + id, null, header, 'GET', (res, code) => {
+		let resData = {
+			title: res.title,
+			body: res.body,
+			author: res.user.name,
+			createdAt: res.createdAt,
+			numLikes: res.numLikes,
+			numViews: res.numViews,
+			following: res.user.following,
+			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
+				.id + '/' + res.user
+					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+			files: []
+		}
+		for (let i = 0; i < res.files.length; i++) {
+			resData.files.push('https://i.iwara.tv/image/large/' + res.files[i].id + '/' + res.files[i].name)
+		}
+		cb(resData, code)
+	})
+}
+
+// 获取图片详情页评论
+export function getImageInfoComments(id, page, cb) {
+	let data = {
+		page: page
+	}
+	let header = null
+	if (accessToken) {
+		header = {
+			authorization: 'Bearer ' + accessToken
+		}
+	}
+	ajax(api + '/image/' + id + '/comments', data, header, 'GET', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 添加图片评论
+export function addCommentForImage(id, body, cb) {
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	let data = {
+		body: body
+	}
+	ajax(api + '/image/' + id + '/comments', data, header, 'POST', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 获取详情页图片该作者图片列表
+export function getImageListForImageInfoUser(id, uid, cb) {
+	let data = {
+		user: uid,
+		exclude: id,
+		limit: 6
+	}
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	ajax(api + '/images', data, header, 'GET', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 获取详情页相关作品图片列表
+export function getImageListForImageInfoRelated(id, cb) {
+	ajax(api + '/image/' + id + '/related', null, null, 'GET', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 点赞图片
+export function likeImage(id, opt, cb) {
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	let method
+	if (opt == 0) {
+		method = 'DELETE'
+	} else if (opt == 1) {
+		method = 'POST'
+	}
+	ajax(api + '/image/' + id + '/like', null, header, method, (res, code) => {
 		cb(res, code)
 	})
 }

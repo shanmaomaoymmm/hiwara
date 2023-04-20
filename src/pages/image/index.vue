@@ -47,19 +47,85 @@
 					</text>
 				</view>
 			</view>
+			<view class="comments">
+				<view style="font-weight: bold;padding: 0.5rem;">
+					评论
+				</view>
+				<view style="padding: 0.5rem;">
+					<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;">
+						<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
+						<br>
+						<text>还没有评论</text>
+					</view>
+					<view v-show="comments.length > 0" v-for="item, i in comments" :key="'comment' + i">
+						<view style="display: flex;">
+							<view>
+								<image class="avatar" :src="item.avatar"></image>
+							</view>
+							<view style="flex:1">{{ item.user }}</view>
+						</view>
+						<view style="margin: 0.4rem 0;">{{ item.content }}</view>
+						<view class="date">
+							<text>
+								<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+							</text>
+						</view>
+					</view>
+				</view>
+				<view class="addComment">
+					<view style="flex:1">
+						<input v-model="addCommentBody" placeholder="添加你的评论" class="addCommentInput" @focus="addCommentActive = true"
+							@blur="addCommentActive = false" />
+					</view>
+					<view :style="{ width: addCommentActive ? '4.5rem' : 0 }"
+						style="width: 4.5rem;text-align: center;transition: width ease 100ms;overflow: hidden;white-space: nowrap;">
+						<button size="mini" style="margin-top: 0.5rem" @click="addComment()">发布</button>
+					</view>
+				</view>
+			</view>
+			<view>
+				<view
+					style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
+					更多来自用户
+				</view>
+				<lists :data="authorOpus" type="image"></lists>
+				<view
+					style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
+					更像这样
+				</view>
+				<lists :data="relatedOpus" type="image"></lists>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-import { getPicture, followers, formatDate } from '@/api/api'
+import {
+	getPicture,
+	followers,
+	formatDate,
+	getImageInfoComments,
+	getImageListForImageInfoRelated,
+	getImageListForImageInfoUser,
+	addCommentForImage,
+	likeImage
+} from '@/api/api'
+import lists from "@/pages/lists/index.vue";
 export default {
+	components: {
+		lists,
+	},
 	data() {
 		return {
 			data: null,
 			id: null,
 			uid: null,
 			unfold: false,
+			comments: [],
+			authorOpus: [],
+			relatedOpus: [],
+			addCommentActive: false,
+			addCommentBody: null
 		}
 	},
 	onLoad: function (opt) {
@@ -70,10 +136,81 @@ export default {
 		getPicture(this.id, (res) => {
 			this.data = res
 		})
+		getImageListForImageInfoUser(this.id, this.uid, (res) => {
+			for (let i = 0; i < res.results.length; i++) {
+				let rs = res.results[i]
+				this.authorOpus.push({
+					id: rs.id,
+					label: rs.title,
+					img:
+						rs.thumbnail != null
+							? "https://i.iwara.tv/image/thumbnail/" +
+							rs.thumbnail.id +
+							"/" +
+							rs.thumbnail.name
+							: null,
+					date: this.formatDate(rs.createdAt),
+					author: rs.user.name,
+					avatar:
+						rs.user.avatar != null
+							? "https://i.iwara.tv/image/avatar/" +
+							rs.user.avatar.id +
+							"/" +
+							rs.user.avatar.name
+							: "https://www.iwara.tv/images/default-avatar.jpg",
+					watch: rs.numViews,
+					like: rs.numLikes,
+					uid: rs.user.id,
+				})
+			}
+		})
+		getImageListForImageInfoRelated(this.id, (res) => {
+			for (let i = 0; i < res.results.length; i++) {
+				let rs = res.results[i]
+				this.relatedOpus.push({
+					id: rs.id,
+					label: rs.title,
+					img:
+						rs.thumbnail != null
+							? "https://i.iwara.tv/image/thumbnail/" +
+							rs.thumbnail.id +
+							"/" +
+							rs.thumbnail.name
+							: null,
+					date: this.formatDate(rs.createdAt),
+					author: rs.user.name,
+					avatar:
+						rs.user.avatar != null
+							? "https://i.iwara.tv/image/avatar/" +
+							rs.user.avatar.id +
+							"/" +
+							rs.user.avatar.name
+							: "https://www.iwara.tv/images/default-avatar.jpg",
+					watch: rs.numViews,
+					like: rs.numLikes,
+					uid: rs.user.id,
+				})
+			}
+		})
+		this.getComments()
 	},
 	methods: {
 		formatDate(t) {
 			return formatDate(t)
+		},
+		getComments() {
+			getImageInfoComments(this.id, 0, (res) => {
+				for (let i = 0; i < res.results.length; i++) {
+					this.comments.push({
+						user: res.results[i].user.name,
+						content: res.results[i].body,
+						date: res.results[i].createdAt,
+						avatar: res.results[i].user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.results[i].user.avatar
+							.id + '/' + res.results[i].user
+								.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg'
+					})
+				}
+			})
 		},
 		followers() {
 			if (this.data.following) {
@@ -123,6 +260,24 @@ export default {
 				});
 			}
 		},
+		addComment() {
+			addCommentForImage(this.id, this.addCommentBody, (res, code) => {
+				if (code == 201) {
+					uni.showToast({
+						title: "评论发表成功",
+						icon: "none",
+						duration: 3000,
+					})
+					this.getComments()
+				} else {
+					uni.showToast({
+						title: "评论发表失败",
+						icon: "none",
+						duration: 3000,
+					})
+				}
+			})
+		}
 	}
 }
 </script>
@@ -177,6 +332,8 @@ export default {
 
 .picture {
 	width: 100%;
+	background-color: #000;
+
 }
 
 .unfold {
@@ -192,6 +349,23 @@ export default {
 	box-shadow: 0 0 0.125rem #0006;
 	padding: 1rem;
 	background-color: #f5f5f5;
+}
+
+.comments {
+	border-radius: 0.25rem;
+	margin: 1rem;
+	box-shadow: 0 0 0.125rem #0006;
+	background-color: #f5f5f5;
+	padding: 0.5rem;
+}
+
+.addComment {
+	display: flex;
+}
+
+.addCommentInput {
+	padding: 0.5rem;
+	border-bottom: solid 2px #00897b;
 }
 
 .avatar {
@@ -210,10 +384,17 @@ button {
 	color: #616161;
 	padding: 1rem 0;
 	font-size: 0.9rem;
+	word-wrap: break-word;
 }
 
 .status {
 	font-size: 0.85rem;
+}
+
+.date {
+	text-align: right;
+	color: #616161;
+	font-size: 0.9rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -222,7 +403,8 @@ button {
 		color: #ddd;
 	}
 
-	.info {
+	.info,
+	.comments {
 		background-color: #101010;
 	}
 

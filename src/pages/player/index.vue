@@ -29,7 +29,7 @@
 				</view>
 				<view class="top">
 					<video id="videoPlayer" class="player" :src="src" :title="data.title" :mobilenet-hint-type="1"
-						:vslide-gesture="true">
+						:vslide-gesture="true" :poster="data.preview">
 					</video>
 					<view class="tabs">
 						<view style="flex: 1;">
@@ -46,10 +46,10 @@
 				<view class="bottom" @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
 					<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100vw' }">
 						<view class="bottom2">
-							<info :id="id" :uid="uid" ref="info"></info>
+							<info :vid="vid" :uid="uid" ref="info"></info>
 						</view>
 						<view class="bottom2">
-							<comments :id="id"></comments>
+							<comments :vid="vid"></comments>
 						</view>
 					</view>
 				</view>
@@ -89,7 +89,7 @@ export default {
 		return {
 			src: null,
 			tab: 0,
-			id: null,
+			vid: null,
 			uid: null,
 			loading: true,
 			error: 0,
@@ -104,6 +104,7 @@ export default {
 				numLikes: null,
 				liked: null,
 				private: null,
+				preview: null,
 				sources: []
 			},
 			definition: null,
@@ -115,7 +116,7 @@ export default {
 		}
 	},
 	onLoad: function (opt) {
-		this.id = opt.id
+		this.vid = opt.id
 		this.uid = opt.uid
 	},
 	watch: {
@@ -147,7 +148,7 @@ export default {
 			}
 			this.definition = b
 		})
-		getVideo(this.id, (res, code) => {
+		getVideo(this.vid, (res, code) => {
 			this.loading = false
 			if (code == 200) {
 				this.error = 0
