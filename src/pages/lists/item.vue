@@ -1,10 +1,11 @@
 <template>
 	<view class="item" @click="gotoPage(item.id, item.uid)">
-		<image class="img" :src="item.img"></image>
-		<view style="width: 9.6rem;overflow: hidden;text-overflow: ellipsis;">
-			<text style="font-weight: bold;font-size: 1rem;">{{ item.label }}</text>
+		<img :src="item.img || '/static/img/not-img.jpg'" class="img" />
+		<view
+			style="overflow: hidden;text-overflow: ellipsis;font-weight: bold;font-size: 1rem;width:calc(100vw / 2 - 0.375rem)">
+			<text>{{ item.label }}</text>
 		</view>
-		<view style="display: flex;width: 9.6rem;padding: 0.1rem 0;">
+		<view style="display: flex;width: calc(100vw / 2 - 0.375rem);padding: 0.1rem 0;">
 			<view>
 				<image class="avatar" :src="item.avatar"></image>
 			</view>
@@ -46,15 +47,13 @@ export default {
 
 <style scoped>
 .item {
-	text-align: left;
+	padding: 0.125rem;
 	white-space: nowrap;
-	display: inline-block;
-	margin: 0.5rem 0;
 }
 
 .img {
-	width: 9.6rem;
-	height: 6.4rem;
+	width: calc(100vw / 2 - 0.375rem);
+	height: calc((100vw / 2 - 0.375rem) * 2 / 3);
 	box-shadow: 0 0 0.125rem #000a;
 }
 

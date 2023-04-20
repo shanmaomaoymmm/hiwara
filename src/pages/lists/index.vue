@@ -31,7 +31,7 @@ export default {
 
 <style scoped>
 .lists {
-	text-align: center;
 	display: flex;
+	padding: 0.25rem 0.125rem;
 }
 </style>

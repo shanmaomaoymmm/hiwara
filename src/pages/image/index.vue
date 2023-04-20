@@ -17,7 +17,7 @@
 				<view v-show="!unfold" class="pictures">
 					<img class="picture" :src="data.files[0]">
 				</view>
-				<text v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
+				<text style="color: #f5f5f5;" v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
 					{{ unfold ? "点击折叠" : "点击展开" }}
 				</text>
 			</view>
@@ -35,7 +35,16 @@
 					</view>
 				</view>
 				<view class="synopsis">
-					{{ data.body }}
+					{{ data.body || data.title }}
+				</view>
+				<view class="status">
+					<text decode="true">
+						<i class="fa-regular fa-circle-play fa-fw"></i>{{ ' ' }}{{ data.numViews }}
+						<i style="width: 0.8rem;display: inline-block;"></i>
+						<i class="fa-regular fa-heart fa-fw"></i>{{ ' ' }}{{ data.numLikes }}
+						<i style="width: 0.8rem;display: inline-block;"></i>
+						<text>{{ formatDate(data.date) }}</text>
+					</text>
 				</view>
 			</view>
 		</view>
@@ -43,7 +52,7 @@
 </template>
 
 <script>
-import { getPicture, followers } from '@/api/api'
+import { getPicture, followers, formatDate } from '@/api/api'
 export default {
 	data() {
 		return {
@@ -63,6 +72,9 @@ export default {
 		})
 	},
 	methods: {
+		formatDate(t) {
+			return formatDate(t)
+		},
 		followers() {
 			if (this.data.following) {
 				followers(this.uid, 0, (res, code) => {
@@ -195,7 +207,13 @@ button {
 }
 
 .synopsis {
-	color: #616161
+	color: #616161;
+	padding: 1rem 0;
+	font-size: 0.9rem;
+}
+
+.status {
+	font-size: 0.85rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -208,7 +226,8 @@ button {
 		background-color: #101010;
 	}
 
-	.synopsis {
+	.synopsis,
+	.status {
 		color: #BDBDBD
 	}
 }
