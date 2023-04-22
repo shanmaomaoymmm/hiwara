@@ -290,7 +290,7 @@ export default {
 }
 
 .top {
-	padding-top: 1.8rem;
+	padding-top: 2rem;
 	display: flex;
 	top: 0;
 	position: fixed;

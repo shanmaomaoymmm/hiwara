@@ -155,8 +155,7 @@ export default {
         refs = this.$refs.video
         break
       case 2:
-        refs = this.$refpictureo
-
+        refs = this.$refs.picture
         break
       default:
         refs = null

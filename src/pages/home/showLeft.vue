@@ -52,7 +52,7 @@ export default {
 
 .user {
 	text-align: center;
-	padding: 1rem;
+	padding: 3rem 1rem 1rem 1rem;
 }
 
 .avatar {
