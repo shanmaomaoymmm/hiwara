@@ -2,6 +2,9 @@
 
 基于uniapp的iwara应用
 
+
+[hiwara](./edit/img/logo.png)
+
 兼容新版iwara客户端，支持Android，iOS和Web端
 
 正在开发中，目前还不提供安装包
