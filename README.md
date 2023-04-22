@@ -2,8 +2,7 @@
 
 基于uniapp的iwara应用
 
-
-[hiwara](./edit/img/logo.png)
+<img src="./edit/img/logo.png" style="width:128px;height:128px" />
 
 兼容新版iwara客户端，支持Android，iOS和Web端
 
