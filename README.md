@@ -36,10 +36,36 @@ npm run dev:h5
 
 ## 其他
 
-如何直接上i站？
-
-答：
+i站hosts直通
 
 ```
-IyMgaXdhcmEKMjYwNjo0NzAwOjIwOjphYzQzOjQ3OWEgaXdhcmEudHYKMjYwNjo0NzAwOjIwOjphYzQzOjQ3OWEgaS5pd2FyYS50dgoyNjA2OjQ3MDA6MjA6OjY4MWE6ZDYwIHd3dy5pd2FyYS50dgo2Ni4yMDYuMTUuNTAgZWNjaGkuaXdhcmEudHYKNjYuMjA2LjE1LjUxIGFwaS5pd2FyYS50dgo3Mi41Mi44My4xMDAgaGltZS5pd2FyYS50dgoxNjMuMTcyLjQwLjE0NSBha3UuaXdhcmEudHYKMTYzLjE3Mi40Mi4xNzUgc3Vrb25lLml3YXJhLnR2CjE2My4xNzIuODEuMTcgeGluLml3YXJhLnR2CjE2My4xNzIuNDAuMTIzIHV0YS5pd2FyYS50dgo3Mi41Mi44My45OSAgbWlrb3RvLml3YXJhLnR2CjE2My4xNzIuNDQuMTUzIG1pa2kuaXdhcmEudHYKNjYuMTY1LjI0MC4xOTQgZmlsZXMuaXdhcmEudHYKNTEuMTUuMTYyLjE5OCBhLml3YXJhLnR2Cjg1LjE4Ny4xMjguNjAgc2VydmljZS5pd2FyYS50dgoxNjMuMTcyLjgwLjMxIHVuaS5pd2FyYS50dgoxNjMuMTcyLjM5LjIyNyBjdWwuaXdhcmEudHYKMTYzLjE3Mi42Mi44OSBtb21vLml3YXJhLnR2CjE2My4xNzIuNDAuMTIzIHV0YS5pd2FyYS50dgoxNjMuMTcyLjYxLjE5MyBydWtvLml3YXJhLnR2CjE2My4xNzIuNTYuODcgeXVrYXJpLml3YXJhLnR2CjE2My4xNzIuNTcuMyBwaWtvLml3YXJhLnR2CjE2My4xNzIuNjEuMTU5IG1lcmxpLml3YXJhLnR2CjE2My4xNzIuNDIuMTc1IHN1a29uZS5pd2FyYS50dgoxNjMuMTcyLjQwLjgxIHRlaS5pd2FyYS50dgoyNjA2OjQ3MDA6OjY4MTI6MzNmIHd3dy5lcm9sYWJzLmNvbQoyNjA2OjQ3MDA6OjY4MTI6OWNhIHd3dy5lcm8tbGFicy5jb20KIyMgaXdhcmE=
+2606:4700:20::ac43:479a iwara.tv
+2606:4700:20::ac43:479a i.iwara.tv
+2606:4700:20::681a:d60 www.iwara.tv
+66.206.15.50 ecchi.iwara.tv
+2606:4700:20::ac43:479a api.iwara.tv
+72.52.83.100 hime.iwara.tv
+163.172.40.145 aku.iwara.tv
+163.172.42.175 sukone.iwara.tv
+163.172.81.17 xin.iwara.tv
+163.172.40.123 uta.iwara.tv
+72.52.83.99 mikoto.iwara.tv
+163.172.44.153 miki.iwara.tv
+66.165.240.194 files.iwara.tv
+51.15.162.198 a.iwara.tv
+85.187.128.60 service.iwara.tv
+163.172.80.31 uni.iwara.tv
+163.172.39.227 cul.iwara.tv
+163.172.62.89 momo.iwara.tv
+163.172.40.123 uta.iwara.tv
+163.172.61.193 ruko.iwara.tv
+163.172.56.87 yukari.iwara.tv
+163.172.57.3 piko.iwara.tv
+163.172.61.159 merli.iwara.tv
+163.172.42.175 sukone.iwara.tv
+163.172.40.81 tei.iwara.tv
+2606:4700::6812:33f www.erolabs.com
+2606:4700::6812:9ca www.ero-labs.com
 ```
+
+# 关注永雏塔菲喵！关注永雏塔菲谢谢喵！
