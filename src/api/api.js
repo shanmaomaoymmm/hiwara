@@ -28,23 +28,23 @@ function ajax(url, data, header, method, cb, num) {
 	if (typeof (num) == 'undefined') {
 		num = 0
 	}
-	console.log(url)
-	console.log(data)
-	console.log(header)
-	console.log(method)
+	// console.log(url)
+	// console.log(data)
+	// console.log(header)
+	// console.log(method)
 	uni.request({
 		url: url,
 		data: data,
 		header: header,
 		method: method,
 		success: res => {
-			console.log(res.data)
-			console.log(res.statusCode)
+			// console.log(res.data)
+			// console.log(res.statusCode)
 			if (res.statusCode == 200) {
 				cb(res.data, res.statusCode)
-			} else if (res.statusCode == (403 || 429)) {
+			} else if (res.statusCode == 403 || res.statusCode == 429 || res.statusCode == 500) {
 				// 403、429暴力重连
-				if (num < 16) {
+				if (num < 65536) {
 					num++
 					ajax(url, data, header, method, (res, code) => {
 						cb(res, code)
@@ -100,7 +100,6 @@ export function getStorage(key, cb) {
 			if (res.data.indexOf('|') == -1) {
 				cb(res.data)
 			} else {
-				console.log(res.data)
 				let d = new Date()
 				let expire = parseInt(res.data.slice(res.data.indexOf('|') + 1))
 				if (d.getTime() > expire) {
@@ -130,7 +129,6 @@ export function removeStorage(key, cb) {
 
 // 获取accessToken
 export function getAccessToken(cb) {
-	console.log('getAccessToken')
 	getStorage('token', (res) => {
 		if (res) {
 			token = res
@@ -414,7 +412,7 @@ export function getSelfData(cb) {
 	})
 }
 
-// 获取图片地址
+// 获取图片
 export function getPicture(id, cb) {
 	let header
 	if (accessToken) {
@@ -509,5 +507,25 @@ export function likeImage(id, opt, cb) {
 	}
 	ajax(api + '/image/' + id + '/like', null, header, method, (res, code) => {
 		cb(res, code)
+	})
+}
+
+// 获取用户信息
+export function getpProfile(username, cb) {
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	ajax(api + '/profile/' + username, null, header, 'GET', (res, code) => {
+		let resData = {
+			name: res.user.name,
+			body: res.body,
+			createdAt: res.user.createdAt,
+			seenAt: res.user.seenAt,
+			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
+				.id + '/' + res.user
+					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+			background: 'https://i.iwara.tv/image/profileHeader/' + res.header.id + '/' + res.header.name
+		}
+		cb(resData, code)
 	})
 }
