@@ -291,6 +291,7 @@ export function getVideo(id, cb) {
 				liked: res.liked,
 				private: res.private,
 				following: res.user.following,
+				username:res.user.username
 			}
 			if (res.file) {
 				let fileUrlParse = parseGET(res.fileUrl)
@@ -527,5 +528,25 @@ export function getpProfile(username, cb) {
 			background: 'https://i.iwara.tv/image/profileHeader/' + res.header.id + '/' + res.header.name
 		}
 		cb(resData, code)
+	})
+}
+
+// 获取用户视频列表
+export function getVideoListForUser(index, uid, cb) {
+	let data = {
+		sort: 'date',
+		page: index,
+		user: uid
+	}
+	let header
+	if (accessToken) {
+		header = {
+			authorization: 'Bearer ' + accessToken
+		}
+	} else {
+		header = null
+	}
+	ajax(api + '/videos', data, header, 'GET', (res, code) => {
+		cb(res, code)
 	})
 }

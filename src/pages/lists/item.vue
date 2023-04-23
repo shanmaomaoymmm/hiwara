@@ -8,7 +8,7 @@
 			</view>
 			<view style="display: flex;width: calc(100vw / 2 - 0.875rem);padding: 0.1rem 0;">
 				<view>
-					<image class="avatar" :src="item.avatar"></image>
+					<img class="avatar" :src="item.avatar" />
 				</view>
 				<view
 					style="flex: 1;font-size: 0.8rem;padding: 0 0.3rem;line-height: 1rem;overflow: hidden;text-overflow: ellipsis;">

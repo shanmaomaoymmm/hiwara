@@ -119,6 +119,9 @@
         "title": "hiwara",
         "devServer": {
             "port": 51001,
+            "allowedHosts": [
+                "ro.qisato.com"
+            ],
             "proxy": {
                 "/api": {
                     "target": "https://api.iwara.tv",

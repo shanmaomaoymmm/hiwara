@@ -55,7 +55,16 @@
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true,
+				"onReachBottonDistance": 100,
+				"app-plus": {
+					"pullToRefresh": {
+						"support": true,
+						"style": "circle",
+						"color": "#00897B",
+						"offset": "10%"
+					}
+				}
 			}
 		}
 	],

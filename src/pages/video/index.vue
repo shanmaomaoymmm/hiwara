@@ -39,9 +39,11 @@ export default {
 	methods: {
 		// 刷新
 		refresh(cb) {
+			this.onload = true
 			this.data = []
 			this.page = 0
 			this.getData(() => {
+				this.onload = false
 				cb()
 			})
 		},

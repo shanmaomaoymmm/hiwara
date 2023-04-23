@@ -1,12 +1,12 @@
 <template>
 	<view>
-		<view v-if="onload" style="text-align: center;padding-top: 30vh;">
-			<image class="loading" src="@/static/icon/loading.png"></image>
+		<view v-if="onload" style="text-align: center;padding-top: 16vh;">
+			<img class="loading" src="@/static/icon/loading.png" />
 			<br>
 			<text>资源加载中……</text>
 		</view>
 		<view v-else>
-			<lists :data="data" type="image"></lists>
+			<lists :data="data" type="video"></lists>
 			<view style="text-align: center;padding: 0.5rem;">
 				<text v-show="loading">
 					<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}正在加载数据……
@@ -18,7 +18,7 @@
 
 <script>
 import lists from "@/pages/lists/index.vue";
-import { getPictureList } from "@/api/api.js";
+import { getVideoListForUser, fill0 } from "@/api/api.js";
 export default {
 	components: {
 		lists,
@@ -31,6 +31,7 @@ export default {
 			loading: false,
 		}
 	},
+	props: ['uid'],
 	mounted() {
 		this.getData(() => {
 			this.onload = false
@@ -50,7 +51,7 @@ export default {
 		// 获取列表
 		getData(cb) {
 			this.loading = true
-			getPictureList(this.page, (res, code) => {
+			getVideoListForUser(this.page, this.uid, (res, code) => {
 				this.loading = false
 				if (code == 200) {
 					this.setPageData(res, code);
@@ -73,11 +74,10 @@ export default {
 					id: rs.id,
 					label: rs.title,
 					img:
-						rs.thumbnail != null
+						rs.file != null
 							? "https://i.iwara.tv/image/thumbnail/" +
-							rs.thumbnail.id +
-							"/" +
-							rs.thumbnail.name
+							rs.file.id +
+							"/thumbnail-" + fill0(rs.thumbnail, 1) + ".jpg"
 							: null,
 					date: this.formatDate(rs.createdAt),
 					author: rs.user.name,

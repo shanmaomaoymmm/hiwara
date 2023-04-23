@@ -2,10 +2,10 @@
 	<view class="info">
 		<view style="padding:0 1rem;">
 			<view style="display: flex;">
-				<view>
+				<view @click="gotoUser()">
 					<image class="avatar" :src="data.avatar"></image>
 				</view>
-				<view style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
+				<view @click="gotoUser()" style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
 					<text style="font-size: 1rem;">{{ data.author }}</text>
 				</view>
 				<view>
@@ -113,7 +113,8 @@ export default {
 				liked: false,
 				private: false,
 				following: false,
-				sources: []
+				sources: [],
+				username: null,
 			},
 			allinfo: false,
 			height: {
@@ -280,6 +281,13 @@ export default {
 					}
 				})
 			}
+		},
+		gotoUser() {
+			uni.navigateTo({
+				url: '/pages/user/index?uid=' + this.uid + '&username=' + this.data.username,
+				animationType: 'slide-in-right',
+				animationDuration: 100
+			});
 		}
 	}
 }
