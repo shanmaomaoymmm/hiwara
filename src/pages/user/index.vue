@@ -7,7 +7,7 @@
     <view class="bg">
       <view class="bgp" :style="{ backgroundImage: 'url(' + profile.background + ')' }"></view>
     </view>
-    <view style="display: flex;position: relative;">
+    <view style="display: flex;position: relative;z-index: 3;">
       <view>
         <img class="avatar" :src="profile.avatar" />
       </view>
@@ -34,16 +34,19 @@
     </view>
     <view style="min-height: calc(100vh - 8.125rem);">
       <video-list ref="video" v-if="tab == 0" :uid="uid"></video-list>
+      <picture-list ref="picture" v-if="tab == 1" :uid="uid"></picture-list>
     </view>
   </view>
 </template>
 
 <script>
 import videoList from './video.vue'
+import pictureList from './picture.vue'
 import { getpProfile } from '@/api/api'
 export default {
   components: {
-    videoList
+    videoList,
+    pictureList
   },
   data() {
     return {
@@ -124,6 +127,7 @@ export default {
   height: 7rem;
   position: sticky;
   top: -6rem;
+  z-index: 2;
 }
 
 .bgp {
@@ -155,6 +159,7 @@ button {
   background-color: #f5f5f5;
   position: sticky;
   top: 5rem;
+  z-index: 1;
 }
 
 .tab {

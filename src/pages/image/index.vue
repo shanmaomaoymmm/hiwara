@@ -1,99 +1,126 @@
 <template>
-	<view class="images" :style="{ backgroundImage: 'url(' + data.files[0] + ')' }">
-		<view class="top">
-			<view>
-				<i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
-				<i @click="back(0)" class="fa-solid fa-house backButton"></i>
-			</view>
-			<view class="title">
-				<text>{{ data.title }}</text>
-			</view>
+	<view>
+		<view v-show="loading" style="text-align: center;padding-top: 40vh;">
+			<image class="loading" src="@/static/icon/loading.png"></image>
+			<br>
+			<text>资源加载中……</text>
 		</view>
-		<view class="main">
-			<view style="text-align: center;position: relative;">
-				<view v-show="unfold" class="pictures">
-					<img class="picture" v-for="item, i in data.files" :src="item">
-				</view>
-				<view v-show="!unfold" class="pictures">
-					<img class="picture" :src="data.files[0]">
-				</view>
-				<text style="color: #f5f5f5;" v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
-					{{ unfold ? "点击折叠" : "点击展开" }}
-				</text>
-			</view>
-			<view class="info">
-				<view style="display: flex;">
-					<view>
-						<image class="avatar" :src="data.avatar"></image>
+		<view v-show="!loading">
+			<view v-show="error" class="error">
+				<view v-if="error == 1">
+					<image src="@/static/icon/leaves-two.png" style="width: 4rem;height: 4rem;"></image>
+					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
+						<text>一叶障目，不见泰山</text>
 					</view>
-					<view style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
-						<text style="font-size: 1rem;">{{ data.author }}</text>
-					</view>
-					<view>
-						<button size="mini" @click="followers">{{ data.following ? "已关注" : "＋ 关注"
-						}}</button>
-					</view>
+					<text>你没有权限查看此内容，请到别的地方看看吧</text>
 				</view>
-				<view class="synopsis">
-					{{ data.body || data.title }}
-				</view>
-				<view class="status">
-					<text decode="true">
-						<i class="fa-regular fa-circle-play fa-fw"></i>{{ ' ' }}{{ data.numViews }}
-						<i style="width: 0.8rem;display: inline-block;"></i>
-						<i class="fa-regular fa-heart fa-fw"></i>{{ ' ' }}{{ data.numLikes }}
-						<i style="width: 0.8rem;display: inline-block;"></i>
-						<text>{{ formatDate(data.date) }}</text>
-					</text>
+				<view v-else>
+					<image src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;"></image>
+					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
+						<text>大漠孤烟直，长河落日圆</text>
+					</view>
+					<text>这里没有任何东西，请到别的地方看看吧</text>
 				</view>
 			</view>
-			<view class="comments">
-				<view style="font-weight: bold;padding: 0.5rem;">
-					评论
-				</view>
-				<view style="padding: 0.5rem;">
-					<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;">
-						<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
-						<br>
-						<text>还没有评论</text>
+			<view v-show="!error" class="images"
+				:style="{ backgroundImage: 'url(' + (data.files[0] || '/static/img/loli.png') + ')' }"
+				@touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
+				<view class="top">
+					<view>
+						<i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
+						<i @click="back(0)" class="fa-solid fa-house backButton"></i>
 					</view>
-					<view v-show="comments.length > 0" v-for="item, i in comments" :key="'comment' + i">
-						<view style="display: flex;">
-							<view>
-								<image class="avatar" :src="item.avatar"></image>
-							</view>
-							<view style="flex:1">{{ item.user }}</view>
+					<view class="title">
+						<text>{{ data.title }}</text>
+					</view>
+				</view>
+				<view class="main">
+					<view style="text-align: center;position: relative;">
+						<view v-show="unfold" class="pictures">
+							<img class="picture" v-for="item, i in data.files" :src="item">
 						</view>
-						<view style="margin: 0.4rem 0;">{{ item.content }}</view>
-						<view class="date">
-							<text>
-								<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+						<view v-show="!unfold" class="pictures">
+							<img class="picture" :src="data.files[0]">
+						</view>
+						<text style="color: #f5f5f5;" v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
+							{{ unfold ? "点击折叠" : "点击展开" }}
+						</text>
+					</view>
+					<view class="info">
+						<view style="display: flex;">
+							<view @click="gotoUser()">
+								<image class="avatar" :src="data.avatar"></image>
+							</view>
+							<view @click="gotoUser()" style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
+								<text style="font-size: 1rem;">{{ data.author }}</text>
+							</view>
+							<view>
+								<button size="mini" @click="followers">{{ data.following ? "已关注" : "＋ 关注"
+								}}</button>
+							</view>
+						</view>
+						<view class="synopsis">
+							{{ data.body || data.title }}
+						</view>
+						<view class="status">
+							<text decode="true">
+								<i class="fa-regular fa-circle-play fa-fw"></i>{{ ' ' }}{{ data.numViews }}
+								<i style="width: 0.8rem;display: inline-block;"></i>
+								<i class="fa-regular fa-heart fa-fw"></i>{{ ' ' }}{{ data.numLikes }}
+								<i style="width: 0.8rem;display: inline-block;"></i>
+								<text>{{ formatDate(data.date) }}</text>
 							</text>
 						</view>
 					</view>
-				</view>
-				<view class="addComment">
-					<view style="flex:1">
-						<input v-model="addCommentBody" placeholder="添加你的评论" class="addCommentInput" @focus="addCommentActive = true"
-							@blur="addCommentActive = false" />
+					<view class="comments">
+						<view style="font-weight: bold;padding: 0.5rem;">
+							评论
+						</view>
+						<view style="padding: 0.5rem;">
+							<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;">
+								<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
+								<br>
+								<text>还没有评论</text>
+							</view>
+							<view v-show="comments.length > 0" v-for="item, i in comments" :key="'comment' + i">
+								<view style="display: flex;">
+									<view>
+										<image class="avatar" :src="item.avatar"></image>
+									</view>
+									<view style="flex:1">{{ item.user }}</view>
+								</view>
+								<view style="margin: 0.4rem 0;">{{ item.content }}</view>
+								<view class="date">
+									<text>
+										<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+									</text>
+								</view>
+							</view>
+						</view>
+						<view class="addComment">
+							<view style="flex:1">
+								<input v-model="addCommentBody" placeholder="添加你的评论" class="addCommentInput"
+									@focus="addCommentActive = true" @blur="addCommentActive = false" />
+							</view>
+							<view :style="{ width: addCommentActive ? '4.5rem' : 0 }"
+								style="width: 4.5rem;text-align: center;transition: width ease 100ms;overflow: hidden;white-space: nowrap;">
+								<button size="mini" style="margin-top: 0.5rem" @click="addComment()">发布</button>
+							</view>
+						</view>
 					</view>
-					<view :style="{ width: addCommentActive ? '4.5rem' : 0 }"
-						style="width: 4.5rem;text-align: center;transition: width ease 100ms;overflow: hidden;white-space: nowrap;">
-						<button size="mini" style="margin-top: 0.5rem" @click="addComment()">发布</button>
+					<view>
+						<view
+							style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
+							更多来自用户
+						</view>
+						<lists :data="authorOpus" type="image"></lists>
+						<view
+							style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
+							更像这样
+						</view>
+						<lists :data="relatedOpus" type="image"></lists>
 					</view>
 				</view>
-			</view>
-			<view>
-				<view
-					style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
-					更多来自用户
-				</view>
-				<lists :data="authorOpus" type="image"></lists>
-				<view
-					style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
-					更像这样
-				</view>
-				<lists :data="relatedOpus" type="image"></lists>
 			</view>
 		</view>
 	</view>
@@ -117,7 +144,9 @@ export default {
 	},
 	data() {
 		return {
-			data: null,
+			data: {
+				files: [null]
+			},
 			id: null,
 			uid: null,
 			unfold: false,
@@ -125,16 +154,36 @@ export default {
 			authorOpus: [],
 			relatedOpus: [],
 			addCommentActive: false,
-			addCommentBody: null
+			addCommentBody: null,
+			loading: true,
+			error: false,
+			//滑动
+			flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
+			lastX: 0,
+			lastY: 0,
 		}
 	},
 	onLoad: function (opt) {
 		this.id = opt.id
 		this.uid = opt.uid
 	},
+	watch: {
+		flag(v) {
+			if (v == 2) {
+				this.back(1)
+			}
+		}
+	},
 	mounted() {
-		getPicture(this.id, (res) => {
-			this.data = res
+		getPicture(this.id, (res, code) => {
+			if (code == 200) {
+				this.data = res
+			} else if (code == 403) {
+				this.error = 1
+			} else if (code == 408) {
+				this.error = 2
+			}
+			this.loading = false
 		})
 		getImageListForImageInfoUser(this.id, this.uid, (res) => {
 			for (let i = 0; i < res.results.length; i++) {
@@ -260,6 +309,52 @@ export default {
 				});
 			}
 		},
+		handletouchmove: function (event) {
+			// console.log(event)
+			if (this.flag !== 0) {
+				return;
+			}
+			let currentX = event.changedTouches[0].pageX;
+			let currentY = event.changedTouches[0].pageY;
+			let tx = currentX - this.lastX;
+			let ty = currentY - this.lastY;
+			let sensitivity = 10
+			//调节灵敏度
+			if (Math.abs(tx) > Math.abs(ty) + sensitivity) {
+				//左右方向滑动
+				if (Math.abs(tx) > Math.abs(ty)) {
+					if (tx < 0) {
+						// 向左滑动
+						this.flag = 1;
+
+					} else if (tx > 0) {
+						//向右滑动 
+						this.flag = 2;
+					}
+				}
+				//上下方向滑动
+				else {
+					if (ty < 0) {
+						//向上滑动
+						this.flag = 3;
+					} else if (ty > 0) {
+						//向下滑动
+						this.flag = 4;
+					}
+				}
+			}
+			//将当前坐标进行保存以进行下一次计算
+			this.lastX = currentX;
+			this.lastY = currentY;
+		},
+		handletouchstart: function (event) {
+			this.lastX = event.changedTouches[0].pageX;
+			this.lastY = event.changedTouches[0].pageY;
+		},
+		handletouchend: function (event) {
+			//停止滑动
+			this.flag = 0;
+		},
 		addComment() {
 			addCommentForImage(this.id, this.addCommentBody, (res, code) => {
 				if (code == 201) {
@@ -277,6 +372,13 @@ export default {
 					})
 				}
 			})
+		},
+		gotoUser() {
+			uni.navigateTo({
+				url: '/pages/user/index?uid=' + this.uid + '&username=' + this.data.username,
+				animationType: 'slide-in-right',
+				animationDuration: 100
+			});
 		}
 	}
 }
@@ -284,7 +386,7 @@ export default {
 
 <style scoped>
 .images {
-	background: #f5f5f5 no-repeat fixed center;
+	background: #acacac no-repeat fixed center;
 	background-size: cover;
 	color: #f5f5f5;
 }
@@ -332,8 +434,8 @@ export default {
 
 .picture {
 	width: 100%;
-	background-color: #000;
-
+	background-color: #0006;
+	min-height: 6rem;
 }
 
 .unfold {
@@ -397,7 +499,45 @@ button {
 	font-size: 0.9rem;
 }
 
+.error {
+	text-align: center;
+	padding-top: 38vh;
+}
+
+.loading {
+	width: 4rem;
+	height: 4rem;
+	animation: rotate 350ms linear infinite;
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	25% {
+		transform: rotate(90deg);
+	}
+
+	50% {
+		transform: rotate(180deg);
+	}
+
+	75% {
+		transform: rotate(270deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 @media (prefers-color-scheme: dark) {
+
+	.images {
+		background-color: #616161;
+	}
+
 	.main {
 		background-color: #10101066;
 		color: #ddd;

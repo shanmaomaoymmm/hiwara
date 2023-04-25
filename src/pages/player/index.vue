@@ -149,7 +149,6 @@ export default {
 			this.definition = b
 		})
 		getVideo(this.vid, (res, code) => {
-			this.loading = false
 			if (code == 200) {
 				this.error = 0
 				this.data = res
@@ -158,6 +157,7 @@ export default {
 			} else if (code == 408) {
 				this.error = 2
 			}
+			this.loading = false
 		})
 	},
 	onHide: function () {

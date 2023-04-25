@@ -291,7 +291,7 @@ export function getVideo(id, cb) {
 				liked: res.liked,
 				private: res.private,
 				following: res.user.following,
-				username:res.user.username
+				username: res.user.username
 			}
 			if (res.file) {
 				let fileUrlParse = parseGET(res.fileUrl)
@@ -435,7 +435,8 @@ export function getPicture(id, cb) {
 			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
 				.id + '/' + res.user
 					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-			files: []
+			files: [],
+			username: res.user.username
 		}
 		for (let i = 0; i < res.files.length; i++) {
 			resData.files.push('https://i.iwara.tv/image/large/' + res.files[i].id + '/' + res.files[i].name)
@@ -525,7 +526,7 @@ export function getpProfile(username, cb) {
 			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
 				.id + '/' + res.user
 					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-			background: 'https://i.iwara.tv/image/profileHeader/' + res.header.id + '/' + res.header.name
+			background: res.header ? 'https://i.iwara.tv/image/profileHeader/' + res.header.id + '/' + res.header.name : '/static/img/loli.png'
 		}
 		cb(resData, code)
 	})
@@ -547,6 +548,26 @@ export function getVideoListForUser(index, uid, cb) {
 		header = null
 	}
 	ajax(api + '/videos', data, header, 'GET', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 获取用户图片列表
+export function getImageListForUser(index, uid, cb) {
+	let data = {
+		sort: 'date',
+		page: index,
+		user: uid
+	}
+	let header
+	if (accessToken) {
+		header = {
+			authorization: 'Bearer ' + accessToken
+		}
+	} else {
+		header = null
+	}
+	ajax(api + '/images', data, header, 'GET', (res, code) => {
 		cb(res, code)
 	})
 }
