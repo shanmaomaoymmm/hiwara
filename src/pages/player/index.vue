@@ -138,7 +138,7 @@ export default {
 			}
 		}
 	},
-	mounted() {
+	created() {
 		getStorage('definition', (a) => {
 			let b
 			if (a) {

@@ -1,16 +1,23 @@
 <template>
 	<view>
-		<view v-if="onload" style="text-align: center;padding-top: 30vh;">
-			<image class="loading" src="@/static/icon/loading.png"></image>
+		<view v-if="onload" style="text-align: center;padding-top: 16vh;">
+			<img class="loading" src="@/static/icon/loading.png" />
 			<br>
 			<text>资源加载中……</text>
 		</view>
 		<view v-else>
-			<lists :data="data" type="video"></lists>
-			<view style="text-align: center;padding: 0.5rem;">
-				<text v-show="loading">
-					<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}正在加载数据……
-				</text>
+			<view v-if="error" style="text-align: center;padding-top: 16vh;">
+				<img src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
+				<br>
+				<text>没有任何内容</text>
+			</view>
+			<view v-else style="min-height: calc(100vh - 8.125rem);">
+				<lists :data="data" type="image"></lists>
+				<view style="text-align: center;padding: 0.5rem;">
+					<text v-show="loading">
+						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}正在加载数据……
+					</text>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -18,7 +25,7 @@
 
 <script>
 import lists from "@/pages/lists/index.vue";
-import { getVideoList, fill0 } from "@/api/api.js";
+import { getImageListForUser, fill0 } from "@/api/api.js";
 export default {
 	components: {
 		lists,
@@ -29,9 +36,11 @@ export default {
 			page: 0,
 			onload: true,
 			loading: false,
+			error: false
 		}
 	},
-	mounted() {
+	props: ['uid'],
+	created() {
 		this.getData(() => {
 			this.onload = false
 		})
@@ -47,14 +56,25 @@ export default {
 				cb()
 			})
 		},
+		onBottom() {
+			if (!this.error) {
+				this.getData(() => { })
+			}
+		},
 		// 获取列表
 		getData(cb) {
 			this.loading = true
-			getVideoList(this.page, (res, code) => {
+			getImageListForUser(this.page, this.uid, (res, code) => {
 				this.loading = false
 				if (code == 200) {
-					this.setPageData(res, code);
-					this.page++
+					if (res.results.length > 0) {
+						this.setPageData(res, code);
+						this.page++
+					} else {
+						if (this.page == 0) {
+							this.error = true
+						}
+					}
 				} else if (code == 408) {
 					uni.showToast({
 						title: "呐！少冲一点吧\r\n无法连接到服务器",
@@ -73,10 +93,11 @@ export default {
 					id: rs.id,
 					label: rs.title,
 					img:
-						rs.file != null
+						rs.thumbnail != null
 							? "https://i.iwara.tv/image/thumbnail/" +
-							rs.file.id +
-							"/thumbnail-" + fill0(rs.thumbnail, 1) + ".jpg"
+							rs.thumbnail.id +
+							"/" +
+							rs.thumbnail.name
 							: null,
 					date: this.formatDate(rs.createdAt),
 					author: rs.user.name,

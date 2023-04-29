@@ -240,7 +240,7 @@ export function getVideoList(index, cb) {
 }
 
 // 获取图片列表
-export function getPictureList(index, cb) {
+export function getImageList(index, cb) {
 	let data = {
 		sort: 'date',
 		rating: 'all',
@@ -403,6 +403,22 @@ export function followers(uid, opt, cb) {
 	})
 }
 
+// 加好友
+export function friends(uid, opt, cb) {
+	let header = {
+		authorization: 'Bearer ' + accessToken
+	}
+	let method
+	if (opt == 0) {
+		method = 'DELETE'
+	} else if (opt == 1) {
+		method = 'POST'
+	}
+	ajax(api + '/user/' + uid + '/friends', null, header, method, (res, code) => {
+		cb(res, code)
+	})
+}
+
 // 获取本用户信息
 export function getSelfData(cb) {
 	let header = {
@@ -414,7 +430,7 @@ export function getSelfData(cb) {
 }
 
 // 获取图片
-export function getPicture(id, cb) {
+export function getImage(id, cb) {
 	let header
 	if (accessToken) {
 		header = {
@@ -526,7 +542,9 @@ export function getpProfile(username, cb) {
 			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
 				.id + '/' + res.user
 					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-			background: res.header ? 'https://i.iwara.tv/image/profileHeader/' + res.header.id + '/' + res.header.name : '/static/img/loli.png'
+			background: res.header ? 'https://i.iwara.tv/image/profileHeader/' + res.header.id + '/' + res.header.name : '/static/img/loli.png',
+			following: res.user.following,
+			friend: res.user.friend
 		}
 		cb(resData, code)
 	})

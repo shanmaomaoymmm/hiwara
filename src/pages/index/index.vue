@@ -34,7 +34,7 @@ export default {
 			display: false
 		}
 	},
-	mounted() {
+	created() {
 		getStorage('token', (res) => {
 			if (res) {
 				uni.redirectTo({

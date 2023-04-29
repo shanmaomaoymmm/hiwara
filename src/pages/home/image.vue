@@ -6,11 +6,16 @@
 			<text>资源加载中……</text>
 		</view>
 		<view v-else>
-			<lists :data="data" type="image"></lists>
-			<view style="text-align: center;padding: 0.5rem;">
-				<text v-show="loading">
-					<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}正在加载数据……
-				</text>
+			<view v-if="error" style="text-align: center;padding-top: 30vh;">
+				<img src="@/static/icon/game.png" style="width: 4rem;height: 4rem;" />
+			</view>
+			<view v-else>
+				<lists :data="data" type="image"></lists>
+				<view style="text-align: center;">
+					<text v-show="loading">
+						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}正在加载数据……
+					</text>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -18,7 +23,7 @@
 
 <script>
 import lists from "@/pages/lists/index.vue";
-import { getPictureList } from "@/api/api.js";
+import { getImageList } from "@/api/api.js";
 export default {
 	components: {
 		lists,
@@ -29,9 +34,10 @@ export default {
 			page: 0,
 			onload: true,
 			loading: false,
+			error: false
 		}
 	},
-	mounted() {
+	created() {
 		this.getData(() => {
 			this.onload = false
 		})
@@ -47,14 +53,25 @@ export default {
 				cb()
 			})
 		},
+		onBottom() {
+			if (!this.error) {
+				this.getData(() => { })
+			}
+		},
 		// 获取列表
 		getData(cb) {
 			this.loading = true
-			getPictureList(this.page, (res, code) => {
+			getImageList(this.page, (res, code) => {
 				this.loading = false
 				if (code == 200) {
-					this.setPageData(res, code);
-					this.page++
+					if (res.results.length > 0) {
+						this.setPageData(res, code);
+						this.page++
+					} else {
+						if (this.page == 0) {
+							this.error = true
+						}
+					}
 				} else if (code == 408) {
 					uni.showToast({
 						title: "呐！少冲一点吧\r\n无法连接到服务器",

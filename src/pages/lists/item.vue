@@ -3,7 +3,7 @@
 		<img :src="item.img || '/static/img/not-img.jpg'" class="img" />
 		<view style="padding:0.25rem">
 			<view
-				style="overflow: hidden;text-overflow: ellipsis;font-weight: bold;font-size: 1rem;width:calc(100vw / 2 - 0.875rem);padding: 0.25rem 0;">
+				style="overflow: hidden;text-overflow: ellipsis;font-weight: bold;font-size: 1rem;width:calc(100vw / 2 - 0.875rem);padding-bottom: 0.25rem;">
 				<text>{{ item.label }}</text>
 			</view>
 			<view style="display: flex;width: calc(100vw / 2 - 0.875rem);padding: 0.1rem 0;">
@@ -55,6 +55,7 @@ export default {
 	border-radius: 0.25rem;
 	background-color: #fff;
 	overflow: hidden;
+	font-size: 0;
 }
 
 .img {

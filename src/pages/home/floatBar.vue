@@ -31,15 +31,7 @@ export default {
 					'/static/icon/pic.png',
 					'/static/icon/a_pic.png'
 				],
-			},
-				/* {
-									label: '论坛',
-									icon: [
-										'/static/icon/communication.png',
-										'/static/icon/a_communication.png'
-									],
-								}, */
-			],
+			}],
 			tab: 0
 		}
 	},

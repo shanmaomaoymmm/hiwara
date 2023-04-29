@@ -3,11 +3,11 @@
 		<view v-if="user" class="user">
 			<view>
 				<image class="avatar" :src="user.user.avatar != null
-					? 'https://i.iwara.tv/image/avatar/' +
-					this.user.user.avatar.id +
-					'/' +
-					this.user.user.avatar.name
-					: 'https://www.iwara.tv/images/default-avatar.jpg'"></image>
+						? 'https://i.iwara.tv/image/avatar/' +
+						this.user.user.avatar.id +
+						'/' +
+						this.user.user.avatar.name
+						: 'https://www.iwara.tv/images/default-avatar.jpg'"></image>
 			</view>
 			<view class="userName">
 				{{ user.user.name }}
@@ -18,6 +18,10 @@
 				</i>
 			</view>
 		</view>
+		<view @click="gotoUser" class="button">我的主页</view>
+		<view class="button">我的收藏</view>
+		<view class="button">历史记录</view>
+		<view class="button">设置</view>
 		<view @click="logout" class="button">退出登录</view>
 	</view>
 </template>
@@ -30,7 +34,7 @@ export default {
 	},
 	props: ['user'],
 	mounted() {
-
+		console.log(this.user)
 	},
 	methods: {
 		logout() {
@@ -39,6 +43,13 @@ export default {
 					url: '/'
 				});
 			})
+		},
+		gotoUser() {
+			uni.navigateTo({
+				url: '/pages/user/index?uid=' + this.user.user.id + '&username=' + this.user.user.username + '&self',
+				animationType: 'slide-in-right',
+				animationDuration: 100
+			});
 		}
 	}
 }
@@ -75,7 +86,6 @@ export default {
 .button {
 	padding: 1rem 1.5rem;
 	font-size: 1rem;
-	color: #616161
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,9 +93,6 @@ export default {
 		background-color: #101010;
 	}
 
-	.button {
-		color: #BDBDBD
-	}
 
 	.avatar {
 		box-shadow: 0 0 0.2rem #fffa;

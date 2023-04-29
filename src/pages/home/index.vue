@@ -2,9 +2,9 @@
   <view class="panel">
     <top-bar class="topBar" @left="showLeftDrawerOpen()"></top-bar>
     <view style="padding:5rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
-      <subscribe ref="subscribe" v-if="tab == 0"></subscribe>
-      <video-page ref="video" v-else-if="tab == 1"></video-page>
-      <picture-page ref="picture" v-else-if="tab == 2"></picture-page>
+      <subscribe-list ref="subscribe" v-if="tab == 0"></subscribe-list>
+      <video-list ref="video" v-else-if="tab == 1"></video-list>
+      <image-list ref="image" v-else-if="tab == 2"></image-list>
     </view>
     <float-bar ref="floatBar" class="floatBar" @alter="tab = $event"></float-bar>
     <uni-drawer ref="showLeftDrawer" mode="left" :width="250">
@@ -16,18 +16,18 @@
 <script>
 import topBar from "./topBar.vue"
 import floatBar from "./floatBar.vue"
-import subscribe from "@/pages/subscribe/index.vue"
-import videoPage from "@/pages/video/index.vue"
-import picturePage from "@/pages/picture/index.vue"
+import subscribeList from "./subscribe.vue"
+import videoList from "./video.vue"
+import imageList from "./image.vue"
 import showLeft from "./showLeft.vue"
 import { getSelfData } from "@/api/api"
 export default {
   components: {
     topBar,
     floatBar,
-    subscribe,
-    videoPage,
-    picturePage,
+    subscribeList,
+    videoList,
+    imageList,
     showLeft
   },
   data() {
@@ -49,7 +49,7 @@ export default {
   onReachBottom() {
     this.onReachBottom()
   },
-  mounted() {
+  created() {
     getSelfData((res, code) => {
       this.user = res
       this.$refs.floatBar.avatar = this.user.user.avatar != null
@@ -81,7 +81,7 @@ export default {
           refs = this.$refs.video
           break
         case 2:
-          refs = this.$refs.picture
+          refs = this.$refs.image
           break
         default:
           refs = null
@@ -155,7 +155,7 @@ export default {
         refs = this.$refs.video
         break
       case 2:
-        refs = this.$refs.picture
+        refs = this.$refs.image
         break
       default:
         refs = null

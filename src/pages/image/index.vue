@@ -87,7 +87,7 @@
 									<view>
 										<image class="avatar" :src="item.avatar"></image>
 									</view>
-									<view style="flex:1">{{ item.user }}</view>
+									<view style="flex:1;padding: 0.25rem 0.5rem;">{{ item.user }}</view>
 								</view>
 								<view style="margin: 0.4rem 0;">{{ item.content }}</view>
 								<view class="date">
@@ -128,7 +128,7 @@
 
 <script>
 import {
-	getPicture,
+	getImage,
 	followers,
 	formatDate,
 	getImageInfoComments,
@@ -174,8 +174,8 @@ export default {
 			}
 		}
 	},
-	mounted() {
-		getPicture(this.id, (res, code) => {
+	created() {
+		getImage(this.id, (res, code) => {
 			if (code == 200) {
 				this.data = res
 			} else if (code == 403) {

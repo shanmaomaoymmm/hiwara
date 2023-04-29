@@ -50,14 +50,14 @@ export default {
 		}
 	},
 	props: ['vid'],
-	mounted() {
-		this.getVideoListForPlayInfoComments()
+	created() {
+		this.getComments()
 	},
 	methods: {
 		formatDate(t) {
 			return formatDate(t)
 		},
-		getVideoListForPlayInfoComments() {
+		getComments() {
 			getVideoListForPlayInfoComments(this.vid, 0, (res) => {
 				for (let i = 0; i < res.results.length; i++) {
 					this.data.push({
@@ -79,7 +79,7 @@ export default {
 						icon: "none",
 						duration: 3000,
 					})
-					this.getVideoListForPlayInfoComments()
+					this.getComments()
 				} else {
 					uni.showToast({
 						title: "评论发表失败",

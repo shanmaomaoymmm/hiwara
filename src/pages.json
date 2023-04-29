@@ -31,13 +31,6 @@
 			}
 		},
 		{
-			"path": "pages/my/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
 			"path": "pages/player/index",
 			"style": {
 				"navigationBarTitleText": "",

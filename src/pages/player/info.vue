@@ -141,7 +141,7 @@ export default {
 	onBackPress: () => {
 		console.log('onBackPress')
 	},
-	mounted() {
+	created() {
 		getVideoListForPlayInfoUser(this.vid, this.uid, (res) => {
 			for (let i = 0; i < res.results.length; i++) {
 				let rs = res.results[i]

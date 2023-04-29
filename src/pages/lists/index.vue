@@ -20,7 +20,6 @@ export default {
 		}
 	},
 	props: ['data','type'],
-	mounted() { },
 	methods: {
 		load() {
 			console.log('load')

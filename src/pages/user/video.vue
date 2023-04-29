@@ -6,11 +6,18 @@
 			<text>资源加载中……</text>
 		</view>
 		<view v-else>
-			<lists :data="data" type="video"></lists>
-			<view style="text-align: center;padding: 0.5rem;">
-				<text v-show="loading">
-					<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}正在加载数据……
-				</text>
+			<view v-if="error" style="text-align: center;padding-top: 16vh;">
+				<img src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
+				<br>
+				<text>没有任何内容</text>
+			</view>
+			<view v-else style="min-height: calc(100vh - 8.125rem);">
+				<lists :data="data" type="video"></lists>
+				<view style="text-align: center;padding: 0.5rem;">
+					<text v-show="loading">
+						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}正在加载数据……
+					</text>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -29,10 +36,11 @@ export default {
 			page: 0,
 			onload: true,
 			loading: false,
+			error: false
 		}
 	},
 	props: ['uid'],
-	mounted() {
+	created() {
 		this.getData(() => {
 			this.onload = false
 		})
@@ -48,14 +56,25 @@ export default {
 				cb()
 			})
 		},
+		onBottom() {
+			if (!this.error) {
+				this.getData(() => { })
+			}
+		},
 		// 获取列表
 		getData(cb) {
 			this.loading = true
 			getVideoListForUser(this.page, this.uid, (res, code) => {
 				this.loading = false
 				if (code == 200) {
-					this.setPageData(res, code);
-					this.page++
+					if (res.results.length > 0) {
+						this.setPageData(res, code);
+						this.page++
+					} else {
+						if (this.page == 0) {
+							this.error = true
+						}
+					}
 				} else if (code == 408) {
 					uni.showToast({
 						title: "呐！少冲一点吧\r\n无法连接到服务器",

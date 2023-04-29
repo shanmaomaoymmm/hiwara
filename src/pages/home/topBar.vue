@@ -18,9 +18,6 @@ export default {
 		}
 	},
 	methods: {
-		users() {
-
-		},
 		left() {
 			this.$emit('left')
 		}
