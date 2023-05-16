@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		<view @click="gotoUser" class="button">我的主页</view>
-		<view class="button">我的收藏</view>
+		<view @clice="gotoLike" class="button">我的收藏</view>
 		<view class="button">历史记录</view>
 		<view class="button">设置</view>
 		<view @click="logout" class="button">退出登录</view>
@@ -47,6 +47,14 @@ export default {
 		gotoUser() {
 			uni.navigateTo({
 				url: '/pages/user/index?uid=' + this.user.user.id + '&username=' + this.user.user.username + '&self',
+				animationType: 'slide-in-right',
+				animationDuration: 100
+			});
+		},
+		gotoLike() {
+			console.log('gotoLike')
+			uni.navigateTo({
+				url: '/pages/like/index',
 				animationType: 'slide-in-right',
 				animationDuration: 100
 			});

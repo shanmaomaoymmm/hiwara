@@ -59,6 +59,13 @@
 					}
 				}
 			}
+		},
+		{
+			"path": "pages/like/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
