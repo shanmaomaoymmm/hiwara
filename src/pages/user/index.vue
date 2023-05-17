@@ -7,10 +7,10 @@
     </view>
     <view v-show="!loading">
       <view class="panel">
-        <view class="back">
+        <!-- <view class="back">
           <i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
           <i @click="back(0)" class="fa-solid fa-house backButton"></i>
-        </view>
+        </view> -->
         <view class="bg">
           <view class="bgp" :style="{ backgroundImage: 'url(' + profile.background + ')' }"></view>
         </view>
@@ -92,8 +92,17 @@ export default {
     getpProfile(this.username, (res, code) => {
       this.profile = res
       console.log(this.profile)
+      uni.setNavigationBarTitle({
+        title: this.profile.name
+      })
       this.loading = false
     })
+  },
+  onNavigationBarButtonTap(e) {
+    console.log(e)
+    if (e.type == 'home') {
+      this.back(0)
+    }
   },
   methods: {
     back(v) {
@@ -101,9 +110,9 @@ export default {
         uni.reLaunch({
           url: '/pages/home/index'
         });
-      } else if (v == 1) {
+      } else {
         uni.navigateBack({
-          delta: 1
+          delta: v
         });
       }
     },
@@ -279,16 +288,16 @@ export default {
 }
 
 .bg {
-  height: 7rem;
+  height: 6rem;
   position: sticky;
-  top: -6rem;
+  top: -7.5rem;
   z-index: 2;
 }
 
 .bgp {
   background-size: cover;
   background-color: #dfdfdf;
-  height: 11rem;
+  height: 10rem;
   box-shadow: 0 0 0.25rem #0003;
 }
 
@@ -313,7 +322,7 @@ button {
   display: flex;
   background-color: #f5f5f5;
   position: sticky;
-  top: 5rem;
+  top: 2.5rem;
   z-index: 1;
 }
 

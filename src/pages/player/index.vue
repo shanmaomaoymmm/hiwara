@@ -23,10 +23,10 @@
 				</view>
 			</view>
 			<view v-show="!error">
-				<view class="back">
+				<!-- <view class="back">
 					<i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
 					<i @click="back(0)" class="fa-solid fa-house backButton"></i>
-				</view>
+				</view> -->
 				<view class="top">
 					<video id="videoPlayer" class="player" :src="src" :title="data.title" :mobilenet-hint-type="1"
 						:vslide-gesture="true" :poster="data.preview">
@@ -138,6 +138,12 @@ export default {
 			}
 		}
 	},
+	onNavigationBarButtonTap(e) {
+		console.log(e)
+		if (e.type == 'home') {
+			this.back(0)
+		}
+	},
 	created() {
 		getStorage('definition', (a) => {
 			let b
@@ -157,6 +163,9 @@ export default {
 			} else if (code == 408) {
 				this.error = 2
 			}
+			uni.setNavigationBarTitle({
+				title: this.data.title
+			})
 			this.loading = false
 		})
 	},
@@ -181,9 +190,9 @@ export default {
 				uni.reLaunch({
 					url: '/pages/home/index'
 				});
-			} else if (v == 1) {
+			} else {
 				uni.navigateBack({
-					delta: 1
+					delta: v
 				});
 			}
 		},
@@ -276,7 +285,7 @@ export default {
 
 .bottom {
 	width: 100vw;
-	height: calc(100vh - 56.25vw - 7.2rem);
+	height: calc(100vh - 56.25vw - 5.8rem);
 	overflow: hidden;
 }
 
@@ -290,7 +299,7 @@ export default {
 
 .bottom2 {
 	flex: 1;
-	height: calc(100vh - 56.25vw - 7.2rem);
+	height: calc(100vh - 56.25vw - 5.8rem);
 	overflow: auto;
 }
 

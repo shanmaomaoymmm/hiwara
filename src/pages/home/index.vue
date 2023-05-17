@@ -1,7 +1,8 @@
 <template>
   <view class="panel">
     <top-bar class="topBar" @left="showLeftDrawerOpen()"></top-bar>
-    <view style="padding:5rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
+    <view style="padding:3.5rem 0 5rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart"
+      @touchend="handletouchend">
       <subscribe-list ref="subscribe" v-if="tab == 0"></subscribe-list>
       <video-list ref="video" v-else-if="tab == 1"></video-list>
       <image-list ref="image" v-else-if="tab == 2"></image-list>
@@ -176,9 +177,8 @@ export default {
 
 .topBar {
   position: fixed;
-  top: 0;
   width: calc(100% - 1rem);
-  padding: 2rem 0.5rem 0.5rem 0.5rem;
+  padding: 0.5rem;
   background-color: #f5f5f5;
   z-index: 10;
 }

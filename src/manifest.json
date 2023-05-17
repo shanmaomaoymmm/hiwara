@@ -6,6 +6,7 @@
     "versionCode": "100",
     "transformPx": false,
     "app-plus": {
+        "darkmode": true,
         /* 5+App特有相关 */
         "usingComponents": true,
         "splashscreen": {
@@ -117,6 +118,7 @@
     },
     "h5": {
         "title": "hiwara",
+        "darkmode": true,
         "devServer": {
             "port": 51001,
             "allowedHosts": [

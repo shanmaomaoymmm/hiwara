@@ -25,7 +25,7 @@
 			<view v-show="!error" class="images"
 				:style="{ backgroundImage: 'url(' + (data.files[0] || '/static/img/loli.png') + ')' }"
 				@touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
-				<view class="top">
+				<!-- <view class="top">
 					<view>
 						<i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
 						<i @click="back(0)" class="fa-solid fa-house backButton"></i>
@@ -33,7 +33,7 @@
 					<view class="title">
 						<text>{{ data.title }}</text>
 					</view>
-				</view>
+				</view> -->
 				<view class="main">
 					<view style="text-align: center;position: relative;">
 						<view v-show="unfold" class="pictures">
@@ -174,6 +174,12 @@ export default {
 			}
 		}
 	},
+	onNavigationBarButtonTap(e) {
+		console.log(e)
+		if (e.type == 'home') {
+			this.back(0)
+		}
+	},
 	created() {
 		getImage(this.id, (res, code) => {
 			if (code == 200) {
@@ -183,6 +189,9 @@ export default {
 			} else if (code == 408) {
 				this.error = 2
 			}
+			uni.setNavigationBarTitle({
+				title: this.data.title
+			})
 			this.loading = false
 		})
 		getImageListForImageInfoUser(this.id, this.uid, (res) => {
@@ -303,9 +312,9 @@ export default {
 				uni.reLaunch({
 					url: '/pages/home/index'
 				});
-			} else if (v == 1) {
+			} else {
 				uni.navigateBack({
-					delta: 1
+					delta: v
 				});
 			}
 		},
@@ -417,7 +426,8 @@ export default {
 }
 
 .main {
-	padding-top: 4.5rem;
+	/* padding-top: 4.5rem; */
+	padding-top: 0.2rem;
 	backdrop-filter: blur(10px);
 	min-height: calc(100vh - 4.5rem);
 	background-color: #f5f5f510;
