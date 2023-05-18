@@ -23,6 +23,7 @@ page {
   color: #333;
   height: 100%;
   font-size: 1rem;
+  background-color: #f5f5f5;
 }
 
 * {
@@ -33,6 +34,7 @@ page {
 @media (prefers-color-scheme: dark) {
   page {
     color: #ddd;
+    background-color: #101010;
   }
 }
 </style>

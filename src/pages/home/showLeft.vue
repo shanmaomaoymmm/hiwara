@@ -18,12 +18,14 @@
 				</i>
 			</view>
 		</view>
-		<view @click="gotoUser" class="button">我的主页</view>
-		<view @clice="gotoLike" class="button">我的收藏</view>
+		<view @click="gotoPage('/pages/user/index?uid=' + user.user.id + '&username=' + user.user.username + '&self')"
+			class="button">我的主页</view>
+		<view @click="gotoPage('/pages/like/index?tab=0')" class="button">我收藏的视频</view>
+		<view @click="gotoPage('/pages/like/index?tab=1')" class="button">我收藏的图片</view>
 		<view class="button">历史记录</view>
 		<view class="button">设置</view>
 		<view @click="logout" class="button">退出登录</view>
-		<view @click="gotoDebug" class="button">debug</view>
+		<view @click="gotoPage('/pages/debug/index')" class="button">debug</view>
 	</view>
 </template>
 
@@ -45,23 +47,9 @@ export default {
 				});
 			})
 		},
-		gotoUser() {
+		gotoPage(url) {
 			uni.navigateTo({
-				url: '/pages/user/index?uid=' + this.user.user.id + '&username=' + this.user.user.username + '&self',
-				animationType: 'slide-in-right',
-				animationDuration: 100
-			});
-		},
-		gotoLike() {
-			uni.navigateTo({
-				url: '/pages/like/index',
-				animationType: 'slide-in-right',
-				animationDuration: 100
-			});
-		},
-		gotoDebug() {
-			uni.navigateTo({
-				url: '/pages/debug/index',
+				url: url,
 				animationType: 'slide-in-right',
 				animationDuration: 100
 			});
@@ -74,11 +62,12 @@ export default {
 .showLeft {
 	background-color: #f5f5f5;
 	height: 100%;
+	padding-top: 2rem;
 }
 
 .user {
 	text-align: center;
-	padding: 3rem 1rem 1rem 1rem;
+	padding: 1rem;
 }
 
 .avatar {

@@ -7,10 +7,14 @@
 		</view>
 		<view v-else>
 			<view v-if="error" style="text-align: center;padding-top: 30vh;">
-				<img src="@/static/icon/game.png" style="width: 4rem;height: 4rem;" />
+				<img src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
+				<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
+					<text>大漠孤烟直，长河落日圆</text>
+				</view>
+				<text>你没有任何收藏，请到别的地方看看吧</text>
 			</view>
 			<view v-else>
-				<lists :data="data" type="video"></lists>
+				<lists :data="data" type="image"></lists>
 				<view style="text-align: center;">
 					<text>
 						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}{{ loading ? '正在加载数据……' : '已加载完成' }}
@@ -23,7 +27,7 @@
 
 <script>
 import lists from "@/pages/lists/index.vue";
-import { getVideoList, fill0 } from "@/api/api.js";
+import { getFavoritesImages } from "@/api/api.js";
 export default {
 	components: {
 		lists,
@@ -61,7 +65,7 @@ export default {
 		// 获取列表
 		getData(cb) {
 			this.loading = true
-			getVideoList(this.page, (res, code) => {
+			getFavoritesImages(this.page, (res, code) => {
 				this.loading = false
 				if (code == 200) {
 					if (res.results.length > 0) {
@@ -90,10 +94,11 @@ export default {
 					id: rs.id,
 					label: rs.title,
 					img:
-						rs.file != null
+						rs.thumbnail != null
 							? "https://i.iwara.tv/image/thumbnail/" +
-							rs.file.id +
-							"/thumbnail-" + fill0(rs.thumbnail, 1) + ".jpg"
+							rs.thumbnail.id +
+							"/" +
+							rs.thumbnail.name
 							: null,
 					date: this.formatDate(rs.createdAt),
 					author: rs.user.name,

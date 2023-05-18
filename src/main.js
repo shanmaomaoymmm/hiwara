@@ -15,6 +15,12 @@ const app = new Vue({
 
 console.log('hello')
 
+Vue.prototype.$backhome = () => {
+	uni.reLaunch({
+		url: '/pages/home/index'
+	});
+}
+
 getAccessToken(() => {
 	app.$mount()
 })

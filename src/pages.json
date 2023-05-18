@@ -91,9 +91,16 @@
 		{
 			"path": "pages/like/index",
 			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "我的收藏",
+				"enablePullDownRefresh": true,
+				"onReachBottonDistance": 100,
 				"app-plus": {
+					"pullToRefresh": {
+						"support": true,
+						"style": "circle",
+						"color": "#00897B",
+						"offset": "10%"
+					},
 					"titleNView": {
 						"buttons": [
 							{
@@ -117,7 +124,6 @@
 		"navigationBarTextStyle": "@navTxtStyle",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "@navBgColor",
-		"backgroundColor": "@backgroundColor",
 		"app-plus": {
 			"titleNView": {
 				"buttons": [

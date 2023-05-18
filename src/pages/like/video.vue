@@ -7,13 +7,17 @@
 		</view>
 		<view v-else>
 			<view v-if="error" style="text-align: center;padding-top: 30vh;">
-				<img src="@/static/icon/game.png" style="width: 4rem;height: 4rem;" />
+				<img src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
+				<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
+					<text>大漠孤烟直，长河落日圆</text>
+				</view>
+				<text>你没有任何收藏，请到别的地方看看吧</text>
 			</view>
 			<view v-else>
 				<lists :data="data" type="video"></lists>
 				<view style="text-align: center;">
 					<text>
-						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}{{ loading ? '正在加载数据……' : '已加载完成' }}
+						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}{{loading?'正在加载数据……':'已加载完成'}}
 					</text>
 				</view>
 			</view>
@@ -23,7 +27,7 @@
 
 <script>
 import lists from "@/pages/lists/index.vue";
-import { getVideoList, fill0 } from "@/api/api.js";
+import { getFavoritesVideos, fill0 } from "@/api/api.js";
 export default {
 	components: {
 		lists,
@@ -61,7 +65,7 @@ export default {
 		// 获取列表
 		getData(cb) {
 			this.loading = true
-			getVideoList(this.page, (res, code) => {
+			getFavoritesVideos(this.page, (res, code) => {
 				this.loading = false
 				if (code == 200) {
 					if (res.results.length > 0) {
@@ -85,7 +89,7 @@ export default {
 		// 生成列表
 		setPageData(res) {
 			for (let i = 0; i < res.results.length; i++) {
-				let rs = res.results[i];
+				let rs = res.results[i].video;
 				this.data.push({
 					id: rs.id,
 					label: rs.title,

@@ -590,3 +590,36 @@ export function getImageListForUser(index, uid, cb) {
 		cb(res, code)
 	})
 }
+
+// 获取我喜欢的视频
+export function getFavoritesVideos(page, cb) {
+	let data = {
+		page: page
+	}
+	ajax(api + 'favorites/videos', data, creatHeader(), 'GET', (res, code) => {
+		cb(res, code)
+	})
+}
+
+// 获取我喜欢的图片
+export function getFavoritesImages(page, cb) {
+	let data = {
+		page: page
+	}
+	ajax(api + '/favorites/images', data, creatHeader(), 'GET', (res, code) => {
+		cb(res, code)
+	})
+}
+
+//检查accessToken
+function creatHeader() {
+	let header
+	if (accessToken) {
+		header = {
+			authorization: 'Bearer ' + accessToken
+		}
+	} else {
+		header = null
+	}
+	return header
+}

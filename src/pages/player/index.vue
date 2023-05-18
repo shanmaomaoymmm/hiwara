@@ -141,7 +141,7 @@ export default {
 	onNavigationBarButtonTap(e) {
 		console.log(e)
 		if (e.type == 'home') {
-			this.back(0)
+			this.$backhome()
 		}
 	},
 	created() {
