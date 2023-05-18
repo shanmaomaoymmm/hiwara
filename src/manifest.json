@@ -22,6 +22,7 @@
         "distribute": {
             /* 应用发布信息 */
             "android": {
+                "themeMode": "dark",
                 /* android打包配置 */
                 "permissions": [
                     "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
@@ -51,7 +52,8 @@
                     "armeabi-v7a",
                     "arm64-v8a",
                     "x86"
-                ]
+                ],
+                "forceDarkAllowed": true
             },
             "ios": {},
             /* ios打包配置 */

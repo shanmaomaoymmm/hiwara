@@ -93,13 +93,15 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
-				"titleNView": {
-					"buttons": [
-						{
-							"type": "home",
-							"float": "left"
-						}
-					]
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"type": "home",
+								"float": "left"
+							}
+						]
+					}
 				}
 			}
 		}
@@ -109,7 +111,19 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "@navBgColor",
 		"backgroundColor": "@backgroundColor",
-		// "titleNView": false,
+		"app-plus": {
+			"titleNView": {
+				"buttons": [
+					{
+						"type": "none",
+						"float": "right",
+						"text": "@darkIcon",
+						"fontSrc": "/static/font/font_4071987_44gsemje7t7/iconfont.ttf",
+						"fontSize":"2rem"
+					}
+				]
+			}
+		},
 		"pageOrientation": "portrait"
 	}
 }

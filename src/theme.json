@@ -2,11 +2,13 @@
 	"light": {
 		"navBgColor": "#f8f8f8",
 		"navTxtStyle": "black",
-    "backgroundColor": "#f5f5f5"
+    "backgroundColor": "#f5f5f5",
+		"darkIcon":"\ue608"
 	},
 	"dark": {
 		"navBgColor": "#292929",
 		"navTxtStyle": "white",
-    "backgroundColor": "#101010"
+    "backgroundColor": "#101010",
+		"darkIcon":"\ue609"
 	}
 }

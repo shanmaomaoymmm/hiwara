@@ -2,6 +2,7 @@
 export default {
   onLaunch: function () {
     console.log("App Launch");
+    // 检测系统暗黑模式
     uni.onThemeChange(function (res) {
       console.log(res.theme);
     });
@@ -19,7 +20,6 @@ export default {
 /*每个页面公共css */
 
 page {
-  /* background-color: #f5f5f5; */
   color: #333;
   height: 100%;
   font-size: 1rem;
@@ -33,7 +33,6 @@ page {
 @media (prefers-color-scheme: dark) {
   page {
     color: #ddd;
-    /* background-color: #101010; */
   }
 }
 </style>

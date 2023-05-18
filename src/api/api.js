@@ -24,6 +24,7 @@ files = 'https://files.iwara.tv'
 api = 'https://api.iwara.tv'
 /*#endif*/
 
+/**API */
 function ajax(url, data, header, method, cb, num) {
 	if (typeof (num) == 'undefined') {
 		num = 0
