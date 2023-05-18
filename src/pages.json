@@ -104,6 +104,13 @@
 					}
 				}
 			}
+		},
+		{
+			"path": "pages/debug/index",
+			"style": {
+				"navigationBarTitleText": "debug",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {
@@ -119,7 +126,7 @@
 						"float": "right",
 						"text": "@darkIcon",
 						"fontSrc": "/static/font/font_4071987_44gsemje7t7/iconfont.ttf",
-						"fontSize":"2rem"
+						"fontSize": "2rem"
 					}
 				]
 			}

@@ -3,11 +3,11 @@
 		<view v-if="user" class="user">
 			<view>
 				<image class="avatar" :src="user.user.avatar != null
-						? 'https://i.iwara.tv/image/avatar/' +
-						this.user.user.avatar.id +
-						'/' +
-						this.user.user.avatar.name
-						: 'https://www.iwara.tv/images/default-avatar.jpg'"></image>
+					? 'https://i.iwara.tv/image/avatar/' +
+					this.user.user.avatar.id +
+					'/' +
+					this.user.user.avatar.name
+					: 'https://www.iwara.tv/images/default-avatar.jpg'"></image>
 			</view>
 			<view class="userName">
 				{{ user.user.name }}
@@ -23,6 +23,7 @@
 		<view class="button">历史记录</view>
 		<view class="button">设置</view>
 		<view @click="logout" class="button">退出登录</view>
+		<view @click="gotoDebug" class="button">debug</view>
 	</view>
 </template>
 
@@ -52,9 +53,15 @@ export default {
 			});
 		},
 		gotoLike() {
-			console.log('gotoLike')
 			uni.navigateTo({
 				url: '/pages/like/index',
+				animationType: 'slide-in-right',
+				animationDuration: 100
+			});
+		},
+		gotoDebug() {
+			uni.navigateTo({
+				url: '/pages/debug/index',
 				animationType: 'slide-in-right',
 				animationDuration: 100
 			});
