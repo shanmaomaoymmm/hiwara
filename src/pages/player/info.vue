@@ -201,7 +201,7 @@ export default {
 				data: val,
 				success: function () {
 					uni.showToast({
-						title: "已复制",
+						title: "已复制下载链接",
 						icon: "none",
 						duration: 3000,
 					})
@@ -295,7 +295,7 @@ export default {
 
 <style scoped>
 .info {
-	padding: 1rem 0;
+	padding-top: 1rem;
 	position: relative;
 }
 

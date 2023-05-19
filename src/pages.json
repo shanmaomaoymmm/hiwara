@@ -113,6 +113,40 @@
 			}
 		},
 		{
+			"path": "pages/setup/index",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"type": "home",
+								"float": "left"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/setup/language",
+			"style": {
+				"navigationBarTitleText": "语言(Language)",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"type": "home",
+								"float": "left"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/debug/index",
 			"style": {
 				"navigationBarTitleText": "debug",

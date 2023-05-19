@@ -285,7 +285,7 @@ export default {
 
 .bottom {
 	width: 100vw;
-	height: calc(100vh - 56.25vw - 5.8rem);
+	height: calc(100vh - 56.25vw - 3.4rem);
 	overflow: hidden;
 }
 
@@ -299,7 +299,7 @@ export default {
 
 .bottom2 {
 	flex: 1;
-	height: calc(100vh - 56.25vw - 5.8rem);
+	height: calc(100vh - 56.25vw - 3.4rem);
 	overflow: auto;
 }
 

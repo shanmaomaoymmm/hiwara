@@ -22,8 +22,8 @@
 			class="button">我的主页</view>
 		<view @click="gotoPage('/pages/like/index?tab=0')" class="button">我收藏的视频</view>
 		<view @click="gotoPage('/pages/like/index?tab=1')" class="button">我收藏的图片</view>
-		<view class="button">历史记录</view>
-		<view class="button">设置</view>
+		<!-- <view class="button">历史记录</view> -->
+		<view @click="gotoPage('/pages/setup/index')" class="button">设置</view>
 		<view @click="logout" class="button">退出登录</view>
 		<view @click="gotoPage('/pages/debug/index')" class="button">debug</view>
 	</view>
