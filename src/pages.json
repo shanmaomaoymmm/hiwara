@@ -147,6 +147,40 @@
 			}
 		},
 		{
+			"path": "pages/setup/definition",
+			"style": {
+				"navigationBarTitleText": "清晰度",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"type": "home",
+								"float": "left"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/setup/userInfo",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"type": "home",
+								"float": "left"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/debug/index",
 			"style": {
 				"navigationBarTitleText": "debug",
