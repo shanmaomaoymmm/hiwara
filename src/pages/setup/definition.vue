@@ -1,11 +1,10 @@
 <template>
   <view style="padding-bottom: 1rem;">
-    <view class="button" v-for="item, i in $languageList" @click="setLanguage(item.code)">
+    <view class="button" v-for="item, i in list" @click="setDefinition(item)">
       <view class="button-title">
-        {{ item.name }}
+        {{ item }}
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
-        {{ item.code }}{{ ' ' }}
         <i class="fa-solid fa-angle-right"></i>
       </view>
     </view>
@@ -18,7 +17,9 @@ export default ({
 
   },
   data() {
-    return {}
+    return {
+      list: ['Source', '540p', '360p']
+    }
   },
   onNavigationBarButtonTap(e) {
     console.log(e)
@@ -29,8 +30,8 @@ export default ({
   created() {
   },
   methods: {
-    setLanguage(lag) {
-      setStorage('language', lag)
+    setDefinition(def) {
+      setStorage('definition', def)
       uni.navigateBack({
         delta: 1
       })

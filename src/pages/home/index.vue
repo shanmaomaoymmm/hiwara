@@ -35,7 +35,17 @@ export default {
     return {
       err: false,
       tab: 0,
-      user: null,
+      user: {
+        profile: {
+          body: null
+        },
+        user: {
+          id: null,
+          avatar: null,
+          name: null,
+          username: null,
+        }
+      },
       //滑动
       flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
       lastX: 0,
@@ -52,7 +62,9 @@ export default {
   },
   created() {
     getSelfData((res, code) => {
-      this.user = res
+      if (code == 200) {
+        this.user = res
+      }
       this.$refs.floatBar.avatar = this.user.user.avatar != null
         ? "https://i.iwara.tv/image/avatar/" +
         this.user.user.avatar.id +

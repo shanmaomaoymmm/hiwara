@@ -1,0 +1,165 @@
+<template>
+  <view>
+    <view style="padding: 2rem;text-align: center;">
+      <view>
+        <image src="@/static/logo-dev.png" style="width: 10rem;height: 10rem;box-shadow: 0 0 1rem #0002;border-radius: 1.6rem;"></image>
+      </view>
+      <view style="padding-top: 1rem;font-size: 2rem;">
+        Hiwara
+      </view>
+    </view>
+    <view class="opt">
+      <view class="button">
+        <view class="button-title">
+          Hiwara
+        </view>
+        <view class="button-opt" style="padding: 1.2rem 1.5rem;">
+          开发版
+        </view>
+      </view>
+      <view class="button">
+        <view class="button-title">
+          版本号
+        </view>
+        <view class="button-opt" style="padding: 1rem 1.5rem;">
+          v{{ SystemInfo.appVersion }}
+        </view>
+      </view>
+      <view class="button">
+        <view class="button-title">
+          webview版本
+        </view>
+        <view class="button-opt" style="padding: 1rem 1.5rem;">
+          v{{ SystemInfo.browserVersion }}
+        </view>
+      </view>
+      <view class="button">
+        <view class="button-title">
+          设备平台
+        </view>
+        <view class="button-opt" style="padding: 1rem 1.5rem;">
+          <i :class="osName(SystemInfo.osName, 1)"></i>
+          {{ ' ' }}
+          {{ osName(SystemInfo.osName, 0) }}
+        </view>
+      </view>
+    </view>
+    <view class="float">
+      本应用遵循MPL-2.0开源协议，内容源自iwara.tv<br/>
+      禁止用于商业用途
+    </view>
+  </view>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      SystemInfo: null
+    }
+  },
+  onNavigationBarButtonTap(e) {
+    console.log(e)
+    if (e.type == 'home') {
+      this.$backhome()
+    }
+  },
+  created() {
+    uni.getSystemInfo({
+      success: (res) => {
+        console.log(res)
+        this.SystemInfo = res
+      }
+    })
+  },
+  methods: {
+    osName(a, c) {
+      let b, d
+      switch (a) {
+        case 'ios':
+          b = 'iOS'
+          d = 'fa-brands fa-apple'
+          break
+        case 'android':
+          b = 'Android'
+          d = 'fa-brands fa-android'
+          break
+        case 'windows':
+          b = 'Windows'
+          d = 'fa-brands fa-windows'
+          break
+        case 'macos':
+          b = 'MacOS'
+          d = 'fa-brands fa-apple'
+          break
+        case 'linux':
+          b = 'Linux'
+          d = 'fa-brands fa-linux'
+          break
+        default:
+          b = 'Others'
+          d = 'fa-solid fa-dice-d6'
+          break
+      }
+      if (c == 0) {
+        return b
+      } else if (c == 1) {
+        return d
+      }
+    }
+  }
+}
+</script>
+<style scoped>
+.opt {
+  border-top: #aaaaaa 1px solid;
+}
+
+.button {
+  border-bottom: #aaaaaa 1px solid;
+  color: #616161;
+  display: flex;
+}
+
+.button-title {
+  padding: 1rem 1.5rem;
+  flex: 2;
+}
+
+.button-opt {
+  flex: 1;
+  text-align: right;
+  color: #969696;
+}
+
+.fa-solid {
+  color: #616161;
+}
+
+.float {
+  text-align: center;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  color: #808080;
+}
+
+@media (prefers-color-scheme: dark) {
+  .opt {
+    border-top: #666666 1px solid;
+  }
+
+  .button {
+    color: #BDBDBD;
+    border-bottom: #666666 1px solid;
+  }
+
+  .button-opt {
+    color: #696969;
+  }
+
+  .fa-solid {
+    color: #666666;
+  }
+}
+</style>

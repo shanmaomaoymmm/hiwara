@@ -3,6 +3,7 @@ var CryptoJS = require('crypto-js')
 var xVersion = '5nFp9kmbNnHdAFhaqMvt'
 var token = null
 var accessToken = null
+var retry = 16
 
 var files = '/files'
 var api = '/api'
@@ -45,13 +46,13 @@ function ajax(url, data, header, method, cb, num) {
 				cb(res.data, res.statusCode)
 			} else if (res.statusCode == 403 || res.statusCode == 429 || res.statusCode == 500) {
 				// 403、429暴力重连
-				if (num < 65536) {
+				if (num < retry) {
 					num++
 					ajax(url, data, header, method, (res, code) => {
 						cb(res, code)
 					}, num)
 				} else {
-					cb(res, code)
+					cb(res.data, res.statusCode)
 				}
 			} else {
 				cb(res.data, res.statusCode)
@@ -94,23 +95,38 @@ export function setStorage(key, data, expire) {
 	}
 }
 
+// 重连次数
+getStorage('retry', (a) => {
+	if (a) {
+		retry = a
+	} else {
+		retry = 16
+	}
+})
+
 export function getStorage(key, cb) {
 	uni.getStorage({
 		key: key,
 		success: (res) => {
-			if (res.data.indexOf('|') == -1) {
-				cb(res.data)
-			} else {
-				let d = new Date()
-				let expire = parseInt(res.data.slice(res.data.indexOf('|') + 1))
-				if (d.getTime() > expire) {
-					cb(null)
-					uni.removeStorage({
-						key: key
-					})
+			console.log(typeof (res.data))
+			console.log(res.data)
+			if (typeof (res.data) == 'string') {
+				if (res.data.indexOf('|') == -1) {
+					cb(res.data)
 				} else {
-					cb(res.data.slice(0, res.data.indexOf('|')))
+					let d = new Date()
+					let expire = parseInt(res.data.slice(res.data.indexOf('|') + 1))
+					if (d.getTime() > expire) {
+						cb(null)
+						uni.removeStorage({
+							key: key
+						})
+					} else {
+						cb(res.data.slice(0, res.data.indexOf('|')))
+					}
 				}
+			} else {
+				cb(res.data)
 			}
 		},
 		fail: () => {

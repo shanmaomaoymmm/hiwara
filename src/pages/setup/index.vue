@@ -5,16 +5,26 @@
         自动播放
       </view>
       <view class="button-opt" style="padding: 0.75rem 0.25rem;">
-        <switch checked color="#00897b" style="transform:scale(0.8)" />
+        <switch @change="autoplayChange" :checked="autoplay" color="#00897b" style="transform:scale(0.8)" />
       </view>
     </view>
-    <view class="button">
+    <view class="button" @click="gotoPage('/pages/setup/definition')">
       <view class="button-title">
         默认播放清晰度
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
-        原画{{ ' ' }}
+        {{ definition }}{{ ' ' }}
         <i class="fa-solid fa-angle-right"></i>
+      </view>
+    </view>
+    <view class="button">
+      <view class="button-title">
+        失败重连次数
+      </view>
+      <view class="button-opt" style="padding: 1.2rem 1.5rem;">
+        <i class="fa-solid fa-minus" @click="retryChange(0)"></i>
+        <text style="width: 3rem;text-align: center;display: inline-block;">{{ retry }}</text>
+        <i class="fa-solid fa-plus" @click="retryChange(1)"></i>
       </view>
     </view>
     <view class="button" @click="gotoPage('/pages/setup/language')">
@@ -22,11 +32,15 @@
         语言(Language)
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
-        中文(简体){{ ' ' }}
+        {{
+          $languageList.find((item) => {
+            return item.code == language
+          }).name
+        }}{{ ' ' }}
         <i class="fa-solid fa-angle-right"></i>
       </view>
     </view>
-    <view class="button">
+    <view class="button" @click="gotoPage('/pages/setup/userInfo')">
       <view class="button-title">
         修改个人信息
       </view>
@@ -34,16 +48,16 @@
         <i class="fa-solid fa-angles-right"></i>
       </view>
     </view>
-    <view class="button">
+    <view class="button" @click="gotoPage('/pages/setup/about')">
       <view class="button-title">
-        此应用信息
+        关于
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         <i class="fa-solid fa-angle-right"></i>
       </view>
     </view>
     <view class="button">
-      <view class="button-title">
+      <view class="button-title" @click="logout()">
         退出登录
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
@@ -53,13 +67,17 @@
   </view>
 </template>
 <script>
+import {
+  getStorage,
+  setStorage
+} from '@/api/api'
 export default ({
-  components: {
-
-  },
   data() {
     return {
-
+      definition: null,
+      language: null,
+      autoplay: false,
+      retry: 16,
     }
   },
   onNavigationBarButtonTap(e) {
@@ -68,16 +86,70 @@ export default ({
       this.$backhome()
     }
   },
-  created() {
+  onShow() {
+    this.getSteup()
   },
+  created() { },
   methods: {
+    getSteup() {
+      returnStorage('autoplay', 'false', (res) => {
+        this.autoplay = res
+      })
+      returnStorage('definition', 'Source', (res) => {
+        this.definition = res
+      })
+      returnStorage('language', 'zh-hans', (res) => {
+        this.language = res
+      })
+      returnStorage('retry', 16, (res) => {
+        this.retry = res
+      })
+      function returnStorage(key, def, cb) {
+        getStorage(key, (a) => {
+          let b
+          if (a) {
+            b = a
+          } else {
+            b = def
+          }
+          cb(b)
+        })
+      }
+    },
     gotoPage(url) {
       uni.navigateTo({
         url: url,
         animationType: 'slide-in-right',
         animationDuration: 100
       });
-    }
+    },
+    autoplayChange: (a) => {
+      setStorage('autoplay', a.detail.value)
+    },
+    retryChange(t) {
+      if (t == 0) {
+        if (this.retry > 4) {
+          this.retry--
+        }
+      } else if (t == 1) {
+        if (this.retry < 256) {
+          this.retry++
+        }
+      }
+      setStorage('retry', this.retry)
+      uni.showToast({
+        title: '连接数修改成功\r\n在下次应用启动后生效',
+        icon: 'none',
+        duration: 2000
+      });
+    },
+    logout() {
+      removeStorage('token', () => {
+        uni.reLaunch({
+          url: '/'
+        });
+      })
+    },
   }
 })
 </script>
@@ -96,13 +168,25 @@ export default ({
 .button-opt {
   flex: 1;
   text-align: right;
+  color: #969696;
+}
+
+.fa-solid {
+  color: #616161;
 }
 
 @media (prefers-color-scheme: dark) {
   .button {
     color: #BDBDBD;
     border-bottom: #666666 1px solid;
+  }
 
+  .button-opt {
+    color: #696969;
+  }
+
+  .fa-solid {
+    color: #666666;
   }
 }
 </style>

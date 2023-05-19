@@ -30,7 +30,7 @@ npm run dev:h5
 2.使用HBuilderX打开本项目，左上角菜单运行->运行到手机或模拟器->运行到Android App基座；  
 3.手机上勾选一律通过此计算机调试，弹出的权限全部允许。
 
-其他具体运行方法参考uniapp官方文档
+其他平台运行方法参考uniapp官方文档
 
 <https://uniapp.dcloud.net.cn/quickstart-cli.html>
 

@@ -181,6 +181,23 @@
 			}
 		},
 		{
+			"path": "pages/setup/about",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"type": "home",
+								"float": "left"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/debug/index",
 			"style": {
 				"navigationBarTitleText": "debug",

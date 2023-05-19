@@ -37,6 +37,7 @@ export default {
 	},
 	props: ['user'],
 	mounted() {
+		console.log('AAAAAAAAAAAAAAAAAAAAAAA')
 		console.log(this.user)
 	},
 	methods: {
