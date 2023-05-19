@@ -5,19 +5,22 @@
       <view class="tab" :class="{ 'tab-a': tab == 1 }" @click="tab = 1">图片</view>
       <view class="tab" :class="{ 'tab-a': tab == 2 }" @click="tab = 2">用户</view>
     </view>
-    <view>
+    <view style="padding-top: 3.2rem;">
       <video-list ref="video" :s="s" v-if="tab == 0"></video-list>
       <image-list ref="image" :s="s" v-else-if="tab == 1"></image-list>
+      <user-list ref="user" :s="s" v-else-if="tab == 2"></user-list>
     </view>
   </view>
 </template>
 <script>
 import videoList from "./video.vue"
 import imageList from "./image.vue"
+import userList from "./user.vue"
 export default ({
   components: {
     videoList,
-    imageList
+    imageList,
+    userList
   },
   data() {
     return {
@@ -62,6 +65,9 @@ export default ({
         case 1:
           refs = this.$refs.image
           break
+        case 2:
+          refs = this.$refs.user
+          break
         default:
           refs = null
           cb()
@@ -82,6 +88,9 @@ export default ({
         case 1:
           refs = this.$refs.image
           break
+        case 2:
+          refs = this.$refs.user
+          break
         default:
           refs = null
           break
@@ -101,6 +110,7 @@ export default ({
   display: flex;
   width: 100%;
   position: fixed;
+  z-index: 10;
 }
 
 .tab {

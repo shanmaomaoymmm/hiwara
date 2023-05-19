@@ -39,9 +39,10 @@
 							{
 								"type": "none",
 								"float": "right",
-								"text": "iwara",
+								"text": " iwara ",
 								"color": "#00897B",
 								"fontSize": "18px",
+								"fontSrc": "/static/font/riwenlogo.ttf",
 								"width": "auto"
 							}
 						]

@@ -212,7 +212,7 @@ export default {
   bottom: 0;
   width: calc(100% - 0.4rem);
   padding: 0.2rem;
-  background-color: #f5f5f5;
+  background-color: #eeeeee;
   z-index: 11;
 }
 
@@ -220,7 +220,7 @@ export default {
 
   /* .topBar, */
   .floatBar {
-    background-color: #101010;
+    background-color: #292929;
   }
 }
 </style>
