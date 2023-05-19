@@ -4,7 +4,6 @@
     "description": "",
     "versionName": "0.0.4",
     "versionCode": 4,
-    "versionType": "dev",
     "transformPx": false,
     "app-plus": {
         "darkmode": true,

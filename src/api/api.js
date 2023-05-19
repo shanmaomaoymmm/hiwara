@@ -155,14 +155,14 @@ export function getAccessToken(cb) {
 			ajax(api + '/user/token', null, header, 'POST', (res, code) => {
 				if (code == 200) {
 					accessToken = res.accessToken
-					cb()
+					cb(true)
 				} else {
-					cb()
+					cb(false)
 				}
 			})
 		} else {
 			token = null
-			cb()
+			cb(false)
 		}
 	})
 }
@@ -627,7 +627,7 @@ export function getFavoritesImages(page, cb) {
 	})
 }
 
-//检查accessToken
+// 检查accessToken
 function creatHeader() {
 	let header
 	if (accessToken) {
@@ -638,4 +638,16 @@ function creatHeader() {
 		header = null
 	}
 	return header
+}
+
+// 搜索
+export function search(type, query, page, cb) {
+	let data = {
+		type: type,
+		query: query,
+		page: page
+	}
+	ajax(api + '/search', data, null, 'GET', (res, code) => {
+		cb(res, code)
+	})
 }

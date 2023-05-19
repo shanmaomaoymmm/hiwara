@@ -1,7 +1,7 @@
 <template>
   <view class="panel">
-    <top-bar class="topBar" @left="showLeftDrawerOpen()"></top-bar>
-    <view style="padding:3.5rem 0 5rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart"
+    <!-- <top-bar class="topBar" @left="showLeftDrawerOpen()"></top-bar> -->
+    <view style="padding:0rem 0 5rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart"
       @touchend="handletouchend">
       <subscribe-list ref="subscribe" v-if="tab == 0"></subscribe-list>
       <video-list ref="video" v-else-if="tab == 1"></video-list>
@@ -51,6 +51,18 @@ export default {
       lastX: 0,
       lastY: 0,
     }
+  },
+  onNavigationBarButtonTap(e) {
+    console.log(e)
+    if (e.type == 'menu') {
+      this.showLeftDrawerOpen()
+    }
+  },
+  onNavigationBarSearchInputConfirmed(e) {
+    console.log(e)
+    uni.navigateTo({
+      url: '/pages/search/index?tab=0&s=' + e.text
+    });
   },
   onPullDownRefresh() {
     this.refresh(() => {
@@ -187,13 +199,13 @@ export default {
   height: 100%;
 }
 
-.topBar {
+/* .topBar {
   position: fixed;
   width: calc(100% - 1rem);
   padding: 0.5rem;
   background-color: #f5f5f5;
   z-index: 10;
-}
+} */
 
 .floatBar {
   position: fixed;
@@ -206,7 +218,7 @@ export default {
 
 @media (prefers-color-scheme: dark) {
 
-  .topBar,
+  /* .topBar, */
   .floatBar {
     background-color: #101010;
   }

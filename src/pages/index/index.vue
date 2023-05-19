@@ -14,7 +14,14 @@
 			<!-- <uni-link href="https://www.iwara.tv/register">注册账号</uni-link> -->
 		</view>
 		<view class="float">
-			内容源自iwara.tv，本程序禁止用于商业用途
+			<navigator url="/pages/setup/language">
+				<view style="padding: 1rem;">
+					<i class="fa-solid fa-language" style="margin-right: 0.4rem;"></i>Language
+				</view>
+			</navigator>
+			<view class="float-tip">
+				内容源自iwara.tv，本程序禁止用于商业用途
+			</view>
 		</view>
 	</view>
 </template>
@@ -102,7 +109,7 @@ export default {
 
 <style scoped>
 .panel {
-	padding: 10vh 1rem
+	padding: 8vh 1rem
 }
 
 .title {
@@ -130,10 +137,13 @@ button {
 
 .float {
 	text-align: center;
-	font-size: 0.8rem;
 	position: absolute;
 	bottom: 20px;
 	width: calc(100% - 2rem);
+}
+
+.float-tip {
+	font-size: 0.8rem;
 	color: #808080;
 }
 

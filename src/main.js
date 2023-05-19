@@ -5,6 +5,8 @@ import {
 	getAccessToken
 } from '@/api/api.js'
 
+var ats
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'
@@ -15,9 +17,14 @@ const app = new Vue({
 
 console.log('hello')
 
+getAccessToken((res) => {
+	ats = res
+	app.$mount()
+})
+
 Vue.prototype.$backhome = () => {
 	uni.reLaunch({
-		url: '/pages/home/index'
+		url: ats ? '/pages/home/index' : '/pages/index/index'
 	});
 }
 Vue.prototype.$languageList = [
@@ -59,7 +66,3 @@ Vue.prototype.$languageList = [
 		code: 'ar-sa'
 	}
 ]
-
-getAccessToken(() => {
-	app.$mount()
-})
