@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 50rem;">
+	<view style="min-height: 100%; width: 100%;position: relative;">
 		<view class="comments">
 			<view v-show="data.length == 0" style="text-align: center;padding-top: 20vh;">
 				<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
@@ -131,6 +131,8 @@ export default {
 	width: 100%;
 	box-shadow: 0 -0.25rem 0.25rem #0002;
 	display: flex;
+	bottom: 0;
+	position: absolute;
 }
 
 .input {
