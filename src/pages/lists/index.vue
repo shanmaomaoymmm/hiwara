@@ -1,8 +1,10 @@
 <template>
-	<view class="lists">
-		<view v-for="c in col" style="flex: 1;">
-			<view v-for="item, i in data">
-				<item v-if="(i - c + 1) % col == 0" :item="item" :type="type"></item>
+	<view>
+		<view class="lists">
+			<view v-for="c in col" style="flex: 1;">
+				<view v-for="item, i in data" v-if="(i - c + 1) % col == 0">
+					<item :item="item" :type="type" :id="'item' + i" :name="'item' + i"></item>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -16,13 +18,20 @@ export default {
 	},
 	data() {
 		return {
-			col: 2
+			col: 2,
+			limit: 24,
 		}
 	},
-	props: ['data','type'],
+	props: ['data', 'type'],
 	methods: {
 		load() {
 			console.log('load')
+		},
+		goAnchor(e) {
+			uni.pageScrollTo({
+				selector: e,
+				duration: 100
+			})
 		}
 	}
 }

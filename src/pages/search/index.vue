@@ -10,6 +10,10 @@
       <image-list ref="image" :s="s" v-else-if="tab == 1"></image-list>
       <user-list ref="user" :s="s" v-else-if="tab == 2"></user-list>
     </view>
+    <uni-transition @click="backTop()" custom-class="back-top" mode-class="zoom-in" :duration="50"
+      :show="scrollTop > 300">
+      <i class="fa-solid fa-angle-up"></i>
+    </uni-transition>
   </view>
 </template>
 <script>
@@ -25,8 +29,12 @@ export default ({
   data() {
     return {
       s: null,
-      tab: 0
+      tab: 0,
+      scrollTop: 0,
     }
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop
   },
   onLoad: function (o) {
     this.s = o.s;
@@ -99,6 +107,12 @@ export default ({
         refs.getData(() => {
         })
       }
+    },
+    backTop() {
+      uni.pageScrollTo({
+        scrollTop: 0,
+        duration: 100
+      })
     }
   }
 })
@@ -125,14 +139,33 @@ export default ({
   color: #00897b;
 }
 
+.back-top {
+  position: fixed;
+  bottom: 5.2rem;
+  right: 1.2rem;
+  background-color: #00897b;
+  color: #fafafa;
+  font-size: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  box-shadow: 0 0 0.25rem #0002;
+}
+
 @media (prefers-color-scheme: dark) {
   .tabs {
-    background-color: #f5f5f5;
+    background-color: #101010;
     box-shadow: 0 0.1rem 0.25rem #fff2;
   }
 
   .tab {
     border-color: #101010;
+  }
+
+  .back-top {
+    box-shadow: 0 0 0.25rem #fff2;
   }
 }
 </style>

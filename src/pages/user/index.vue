@@ -45,6 +45,10 @@
         </view>
       </view>
     </view>
+    <uni-transition @click="backTop()" custom-class="back-top" mode-class="zoom-in" :duration="50"
+      :show="scrollTop > 300">
+      <i class="fa-solid fa-angle-up"></i>
+    </uni-transition>
   </view>
 </template>
 
@@ -71,7 +75,11 @@ export default {
       flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
       lastX: 0,
       lastY: 0,
+      scrollTop: 0,
     }
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop
   },
   onLoad: function (opt) {
     this.uid = opt.uid
@@ -253,6 +261,12 @@ export default {
     handletouchend: function (event) {
       //停止滑动
       this.flag = 0;
+    },
+    backTop() {
+      uni.pageScrollTo({
+        scrollTop: 0,
+        duration: 100
+      })
     }
   },
   watch: {
@@ -366,6 +380,21 @@ button {
   }
 }
 
+.back-top {
+  position: fixed;
+  bottom: 5.2rem;
+  right: 1.2rem;
+  background-color: #00897b;
+  color: #fafafa;
+  font-size: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  box-shadow: 0 0 0.25rem #0002;
+}
+
 @media (prefers-color-scheme: dark) {
   .bgp {
     background-color: #3b3b3b;
@@ -389,6 +418,10 @@ button {
 
   .bgp {
     box-shadow: 0 0 0.25rem #fff8;
+  }
+
+  .back-top {
+    box-shadow: 0 0 0.25rem #fff2;
   }
 }
 </style>

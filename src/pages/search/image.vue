@@ -16,9 +16,12 @@
 			<view v-else>
 				<lists :data="data" type="image"></lists>
 				<view style="text-align: center;padding-bottom: 1rem;">
-					<text>
-						<i v-if="loading" class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}{{ loading ?
-							'正在加载数据……' : '已加载完成' }}
+					<text v-if="loading">
+						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
+						<text>正在加载数据……</text>
+					</text>
+					<text v-else>
+						<text><i style="transform:scale(2.5,1)" class="fa-solid fa-minus"></i></text>
 					</text>
 				</view>
 			</view>

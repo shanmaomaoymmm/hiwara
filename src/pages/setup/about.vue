@@ -2,9 +2,9 @@
   <view>
     <view style="padding: 2rem;text-align: center;">
       <view>
-        <image src="@/static/logo-dev.png" style="width: 10rem;height: 10rem;box-shadow: 0 0 1rem #0002;border-radius: 1.6rem;"></image>
+        <image src="@/static/logo-dev.png" class="logo"></image>
       </view>
-      <view style="padding-top: 1rem;font-size: 2rem;">
+      <view class="lable">
         Hiwara
       </view>
     </view>
@@ -45,7 +45,7 @@
       </view>
     </view>
     <view class="float">
-      本应用遵循MPL-2.0开源协议，内容源自iwara.tv<br/>
+      本应用遵循MPL-2.0开源协议，内容源自iwara.tv<br />
       禁止用于商业用途
     </view>
   </view>
@@ -110,6 +110,25 @@ export default {
 }
 </script>
 <style scoped>
+.lable {
+  padding-top: 1rem;
+  font-size: 2rem;
+  font-family: label;
+  color: #616161;
+}
+
+@font-face {
+  font-family: label;
+  src: url('/static/font/riwenlogo.ttf');
+}
+
+.logo {
+  width: 10rem;
+  height: 10rem;
+  box-shadow: 0 0 1rem #0002;
+  border-radius: 1.6rem;
+}
+
 .opt {
   border-top: #aaaaaa 1px solid;
 }
@@ -145,6 +164,10 @@ export default {
 }
 
 @media (prefers-color-scheme: dark) {
+  .lable {
+    color: #aaaaaa;
+  }
+
   .opt {
     border-top: #666666 1px solid;
   }
@@ -160,6 +183,11 @@ export default {
 
   .fa-solid {
     color: #666666;
+  }
+
+
+  .logo {
+    box-shadow: 0 0 1rem #fff2;
   }
 }
 </style>

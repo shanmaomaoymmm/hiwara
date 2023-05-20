@@ -1,7 +1,7 @@
 <template>
   <view class="panel">
     <!-- <top-bar class="topBar" @left="showLeftDrawerOpen()"></top-bar> -->
-    <view style="padding:0rem 0 5rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart"
+    <view style="padding:0 0 4rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart"
       @touchend="handletouchend">
       <subscribe-list ref="subscribe" v-if="tab == 0"></subscribe-list>
       <video-list ref="video" v-else-if="tab == 1"></video-list>
@@ -11,6 +11,10 @@
     <uni-drawer ref="showLeftDrawer" mode="left" :width="250">
       <show-left ref="showLeft" :user="user"></show-left>
     </uni-drawer>
+    <uni-transition @click="backTop()" custom-class="back-top" mode-class="zoom-in" :duration="50"
+      :show="scrollTop > 300">
+      <i class="fa-solid fa-angle-up"></i>
+    </uni-transition>
   </view>
 </template>
 
@@ -29,7 +33,7 @@ export default {
     subscribeList,
     videoList,
     imageList,
-    showLeft
+    showLeft,
   },
   data() {
     return {
@@ -50,7 +54,11 @@ export default {
       flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
       lastX: 0,
       lastY: 0,
+      scrollTop: 0,
     }
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop
   },
   onNavigationBarButtonTap(e) {
     console.log(e)
@@ -168,6 +176,12 @@ export default {
     handletouchend: function (event) {
       //停止滑动
       this.flag = 0;
+    },
+    backTop() {
+      uni.pageScrollTo({
+        scrollTop: 0,
+        duration: 100
+      })
     }
   },
   onReachBottom() {
@@ -216,11 +230,30 @@ export default {
   z-index: 11;
 }
 
+.back-top {
+  position: fixed;
+  bottom: 5.2rem;
+  right: 1.2rem;
+  background-color: #00897b;
+  color: #fafafa;
+  font-size: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  box-shadow: 0 0 0.25rem #0002;
+}
+
 @media (prefers-color-scheme: dark) {
 
   /* .topBar, */
   .floatBar {
     background-color: #292929;
+  }
+
+  .back-top {
+    box-shadow: 0 0 0.25rem #fff2;
   }
 }
 </style>
