@@ -10,6 +10,16 @@
 		{
 			"path": "pages/index/index",
 			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
 				"navigationBarTitleText": "登录",
 				"enablePullDownRefresh": false
 			}
@@ -256,6 +266,9 @@
 		"navigationBarTextStyle": "@navTxtStyle",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "@navBgColor",
-		"pageOrientation": "portrait"
+		"pageOrientation": "portrait",
+		"app-plus": {
+			"bounce": "none"
+		}
 	}
 }

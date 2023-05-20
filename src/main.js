@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import App from './App'
 import './uni.promisify.adaptor'
-import {
-	getAccessToken
-} from '@/api/api.js'
-
-var ats
 
 Vue.config.productionTip = false
 
@@ -15,16 +10,11 @@ const app = new Vue({
 	...App
 })
 
-console.log('hello')
-
-getAccessToken((res) => {
-	ats = res
-	app.$mount()
-})
+app.$mount()
 
 Vue.prototype.$backhome = () => {
 	uni.reLaunch({
-		url: ats ? '/pages/home/index' : '/pages/index/index'
+		url: '/pages/index/index'
 	});
 }
 Vue.prototype.$languageList = [
