@@ -73,12 +73,12 @@
 				</view>
 			</view>
 		</view>
-		<view>
-			<view style="padding:0.5rem 1rem">
+		<view v-if="!pad">
+			<view style="padding:0.5rem 1rem;">
 				<text>该作者的其他作品</text>
 			</view>
 			<lists :data="authorOpus" type="video"></lists>
-			<view style="padding:0.5rem 1rem">
+			<view style="padding:0.5rem 1rem;width: 100%;">
 				<text>相关作品</text>
 			</view>
 			<lists :data="relatedOpus" type="video"></lists>
@@ -127,7 +127,7 @@ export default {
 			relatedOpus: [],
 		}
 	},
-	props: ['vid', 'uid'],
+	props: ['vid', 'uid', 'pad'],
 	watch: {
 		data: {
 			handler() {

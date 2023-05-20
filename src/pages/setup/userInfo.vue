@@ -8,7 +8,9 @@ export default {
   onNavigationBarButtonTap(e) {
     console.log(e)
     if (e.type == 'home') {
-      this.$backhome()
+      uni.reLaunch({
+        url: '/pages/index/index?check=1'
+      });
     }
   },
 }

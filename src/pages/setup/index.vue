@@ -32,11 +32,7 @@
         语言(Language)
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
-        {{
-          $languageList.find((item) => {
-            return item.code == language
-          }).name
-        }}{{ ' ' }}
+        {{ $languageList.find((item) => { return item.code == language }).name }}{{ ' ' }}
         <i class="fa-solid fa-angle-right"></i>
       </view>
     </view>
@@ -83,7 +79,9 @@ export default ({
   onNavigationBarButtonTap(e) {
     console.log(e)
     if (e.type == 'home') {
-      this.$backhome()
+      uni.reLaunch({
+        url: '/pages/index/index?check=1'
+      });
     }
   },
   onShow() {
@@ -92,7 +90,7 @@ export default ({
   created() { },
   methods: {
     getSteup() {
-      returnStorage('autoplay', 'false', (res) => {
+      returnStorage('autoplay', false, (res) => {
         this.autoplay = res
       })
       returnStorage('definition', 'Source', (res) => {

@@ -10,7 +10,7 @@
 				<img src="@/static/icon/game.png" style="width: 4rem;height: 4rem;" />
 			</view>
 			<view v-else>
-				<lists :data="data" type="video"></lists>
+				<lists :data="data" ref="lists" type="video"></lists>
 				<view style="text-align: center;padding-bottom: 1rem;">
 					<text v-if="loading">
 						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>

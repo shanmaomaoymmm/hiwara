@@ -2,7 +2,6 @@
 	"easycom": {
 		"autoscan": true,
 		"custom": {
-			// uni-ui 规则如下配置
 			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
 		}
 	},
@@ -11,10 +10,14 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"app-plus": {
-					"titleNView": "none"
-				}
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/index/netfail",
+			"style": {
+				"navigationBarTitleText": "网络连接错误",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -266,7 +269,7 @@
 		"navigationBarTextStyle": "@navTxtStyle",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "@navBgColor",
-		"pageOrientation": "portrait",
+		"pageOrientation": "auto",
 		"app-plus": {
 			"bounce": "none"
 		}

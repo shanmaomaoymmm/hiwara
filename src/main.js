@@ -14,7 +14,7 @@ app.$mount()
 
 Vue.prototype.$backhome = () => {
 	uni.reLaunch({
-		url: '/pages/index/index'
+		url: '/pages/index/index?check=0'
 	});
 }
 Vue.prototype.$languageList = [

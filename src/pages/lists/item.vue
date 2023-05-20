@@ -1,12 +1,11 @@
 <template>
 	<view class="item" @click="gotoPage(item.id, item.uid)">
 		<img :src="item.img || '/static/img/not-img.jpg'" class="img" />
-		<view style="padding:0.25rem">
-			<view
-				style="overflow: hidden;text-overflow: ellipsis;font-weight: bold;font-size: 1rem;width:calc(100vw / 2 - 0.875rem);padding-bottom: 0.25rem;">
+		<view style="padding:0.25rem;">
+			<view class="label">
 				<text>{{ item.label }}</text>
 			</view>
-			<view style="display: flex;width: calc(100vw / 2 - 0.875rem);padding: 0.1rem 0;">
+			<view style="display: flex;padding: 0.1rem 0;" v-show="false">
 				<view>
 					<img class="avatar" :src="item.avatar" />
 				</view>
@@ -54,13 +53,21 @@ export default {
 	box-shadow: 0 0 0.125rem #0004;
 	border-radius: 0.25rem;
 	background-color: #fff;
-	overflow: hidden;
 	font-size: 0;
+	overflow: hidden;
 }
 
 .img {
-	width: calc(100vw / 2 - 0.375rem);
-	height: calc((100vw / 2 - 0.375rem) * 2 / 3);
+	width: 100%;
+	aspect-ratio: 11/8;
+}
+
+.label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;
+	font-size: 1rem;
+	padding-bottom: 0.25rem;
 }
 
 .avatar {

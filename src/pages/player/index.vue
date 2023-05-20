@@ -1,11 +1,11 @@
 <template>
-	<view>
+	<view style="height: 100%;">
 		<view v-show="loading" style="text-align: center;padding-top: 40vh;">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
 			<text>资源加载中……</text>
 		</view>
-		<view v-show="!loading">
+		<view v-show="!loading" style="height: 100%;">
 			<view v-show="error" class="error">
 				<view v-if="error == 1">
 					<image src="@/static/icon/leaves-two.png" style="width: 4rem;height: 4rem;"></image>
@@ -22,36 +22,40 @@
 					<text>这里没有任何东西，请到别的地方看看吧</text>
 				</view>
 			</view>
-			<view v-show="!error">
+			<view v-show="!error" style="display: flex;height: 100%;">
 				<!-- <view class="back">
 					<i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
 					<i @click="back(0)" class="fa-solid fa-house backButton"></i>
 				</view> -->
-				<view class="top">
-					<video id="videoPlayer" class="player" :src="src" :title="data.title" :mobilenet-hint-type="1"
-						:vslide-gesture="true" :poster="data.preview">
-					</video>
-					<view class="tabs">
-						<view style="flex: 1;">
-							<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">简介</text>
-							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
+				<view class="main">
+					<view class="top">
+						<video id="videoPlayer" class="player" :src="src" :title="data.title" vslide-gesture="true"
+							:poster="data.preview" :autoplay="autoplay">
+						</video>
+						<view class="tabs">
+							<view style="flex: 1;">
+								<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">简介</text>
+								<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
+							</view>
+							<view style="flex: 1;text-align: right;">
+								<span class="definitionButton" @click="$refs.definitionPopup.open()">
+									<i class="fa-solid fa-film fa-fw"></i>{{ ' ' }}{{ definition }}
+								</span>
+							</view>
 						</view>
-						<view style="flex: 1;text-align: right;">
-							<span class="definitionButton" @click="$refs.definitionPopup.open()">
-								<i class="fa-solid fa-film fa-fw"></i>{{ ' ' }}{{ definition }}
-							</span>
+					</view>
+					<view class="bottom" @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
+						<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100%' }">
+							<view class="bottom2">
+								<info :pad="pad" :vid="vid" :uid="uid" ref="info"></info>
+							</view>
+							<view class="bottom2">
+								<comments :vid="vid"></comments>
+							</view>
 						</view>
 					</view>
 				</view>
-				<view class="bottom" @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
-					<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100vw' }">
-						<view class="bottom2">
-							<info :vid="vid" :uid="uid" ref="info"></info>
-						</view>
-						<view class="bottom2">
-							<comments :vid="vid"></comments>
-						</view>
-					</view>
+				<view class="right" v-if="pad">
 				</view>
 			</view>
 		</view>
@@ -112,8 +116,30 @@ export default {
 			flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
 			lastX: 0,
 			lastY: 0,
-			videoContex: null
+			videoContex: null,
+			autoplay: false,
+			pad: false
 		}
+	},
+	mounted() {
+		let media = uni.createMediaQueryObserver(this)
+		media.observe({
+			minWidth: 0,
+			maxWidth: 500
+		}, (res) => {
+			if (res) {
+				console.log('1:' + res)
+				this.pad = false
+			}
+		})
+		media.observe({
+			minWidth: 501
+		}, (res) => {
+			if (res) {
+				console.log('2:' + res)
+				this.pad = true
+			}
+		})
 	},
 	onLoad: function (opt) {
 		this.vid = opt.id
@@ -153,6 +179,15 @@ export default {
 				b = 'Source'
 			}
 			this.definition = b
+		})
+		getStorage('autoplay', (a) => {
+			let b
+			if (a) {
+				b = a
+			} else {
+				b = false
+			}
+			this.autoplay = b
 		})
 		getVideo(this.vid, (res, code) => {
 			if (code == 200) {
@@ -248,8 +283,8 @@ export default {
 
 <style scoped>
 .player {
-	width: 100vw;
-	height: 56.25vw;
+	width: 100%;
+	height: 100%;
 }
 
 .back {
@@ -267,6 +302,9 @@ export default {
 .top {
 	background-color: #f5f5f5;
 	z-index: 10;
+	width: 100%;
+	aspect-ratio: 16/9;
+	padding-bottom: 3rem;
 }
 
 
@@ -274,6 +312,7 @@ export default {
 	box-shadow: 0 0.25rem 0.25rem #0002;
 	padding: 0 1rem;
 	display: flex;
+	white-space: nowrap;
 }
 
 .tabs-button {
@@ -284,23 +323,26 @@ export default {
 }
 
 .bottom {
-	width: 100vw;
-	height: calc(100vh - 56.25vw - 3.4rem);
+	flex: 1;
+	width: 100%;
 	overflow: hidden;
 }
 
 .bottom1 {
 	display: flex;
-	width: 200vw;
+	width: 200%;
+	height: 100%;
 	position: relative;
 	left: 0;
 	transition: left 100ms ease;
+	overflow: hidden;
 }
 
 .bottom2 {
 	flex: 1;
-	height: calc(100vh - 56.25vw - 3.4rem);
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 100%;
 }
 
 .definitionButton {
@@ -362,6 +404,20 @@ export default {
 .error {
 	text-align: center;
 	padding-top: 38vh;
+}
+
+.main {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+}
+
+.right {
+	flex: 1;
+	height: 100%;
+	overflow: hidden;
 }
 
 @media (prefers-color-scheme: dark) {

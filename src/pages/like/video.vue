@@ -14,7 +14,7 @@
 				<text>你没有任何收藏，请到别的地方看看吧</text>
 			</view>
 			<view v-else>
-				<lists :data="data" type="video"></lists>
+				<lists :data="data" ref="lists" type="video"></lists>
 				<view style="text-align: center;padding-bottom: 1rem;">
 					<text v-if="loading">
 						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>

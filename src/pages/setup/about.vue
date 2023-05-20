@@ -60,7 +60,9 @@ export default {
   onNavigationBarButtonTap(e) {
     console.log(e)
     if (e.type == 'home') {
-      this.$backhome()
+      uni.reLaunch({
+        url: '/pages/index/index?check=1'
+      });
     }
   },
   created() {
@@ -123,8 +125,8 @@ export default {
 }
 
 .logo {
-  width: 10rem;
-  height: 10rem;
+  width: 8rem;
+  height: 8rem;
   box-shadow: 0 0 1rem #0002;
   border-radius: 1.6rem;
 }

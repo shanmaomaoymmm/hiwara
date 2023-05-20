@@ -12,7 +12,7 @@
 				<text>没有任何内容</text>
 			</view>
 			<view v-else style="min-height: calc(100vh - 8.125rem);">
-				<lists :data="data" type="image"></lists>
+				<lists :data="data" ref="lists" type="image"></lists>
 				<view style="text-align: center;padding-bottom: 1rem;">
 					<text v-if="loading">
 						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>

@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="height: 50rem;">
 		<view class="comments">
 			<view v-show="data.length == 0" style="text-align: center;padding-top: 20vh;">
 				<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
@@ -95,7 +95,7 @@ export default {
 
 <style scoped>
 .comments {
-	padding: 0 1rem 5rem 1rem;
+	padding: 0 1rem;
 }
 
 .comment {
@@ -127,7 +127,6 @@ export default {
 
 .addComment {
 	background-color: #f5f5f5;
-	position: fixed;
 	bottom: 0;
 	width: 100%;
 	box-shadow: 0 -0.25rem 0.25rem #0002;

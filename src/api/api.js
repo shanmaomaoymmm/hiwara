@@ -30,18 +30,12 @@ function ajax(url, data, header, method, cb, num) {
 	if (typeof (num) == 'undefined') {
 		num = 0
 	}
-	// console.log(url)
-	// console.log(data)
-	// console.log(header)
-	// console.log(method)
 	uni.request({
 		url: url,
 		data: data,
 		header: header,
 		method: method,
 		success: res => {
-			// console.log(res.data)
-			// console.log(res.statusCode)
 			if (res.statusCode == 200) {
 				cb(res.data, res.statusCode)
 			} else if (res.statusCode == 403 || res.statusCode == 429 || res.statusCode == 500) {
@@ -108,8 +102,6 @@ export function getStorage(key, cb) {
 	uni.getStorage({
 		key: key,
 		success: (res) => {
-			console.log(typeof (res.data))
-			console.log(res.data)
 			if (typeof (res.data) == 'string') {
 				if (res.data.indexOf('|') == -1) {
 					cb(res.data)
@@ -223,16 +215,10 @@ export function getSubscribeList(index, cb) {
 		subscribed: true,
 		page: index
 	}
-	let header
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	} else {
-		header = null
-	}
-	ajax(api + '/videos', data, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/videos', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
@@ -243,16 +229,10 @@ export function getVideoList(index, cb) {
 		rating: 'all',
 		page: index
 	}
-	let header
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	} else {
-		header = null
-	}
-	ajax(api + '/videos', data, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/videos', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
@@ -263,80 +243,68 @@ export function getImageList(index, cb) {
 		rating: 'all',
 		page: index
 	}
-	let header
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	} else {
-		header = null
-	}
-	ajax(api + '/images', data, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/images', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 获取视频地址
 export function getVideo(id, cb) {
-	let header
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	} else {
-		header = null
-	}
 	let resData
-	ajax(api + '/video/' + id, null, header, 'GET', (res, code) => {
-		if (code == 200) {
-			resData = {
-				id: res.id,
-				title: res.title,
-				author: res.user.name,
-				avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
-					.id + '/' + res.user
-						.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-				preview: res.file != null
-					? "https://i.iwara.tv/image/thumbnail/" +
-					res.file.id +
-					"/thumbnail-" + fill0(res.thumbnail, 1) + ".jpg"
-					: null,
-				synopsis: res.body,
-				date: res.createdAt,
-				numView: res.numViews,
-				numLikes: res.numLikes,
-				liked: res.liked,
-				private: res.private,
-				following: res.user.following,
-				username: res.user.username
-			}
-			if (res.file) {
-				let fileUrlParse = parseGET(res.fileUrl)
-				header = {
-					'x-version': CryptoJS.SHA1(res.file.id + '_' + fileUrlParse.expires + '_' + xVersion).toString()
+	creatHeader((h) => {
+		ajax(api + '/video/' + id, null, h, 'GET', (res, code) => {
+			if (code == 200) {
+				resData = {
+					id: res.id,
+					title: res.title,
+					author: res.user.name,
+					avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
+						.id + '/' + res.user
+							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+					preview: res.file != null
+						? "https://i.iwara.tv/image/thumbnail/" +
+						res.file.id +
+						"/thumbnail-" + fill0(res.thumbnail, 1) + ".jpg"
+						: null,
+					synopsis: res.body,
+					date: res.createdAt,
+					numView: res.numViews,
+					numLikes: res.numLikes,
+					liked: res.liked,
+					private: res.private,
+					following: res.user.following,
+					username: res.user.username
 				}
-				ajax(files + res.fileUrl.slice(22), null, header, 'GET', (res, code) => {
-					resData.sources = []
-					if (code == 200) {
-						for (let i = 0; i < res.length; i++) {
-							if (res[i].name != 'preview') {
-								resData.sources.push({
-									name: res[i].name,
-									view: res[i].src.view,
-									download: res[i].src.download
-								})
+				if (res.file) {
+					let fileUrlParse = parseGET(res.fileUrl)
+					let header = {
+						'x-version': CryptoJS.SHA1(res.file.id + '_' + fileUrlParse.expires + '_' + xVersion).toString()
+					}
+					ajax(files + res.fileUrl.slice(22), null, header, 'GET', (res, code) => {
+						resData.sources = []
+						if (code == 200) {
+							for (let i = 0; i < res.length; i++) {
+								if (res[i].name != 'preview') {
+									resData.sources.push({
+										name: res[i].name,
+										view: res[i].src.view,
+										download: res[i].src.download
+									})
+								}
 							}
 						}
-					}
-					cb(resData, code)
-				})
+						cb(resData, code)
+					})
+				} else {
+					cb(resData, 408)
+				}
 			} else {
-				cb(resData, 408)
+				resData = null
+				cb(resData, code)
 			}
-		} else {
-			resData = null
-			cb(resData, code)
-		}
+		})
 	})
 }
 
@@ -364,117 +332,102 @@ export function getVideoListForPlayInfoComments(id, page, cb) {
 	let data = {
 		page: page
 	}
-	let header = null
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	}
-	ajax(api + '/video/' + id + '/comments', data, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/video/' + id + '/comments', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 添加视频评论
 export function addCommentForVideo(id, body, cb) {
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
 	let data = {
 		body: body
 	}
-	ajax(api + '/video/' + id + '/comments', data, header, 'POST', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/video/' + id + '/comments', data, h, 'POST', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 点赞视频
 export function likeVideo(id, opt, cb) {
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
 	let method
 	if (opt == 0) {
 		method = 'DELETE'
 	} else if (opt == 1) {
 		method = 'POST'
 	}
-	ajax(api + '/video/' + id + '/like', null, header, method, (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/video/' + id + '/like', null, h, method, (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 关注用户
 export function followers(uid, opt, cb) {
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
 	let method
 	if (opt == 0) {
 		method = 'DELETE'
 	} else if (opt == 1) {
 		method = 'POST'
 	}
-	ajax(api + '/user/' + uid + '/followers', null, header, method, (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/user/' + uid + '/followers', null, h, method, (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 加好友
 export function friends(uid, opt, cb) {
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
 	let method
 	if (opt == 0) {
 		method = 'DELETE'
 	} else if (opt == 1) {
 		method = 'POST'
 	}
-	ajax(api + '/user/' + uid + '/friends', null, header, method, (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/user/' + uid + '/friends', null, h, method, (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 获取本用户信息
 export function getSelfData(cb) {
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
-	ajax(api + '/user', null, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/user', null, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 获取图片
 export function getImage(id, cb) {
-	let header
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	} else {
-		header = null
-	}
-	ajax(api + '/image/' + id, null, header, 'GET', (res, code) => {
-		let resData = {
-			title: res.title,
-			body: res.body,
-			author: res.user.name,
-			createdAt: res.createdAt,
-			numLikes: res.numLikes,
-			numViews: res.numViews,
-			following: res.user.following,
-			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
-				.id + '/' + res.user
-					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-			files: [],
-			username: res.user.username
-		}
-		for (let i = 0; i < res.files.length; i++) {
-			resData.files.push('https://i.iwara.tv/image/large/' + res.files[i].id + '/' + res.files[i].name)
-		}
-		cb(resData, code)
+	creatHeader((h) => {
+		ajax(api + '/image/' + id, null, h, 'GET', (res, code) => {
+			let resData = {
+				title: res.title,
+				body: res.body,
+				author: res.user.name,
+				createdAt: res.createdAt,
+				numLikes: res.numLikes,
+				numViews: res.numViews,
+				following: res.user.following,
+				avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
+					.id + '/' + res.user
+						.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+				files: [],
+				username: res.user.username
+			}
+			for (let i = 0; i < res.files.length; i++) {
+				resData.files.push('https://i.iwara.tv/image/large/' + res.files[i].id + '/' + res.files[i].name)
+			}
+			cb(resData, code)
+		})
 	})
 }
 
@@ -483,27 +436,22 @@ export function getImageInfoComments(id, page, cb) {
 	let data = {
 		page: page
 	}
-	let header = null
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	}
-	ajax(api + '/image/' + id + '/comments', data, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/image/' + id + '/comments', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 添加图片评论
 export function addCommentForImage(id, body, cb) {
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
 	let data = {
 		body: body
 	}
-	ajax(api + '/image/' + id + '/comments', data, header, 'POST', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/image/' + id + '/comments', data, h, 'POST', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
@@ -514,11 +462,10 @@ export function getImageListForImageInfoUser(id, uid, cb) {
 		exclude: id,
 		limit: 6
 	}
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
-	ajax(api + '/images', data, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/images', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
@@ -531,39 +478,37 @@ export function getImageListForImageInfoRelated(id, cb) {
 
 // 点赞图片
 export function likeImage(id, opt, cb) {
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
 	let method
 	if (opt == 0) {
 		method = 'DELETE'
 	} else if (opt == 1) {
 		method = 'POST'
 	}
-	ajax(api + '/image/' + id + '/like', null, header, method, (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/image/' + id + '/like', null, h, method, (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
 // 获取用户信息
 export function getpProfile(username, cb) {
-	let header = {
-		authorization: 'Bearer ' + accessToken
-	}
-	ajax(api + '/profile/' + username, null, header, 'GET', (res, code) => {
-		let resData = {
-			name: res.user.name,
-			body: res.body,
-			createdAt: res.user.createdAt,
-			seenAt: res.user.seenAt,
-			avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
-				.id + '/' + res.user
-					.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-			background: res.header ? 'https://i.iwara.tv/image/profileHeader/' + res.header.id + '/' + res.header.name : '/static/img/loli.png',
-			following: res.user.following,
-			friend: res.user.friend
-		}
-		cb(resData, code)
+	creatHeader((h) => {
+		ajax(api + '/profile/' + username, null, h, 'GET', (res, code) => {
+			let resData = {
+				name: res.user.name,
+				body: res.body,
+				createdAt: res.user.createdAt,
+				seenAt: res.user.seenAt,
+				avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
+					.id + '/' + res.user
+						.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+				background: res.header ? 'https://i.iwara.tv/image/profileHeader/' + res.header.id + '/' + res.header.name : '/static/img/loli.png',
+				following: res.user.following,
+				friend: res.user.friend
+			}
+			cb(resData, code)
+		})
 	})
 }
 
@@ -574,16 +519,10 @@ export function getVideoListForUser(index, uid, cb) {
 		page: index,
 		user: uid
 	}
-	let header
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	} else {
-		header = null
-	}
-	ajax(api + '/videos', data, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/videos', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
@@ -594,16 +533,10 @@ export function getImageListForUser(index, uid, cb) {
 		page: index,
 		user: uid
 	}
-	let header
-	if (accessToken) {
-		header = {
-			authorization: 'Bearer ' + accessToken
-		}
-	} else {
-		header = null
-	}
-	ajax(api + '/images', data, header, 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/images', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
@@ -612,8 +545,10 @@ export function getFavoritesVideos(page, cb) {
 	let data = {
 		page: page
 	}
-	ajax(api + 'favorites/videos', data, creatHeader(), 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + 'favorites/videos', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
@@ -622,22 +557,33 @@ export function getFavoritesImages(page, cb) {
 	let data = {
 		page: page
 	}
-	ajax(api + '/favorites/images', data, creatHeader(), 'GET', (res, code) => {
-		cb(res, code)
+	creatHeader((h) => {
+		ajax(api + '/favorites/images', data, h, 'GET', (res, code) => {
+			cb(res, code)
+		})
 	})
 }
 
-// 检查accessToken
-function creatHeader() {
+// 生成Header
+function creatHeader(cb) {
 	let header
 	if (accessToken) {
 		header = {
 			authorization: 'Bearer ' + accessToken
 		}
+		cb(header)
 	} else {
-		header = null
+		getAccessToken((res) => {
+			if (res) {
+				header = {
+					authorization: 'Bearer ' + accessToken
+				}
+				cb(header)
+			} else {
+				cb(null)
+			}
+		})
 	}
-	return header
 }
 
 // 搜索
