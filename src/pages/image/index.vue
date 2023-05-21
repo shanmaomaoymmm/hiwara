@@ -25,100 +25,109 @@
 			<view v-show="!error" class="images"
 				:style="{ backgroundImage: 'url(' + (data.files[0] || '/static/img/loli.png') + ')' }"
 				@touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
-				<!-- <view class="top">
-					<view>
-						<i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
-						<i @click="back(0)" class="fa-solid fa-house backButton"></i>
-					</view>
-					<view class="title">
-						<text>{{ data.title }}</text>
-					</view>
-				</view> -->
-				<view class="main">
-					<view style="text-align: center;position: relative;">
-						<view v-show="unfold" class="pictures">
-							<img class="picture" v-for="item, i in data.files" :src="item">
-						</view>
-						<view v-show="!unfold" class="pictures">
-							<img class="picture" :src="data.files[0]">
-						</view>
-						<text style="color: #f5f5f5;" v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
-							{{ unfold ? "点击折叠" : "点击展开" }}
-						</text>
-					</view>
-					<view class="info">
-						<view style="display: flex;">
-							<view @click="gotoUser()">
-								<image class="avatar" :src="data.avatar"></image>
+				<view class="panel">
+					<view class="main">
+						<view style="text-align: center;position: relative;">
+							<view v-show="unfold" class="pictures">
+								<img class="picture" v-for="item, i in data.files" :src="item" @click="fillScreen(i)">
 							</view>
-							<view @click="gotoUser()" style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
-								<text style="font-size: 1rem;">{{ data.author }}</text>
+							<view v-show="!unfold" class="pictures">
+								<img class="picture" :src="data.files[0]" @click="unfold = !unfold">
 							</view>
-							<view>
-								<button size="mini" @click="followers">{{ data.following ? "已关注" : "＋ 关注"
-								}}</button>
-							</view>
-						</view>
-						<view class="synopsis">
-							{{ data.body || data.title }}
-						</view>
-						<view class="status">
-							<text decode="true">
-								<i class="fa-regular fa-circle-play fa-fw"></i>{{ ' ' }}{{ data.numViews }}
-								<i style="width: 0.8rem;display: inline-block;"></i>
-								<i class="fa-regular fa-heart fa-fw"></i>{{ ' ' }}{{ data.numLikes }}
-								<i style="width: 0.8rem;display: inline-block;"></i>
-								<text>{{ formatDate(data.date) }}</text>
+							<text style="color: #f5f5f5;" v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
+								{{ unfold ? "点击折叠" : "点击展开" }}
 							</text>
 						</view>
-					</view>
-					<view class="comments">
-						<view style="font-weight: bold;padding: 0.5rem;">
-							评论
-						</view>
-						<view style="padding: 0.5rem;">
-							<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;">
-								<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
-								<br>
-								<text>还没有评论</text>
+						<view class="info">
+							<view style="display: flex;">
+								<view @click="gotoUser()">
+									<image class="avatar" :src="data.avatar"></image>
+								</view>
+								<view @click="gotoUser()" style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
+									<text style="font-size: 1rem;">{{ data.author }}</text>
+								</view>
+								<view>
+									<button size="mini" @click="followers">{{ data.following ? "已关注" : "＋ 关注"
+									}}</button>
+								</view>
 							</view>
-							<view v-show="comments.length > 0" v-for="item, i in comments" :key="'comment' + i">
-								<view style="display: flex;">
-									<view>
-										<image class="avatar" :src="item.avatar"></image>
+							<view class="synopsis">
+								{{ data.body || data.title }}
+							</view>
+							<view class="status">
+								<text decode="true">
+									<i class="fa-regular fa-circle-play fa-fw"></i>{{ ' ' }}{{ data.numViews }}
+									<i style="width: 0.8rem;display: inline-block;"></i>
+									<i class="fa-regular fa-heart fa-fw"></i>{{ ' ' }}{{ data.numLikes }}
+									<i style="width: 0.8rem;display: inline-block;"></i>
+									<text>{{ formatDate(data.date) }}</text>
+								</text>
+							</view>
+						</view>
+						<view class="comments">
+							<view style="font-weight: bold;padding: 0.5rem;">
+								评论
+							</view>
+							<view style="padding: 0.5rem;">
+								<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;">
+									<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
+									<br>
+									<text>还没有评论</text>
+								</view>
+								<view v-show="comments.length > 0" v-for="item, i in comments" :key="'comment' + i">
+									<view style="display: flex;">
+										<view>
+											<image class="avatar" :src="item.avatar"></image>
+										</view>
+										<view style="flex:1;padding: 0.25rem 0.5rem;">{{ item.user }}</view>
 									</view>
-									<view style="flex:1;padding: 0.25rem 0.5rem;">{{ item.user }}</view>
+									<view style="margin: 0.4rem 0;">{{ item.content }}</view>
+									<view class="date">
+										<text>
+											<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+										</text>
+									</view>
 								</view>
-								<view style="margin: 0.4rem 0;">{{ item.content }}</view>
-								<view class="date">
-									<text>
-										<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
-									</text>
+							</view>
+							<view class="addComment">
+								<view style="flex:1">
+									<input v-model="addCommentBody" placeholder="添加你的评论" class="addCommentInput"
+										@focus="addCommentActive = true" @blur="addCommentActive = false" />
+								</view>
+								<view :style="{ width: addCommentActive ? '4.5rem' : 0 }"
+									style="width: 4.5rem;text-align: center;transition: width ease 100ms;overflow: hidden;white-space: nowrap;">
+									<button size="mini" style="margin-top: 0.5rem" @click="addComment()">发布</button>
 								</view>
 							</view>
 						</view>
-						<view class="addComment">
-							<view style="flex:1">
-								<input v-model="addCommentBody" placeholder="添加你的评论" class="addCommentInput"
-									@focus="addCommentActive = true" @blur="addCommentActive = false" />
-							</view>
-							<view :style="{ width: addCommentActive ? '4.5rem' : 0 }"
-								style="width: 4.5rem;text-align: center;transition: width ease 100ms;overflow: hidden;white-space: nowrap;">
-								<button size="mini" style="margin-top: 0.5rem" @click="addComment()">发布</button>
+						<view v-if="!pad">
+							<view style="padding: 0 0.5rem;">
+								<view
+									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
+									更多来自用户
+								</view>
+								<lists :scol="2" :data="authorOpus" type="image"></lists>
+								<view
+									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
+									更像这样
+								</view>
+								<lists :scol="2" :data="relatedOpus" type="image"></lists>
 							</view>
 						</view>
 					</view>
-					<view>
-						<view
-							style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
-							更多来自用户
+					<view class="right" v-if="pad">
+						<view style="padding: 0 0.5rem;">
+							<view
+								style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
+								更多来自用户
+							</view>
+							<lists :scol="2" :data="authorOpus" type="image"></lists>
+							<view
+								style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
+								更像这样
+							</view>
+							<lists :scol="2" :data="relatedOpus" type="image"></lists>
 						</view>
-						<lists :data="authorOpus" type="image"></lists>
-						<view
-							style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
-							更像这样
-						</view>
-						<lists :data="relatedOpus" type="image"></lists>
 					</view>
 				</view>
 			</view>
@@ -145,7 +154,7 @@ export default {
 	data() {
 		return {
 			data: {
-				files: [null]
+				files: []
 			},
 			id: null,
 			uid: null,
@@ -161,7 +170,28 @@ export default {
 			flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
 			lastX: 0,
 			lastY: 0,
+			pad: false,
 		}
+	},
+	mounted() {
+		let media = uni.createMediaQueryObserver(this)
+		media.observe({
+			minWidth: 0,
+			maxWidth: 500
+		}, (res) => {
+			if (res) {
+				console.log('1:' + res)
+				this.pad = false
+			}
+		})
+		media.observe({
+			minWidth: 501
+		}, (res) => {
+			if (res) {
+				console.log('2:' + res)
+				this.pad = true
+			}
+		})
 	},
 	onLoad: function (opt) {
 		this.id = opt.id
@@ -388,6 +418,14 @@ export default {
 				animationType: 'slide-in-right',
 				animationDuration: 100
 			});
+		},
+		fillScreen(i) {
+			let send = encodeURIComponent(JSON.stringify(this.data))
+			uni.navigateTo({
+				url: '/pages/image/fill?index=' + i + '&data=' + send,
+				animationType: 'slide-in-right',
+				animationDuration: 100,
+			});
 		}
 	}
 }
@@ -425,13 +463,25 @@ export default {
 	padding: 0.8rem 0.8rem;
 }
 
-.main {
-	/* padding-top: 4.5rem; */
-	padding-top: 0.2rem;
+.panel {
 	backdrop-filter: blur(10px);
 	min-height: calc(100vh - 4.5rem);
 	background-color: #f5f5f510;
+	display: flex;
+}
+
+.main {
+	padding-top: 0.2rem;
 	color: #333;
+	flex: 2;
+	overflow: hidden;
+}
+
+.right {
+	flex: 1;
+	padding-top: 0.2rem;
+	color: #333;
+	overflow: hidden;
 }
 
 .pictures {
@@ -548,8 +598,11 @@ button {
 		background-color: #616161;
 	}
 
-	.main {
+	.panel {
 		background-color: #10101066;
+	}
+
+	.main.right {
 		color: #ddd;
 	}
 

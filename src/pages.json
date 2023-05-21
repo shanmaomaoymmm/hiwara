@@ -132,6 +132,23 @@
 			}
 		},
 		{
+			"path": "pages/image/fill",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+								"type": "home",
+								"float": "left"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "",
