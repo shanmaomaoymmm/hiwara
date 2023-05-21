@@ -1,9 +1,13 @@
 <template>
   <view class="fill">
     <view style="flex: 1;">
-      <swiper style="height: 100%;">
-        <swiper-item v-for="item in data.files">
-          <img class="img" :src="item" />
+      <swiper style="height: 100%;" :current="i">
+        <swiper-item v-for="item in data.files" style="display: flex;flex-direction: column;height: 100%;">
+          <view style="flex: 1;"></view>
+          <view>
+            <q-img class="img" :src="item" />
+          </view>
+          <view style="flex: 1;"></view>
         </swiper-item>
       </swiper>
     </view>
@@ -17,17 +21,16 @@ export default {
   data() {
     return {
       img: null,
-      i: 0,
+      i: 1,
       data: {
-        files
+        files: []
       }
     }
   },
   onLoad: function (e) {
     this.data = JSON.parse(decodeURIComponent(e.data))
     this.i = e.index
-    console.log(this.index)
-    console.log(this.data)
+    console.log(this.i)
     this.img = this.data.files[this.i]
   },
 }

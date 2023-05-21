@@ -12,6 +12,8 @@ const app = new Vue({
 
 app.$mount()
 
+
+/**全局方法与变量 */
 Vue.prototype.$backhome = () => {
 	uni.reLaunch({
 		url: '/pages/index/index?check=0'
@@ -56,3 +58,7 @@ Vue.prototype.$languageList = [
 		code: 'ar-sa'
 	}
 ]
+
+/**全局组件 */
+import qImg from '@/pages/component/q-img.vue'
+Vue.component('q-img', qImg)

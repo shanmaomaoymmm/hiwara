@@ -45,8 +45,11 @@
       </view>
     </view>
     <view class="float">
-      本应用遵循MPL-2.0开源协议，内容源自iwara.tv<br />
+      本应用遵循MPL-2.0开源协议，内容源自iwara.tv
+      <br />
       禁止用于商业用途
+      <br />
+      ©2019-2023 Maoerxiachuan
     </view>
   </view>
 </template>
@@ -164,7 +167,7 @@ export default {
   text-align: center;
   font-size: 0.8rem;
   position: absolute;
-  bottom: 20px;
+  bottom: 1rem;
   width: 100%;
   color: #808080;
 }

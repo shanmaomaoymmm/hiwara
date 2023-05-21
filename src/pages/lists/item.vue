@@ -1,6 +1,6 @@
 <template>
 	<view class="item" @click="gotoPage(item.id, item.uid)">
-		<img :src="item.img || '/static/img/not-img.jpg'" class="img" />
+		<q-img :src="item.img || '/static/img/not-img.jpg'" class="img" />
 		<view style="padding:0.25rem;">
 			<view class="label">
 				<text>{{ item.label }}</text>

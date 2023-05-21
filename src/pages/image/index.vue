@@ -27,14 +27,16 @@
 				@touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
 				<view class="panel">
 					<view class="main">
-						<view style="text-align: center;position: relative;">
+						<view style="text-align: center;position: relative;font-size: 1rem;">
 							<view v-show="unfold" class="pictures">
-								<img class="picture" v-for="item, i in data.files" :src="item" @click="fillScreen(i)">
+								<!-- 多图 -->
+								<q-img class="picture" v-for="item, i in data.files" :src="item" @click="fillScreen(i)" />
 							</view>
 							<view v-show="!unfold" class="pictures">
-								<img class="picture" :src="data.files[0]" @click="unfold = !unfold">
+								<!-- 单图 -->
+								<q-img class="picture" :src="data.files[0]" @click="unfold = !unfold" />
 							</view>
-							<text style="color: #f5f5f5;" v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
+							<text v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
 								{{ unfold ? "点击折叠" : "点击展开" }}
 							</text>
 						</view>
@@ -154,7 +156,7 @@ export default {
 	data() {
 		return {
 			data: {
-				files: []
+				files: [null]
 			},
 			id: null,
 			uid: null,
@@ -503,6 +505,8 @@ export default {
 	position: absolute;
 	bottom: 0.75rem;
 	right: 1.5rem;
+	color: #f5f5f5;
+	text-shadow: 0 0 0.5rem #000a;
 }
 
 .info {

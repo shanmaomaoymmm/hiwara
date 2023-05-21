@@ -21,6 +21,8 @@
 			</navigator>
 			<view class="float-tip">
 				内容源自iwara.tv，本程序禁止用于商业用途
+				<br />
+				©2019-2023 Maoerxiachuan
 			</view>
 		</view>
 	</view>
@@ -129,7 +131,7 @@ button {
 .float {
 	text-align: center;
 	position: absolute;
-	bottom: 20px;
+	bottom: 1rem;
 	width: calc(100% - 2rem);
 	color: #505050;
 }

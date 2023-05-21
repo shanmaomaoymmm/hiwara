@@ -11,9 +11,15 @@
       <view class="bottom" :style="{ 'bottom': bottom + 'rem' }">
         <i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>软件启动中
       </view>
+      <view class="float">
+        <view class="float-tip">
+          内容源自iwara.tv，本程序禁止用于商业用途
+          <br />
+          ©2019-2023 Maoerxiachuan
+        </view>
+      </view>
     </view>
     <view v-else>
-
     </view>
   </view>
 </template>
@@ -116,6 +122,18 @@ export default {
   font-size: 1.1rem;
   color: #616161;
   transition: bottom 200ms ease;
+}
+
+.float {
+  text-align: center;
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+}
+
+.float-tip {
+  font-size: 0.8rem;
+  color: #808080;
 }
 
 @media (prefers-color-scheme: dark) {
