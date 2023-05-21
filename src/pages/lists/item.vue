@@ -5,7 +5,7 @@
 			<view class="label">
 				<text>{{ item.label }}</text>
 			</view>
-			<view style="display: flex;padding: 0.1rem 0;" v-show="false">
+			<view style="display: flex;padding: 0.1rem 0;">
 				<view>
 					<img class="avatar" :src="item.avatar" />
 				</view>

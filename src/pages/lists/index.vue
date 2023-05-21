@@ -22,26 +22,30 @@ export default {
 			limit: 24,
 		}
 	},
-	props: ['data', 'type'],
+	props: ['data', 'type', 'scol'],
 	mounted() {
-		let media = uni.createMediaQueryObserver(this)
-		media.observe({
-			minWidth: 0,
-			maxWidth: 500
-		}, (res) => {
-			if (res) {
-				console.log('1:' + res)
-				this.col = 2
-			}
-		})
-		media.observe({
-			minWidth: 501
-		}, (res) => {
-			if (res) {
-				console.log('2:' + res)
-				this.col = 4
-			}
-		})
+		if (this.scol) {
+			this.col = this.scol
+		} else {
+			let media = uni.createMediaQueryObserver(this)
+			media.observe({
+				minWidth: 0,
+				maxWidth: 500
+			}, (res) => {
+				if (res) {
+					console.log('1:' + res)
+					this.col = 2
+				}
+			})
+			media.observe({
+				minWidth: 501
+			}, (res) => {
+				if (res) {
+					console.log('2:' + res)
+					this.col = 4
+				}
+			})
+		}
 	},
 	methods: {
 		load() {

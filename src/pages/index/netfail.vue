@@ -39,7 +39,7 @@ export default {
   methods: {
     setup() {
       uni.navigateTo({
-        url: '/pages/setup/index',
+        url: '/pages/setup/index?init=1',
         animationType: 'slide-in-right',
         animationDuration: 100
       });

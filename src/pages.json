@@ -28,6 +28,13 @@
 			}
 		},
 		{
+			"path": "pages/login/regist",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/home/index",
 			"style": {
 				"enablePullDownRefresh": true,

@@ -14,17 +14,19 @@
 <script>
 import { setStorage } from '@/api/api.js'
 export default ({
-  components: {
-
-  },
   data() {
-    return {}
+    return {
+      init: 0,
+    }
+  },
+  onLoad: function (opt) {
+    this.init = opt.init
   },
   onNavigationBarButtonTap(e) {
     console.log(e)
     if (e.type == 'home') {
       uni.reLaunch({
-        url: '/pages/index/index?check=1'
+        url: '/pages/index/index?check=' + this.init
       });
     }
   },

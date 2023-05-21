@@ -11,10 +11,10 @@
 			<text v-else>登录</text>
 		</button>
 		<view class="sub">
-			<!-- <uni-link href="https://www.iwara.tv/register">注册账号</uni-link> -->
+			<navigator url="/pages/login/regist">注册账号</navigator>
 		</view>
 		<view class="float">
-			<navigator url="/pages/setup/language">
+			<navigator url="/pages/setup/language?init=1">
 				<view style="padding: 1rem;">
 					<i class="fa-solid fa-language" style="margin-right: 0.4rem;"></i>Language
 				</view>
@@ -123,6 +123,7 @@ button {
 .sub {
 	margin: 1rem;
 	text-align: right;
+	color: #505050;
 }
 
 .float {
@@ -130,6 +131,7 @@ button {
 	position: absolute;
 	bottom: 20px;
 	width: calc(100% - 2rem);
+	color: #505050;
 }
 
 .float-tip {
@@ -140,6 +142,11 @@ button {
 @media (prefers-color-scheme: dark) {
 	.button {
 		color: black;
+	}
+
+	.sub,
+	.float {
+		color: #afafaf;
 	}
 }
 </style>

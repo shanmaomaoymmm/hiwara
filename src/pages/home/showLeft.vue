@@ -23,7 +23,7 @@
 		<view @click="gotoPage('/pages/like/index?tab=0')" class="button">我收藏的视频</view>
 		<view @click="gotoPage('/pages/like/index?tab=1')" class="button">我收藏的图片</view>
 		<!-- <view class="button">历史记录</view> -->
-		<view @click="gotoPage('/pages/setup/index')" class="button">设置</view>
+		<view @click="gotoPage('/pages/setup/index?init=0')" class="button">设置</view>
 		<view @click="logout" class="button">退出登录</view>
 		<view @click="gotoPage('/pages/debug/index')" class="button">debug</view>
 	</view>
@@ -41,6 +41,16 @@ export default {
 	},
 	methods: {
 		logout() {
+			uni.showModal({
+				title: '退出登录',
+				content: '是否退出此账号？\n',
+				confirmColor: '#00897B',
+				success: function (res) {
+					this.logoutopt()
+				}.bind(this)
+			});
+		},
+		logoutopt() {
 			removeStorage('token', () => {
 				uni.reLaunch({
 					url: '/'

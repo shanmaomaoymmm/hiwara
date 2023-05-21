@@ -34,40 +34,46 @@ export default {
     }
   },
   created() {
-    setTimeout(() => {
-      this.logop = -5
-      this.titlep = -4.6
-      this.bottom = 4
-    }, 200)
     if (this.check) {
+      this.anime()
       getAccessToken((at) => {
-        let page = null
         getStorage('token', (ln) => {
           if (ln) {
             if (at) {
-              page = '/pages/home/index'
+              this.gotoPage('/pages/home/index')
             } else {
-              page = '/pages/index/netfail'
+              this.gotoPage('/pages/index/netfail')
             }
           } else {
-            page = '/pages/login/index'
+            setTimeout(() => {
+              this.gotoPage('/pages/login/index')
+            }, 1000)
           }
-          uni.reLaunch({
-            url: page
-          })
         })
       })
     } else {
       getStorage('token', (ln) => {
-        let page = null
         if (ln) {
-          page = '/pages/home/index'
+          this.gotoPage('/pages/home/index')
         } else {
-          page = '/pages/login/index'
+          setTimeout(() => {
+            this.gotoPage('/pages/login/index')
+          }, 1000)
         }
-        uni.reLaunch({
-          url: page
-        })
+      })
+    }
+  },
+  methods: {
+    anime() {
+      setTimeout(() => {
+        this.logop = -5
+        this.titlep = -4.6
+        this.bottom = 4
+      }, 200)
+    },
+    gotoPage(page) {
+      uni.reLaunch({
+        url: page
       })
     }
   }

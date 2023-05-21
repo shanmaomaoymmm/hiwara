@@ -32,22 +32,31 @@
 						<video id="videoPlayer" class="player" :src="src" :title="data.title" vslide-gesture="true"
 							:poster="data.preview" :autoplay="autoplay">
 						</video>
-						<view class="tabs">
-							<view style="flex: 1;">
-								<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">简介</text>
-								<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
-							</view>
-							<view style="flex: 1;text-align: right;">
-								<span class="definitionButton" @click="$refs.definitionPopup.open()">
-									<i class="fa-solid fa-film fa-fw"></i>{{ ' ' }}{{ definition }}
-								</span>
-							</view>
+					</view>
+					<view class="tabs" v-if="!pad">
+						<view style="flex: 1;">
+							<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">简介</text>
+							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
+						</view>
+						<view style="flex: 1;text-align: right;">
+							<span class="definitionButton" @click="$refs.definitionPopup.open()">
+								<i class="fa-solid fa-film fa-fw"></i>{{ ' ' }}{{ definition }}
+							</span>
 						</view>
 					</view>
-					<view class="bottom" @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
+					<!-- pad端 -->
+					<view v-if="pad" class="bottom">
+						<view style="overflow: auto;height: 100%;padding-bottom:1rem ;">
+							<info :pad="pad" :vid="vid" :uid="uid" ref="info" :data="data"></info>
+						</view>
+					</view>
+					<!-- 手机端 -->
+					<view v-else class="bottom" @touchmove="handletouchmove" @touchstart="handletouchstart"
+						@touchend="handletouchend">
 						<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100%' }">
 							<view class="bottom2">
-								<info :pad="pad" :vid="vid" :uid="uid" ref="info"></info>
+								<info :pad="pad" :vid="vid" :uid="uid" ref="info" :data="data"></info>
+								<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
 							</view>
 							<view class="bottom2">
 								<comments :vid="vid"></comments>
@@ -55,7 +64,27 @@
 						</view>
 					</view>
 				</view>
-				<view class="right" v-if="pad">
+				<view class="right" v-if="pad" @touchmove="handletouchmove" @touchstart="handletouchstart"
+					@touchend="handletouchend">
+					<view class="tabs">
+						<view style="flex: 1;">
+							<span class="definitionButton" @click="$refs.definitionPopup.open()">
+								<i class="fa-solid fa-film fa-fw"></i>{{ ' ' }}{{ definition }}
+							</span>
+						</view>
+						<view style="flex: 1;text-align: right;">
+							<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">更多</text>
+							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
+						</view>
+					</view>
+					<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100%' }" style="padding-top: 0.5rem;">
+						<view class="bottom2">
+							<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
+						</view>
+						<view class="bottom2">
+							<comments :vid="vid"></comments>
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -79,15 +108,21 @@
 <script>
 import info from './info.vue'
 import comments from './comments.vue'
+import lists from './lists.vue'
 import {
 	getVideo,
 	getStorage,
-	setStorage
+	setStorage,
+	getVideoListForPlayInfoUser,
+	getVideoListForPlayInfoRelated,
+	fill0,
+	formatDate,
 } from '@/api/api.js'
 export default {
 	components: {
 		info,
-		comments
+		comments,
+		lists,
 	},
 	data() {
 		return {
@@ -109,7 +144,8 @@ export default {
 				liked: null,
 				private: null,
 				preview: null,
-				sources: []
+				sources: [],
+				username: null,
 			},
 			definition: null,
 			//滑动
@@ -118,7 +154,9 @@ export default {
 			lastY: 0,
 			videoContex: null,
 			autoplay: false,
-			pad: false
+			pad: false,
+			authorOpus: [],
+			relatedOpus: [],
 		}
 	},
 	mounted() {
@@ -149,7 +187,6 @@ export default {
 		data() {
 			this.$nextTick(() => {
 				this.initializeVideo(this.data.sources)
-				this.$refs.info.data = this.data
 			})
 		},
 		flag(v) {
@@ -202,6 +239,44 @@ export default {
 				title: this.data.title
 			})
 			this.loading = false
+		})
+		getVideoListForPlayInfoUser(this.vid, this.uid, (res) => {
+			for (let i = 0; i < res.results.length; i++) {
+				let rs = res.results[i]
+				this.authorOpus.push({
+					id: rs.id,
+					label: rs.title,
+					img: rs.file != null ? 'https://i.iwara.tv/image/thumbnail/' + rs.file.id +
+						'/thumbnail-' + fill0(rs.thumbnail, 1) + '.jpg' : '/static/img/nachoneko.jpg',
+					date: this.formatDate(rs.createdAt),
+					author: rs.user.name,
+					avatar: rs.user.avatar != null ? 'https://i.iwara.tv/image/avatar/' + rs.user.avatar
+						.id + '/' + rs.user
+							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+					watch: rs.numViews,
+					like: rs.numLikes,
+					uid: rs.user.id
+				})
+			}
+		})
+		getVideoListForPlayInfoRelated(this.vid, (res) => {
+			for (let i = 0; i < res.results.length; i++) {
+				let rs = res.results[i]
+				this.relatedOpus.push({
+					id: rs.id,
+					label: rs.title,
+					img: rs.file != null ? 'https://i.iwara.tv/image/thumbnail/' + rs.file.id +
+						'/thumbnail-' + fill0(rs.thumbnail, 1) + '.jpg' : '/static/img/nachoneko.jpg',
+					date: this.formatDate(rs.createdAt),
+					author: rs.user.name,
+					avatar: rs.user.avatar != null ? 'https://i.iwara.tv/image/avatar/' + rs.user.avatar
+						.id + '/' + rs.user
+							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+					watch: rs.numViews,
+					like: rs.numLikes,
+					uid: rs.user.id
+				})
+			}
 		})
 	},
 	onHide: function () {
@@ -276,7 +351,10 @@ export default {
 		handletouchend: function (event) {
 			//停止滑动
 			this.flag = 0;
-		}
+		},
+		formatDate(t) {
+			return formatDate(t)
+		},
 	}
 }
 </script>
@@ -304,7 +382,6 @@ export default {
 	z-index: 10;
 	width: 100%;
 	aspect-ratio: 16/9;
-	padding-bottom: 3rem;
 }
 
 
@@ -316,7 +393,7 @@ export default {
 }
 
 .tabs-button {
-	padding: 0.5rem 1.5rem 0.75rem 1.5rem;
+	padding: 0.75rem 1.5rem;
 	display: inline-block;
 	border-bottom: solid 0.125rem #f5f5f5;
 	transition: borderColor 100ms ease;
@@ -346,7 +423,7 @@ export default {
 }
 
 .definitionButton {
-	padding: 0.6rem 1rem 0.7rem 1rem;
+	padding: 0.6rem 1rem;
 	display: inline-block;
 	color: #616161;
 }
@@ -418,6 +495,8 @@ export default {
 	flex: 1;
 	height: 100%;
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
 }
 
 @media (prefers-color-scheme: dark) {

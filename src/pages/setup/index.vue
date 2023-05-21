@@ -36,7 +36,7 @@
         <i class="fa-solid fa-angle-right"></i>
       </view>
     </view>
-    <view class="button" @click="gotoPage('/pages/setup/userInfo')">
+    <view v-if="init == 0" class="button" @click="gotoPage('/pages/setup/userInfo')">
       <view class="button-title">
         修改个人信息
       </view>
@@ -52,8 +52,8 @@
         <i class="fa-solid fa-angle-right"></i>
       </view>
     </view>
-    <view class="button">
-      <view class="button-title" @click="logout()">
+    <view v-if="init == 0" class="button" @click="logout()">
+      <view class="button-title">
         退出登录
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
@@ -65,7 +65,8 @@
 <script>
 import {
   getStorage,
-  setStorage
+  setStorage,
+  removeStorage
 } from '@/api/api'
 export default ({
   data() {
@@ -74,13 +75,17 @@ export default ({
       language: null,
       autoplay: false,
       retry: 16,
+      init: 0,
     }
+  },
+  onLoad: function (opt) {
+    this.init = opt.init
   },
   onNavigationBarButtonTap(e) {
     console.log(e)
     if (e.type == 'home') {
       uni.reLaunch({
-        url: '/pages/index/index?check=1'
+        url: '/pages/index/index?check=' + this.init
       });
     }
   },
@@ -116,7 +121,7 @@ export default ({
     },
     gotoPage(url) {
       uni.navigateTo({
-        url: url,
+        url: url + '?init=' + this.init,
         animationType: 'slide-in-right',
         animationDuration: 100
       });
@@ -142,12 +147,22 @@ export default ({
       });
     },
     logout() {
+      uni.showModal({
+        title: '退出登录',
+        content: '是否退出此账号？\n',
+        confirmColor: '#00897B',
+        success: function (res) {
+          this.logoutopt()
+        }.bind(this)
+      });
+    },
+    logoutopt() {
       removeStorage('token', () => {
         uni.reLaunch({
           url: '/'
         });
       })
-    },
+    }
   }
 })
 </script>

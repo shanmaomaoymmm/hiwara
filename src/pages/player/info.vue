@@ -73,49 +73,19 @@
 				</view>
 			</view>
 		</view>
-		<view v-if="!pad">
-			<view style="padding:0.5rem 1rem;">
-				<text>该作者的其他作品</text>
-			</view>
-			<lists :data="authorOpus" type="video"></lists>
-			<view style="padding:0.5rem 1rem;width: 100%;">
-				<text>相关作品</text>
-			</view>
-			<lists :data="relatedOpus" type="video"></lists>
-		</view>
 	</view>
 </template>
 
 <script>
-import lists from '@/pages/lists/index.vue'
+// import lists from '@/pages/lists/index.vue'
 import {
 	formatDate,
-	getVideoListForPlayInfoUser,
-	getVideoListForPlayInfoRelated,
-	fill0,
 	followers,
 	likeVideo
 } from '@/api/api.js'
 export default {
-	components: {
-		lists
-	},
 	data() {
 		return {
-			data: {
-				title: null,
-				author: null,
-				avatar: null,
-				synopsis: null,
-				date: null,
-				numView: 0,
-				numLikes: 0,
-				liked: false,
-				private: false,
-				following: false,
-				sources: [],
-				username: null,
-			},
 			allinfo: false,
 			height: {
 				title1: null,
@@ -127,7 +97,7 @@ export default {
 			relatedOpus: [],
 		}
 	},
-	props: ['vid', 'uid', 'pad'],
+	props: ['vid', 'uid', 'pad', 'data'],
 	watch: {
 		data: {
 			handler() {
@@ -140,46 +110,6 @@ export default {
 	},
 	onBackPress: () => {
 		console.log('onBackPress')
-	},
-	created() {
-		getVideoListForPlayInfoUser(this.vid, this.uid, (res) => {
-			for (let i = 0; i < res.results.length; i++) {
-				let rs = res.results[i]
-				this.authorOpus.push({
-					id: rs.id,
-					label: rs.title,
-					img: rs.file != null ? 'https://i.iwara.tv/image/thumbnail/' + rs.file.id +
-						'/thumbnail-' + fill0(rs.thumbnail, 1) + '.jpg' : '/static/img/nachoneko.jpg',
-					date: this.formatDate(rs.createdAt),
-					author: rs.user.name,
-					avatar: rs.user.avatar != null ? 'https://i.iwara.tv/image/avatar/' + rs.user.avatar
-						.id + '/' + rs.user
-							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-					watch: rs.numViews,
-					like: rs.numLikes,
-					uid: rs.user.id
-				})
-			}
-		})
-		getVideoListForPlayInfoRelated(this.vid, (res) => {
-			for (let i = 0; i < res.results.length; i++) {
-				let rs = res.results[i]
-				this.relatedOpus.push({
-					id: rs.id,
-					label: rs.title,
-					img: rs.file != null ? 'https://i.iwara.tv/image/thumbnail/' + rs.file.id +
-						'/thumbnail-' + fill0(rs.thumbnail, 1) + '.jpg' : '/static/img/nachoneko.jpg',
-					date: this.formatDate(rs.createdAt),
-					author: rs.user.name,
-					avatar: rs.user.avatar != null ? 'https://i.iwara.tv/image/avatar/' + rs.user.avatar
-						.id + '/' + rs.user
-							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-					watch: rs.numViews,
-					like: rs.numLikes,
-					uid: rs.user.id
-				})
-			}
-		})
 	},
 	methods: {
 		setHeight() {
