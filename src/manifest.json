@@ -2,8 +2,8 @@
     "name" : "Hiwara",
     "appid" : "__UNI__9B9DA16",
     "description" : "",
-    "versionName" : "0.0.7",
-    "versionCode" : 7,
+    "versionName" : "0.0.8",
+    "versionCode" : 8,
     "transformPx" : false,
     "app-plus" : {
         "darkmode" : true,
@@ -46,7 +46,8 @@
                     "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
-                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ]
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a", "x86" ],
+                "autoSdkPermissions" : true
             },
             "ios" : {
                 "dSYMs" : false
@@ -138,5 +139,11 @@
         }
     },
     "locale" : "auto",
-    "fallbackLocale" : "zh-Hans"
+    "fallbackLocale" : "zh-Hans",
+    "orientation" : [
+        "portrait-primary",
+        "portrait-secondary",
+        "landscape-primary",
+        "landscape-secondary"
+    ]
 }

@@ -13,13 +13,11 @@ export default {
   },
   props: ['src'],
   created() {
-    console.log(this.src)
     this.path = this.src
   },
   watch: {
     src: function (n) {
       this.path = n
-      console.log(n)
     }
   },
   methods: {
@@ -39,7 +37,7 @@ export default {
 }
 
 .img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
 }
 </style>

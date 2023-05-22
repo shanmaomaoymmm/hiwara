@@ -32,6 +32,9 @@ export default {
     this.i = e.index
     console.log(this.i)
     this.img = this.data.files[this.i]
+    uni.setNavigationBarTitle({
+      title: this.data.title
+    })
   },
 }
 </script>

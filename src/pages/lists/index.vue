@@ -18,8 +18,9 @@ export default {
 	},
 	data() {
 		return {
-			col: 2,
+			col: 0,
 			limit: 24,
+			ori: false,
 		}
 	},
 	props: ['data', 'type', 'scol'],
@@ -30,20 +31,39 @@ export default {
 			let media = uni.createMediaQueryObserver(this)
 			media.observe({
 				minWidth: 0,
-				maxWidth: 500
+				maxWidth: 425
 			}, (res) => {
 				if (res) {
-					console.log('1:' + res)
 					this.col = 2
 				}
 			})
 			media.observe({
-				minWidth: 501
+				minWidth: 426,
+				maxWidth: 767
 			}, (res) => {
 				if (res) {
-					console.log('2:' + res)
+					this.col = 3
+				}
+			})
+			media.observe({
+				minWidth: 768,
+				maxWidth: 1024
+			}, (res) => {
+				if (res) {
 					this.col = 4
 				}
+			})
+			media.observe({
+				minWidth: 1025,
+			}, (res) => {
+				if (res) {
+					this.col = 6
+				}
+			})
+			media.observe({
+				orientation: 'landscape'
+			}, (res) => {
+				this.ori = res
 			})
 		}
 	},

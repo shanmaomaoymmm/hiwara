@@ -2,17 +2,26 @@
 export default {
   onLaunch: function () {
     console.log("App Launch");
-    // 检测系统暗黑模式
-    uni.onThemeChange(function (res) {
-      console.log(res.theme);
-    });
+    //  #ifdef APP-PLUS
+    uni.getSystemInfo({
+      success: (res) => {
+        if (res.deviceType == 'phone') {
+          plus.screen.lockOrientation("portrait-primary")
+        } else if (res.deviceType == 'unknown') {
+          if (Math.min(res.screenHeight, res.screenWidth) < 768) {
+            plus.screen.lockOrientation("portrait-primary")
+          }
+        }
+      }
+    })
+    // #endif
   },
   onShow: function () {
     console.log("App Show");
   },
   onHide: function () {
     console.log("App Hide");
-  },
+  }
 };
 </script>
 

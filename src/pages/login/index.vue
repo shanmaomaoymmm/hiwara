@@ -1,5 +1,5 @@
 <template>
-	<view class="panel">
+	<view class="panel" :style="{ width: (pad && ori) ? '50%' : 'calc(100% - 2rem)' }">
 		<view class="title">登录到你的iwara账号</view>
 		<input class="input" :disabled="disabled" v-model="username" placeholder="请输入账号" />
 		<input class="input" :disabled="disabled" v-model="passwd" password="password" placeholder="请输入密码" />
@@ -40,6 +40,8 @@ export default {
 			username: null,
 			passwd: null,
 			disabled: false,
+			pad: false,
+			ori: false
 		}
 	},
 	created() {
@@ -52,6 +54,24 @@ export default {
 			if (res) {
 				this.passwd = res
 			}
+		})
+	},
+	mounted() {
+		let media = uni.createMediaQueryObserver(this)
+		media.observe({
+			minWidth: 768,
+			minHeight: 768
+		}, (res) => {
+			if (res) {
+				this.pad = true
+			} else {
+				this.pad = false
+			}
+		})
+		media.observe({
+			orientation: 'landscape'
+		}, (res) => {
+			this.ori = res
 		})
 	},
 	methods: {
@@ -101,7 +121,12 @@ export default {
 
 <style scoped>
 .panel {
-	padding: 8vh 1rem
+	padding: 8vh 1rem;
+	margin: 0 auto;
+	width: calc(100% - 2rem);
+	position: relative;
+	height: calc(100% - 16vh);
+	transition: width 100ms ease;
 }
 
 .title {

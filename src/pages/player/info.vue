@@ -97,7 +97,7 @@ export default {
 			relatedOpus: [],
 		}
 	},
-	props: ['vid', 'uid', 'pad', 'data'],
+	props: ['vid', 'uid', 'data'],
 	watch: {
 		data: {
 			handler() {

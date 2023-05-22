@@ -293,7 +293,7 @@
 		"navigationBarTextStyle": "@navTxtStyle",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "@navBgColor",
-		"pageOrientation": "auto",
+		// "pageOrientation": "auto",
 		"app-plus": {
 			"bounce": "none"
 		}

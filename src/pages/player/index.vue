@@ -23,17 +23,13 @@
 				</view>
 			</view>
 			<view v-show="!error" style="display: flex;height: 100%;">
-				<!-- <view class="back">
-					<i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
-					<i @click="back(0)" class="fa-solid fa-house backButton"></i>
-				</view> -->
 				<view class="main">
 					<view class="top">
 						<video id="videoPlayer" class="player" :src="src" :title="data.title" vslide-gesture="true"
 							:poster="data.preview" :autoplay="autoplay">
 						</video>
 					</view>
-					<view class="tabs" v-if="!pad">
+					<view class="tabs" v-if="!(ori && pad)">
 						<view style="flex: 1;">
 							<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">简介</text>
 							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
@@ -44,28 +40,26 @@
 							</span>
 						</view>
 					</view>
-					<!-- pad端 -->
-					<view v-if="pad" class="bottom">
+					<view v-if="ori && pad" class="bottom">
 						<view style="overflow: auto;height: 100%;padding-bottom:1rem ;">
-							<info :pad="pad" :vid="vid" :uid="uid" ref="info" :data="data"></info>
+							<info :vid="vid" :uid="uid" ref="info" :data="data"></info>
 						</view>
 					</view>
-					<!-- 手机端 -->
-					<view v-else class="bottom" @touchmove="handletouchmove" @touchstart="handletouchstart"
-						@touchend="handletouchend">
-						<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100%' }">
-							<view class="bottom2">
-								<info :pad="pad" :vid="vid" :uid="uid" ref="info" :data="data"></info>
-								<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
-							</view>
-							<view class="bottom2">
+					<view v-else class="bottom">
+						<swiper style="height: 100%;" :current="tab" @change="swiper" :duration="100">
+							<swiper-item>
+								<view style="height: 100%;overflow: auto;">
+									<info :vid="vid" :uid="uid" ref="info" :data="data"></info>
+									<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
+								</view>
+							</swiper-item>
+							<swiper-item>
 								<comments :vid="vid"></comments>
-							</view>
-						</view>
+							</swiper-item>
+						</swiper>
 					</view>
 				</view>
-				<view class="right" v-if="pad" @touchmove="handletouchmove" @touchstart="handletouchstart"
-					@touchend="handletouchend">
+				<view class="right" v-if="ori && pad">
 					<view class="tabs">
 						<view style="flex: 1;">
 							<span class="definitionButton" @click="$refs.definitionPopup.open()">
@@ -77,14 +71,16 @@
 							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
 						</view>
 					</view>
-					<view class="bottom1" :style="{ left: tab == 0 ? 0 : '-100%' }" style="padding-top: 0.5rem;">
-						<view class="bottom2">
-							<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
-						</view>
-						<view class="bottom2">
+					<swiper style="height: 100%;" :current="tab" @change="swiper" :duration="100">
+						<swiper-item>
+							<view style="height: 100%;overflow: auto;">
+								<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
+							</view>
+						</swiper-item>
+						<swiper-item>
 							<comments :vid="vid"></comments>
-						</view>
-					</view>
+						</swiper-item>
+					</swiper>
 				</view>
 			</view>
 		</view>
@@ -148,35 +144,30 @@ export default {
 				username: null,
 			},
 			definition: null,
-			//滑动
-			flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
-			lastX: 0,
-			lastY: 0,
 			videoContex: null,
 			autoplay: false,
-			pad: false,
 			authorOpus: [],
 			relatedOpus: [],
+			pad: false,
+			ori: false,
 		}
 	},
 	mounted() {
 		let media = uni.createMediaQueryObserver(this)
 		media.observe({
-			minWidth: 0,
-			maxWidth: 500
+			minWidth: 768,
+			minHeight: 768
 		}, (res) => {
 			if (res) {
-				console.log('1:' + res)
+				this.pad = true
+			}else{
 				this.pad = false
 			}
 		})
 		media.observe({
-			minWidth: 501
+			orientation: 'landscape'
 		}, (res) => {
-			if (res) {
-				console.log('2:' + res)
-				this.pad = true
-			}
+			this.ori = res
 		})
 	},
 	onLoad: function (opt) {
@@ -186,20 +177,10 @@ export default {
 	watch: {
 		data() {
 			this.$nextTick(() => {
+				this.autoplay = true
 				this.initializeVideo(this.data.sources)
 			})
 		},
-		flag(v) {
-			if (v == 1) {
-				this.tab = 1
-			} else if (v == 2) {
-				if (this.tab == 1) {
-					this.tab = 0
-				} else {
-					this.back(1)
-				}
-			}
-		}
 	},
 	onNavigationBarButtonTap(e) {
 		console.log(e)
@@ -306,51 +287,8 @@ export default {
 				});
 			}
 		},
-		handletouchmove: function (event) {
-			// console.log(event)
-			if (this.flag !== 0) {
-				return;
-			}
-			let currentX = event.changedTouches[0].pageX;
-			let currentY = event.changedTouches[0].pageY;
-			let tx = currentX - this.lastX;
-			let ty = currentY - this.lastY;
-			let sensitivity = 10
-			//调节灵敏度
-			if (Math.abs(tx) > Math.abs(ty) + sensitivity) {
-				//左右方向滑动
-				if (Math.abs(tx) > Math.abs(ty)) {
-					if (tx < 0) {
-						// 向左滑动
-						this.flag = 1;
-
-					} else if (tx > 0) {
-						//向右滑动 
-						this.flag = 2;
-					}
-				}
-				//上下方向滑动
-				else {
-					if (ty < 0) {
-						//向上滑动
-						this.flag = 3;
-					} else if (ty > 0) {
-						//向下滑动
-						this.flag = 4;
-					}
-				}
-			}
-			//将当前坐标进行保存以进行下一次计算
-			this.lastX = currentX;
-			this.lastY = currentY;
-		},
-		handletouchstart: function (event) {
-			this.lastX = event.changedTouches[0].pageX;
-			this.lastY = event.changedTouches[0].pageY;
-		},
-		handletouchend: function (event) {
-			//停止滑动
-			this.flag = 0;
+		swiper: function (t) {
+			this.tab = t.detail.current
 		},
 		formatDate(t) {
 			return formatDate(t)

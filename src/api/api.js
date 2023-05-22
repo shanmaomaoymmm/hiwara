@@ -227,7 +227,8 @@ export function getVideoList(index, cb) {
 	let data = {
 		sort: 'date',
 		rating: 'all',
-		page: index
+		page: index,
+		limit: 24
 	}
 	creatHeader((h) => {
 		ajax(api + '/videos', data, h, 'GET', (res, code) => {
@@ -241,7 +242,8 @@ export function getImageList(index, cb) {
 	let data = {
 		sort: 'date',
 		rating: 'all',
-		page: index
+		page: index,
+		limit: 24,
 	}
 	creatHeader((h) => {
 		ajax(api + '/images', data, h, 'GET', (res, code) => {
@@ -517,7 +519,8 @@ export function getVideoListForUser(index, uid, cb) {
 	let data = {
 		sort: 'date',
 		page: index,
-		user: uid
+		user: uid,
+		limit: 24,
 	}
 	creatHeader((h) => {
 		ajax(api + '/videos', data, h, 'GET', (res, code) => {
@@ -531,7 +534,8 @@ export function getImageListForUser(index, uid, cb) {
 	let data = {
 		sort: 'date',
 		page: index,
-		user: uid
+		user: uid,
+		limit: 24,
 	}
 	creatHeader((h) => {
 		ajax(api + '/images', data, h, 'GET', (res, code) => {
@@ -591,7 +595,8 @@ export function search(type, query, page, cb) {
 	let data = {
 		type: type,
 		query: query,
-		page: page
+		page: page,
+		limit: 24,
 	}
 	ajax(api + '/search', data, null, 'GET', (res, code) => {
 		cb(res, code)
