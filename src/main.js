@@ -61,4 +61,6 @@ Vue.prototype.$languageList = [
 
 /**全局组件 */
 import qImg from '@/pages/component/q-img.vue'
+import qAvatar from '@/pages/component/q-avatar.vue'
 Vue.component('q-img', qImg)
+Vue.component('q-avatar', qAvatar)

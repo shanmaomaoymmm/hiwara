@@ -135,6 +135,8 @@
 			"path": "pages/image/fill",
 			"style": {
 				"navigationBarTitleText": "",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#292929",
 				"enablePullDownRefresh": false,
 				"app-plus": {
 					"titleNView": {

@@ -438,7 +438,8 @@ export default {
 .picture {
 	width: 100%;
 	background-color: #0006;
-	min-height: 6rem;
+	aspect-ratio: 16/9;
+	color: #c0c0c0;
 }
 
 .unfold {
@@ -547,7 +548,8 @@ button {
 		background-color: #10101066;
 	}
 
-	.main.right {
+	.main,
+	.right {
 		color: #ddd;
 	}
 

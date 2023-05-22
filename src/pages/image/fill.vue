@@ -1,18 +1,16 @@
 <template>
   <view class="fill">
-    <view style="flex: 1;">
-      <swiper style="height: 100%;" :current="i">
-        <swiper-item v-for="item in data.files" style="display: flex;flex-direction: column;height: 100%;">
-          <view style="flex: 1;"></view>
-          <view>
-            <q-img class="img" :src="item" />
-          </view>
-          <view style="flex: 1;"></view>
-        </swiper-item>
-      </swiper>
-    </view>
-    <view>
-
+    <swiper style="height: 100%;" @change="swiper" :current="i">
+      <swiper-item v-for="item in data.files" style="display: flex;flex-direction: column;height: 100%;">
+        <view style="flex: 1;"></view>
+        <view>
+          <q-img class="img" :src="item" />
+        </view>
+        <view style="flex: 1;"></view>
+      </swiper-item>
+    </swiper>
+    <view class="tips">
+      第{{ ' ' + (p + 1) + '/' + data.files.length + ' ' }}P
     </view>
   </view>
 </template>
@@ -22,6 +20,7 @@ export default {
     return {
       img: null,
       i: 1,
+      p: 0,
       data: {
         files: []
       }
@@ -36,6 +35,11 @@ export default {
       title: this.data.title
     })
   },
+  methods: {
+    swiper: function (t) {
+      this.p = t.detail.current
+    },
+  }
 }
 </script>
 <style scoped>
@@ -44,8 +48,6 @@ export default {
   height: 100%;
   background-color: black;
   text-align: center;
-  display: flex;
-  flex-direction: column;
   font-size: 0;
 }
 
@@ -56,5 +58,13 @@ export default {
 .img {
   max-width: 100%;
   max-height: 100%;
+}
+
+.tips {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  color: #fff;
+  font-size: 1rem;
 }
 </style>

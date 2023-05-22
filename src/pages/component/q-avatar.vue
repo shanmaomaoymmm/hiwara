@@ -1,13 +1,10 @@
 <template>
   <view class="qimg" @click="$emit('click')">
-    <view style="flex: 1;"></view>
-    <view>
-      <view v-show="loading" class="loading">
-        <i class="fa-brands fa-digital-ocean "></i>
-      </view>
-      <img v-show="!loading" class="img" :src="path" @load="imgLoad()" @error="imgError()" />
+    <view v-show="show" :class="error ? 'error' : 'loading'">
+      <i v-if="error" class="fa-solid fa-circle-user"></i>
+      <i v-else class="fa-brands fa-digital-ocean"></i>
     </view>
-    <view style="flex: 1;"></view>
+    <img v-show="!show" class="img" :src="path" @load="imgLoad()" @error="imgError()" />
   </view>
 </template>
 <script>
@@ -15,8 +12,8 @@ export default {
   data() {
     return {
       path: null,
-      def: '/static/img/not-img.jpg',
-      loading: true,
+      show: true,
+      error: false,
     }
   },
   props: ['src'],
@@ -30,10 +27,10 @@ export default {
   },
   methods: {
     imgLoad() {
-      this.loading = false
+      this.show = false
     },
     imgError() {
-      this.path = this.def
+      this.error = true
     },
   }
 }
@@ -44,20 +41,21 @@ export default {
   text-align: center;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
 }
 
 .img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.loading,
+.error {
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .loading {
-  font-size: 2rem;
-  text-align: center;
-  line-height: 100%;
-  height: 100%;
   animation: rotate 175ms steps(1) infinite;
 }
 

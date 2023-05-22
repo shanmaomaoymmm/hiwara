@@ -7,7 +7,7 @@
 			</view>
 			<view style="display: flex;padding: 0.1rem 0;">
 				<view>
-					<img class="avatar" :src="item.avatar" />
+					<q-avatar class="avatar" :src="item.avatar" />
 				</view>
 				<view
 					style="flex: 1;font-size: 0.8rem;padding: 0 0.3rem;line-height: 1rem;overflow: hidden;text-overflow: ellipsis;">
