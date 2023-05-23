@@ -157,9 +157,14 @@ export default ({
       });
     },
     logoutopt() {
+      uni.showToast({
+				title: '已退出登录',
+				icon: 'none',
+				duration: 3000
+			});
       removeStorage('token', () => {
         uni.reLaunch({
-          url: '/'
+          url: '/pages/index/index'
         });
       })
     }

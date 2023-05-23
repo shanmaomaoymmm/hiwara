@@ -10,7 +10,11 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": false
+				}
 			}
 		},
 		{
@@ -18,7 +22,7 @@
 			"style": {
 				"navigationBarTitleText": "网络连接错误",
 				"enablePullDownRefresh": false,
-				"app-plus":{
+				"app-plus": {
 					"bounce": "none"
 				}
 			}
@@ -28,7 +32,7 @@
 			"style": {
 				"navigationBarTitleText": "登录",
 				"enablePullDownRefresh": false,
-				"app-plus":{
+				"app-plus": {
 					"bounce": "none"
 				}
 			}
@@ -302,6 +306,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "@navTxtStyle",
 		"navigationBarTitleText": "Hiwara",
-		"navigationBarBackgroundColor": "@navBgColor"
+		"navigationBarBackgroundColor": "@navBgColor",
+		"pageOrientation": "auto"
 	}
 }

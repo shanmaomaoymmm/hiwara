@@ -1,7 +1,7 @@
 <template>
   <view>
     <view v-if="check">
-      <view style="text-align: center;padding-top:14vh">
+      <view style="text-align: center;padding-top:18vh">
         <image src="@/static/logo-dev.png" class="logo" :style="{ 'left': logop + 'rem' }"></image>
         <br />
         <view class="lable" :style="{ 'right': titlep + 'rem' }">
