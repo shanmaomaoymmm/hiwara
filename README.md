@@ -1,12 +1,18 @@
 # hiwara
 
+![GitHub](https://img.shields.io/github/license/shanmaomaoymmm/hiwara)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/shanmaomaoymmm/hiwara?include_prereleases)
+![GitHub issues](https://img.shields.io/github/issues/shanmaomaoymmm/hiwara)
+![GitHub repo size](https://img.shields.io/github/repo-size/shanmaomaoymmm/hiwara)
+![GitHub Repo stars](https://img.shields.io/github/stars/shanmaomaoymmm/hiwara?style=social)
+
 基于uniapp的iwara应用
 
 <img src="./edit/img/logo.png" style="width:128px;height:128px" />
 
 兼容新版iwara客户端，支持Android，iOS和Web端
 
-正在开发中，目前还不提供安装包
+正在开发中，[Android安装包](https://github.com/shanmaomaoymmm/hiwara/releases)仅供测试使用，不代表最终成品效果
 
 如果想拿来玩玩的话下HBuilderX编译就行
 
@@ -67,6 +73,8 @@ i站hosts直通
 2606:4700::6812:33f www.erolabs.com
 2606:4700::6812:9ca www.ero-labs.com
 ```
+
+计划支持多语种，如果有翻译大佬希望能够协助（如果没有就只能靠机翻力）
 
 ## 关注永雏塔菲喵！
 ## 关注永雏塔菲谢谢喵！
