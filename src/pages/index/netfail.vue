@@ -25,7 +25,7 @@
       </view>
     </view>
     <view>
-      <button @click="retry">
+      <button @click="retry()">
         重试
       </button>
       <button @click="setup()">

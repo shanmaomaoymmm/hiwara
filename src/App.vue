@@ -5,10 +5,11 @@ export default {
     //  #ifdef APP-PLUS
     uni.getSystemInfo({
       success: (res) => {
+        console.log(res)
         if (res.deviceType == 'phone') {
           plus.screen.lockOrientation("portrait-primary")
         } else if (res.deviceType == 'unknown') {
-          if (Math.min(res.screenHeight, res.screenWidth) < 768) {
+          if (Math.min(res.screenHeight, res.screenWidth) < 582) {
             plus.screen.lockOrientation("portrait-primary")
           }
         }

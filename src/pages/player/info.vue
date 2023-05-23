@@ -98,28 +98,18 @@ export default {
 		}
 	},
 	props: ['vid', 'uid', 'data'],
-	watch: {
-		data: {
-			handler() {
-				this.$nextTick(() => {
-					this.setHeight()
-				})
-			},
-			immediate: true
-		},
-	},
-	onBackPress: () => {
-		console.log('onBackPress')
+	mounted() {
+		this.setHeight()
 	},
 	methods: {
 		setHeight() {
-			uni.createSelectorQuery().in(this).select("#title1").boundingClientRect(data => {
+			uni.createSelectorQuery().in(this).select('#title1').boundingClientRect(data => {
 				this.height.title1 = data.height + 'px'
 			}).exec()
-			uni.createSelectorQuery().in(this).select("#title2").boundingClientRect(data => {
+			uni.createSelectorQuery().in(this).select('#title2').boundingClientRect(data => {
 				this.height.title2 = data.height + 'px'
 			}).exec()
-			uni.createSelectorQuery().in(this).select("#synopsis").boundingClientRect(data => {
+			uni.createSelectorQuery().in(this).select('#synopsis').boundingClientRect(data => {
 				this.height.synopsis = data.height + 'px'
 			}).exec()
 		},

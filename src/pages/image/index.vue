@@ -174,8 +174,8 @@ export default {
 	mounted() {
 		let media = uni.createMediaQueryObserver(this)
 		media.observe({
-			minWidth: 768,
-			minHeight: 768
+			minWidth: 582,
+			minHeight: 582
 		}, (res) => {
 			if (res) {
 				this.pad = true

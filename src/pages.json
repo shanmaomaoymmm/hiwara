@@ -135,7 +135,7 @@
 			"path": "pages/image/fill",
 			"style": {
 				"navigationBarTitleText": "",
-				"navigationBarTextStyle": "white",
+				"navigationBarTextStyle": "#dddddd",
 				"navigationBarBackgroundColor": "#292929",
 				"enablePullDownRefresh": false,
 				"app-plus": {
@@ -295,7 +295,6 @@
 		"navigationBarTextStyle": "@navTxtStyle",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "@navBgColor",
-		// "pageOrientation": "auto",
 		"app-plus": {
 			"bounce": "none"
 		}

@@ -1,12 +1,12 @@
 <template>
 	<view style="height: 100%;">
-		<view v-show="loading" style="text-align: center;padding-top: 40vh;">
+		<view v-if="loading" style="text-align: center;padding-top: 40vh;">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
 			<text>资源加载中……</text>
 		</view>
-		<view v-show="!loading" style="height: 100%;">
-			<view v-show="error" class="error">
+		<view v-else style="height: 100%;">
+			<view v-if="error" class="error">
 				<view v-if="error == 1">
 					<image src="@/static/icon/leaves-two.png" style="width: 4rem;height: 4rem;"></image>
 					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
@@ -22,7 +22,7 @@
 					<text>这里没有任何东西，请到别的地方看看吧</text>
 				</view>
 			</view>
-			<view v-show="!error" style="display: flex;height: 100%;">
+			<view v-else style="display: flex;height: 100%;">
 				<view class="main">
 					<view class="top">
 						<video id="videoPlayer" class="player" :src="src" :title="data.title" vslide-gesture="true"
@@ -40,16 +40,15 @@
 							</span>
 						</view>
 					</view>
-					<view v-if="ori && pad" class="bottom">
-						<view style="overflow: auto;height: 100%;padding-bottom:1rem ;">
+					<view class="bottom">
+						<view v-if="ori && pad" style="overflow: auto;height: 100%;padding-bottom:1rem ;">
 							<info :vid="vid" :uid="uid" ref="info" :data="data"></info>
 						</view>
-					</view>
-					<view v-else class="bottom">
-						<swiper style="height: 100%;" :current="tab" @change="swiper" :duration="100">
+						<swiper v-else style="height: 100%;" :current="tab" @change="swiper" :duration="100">
 							<swiper-item>
 								<view style="height: 100%;overflow: auto;">
-									<info :vid="vid" :uid="uid" ref="info" :data="data"></info>
+									<info :vid="vid" :uid="uid" ref="info" :data="data">
+									</info>
 									<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
 								</view>
 							</swiper-item>
@@ -155,12 +154,12 @@ export default {
 	mounted() {
 		let media = uni.createMediaQueryObserver(this)
 		media.observe({
-			minWidth: 768,
-			minHeight: 768
+			minWidth: 582,
+			minHeight: 582
 		}, (res) => {
 			if (res) {
 				this.pad = true
-			}else{
+			} else {
 				this.pad = false
 			}
 		})
@@ -177,7 +176,6 @@ export default {
 	watch: {
 		data() {
 			this.$nextTick(() => {
-				this.autoplay = true
 				this.initializeVideo(this.data.sources)
 			})
 		},
@@ -422,7 +420,7 @@ export default {
 }
 
 .main {
-	flex: 2;
+	flex: 7;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
@@ -430,7 +428,7 @@ export default {
 }
 
 .right {
-	flex: 1;
+	flex: 4;
 	height: 100%;
 	overflow: hidden;
 	display: flex;
