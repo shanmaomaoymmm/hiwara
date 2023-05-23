@@ -58,6 +58,9 @@ export default {
   text-align: center;
   line-height: 100%;
   height: 100%;
+}
+
+.fa-digital-ocean {
   animation: rotate 175ms steps(1) infinite;
 }
 

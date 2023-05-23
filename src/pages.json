@@ -17,14 +17,20 @@
 			"path": "pages/index/netfail",
 			"style": {
 				"navigationBarTitleText": "网络连接错误",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"app-plus":{
+					"bounce": "none"
+				}
 			}
 		},
 		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"app-plus":{
+					"bounce": "none"
+				}
 			}
 		},
 		{
@@ -40,6 +46,7 @@
 				"enablePullDownRefresh": true,
 				"onReachBottonDistance": 100,
 				"app-plus": {
+					"bounce": "none",
 					"pullToRefresh": {
 						"support": true,
 						"style": "circle",
@@ -103,6 +110,7 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
+					"bounce": "none",
 					"titleNView": {
 						"buttons": [
 							{
@@ -135,7 +143,7 @@
 			"path": "pages/image/fill",
 			"style": {
 				"navigationBarTitleText": "",
-				"navigationBarTextStyle": "#dddddd",
+				"navigationBarTextStyle": "white",
 				"navigationBarBackgroundColor": "#292929",
 				"enablePullDownRefresh": false,
 				"app-plus": {
@@ -293,10 +301,7 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "@navTxtStyle",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "@navBgColor",
-		"app-plus": {
-			"bounce": "none"
-		}
+		"navigationBarTitleText": "Hiwara",
+		"navigationBarBackgroundColor": "@navBgColor"
 	}
 }

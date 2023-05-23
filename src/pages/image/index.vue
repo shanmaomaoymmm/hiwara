@@ -101,7 +101,7 @@
 								</view>
 							</view>
 						</view>
-						<view v-if="!ori && pad">
+						<view v-if="!(ori && pad)">
 							<view style="padding: 0 0.5rem;">
 								<view
 									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
@@ -408,7 +408,7 @@ export default {
 
 .panel {
 	backdrop-filter: blur(10px);
-	min-height: calc(100vh - 4.5rem);
+	height: calc(100vh - var(--window-top));
 	background-color: #f5f5f510;
 	display: flex;
 }
@@ -417,14 +417,14 @@ export default {
 	padding-top: 0.2rem;
 	color: #333;
 	flex: 2;
-	overflow: hidden;
+	overflow: auto;
 }
 
 .right {
 	flex: 1;
 	padding-top: 0.2rem;
 	color: #333;
-	overflow: hidden;
+	overflow: auto;
 }
 
 .pictures {

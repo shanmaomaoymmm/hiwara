@@ -1,10 +1,10 @@
 <template>
-  <view class="qimg" @click="$emit('click')">
-    <view v-show="show" :class="error ? 'error' : 'loading'">
-      <i v-if="error" class="fa-solid fa-circle-user"></i>
-      <i v-else class="fa-brands fa-digital-ocean"></i>
+  <view class="avatar">
+    <view class="tips" v-if="!show">
+      <i v-if="error" class="fa-solid fa-circle-user error"></i>
+      <i v-else class="fa-brands fa-digital-ocean loading"></i>
     </view>
-    <img v-show="!show" class="img" :src="path" @load="imgLoad()" @error="imgError()" />
+    <img v-show="show" :src="path" @error="imgError" />
   </view>
 </template>
 <script>
@@ -12,7 +12,7 @@ export default {
   data() {
     return {
       path: null,
-      show: true,
+      show: false,
       error: false,
     }
   },
@@ -27,35 +27,39 @@ export default {
   },
   methods: {
     imgLoad() {
-      this.show = false
+      this.show = true
     },
     imgError() {
+      this.show = false
       this.error = true
     },
   }
 }
 </script>
 <style scoped>
-.qimg {
-  font-size: 0;
-  text-align: center;
-  width: 100%;
+.avatar {
   height: 100%;
+  width: 100%;
+  font-size: 0;
   overflow: hidden;
 }
 
-.img {
-  width: 100%;
-  height: 100%;
+.tips {
+  text-align: center;
+  height: inherit;
+  width: inherit;
+  display: flex;
+  align-items: center;
 }
 
-.loading,
 .error {
-  font-size: 1.5rem;
-  text-align: center;
+  width: 100%;
+  font-size: 2rem;
 }
 
 .loading {
+  width: 100%;
+  font-size: 1.2rem;
   animation: rotate 175ms steps(1) infinite;
 }
 
