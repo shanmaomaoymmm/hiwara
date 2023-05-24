@@ -99,6 +99,7 @@ export default {
 	},
 	props: ['vid', 'uid', 'data'],
 	mounted() {
+		console.log('INFO！')
 		this.setHeight()
 	},
 	methods: {

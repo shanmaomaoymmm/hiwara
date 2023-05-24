@@ -39,14 +39,14 @@ export default {
 			})
 			media.observe({
 				minWidth: 426,
-				maxWidth: 581
+				maxWidth: 768
 			}, (res) => {
 				if (res) {
 					this.col = 3
 				}
 			})
 			media.observe({
-				minWidth: 582,
+				minWidth: 769,
 				maxWidth: 1199
 			}, (res) => {
 				if (res) {

@@ -107,12 +107,12 @@
 									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
 									更多来自用户
 								</view>
-								<lists :scol="2" :data="authorOpus" type="image"></lists>
+								<lists :data="authorOpus" type="image"></lists>
 								<view
 									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
 									更像这样
 								</view>
-								<lists :scol="2" :data="relatedOpus" type="image"></lists>
+								<lists :data="relatedOpus" type="image"></lists>
 							</view>
 						</view>
 					</view>
@@ -174,16 +174,6 @@ export default {
 	mounted() {
 		let media = uni.createMediaQueryObserver(this)
 		media.observe({
-			minWidth: 582,
-			minHeight: 582
-		}, (res) => {
-			if (res) {
-				this.pad = true
-			} else {
-				this.pad = false
-			}
-		})
-		media.observe({
 			orientation: 'landscape'
 		}, (res) => {
 			this.ori = res
@@ -200,6 +190,11 @@ export default {
 		}
 	},
 	created() {
+		if (this.$deviceType == 'phone') {
+			this.pad = false
+		} else {
+			this.pad = true
+		}
 		getImage(this.id, (res, code) => {
 			if (code == 200) {
 				this.data = res

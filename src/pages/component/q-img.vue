@@ -1,13 +1,9 @@
 <template>
   <view class="qimg" @click="$emit('click')">
-    <view style="flex: 1;"></view>
-    <view>
-      <view v-show="loading" class="loading">
-        <i class="fa-brands fa-digital-ocean "></i>
-      </view>
-      <img v-show="!loading" class="img" :src="path" @load="imgLoad()" @error="imgError()" />
+    <view v-show="loading" class="loading">
+      <i class="fa-brands fa-digital-ocean "></i>
     </view>
-    <view style="flex: 1;"></view>
+    <img v-show="!loading" class="img" :src="path" @load="imgLoad()" @error="imgError()" />
   </view>
 </template>
 <script>
@@ -44,24 +40,28 @@ export default {
   text-align: center;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  display: inline-block;
 }
 
 .img {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .loading {
   font-size: 2rem;
   text-align: center;
-  line-height: 100%;
-  height: 100%;
+  height: inherit;
+  width: inherit;
+  display: flex;
+  align-items: center;
 }
 
 .fa-digital-ocean {
   animation: rotate 175ms steps(1) infinite;
+  width: 100%;
 }
 
 @keyframes rotate {

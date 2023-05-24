@@ -1,11 +1,12 @@
 <template>
-  <view style="padding: 1rem;">
-    <view style="font-size: 0.8rem;overflow: scroll">
-      <pre>
-        系统信息
-        {{ JSON.stringify(SystemInfo, null, 4) }}
-      </pre>
-    </view>
+  <view style="font-size: 0.8rem;">
+    系统信息
+    <br />
+    <pre>{{ JSON.stringify(SystemInfo, null, 4) }}</pre>
+    <br />
+    系统信息
+    <br />
+    <pre>{{ JSON.stringify(DeviceInfo, null, 4) }}</pre>
   </view>
 </template>
 
@@ -14,7 +15,7 @@ export default {
   data() {
     return {
       SystemInfo: null,
-      DeviceInfo:null,
+      DeviceInfo: null,
     }
   },
   created() {
@@ -24,6 +25,7 @@ export default {
         this.SystemInfo = res
       }
     })
+    this.DeviceInfo=uni.getDeviceInfo()
   },
   methods: {
 

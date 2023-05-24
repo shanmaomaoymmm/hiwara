@@ -41,7 +41,10 @@
 			"path": "pages/login/regist",
 			"style": {
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"bounce": "none"
+				}
 			}
 		},
 		{
@@ -132,6 +135,7 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
+					"bounce": "none",
 					"titleNView": {
 						"buttons": [
 							{
@@ -151,6 +155,7 @@
 				"navigationBarBackgroundColor": "#292929",
 				"enablePullDownRefresh": false,
 				"app-plus": {
+					"bounce": "none",
 					"titleNView": {
 						"buttons": [
 							{
@@ -216,6 +221,7 @@
 				"navigationBarTitleText": "设置",
 				"enablePullDownRefresh": false,
 				"app-plus": {
+					"bounce": "none",
 					"titleNView": {
 						"buttons": [
 							{
@@ -233,6 +239,7 @@
 				"navigationBarTitleText": "语言(Language)",
 				"enablePullDownRefresh": false,
 				"app-plus": {
+					"bounce": "none",
 					"titleNView": {
 						"buttons": [
 							{
@@ -250,6 +257,7 @@
 				"navigationBarTitleText": "清晰度",
 				"enablePullDownRefresh": false,
 				"app-plus": {
+					"bounce": "none",
 					"titleNView": {
 						"buttons": [
 							{
@@ -267,6 +275,7 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
+					"bounce": "none",
 					"titleNView": {
 						"buttons": [
 							{
@@ -284,6 +293,7 @@
 				"navigationBarTitleText": "关于",
 				"enablePullDownRefresh": false,
 				"app-plus": {
+					"bounce": "none",
 					"titleNView": {
 						"buttons": [
 							{

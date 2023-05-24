@@ -2,12 +2,12 @@
 	<view class="showLeft">
 		<view v-if="user" class="user">
 			<view>
-				<image class="avatar" :src="user.user.avatar != null
+				<q-avatar class="avatar" :src="user.user.avatar != null
 					? 'https://i.iwara.tv/image/avatar/' +
 					this.user.user.avatar.id +
 					'/' +
 					this.user.user.avatar.name
-					: 'https://www.iwara.tv/images/default-avatar.jpg'"></image>
+					: 'https://www.iwara.tv/images/default-avatar.jpg'" />
 			</view>
 			<view class="userName">
 				{{ user.user.name }}
@@ -25,7 +25,6 @@
 		<!-- <view class="button">历史记录</view> -->
 		<view @click="gotoPage('/pages/setup/index?init=0')" class="button">设置</view>
 		<view @click="logout" class="button">退出登录</view>
-		<view @click="gotoPage('/pages/debug/index')" class="button">debug</view>
 	</view>
 </template>
 
@@ -36,9 +35,6 @@ export default {
 		return {}
 	},
 	props: ['user'],
-	mounted() {
-		console.log(this.user)
-	},
 	methods: {
 		logout() {
 			uni.showModal({

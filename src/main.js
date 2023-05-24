@@ -14,11 +14,15 @@ app.$mount()
 
 
 /**全局方法与变量 */
+// 设备类型
+Vue.prototype.$deviceType=uni.getSystemInfoSync().deviceType
+// 返回起始页
 Vue.prototype.$backhome = () => {
 	uni.reLaunch({
 		url: '/pages/index/index?check=0'
 	});
 }
+// 语言列表
 Vue.prototype.$languageList = [
 	{
 		name: '中文(简体)',

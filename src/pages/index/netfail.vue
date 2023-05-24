@@ -46,7 +46,7 @@ export default {
     },
     retry() {
       uni.reLaunch({
-        url: '/pages/index/index/?check=1'
+        url: '/pages/index/index'
       });
     }
   }

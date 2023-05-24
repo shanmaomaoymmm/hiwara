@@ -3,11 +3,11 @@
     <view>
       <text>该作者的其他作品</text>
     </view>
-    <lists :scol="2" :data="authorOpus" type="video"></lists>
+    <lists :scol="scol" :data="authorOpus" type="video"></lists>
     <view>
       <text>相关作品</text>
     </view>
-    <lists :scol="2" :data="relatedOpus" type="video"></lists>
+    <lists :scol="scol" :data="relatedOpus" type="video"></lists>
   </view>
 </template>
 <script>
@@ -16,11 +16,11 @@ export default {
   components: {
     lists
   },
-  props: ['authorOpus', 'relatedOpus']
+  props: ['authorOpus', 'relatedOpus', 'scol']
 }
 </script>
 <style>
-.lists{
+.lists {
   padding: 0.5rem;
 }
 </style>

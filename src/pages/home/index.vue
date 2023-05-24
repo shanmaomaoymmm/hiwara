@@ -41,12 +41,12 @@ export default {
       tab: 0,
       user: {
         profile: {
-          body: null
+          body: '-'
         },
         user: {
           id: null,
           avatar: null,
-          name: null,
+          name: '-',
           username: null,
         }
       },

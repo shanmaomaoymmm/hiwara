@@ -58,7 +58,7 @@
 						</swiper>
 					</view>
 				</view>
-				<view class="right" v-if="ori && pad">
+				<view class="right" v-show="ori && pad">
 					<view class="tabs">
 						<view style="flex: 1;">
 							<span class="definitionButton" @click="$refs.definitionPopup.open()">
@@ -73,7 +73,7 @@
 					<swiper style="height: 100%;" :current="tab" @change="swiper" :duration="100">
 						<swiper-item>
 							<view style="height: 100%;overflow: auto;">
-								<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
+								<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus" :scol="2"></lists>
 							</view>
 						</swiper-item>
 						<swiper-item>
@@ -154,16 +154,6 @@ export default {
 	mounted() {
 		let media = uni.createMediaQueryObserver(this)
 		media.observe({
-			minWidth: 582,
-			minHeight: 582
-		}, (res) => {
-			if (res) {
-				this.pad = true
-			} else {
-				this.pad = false
-			}
-		})
-		media.observe({
 			orientation: 'landscape'
 		}, (res) => {
 			this.ori = res
@@ -178,7 +168,7 @@ export default {
 			this.$nextTick(() => {
 				this.initializeVideo(this.data.sources)
 			})
-		},
+		}
 	},
 	onNavigationBarButtonTap(e) {
 		console.log(e)
@@ -187,6 +177,11 @@ export default {
 		}
 	},
 	created() {
+		if (this.$deviceType == 'phone') {
+			this.pad = false
+		} else {
+			this.pad = true
+		}
 		getStorage('definition', (a) => {
 			let b
 			if (a) {

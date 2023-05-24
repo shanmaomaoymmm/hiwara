@@ -4,7 +4,7 @@
       <i v-if="error" class="fa-solid fa-circle-user error"></i>
       <i v-else class="fa-brands fa-digital-ocean loading"></i>
     </view>
-    <img v-show="show" :src="path" @error="imgError" />
+    <img v-show="show" :src="path" @error="imgError" @load="imgLoad" class="img" />
   </view>
 </template>
 <script>
@@ -42,6 +42,7 @@ export default {
   width: 100%;
   font-size: 0;
   overflow: hidden;
+  display: inline-block;
 }
 
 .tips {
@@ -61,6 +62,12 @@ export default {
   width: 100%;
   font-size: 1.2rem;
   animation: rotate 175ms steps(1) infinite;
+}
+
+.img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
 
 @keyframes rotate {

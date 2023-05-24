@@ -59,7 +59,7 @@ export default {
 
 .img {
 	width: 100%;
-	aspect-ratio: 11/8;
+	aspect-ratio: 64/38;
 }
 
 .label {
