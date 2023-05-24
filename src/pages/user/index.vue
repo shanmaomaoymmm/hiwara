@@ -16,7 +16,7 @@
         </view>
         <view style="display: flex;position: relative;z-index: 3;">
           <view>
-            <img class="avatar" :src="profile.avatar" />
+            <image class="avatar" :src="profile.avatar" />
           </view>
           <view style="flex: 1;">
             <view

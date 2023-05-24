@@ -7,7 +7,7 @@
 		</view>
 		<view v-else>
 			<view v-if="error" style="text-align: center;padding-top: 30vh;">
-				<img src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
+				<image src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
 				<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
 					<text>大漠孤烟直，长河落日圆</text>
 				</view>

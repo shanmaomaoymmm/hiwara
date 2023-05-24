@@ -7,7 +7,7 @@
 		</view>
 		<view v-else>
 			<view v-if="error" style="text-align: center;padding-top: 30vh;">
-				<img src="@/static/icon/game.png" style="width: 4rem;height: 4rem;" />
+				<image src="@/static/icon/game.png" style="width: 4rem;height: 4rem;" />
 			</view>
 			<view v-else>
 				<lists :data="data" ref="lists" type="image"></lists>

@@ -1,13 +1,13 @@
 <template>
 	<view>
 		<view v-if="onload" style="text-align: center;padding-top: 16vh;">
-			<img class="loading" src="@/static/icon/loading.png" />
+			<image class="loading" src="@/static/icon/loading.png" />
 			<br>
 			<text>资源加载中……</text>
 		</view>
 		<view v-else>
 			<view v-if="error" style="text-align: center;padding-top: 16vh;">
-				<img src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
+				<image src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
 				<br>
 				<text>没有任何内容</text>
 			</view>

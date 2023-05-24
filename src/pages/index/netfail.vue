@@ -2,7 +2,7 @@
   <view style="padding: 0 1rem;">
     <view class="panel">
       <view>
-        <img src="/static/icon/game.png" style="width: 6rem;height: 6rem;" />
+        <image src="@/static/icon/game.png" style="width: 6rem;height: 6rem;" />
       </view>
       <view style="font-size: 1.5rem;padding:1.5rem 0;">
         你的网络出现了问题
