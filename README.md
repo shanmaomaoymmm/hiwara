@@ -6,62 +6,62 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/shanmaomaoymmm/hiwara)
 ![GitHub Repo stars](https://img.shields.io/github/stars/shanmaomaoymmm/hiwara?style=social)
 
-基于uniapp的iwara应用
+🕹️基于uniapp的iwara应用
 
 <img src="./edit/img/logo.png" style="width:192px;height:192px" />
 
 兼容新版iwara客户端，支持Android，iOS和Web端
 
-正在开发中，[Android安装包](https://github.com/shanmaomaoymmm/hiwara/releases)仅供测试使用，不代表最终成品效果
+正在开发中，[📦Android安装包](https://github.com/shanmaomaoymmm/hiwara/releases)仅供测试使用，不代表最终成品效果
 
 如果想拿来玩玩的话下HBuilderX编译就行
 
 友情提示，需要梯子
 
-## <i class="fa-solid fa-screwdriver-wrench fa-fw"></i> 环境搭建
+## 🛠️环境搭建
 
 ```
 npm install
 ```
 
-## <i class="fa-brands fa-html5 fa-fw"></i> H5端运行
+## 💻H5端运行
 
 ```
 npm run dev:h5
 ```
 
-## <i class="fa-brands fa-android fa-fw"></i> Android端运行
+## 📱Android端运行
 
 1.Android手机设备信息点5下版本号打开开发者模式，打开通过USB调试（小米手机需要插SIM卡同时打开通过USB安装），连接数据线至电脑；  
 2.使用HBuilderX打开本项目，左上角菜单运行->运行到手机或模拟器->运行到Android App基座；  
 3.手机上勾选一律通过此计算机调试，弹出的权限全部允许。
 
-## <i class="fa-solid fa-mobile-screen fa-fw"></i> 其他平台运行方法参考uniapp官方文档
+## 📟其他平台运行方法参考uniapp官方文档
 
 <https://uniapp.dcloud.net.cn/quickstart-cli.html>
 
-## <i class="fa-solid fa-bars-progress fa-fw"></i> 开发进度
+## 🗓️开发进度
 
-* <i class="fa-regular fa-square-check fa-fw"></i> 登录
-* <i class="fa-regular fa-square-check fa-fw"></i> 视频播放
-* <i class="fa-regular fa-square-check fa-fw"></i> 图片查看
-* <i class="fa-regular fa-square-check fa-fw"></i> 搜索
-* <i class="fa-regular fa-square-check fa-fw"></i> 关注、订阅、收藏、评论
-* <i class="fa-regular fa-square fa-fw"></i> 播放列表
-* <i class="fa-regular fa-square-check fa-fw"></i> 设置
-* <i class="fa-regular fa-square-check fa-fw"></i> pad端适配
-* <i class="fa-regular fa-square fa-fw"></i> 离线缓存及下载
-* <i class="fa-regular fa-square fa-fw"></i> 论坛
-* <i class="fa-regular fa-square fa-fw"></i> 多语言支持
+* ✅登录
+* ✅视频播放
+* ✅图片查看
+* ✅搜索
+* ✅关注、订阅、收藏、评论
+* ⬜播放列表
+* ✅设置
+* ✅pad端适配
+* ⬜离线缓存及下载
+* ⬜论坛
+* ⬜多语言支持
 
-## <i class="fa-solid fa-triangle-exclamation fa-fw"></i> 已知问题
+## ⚠️已知问题
 
 1.uniapp对于暗黑模式的支持不是很完善，在Android端使用HBuilderX真机调试及离线打包时暗黑模式不会生效，只有使用云打包才能使暗黑模式生效；  
 2.用户头像无法正常显示是iwara网站为了安全对获取用户头像进行了403限制，正在尝试其他方法获取用户头像；  
 3.使用pad端浮窗模式打开后将无法切换至横屏模式，目前暂无解决方案；  
 4.未对iOS及折叠屏设备进行适配（问就是没钱）。
 
-## <i class="fa-solid fa-cubes fa-fw"></i> 其他
+## 📒其他
 
 i站hosts直通
 
@@ -97,7 +97,5 @@ i站hosts直通
 
 计划支持多语种，诚邀翻译大佬协助开发（如果没有就只能靠机翻力）
 
-## 关注永雏塔菲喵！
-## 关注永雏塔菲谢谢喵！
-
-<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+## 🥰关注永雏塔菲喵！
+## 🤗关注永雏塔菲谢谢喵！
