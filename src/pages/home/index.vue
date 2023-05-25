@@ -8,7 +8,7 @@
       <image-list ref="image" v-else-if="tab == 2"></image-list>
     </view>
     <float-bar ref="floatBar" class="floatBar" @alter="tab = $event"></float-bar>
-    <uni-drawer ref="showLeftDrawer" mode="left" :width="250">
+    <uni-drawer ref="showLeftDrawer" mode="left" :width="250" style="overflow: auto;">
       <show-left ref="showLeft" :user="user"></show-left>
     </uni-drawer>
     <uni-transition @click="backTop()" custom-class="back-top" mode-class="zoom-in" :duration="50"

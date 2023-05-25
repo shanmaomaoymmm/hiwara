@@ -602,3 +602,110 @@ export function search(type, query, page, cb) {
 		cb(res, code)
 	})
 }
+
+// 下载
+export function download(type, url, name, cb) {
+	uni.showToast({
+		title: "已开始下载",
+		icon: "none",
+		duration: 3000,
+	})
+	let path
+	if (type == 'video') {
+		path = '/Movies/iwara/'
+	} else if (type = 'image') {
+		path = '/Pictures/iwara/'
+	} else {
+		path = '/Download/iwara/'
+	}
+	let dtask = plus.downloader.createDownload(url, {
+		filename: 'file://storage/emulated/0' + path + name + '.mp4' //利用保存路径，实现下载文件的重命名
+	}, (d, status) => {
+		//d为下载的文件对象
+		if (status != 200) {
+			//下载失败
+			console.log('失败')
+			plus.downloader.clear(); //清除下载任务
+			uni.createPushMessage({
+				content: '下载失败',
+				cover: true
+			})
+		}
+	})
+	// dtask.start()
+	dtask.addEventListener('statechanged', (res) => {
+		console.log(res)
+		if ([0, 1, 2, 3].includes(res.state)) {
+			if (res.totalSize > 0) {
+				text = '下载中：' + (res.downloadedSize / res.totalSize * 100).toFixed(1) + '%'
+			} else {
+				text = '下载中'
+			}
+		} else if (res.state == 4) {
+			text = '下载完成，已保存至：' + path + name + '.mp4'
+		} else if (res.state == 5) {
+			text = '已暂停'
+		}
+		console.log(text)
+		uni.createPushMessage({
+			content: text,
+			cover: true
+		})
+	})
+	cb()
+}
+
+// 存储权限
+export function storagePermission() {
+	let Build = plus.android.importClass("android.os.Build")
+	let Manifest = plus.android.importClass("android.Manifest")
+	let MainActivity = plus.android.runtimeMainActivity()
+
+	let ArrPermissions = [
+		Manifest.permission.READ_EXTERNAL_STORAGE,
+		Manifest.permission.WRITE_EXTERNAL_STORAGE
+	];
+
+	// 检查每一个权限
+	function PermissionCheck(permission) {
+		if (Build.VERSION.SDK_INT >= 23) {
+			if (MainActivity.checkSelfPermission(permission) == -1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// 申请权限
+	function PermissionRequest(Arr) {
+		let REQUEST_CODE_CONTACT = 101;
+		if (Build.VERSION.SDK_INT >= 23) {
+			MainActivity.requestPermissions(Arr, REQUEST_CODE_CONTACT)
+		}
+	}
+
+	function PermissionChecks(Arr) {
+		let HasPermission = true;
+		for (let index in Arr) {
+			let permission = Arr[index];
+			// 如果此处没有权限,则是用户拒绝了  
+			if (!PermissionCheck(permission)) {
+				HasPermission = false;
+				break;
+			}
+		}
+		return HasPermission;
+	}
+
+
+
+	// 如果没有权限，则申请  
+	if (!PermissionChecks(ArrPermissions)) {
+		// 申请权限，下次再试
+		PermissionRequest(ArrPermissions);
+		return false
+	} else {
+		// 拥有权限
+		return true
+	}
+}

@@ -30,6 +30,7 @@ page {
 * {
   transition: color 100ms ease;
   transition: background 100ms ease;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -306,6 +306,13 @@
 			}
 		},
 		{
+			"path": "pages/download/index",
+			"style": {
+				"navigationBarTitleText": "下载管理",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/debug/index",
 			"style": {
 				"navigationBarTitleText": "debug",

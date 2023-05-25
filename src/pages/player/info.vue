@@ -44,16 +44,16 @@
 						<text>{{ data.liked ? '已点赞' : '点赞' }}</text>
 					</view>
 				</view>
-				<view class="opt">
+				<view class="opt" @click="share()">
 					<image class="icon" src="@/static/icon/share-one.png"></image>
 					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
 						<text>分享</text>
 					</view>
 				</view>
-				<view class="opt">
+				<view class="opt" @click="openDownloadPopup()">
 					<image class="icon" src="@/static/icon/download-four.png"></image>
 					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-						<text>缓存</text>
+						<text>下载</text>
 					</view>
 				</view>
 				<view class="opt" @click="copyLinkButton = !copyLinkButton">
@@ -73,15 +73,26 @@
 				</view>
 			</view>
 		</view>
+		<uni-popup ref="downloadPopup" type="bottom">
+			<view class="downloadPopup">
+				<view class="downloadTitle">
+					<text>下载</text>
+				</view>
+				<view v-for="item, i in data.sources" :key="'download' + i" style="padding:0.75rem 0;" @click="download(item)">
+					{{ item.name }}
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
-// import lists from '@/pages/lists/index.vue'
 import {
 	formatDate,
 	followers,
-	likeVideo
+	likeVideo,
+	download,
+	storagePermission
 } from '@/api/api.js'
 export default {
 	data() {
@@ -99,7 +110,6 @@ export default {
 	},
 	props: ['vid', 'uid', 'data'],
 	mounted() {
-		console.log('INFO！')
 		this.setHeight()
 	},
 	methods: {
@@ -209,6 +219,24 @@ export default {
 				animationType: 'slide-in-right',
 				animationDuration: 100
 			});
+		},
+		share() {
+			uni.shareWithSystem({
+				type: 'text',
+				summary: this.data.title,
+				href: 'https://www.iwara.tv/video/' + this.data.id + '/' + this.data.slug
+			})
+		},
+		openDownloadPopup() {
+			if (storagePermission() == true) {
+				this.$refs.downloadPopup.open()
+			}
+		},
+		download(it) {
+			let dlUrl = 'https:' + it.download
+			download('video', dlUrl, this.data.title, () => {
+				this.$refs.downloadPopup.close()
+			})
 		}
 	}
 }
@@ -278,6 +306,19 @@ button {
 	transition: height ease 100ms;
 }
 
+.downloadTitle {
+	padding: 0.75rem 0;
+	font-weight: bold;
+	color: #616161;
+}
+
+.downloadPopup {
+	text-align: center;
+	font-size: 1.1rem;
+	padding: 0.5rem 0;
+	background-color: #f5f5f5;
+}
+
 @media (prefers-color-scheme: dark) {
 
 	.synopsis,
@@ -287,6 +328,15 @@ button {
 
 	.opt {
 		color: #BDBDBD;
+	}
+
+	.downloadPopup {
+		background-color: #4f4f4f;
+	}
+
+	.downloadButton,
+	.downloadTitle {
+		color: #BDBDBD
 	}
 }
 </style>
