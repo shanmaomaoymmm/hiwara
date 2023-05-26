@@ -39,7 +39,7 @@
           <text class="tab" @click="tab = 0" :class="{ tabsActive: tab == 0 }">视频</text>
           <text class="tab" @click="tab = 1" :class="{ tabsActive: tab == 1 }">图片</text>
         </view>
-        <view @touchmove="handletouchmove" @touchstart="handletouchstart" @touchend="handletouchend">
+        <view>
           <video-list ref="video" v-if="tab == 0" :uid="uid"></video-list>
           <image-list ref="image" v-if="tab == 1" :uid="uid"></image-list>
         </view>
@@ -71,10 +71,6 @@ export default {
       },
       tab: 0,
       loading: true,
-      //滑动
-      flag: 0, //1向左滑动,2向右滑动,3向上滑动 4向下滑动
-      lastX: 0,
-      lastY: 0,
       scrollTop: 0,
     }
   },
@@ -215,53 +211,6 @@ export default {
         })
       }
     },
-    /* 页面滑动检测 */
-    handletouchmove: function (event) {
-      // console.log(event)
-      if (this.flag !== 0) {
-        return;
-      }
-      let currentX = event.changedTouches[0].pageX;
-      let currentY = event.changedTouches[0].pageY;
-      let tx = currentX - this.lastX;
-      let ty = currentY - this.lastY;
-      let sensitivity = 10
-      //调节灵敏度
-      if (Math.abs(tx) || Math.abs(ty)) {
-        //左右方向滑动
-        if (Math.abs(tx) > Math.abs(ty) + sensitivity) {
-          if (tx < 0) {
-            // 向左滑动
-            this.flag = 1;
-
-          } else if (tx > 0) {
-            //向右滑动 
-            this.flag = 2;
-          }
-        }
-        //上下方向滑动
-        else {
-          if (ty < 0) {
-            //向上滑动
-            this.flag = 3;
-          } else if (ty > 0) {
-            //向下滑动
-            this.flag = 4;
-          }
-        }
-      }
-      //将当前坐标进行保存以进行下一次计算
-      this.lastX = currentX;
-      this.lastY = currentY;
-    },
-    handletouchstart: function (event) {
-      this.lastX = event.changedTouches[0].pageX;
-      this.lastY = event.changedTouches[0].pageY;
-    },
-    handletouchend: function (event) {
-      //停止滑动
-      this.flag = 0;
-    },
     backTop() {
       uni.pageScrollTo({
         scrollTop: 0,
@@ -382,7 +331,7 @@ button {
 
 .back-top {
   position: fixed;
-  bottom: 5.2rem;
+  bottom: 2.2rem;
   right: 1.2rem;
   background-color: #00897b;
   color: #fafafa;

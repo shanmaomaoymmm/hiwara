@@ -323,6 +323,36 @@
 			}
 		},
 		{
+			"path": "pages/following/index",
+			"style": {
+				"navigationBarTitleText": "我的关注",
+				"enablePullDownRefresh": false,
+				"titleNView": {
+					"buttons": [
+						{
+							"type": "home",
+							"float": "left"
+						}
+					]
+				}
+			}
+		},
+		{
+			"path": "pages/history/index",
+			"style": {
+				"navigationBarTitleText": "历史记录",
+				"enablePullDownRefresh": false,
+				"titleNView": {
+					"buttons": [
+						{
+							"type": "home",
+							"float": "left"
+						}
+					]
+				}
+			}
+		},
+		{
 			"path": "pages/debug/index",
 			"style": {
 				"navigationBarTitleText": "debug",

@@ -106,7 +106,7 @@ export default ({
 <style scoped>
 .back-top {
   position: fixed;
-  bottom: 5.2rem;
+  bottom: 2.2rem;
   right: 1.2rem;
   background-color: #00897b;
   color: #fafafa;

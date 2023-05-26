@@ -24,6 +24,8 @@
 		<view @click="gotoPage('/pages/like/index?tab=1')" class="button">我收藏的图片</view>
 		<!-- <view class="button">历史记录</view> -->
 		<!-- #ifdef APP-PLUS -->
+		<view @click="gotoPage('/pages/following/index')" class="button">我的关注</view>
+		<view @click="gotoPage('/pages/history/index')" class="button">历史记录</view>
 		<view @click="gotoPage('/pages/download/index')" class="button">下载管理</view>
 		<!-- #endif -->
 		<view @click="gotoPage('/pages/setup/index?init=0')" class="button">设置</view>

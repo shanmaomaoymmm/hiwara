@@ -11,15 +11,15 @@
         <view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
           <text>大漠孤烟直，长河落日圆</text>
         </view>
-        <text>你没有任何收藏，请到别的地方看看吧</text>
+        <text>找不到任何用户，请到别的地方看看吧</text>
       </view>
       <view v-else style="padding: 0.5rem;">
         <view v-for="item, i in list" class="item" @click="gotoPage(item.id, item.username)">
           <view class="ava">
-            <image class="img" :src="item.avatar != null
+            <q-avatar class="img" :src="item.avatar != null
               ? 'https://i.iwara.tv/image/avatar/' +
               item.avatar.id + '/' + item.avatar.name
-              : 'https://www.iwara.tv/images/default-avatar.jpg'"></image>
+              : 'https://www.iwara.tv/images/default-avatar.jpg'"/>
           </view>
           <view class="lab">
             {{ item.name }}

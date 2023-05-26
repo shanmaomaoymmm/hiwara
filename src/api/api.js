@@ -256,14 +256,8 @@ export function getVideo(id, cb) {
 					id: res.id,
 					title: res.title,
 					author: res.user.name,
-					avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
-						.id + '/' + res.user
-							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-					preview: res.file != null
-						? "https://i.iwara.tv/image/thumbnail/" +
-						res.file.id +
-						"/thumbnail-" + fill0(res.thumbnail, 1) + ".jpg"
-						: null,
+					avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar.id + '/' + res.user.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+					preview: res.file != null ? "https://i.iwara.tv/image/thumbnail/" + res.file.id + "/thumbnail-" + fill0(res.thumbnail, 1) + ".jpg" : null,
 					synopsis: res.body,
 					date: res.createdAt,
 					numView: res.numViews,
@@ -296,6 +290,30 @@ export function getVideo(id, cb) {
 				} else {
 					cb(resData, 408)
 				}
+				// #ifdef APP-PLUS
+				// 记录
+				let d = new Date()
+				addDataForDB('history', [
+					res.id,
+					res.user.id,
+					res.title,
+					res.user.name,
+					res.createdAt,
+					res.file != null ? "https://i.iwara.tv/image/thumbnail/" + res.file.id + "/thumbnail-" + fill0(res.thumbnail, 1) + ".jpg" : null,
+					res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar.id + '/' + res.user.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+					'video',
+					d.getTime()
+				])
+				if (res.user.following) {
+					addDataForDB('following', [
+						res.user.id,
+						res.user.username,
+						res.user.name,
+						res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar.id + '/' + res.user.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+						d.getTime()
+					])
+				}
+				// #endif
 			} else {
 				resData = null
 				cb(resData, code)
@@ -413,9 +431,7 @@ export function getImage(id, cb) {
 				numLikes: res.numLikes,
 				numViews: res.numViews,
 				following: res.user.following,
-				avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar
-					.id + '/' + res.user
-						.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+				avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar.id + '/' + res.user.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
 				files: [],
 				username: res.user.username
 			}
@@ -423,6 +439,29 @@ export function getImage(id, cb) {
 				resData.files.push('https://i.iwara.tv/image/large/' + res.files[i].id + '/' + res.files[i].name)
 			}
 			cb(resData, code)
+			// #ifdef APP-PLUS
+			// 记录
+			let d = new Date()
+			addDataForDB('history', [
+				res.id,
+				res.user.id,
+				res.title,
+				res.user.name,
+				res.createdAt,
+				res.thumbnail != null ? "https://i.iwara.tv/image/thumbnail/" + rs.thumbnail.id + "/" + rs.thumbnail.name : null,
+				'image',
+				d.getTime()
+			])
+			if (res.user.following) {
+				addDataForDB('following', [
+					res.user.id,
+					res.user.username,
+					res.user.name,
+					res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar.id + '/' + res.user.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
+					d.getTime()
+				])
+			}
+			// #endif
 		})
 	})
 }
@@ -685,3 +724,112 @@ export function storagePermission() {
 		return true
 	}
 }
+
+// 获取关注
+export function getFollowing(cb) {
+	enquiryDBTable('following', 0, (res) => {
+		cb(res)
+	})
+}
+
+// 历史记录
+export function getHistory(cb) {
+	enquiryDBTable('history', 0, (res) => {
+		cb(res)
+	})
+}
+
+// #ifdef APP-PLUS
+
+/**数据库操作 */
+
+// 打开数据库
+plus.sqlite.openDatabase({
+	name: "a",
+	path: "_doc/a.db",
+	success: function () {
+		console.log('success')
+	},
+	fail: function (e) {
+		console.log(e);
+	}
+});
+
+/**检查数据库是否存在history和follow表
+ * 如果没有则创建
+ */
+enquiryDBTableName('history', (res) => {
+	if (res.length == 0) {
+		createDBTable('history', 'id TEXT NOT NULL, uid TEXT NOT NULL, title TEXT, username TEXT, date TEXT, preview TEXT, avatar TEXT, type TEXT, logdate TEXT')
+	}
+})
+enquiryDBTableName('following', (res) => {
+	if (res.length == 0) {
+		createDBTable('following', 'id TEXT PRIMARY KEY NOT NULL, username TEXT, name TEXT, avatar TEXT, logdate TEXT')
+	}
+})
+
+// 查询数据库是否存在表
+function enquiryDBTableName(name, cb) {
+	plus.sqlite.selectSql({
+		name: "a",
+		sql: "SELECT * FROM sqlite_master WHERE name='" + name + "'",
+		success: function (data) {
+			console.log(data)
+			cb(data)
+		},
+		fail: function (e) {
+			console.log(e)
+			cb(null)
+		}
+	})
+}
+// 创建表
+function createDBTable(name, field) {
+	plus.sqlite.executeSql({
+		name: "a",
+		sql: "CREATE TABLE " + name + " (" + field + ")",
+		success: function () {
+			console.log('success')
+		},
+		fail: function (e) {
+			console.log(e);
+		}
+	});
+}
+// 向数据库添加数据
+function addDataForDB(table, arr) {
+	let v = ''
+	for (let i = 0; i < arr.length; i++) {
+		v = v + '\'' + arr[i] + '\''
+		if (i + 1 < arr.length) {
+			v = v + ','
+		}
+	}
+	plus.sqlite.executeSql({
+		name: "a",
+		sql: "INSERT INTO " + table + " VALUES (" + v + ")",
+		success: function () {
+			console.log('success')
+		},
+		fail: function (e) {
+			console.log(e);
+		}
+	});
+}
+// 查询数据库表
+function enquiryDBTable(table, sort, cb) {
+	plus.sqlite.selectSql({
+		name: "a",
+		sql: "SELECT * FROM " + table + " ORDER BY logdate " + (sort ? "ASC" : "DESC"),
+		success: function (data) {
+			console.log(data)
+			cb(data)
+		},
+		fail: function (e) {
+			console.log(e)
+			cb(null)
+		}
+	})
+}
+// #endif

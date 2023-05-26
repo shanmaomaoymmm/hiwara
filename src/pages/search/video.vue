@@ -11,7 +11,7 @@
 				<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
 					<text>大漠孤烟直，长河落日圆</text>
 				</view>
-				<text>你没有任何收藏，请到别的地方看看吧</text>
+				<text>搜索不到任何视频，请到别的地方看看吧</text>
 			</view>
 			<view v-else>
 				<lists :data="data" ref="lists" type="video"></lists>

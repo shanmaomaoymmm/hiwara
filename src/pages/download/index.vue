@@ -77,7 +77,7 @@
               <button @click="clearDownloadLogs()">清空下载记录</button>
             </view>
           </view>
-          <view else style="padding-top: 38vh;text-align: center;">
+          <view v-else style="padding-top: 38vh;text-align: center;">
             <image src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;"></image>
           </view>
         </swiper-item>
