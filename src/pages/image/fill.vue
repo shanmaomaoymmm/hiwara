@@ -9,12 +9,18 @@
         <view style="flex: 1;"></view>
       </swiper-item>
     </swiper>
+    <!-- #ifdef APP-PLUS -->
+    <view class="download" @click="download()">
+      下载图片
+    </view>
+    <!-- #endif -->
     <view class="tips">
       第{{ ' ' + (p + 1) + '/' + data.files.length + ' ' }}P
     </view>
   </view>
 </template>
 <script>
+import { download, storagePermission } from '@/api/api'
 export default {
   data() {
     return {
@@ -24,6 +30,11 @@ export default {
       data: {
         files: []
       }
+    }
+  },
+  onNavigationBarButtonTap(e) {
+    if (e.type == 'home') {
+      this.$backhome()
     }
   },
   onLoad: function (e) {
@@ -39,6 +50,12 @@ export default {
     swiper: function (t) {
       this.p = t.detail.current
     },
+    download() {
+      if (storagePermission() == true) {
+        let dlUrl = this.data.files[this.p]
+        download('image', dlUrl, this.data.title, () => { })
+      }
+    }
   }
 }
 </script>
@@ -66,5 +83,20 @@ export default {
   right: 1rem;
   color: #fff;
   font-size: 1rem;
+}
+
+.download {
+  position: fixed;
+  bottom: 1rem;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 1rem;
+  background-color: #00897b88;
+  border: #81fcf0 2px solid;
+  padding: 0.5rem;
+  width: 5rem;
+  border-radius: 0.5rem
 }
 </style>

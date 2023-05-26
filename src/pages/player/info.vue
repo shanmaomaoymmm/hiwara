@@ -221,16 +221,35 @@ export default {
 			});
 		},
 		share() {
+			// #ifdef APP-PLUS
 			uni.shareWithSystem({
 				type: 'text',
 				summary: this.data.title,
 				href: 'https://www.iwara.tv/video/' + this.data.id + '/' + this.data.slug
 			})
+			// #endif
+
+			// #ifndef APP-PLUS
+			uni.showToast({
+				title: "此操作仅手机端支持",
+				icon: "none",
+				duration: 3000,
+			})
+			// #endif
 		},
 		openDownloadPopup() {
+			// #ifdef APP-PLUS
 			if (storagePermission() == true) {
 				this.$refs.downloadPopup.open()
 			}
+			// #endif
+			// #ifndef APP-PLUS
+			uni.showToast({
+				title: "此操作仅手机端支持",
+				icon: "none",
+				duration: 3000,
+			})
+			// #endif
 		},
 		download(it) {
 			let dlUrl = 'https:' + it.download

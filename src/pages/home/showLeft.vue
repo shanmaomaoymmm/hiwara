@@ -23,7 +23,9 @@
 		<view @click="gotoPage('/pages/like/index?tab=0')" class="button">我收藏的视频</view>
 		<view @click="gotoPage('/pages/like/index?tab=1')" class="button">我收藏的图片</view>
 		<!-- <view class="button">历史记录</view> -->
+		<!-- #ifdef APP-PLUS -->
 		<view @click="gotoPage('/pages/download/index')" class="button">下载管理</view>
+		<!-- #endif -->
 		<view @click="gotoPage('/pages/setup/index?init=0')" class="button">设置</view>
 		<view @click="logout" class="button">退出登录</view>
 	</view>

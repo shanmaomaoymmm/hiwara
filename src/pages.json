@@ -28,6 +28,16 @@
 			}
 		},
 		{
+			"path": "pages/index/outline",
+			"style": {
+				"navigationBarTitleText": "iwara",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录",

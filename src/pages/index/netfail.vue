@@ -28,8 +28,8 @@
       <button @click="retry()">
         重试
       </button>
-      <button @click="setup()">
-        进入设置界面
+      <button @click="outline()">
+        离线模式
       </button>
     </view>
   </view>
@@ -37,9 +37,9 @@
 <script>
 export default {
   methods: {
-    setup() {
+    outline() {
       uni.navigateTo({
-        url: '/pages/setup/index?init=1',
+        url: '/pages/index/outline',
         animationType: 'slide-in-right',
         animationDuration: 100
       });

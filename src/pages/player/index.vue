@@ -49,7 +49,7 @@
 								<view style="height: 100%;overflow: auto;">
 									<info :vid="vid" :uid="uid" ref="info" :data="data">
 									</info>
-									<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus"></lists>
+									<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus" :scol="pad?null:2"></lists>
 								</view>
 							</swiper-item>
 							<swiper-item>
