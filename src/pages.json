@@ -358,6 +358,13 @@
 				"navigationBarTitleText": "debug",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path": "pages/debug/test",
+			"style": {
+				"navigationBarTitleText": "测试页面",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {

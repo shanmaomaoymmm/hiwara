@@ -30,34 +30,13 @@ export default {
 		} else {
 			let media = uni.createMediaQueryObserver(this)
 			media.observe({
-				minWidth: 0,
-				maxWidth: 425
-			}, (res) => {
-				if (res) {
-					this.col = 2
-				}
-			})
-			media.observe({
-				minWidth: 426,
-				maxWidth: 768
-			}, (res) => {
-				if (res) {
-					this.col = 3
-				}
-			})
-			media.observe({
-				minWidth: 769,
-				maxWidth: 1199
+				minHeight: 556,
+				minWidth: 556,
 			}, (res) => {
 				if (res) {
 					this.col = 4
-				}
-			})
-			media.observe({
-				minWidth: 1200,
-			}, (res) => {
-				if (res) {
-					this.col = 6
+				} else {
+					this.col = 2
 				}
 			})
 			media.observe({

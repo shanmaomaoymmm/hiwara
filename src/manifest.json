@@ -17,7 +17,8 @@
         },
         "modules" : {
             "VideoPlayer" : {},
-            "SQLite" : {}
+            "SQLite" : {},
+            "Push" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -55,7 +56,10 @@
             },
             /* ios打包配置 */
             "sdkConfigs" : {
-                "ad" : {}
+                "ad" : {},
+                "push" : {
+                    "unipush" : null
+                }
             },
             "icons" : {
                 "android" : {
