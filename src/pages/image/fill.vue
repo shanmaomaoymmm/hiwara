@@ -11,11 +11,11 @@
     </swiper>
     <!-- #ifdef APP-PLUS -->
     <view class="download" @click="download()">
-      下载图片
+      {{ $t('image.download') }}
     </view>
     <!-- #endif -->
     <view class="tips">
-      第{{ ' ' + (p + 1) + '/' + data.files.length + ' ' }}P
+      {{ $t('image.tip[0]') }} {{ ' ' + (p + 1) + '/' + data.files.length + ' ' }}{{ $t('image.tip[1]') }}
     </view>
   </view>
 </template>

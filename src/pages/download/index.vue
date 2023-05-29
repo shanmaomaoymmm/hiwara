@@ -1,8 +1,8 @@
 <template>
   <view style="display: flex;flex-flow: column;height: 100%;">
     <view class="tabs">
-      <view class="tab" :class="{ 'tab-a': tab == 0 }" @click="tab = 0">正在下载</view>
-      <view class="tab" :class="{ 'tab-a': tab == 1 }" @click="tab = 1">下载完成</view>
+      <view class="tab" :class="{ 'tab-a': tab == 0 }" @click="tab = 0">{{ $t('download.doing') }}</view>
+      <view class="tab" :class="{ 'tab-a': tab == 1 }" @click="tab = 1">{{ $t('download.end') }}</view>
     </view>
     <view style="flex: 1">
       <swiper style="height: 100%;" :current="tab" @change="swiper" :duration="100">
@@ -37,7 +37,7 @@
                   <i @click="abort(it)" class="fa-solid fa-trash-can" style="width: 100%;font-size: 1.2rem;"></i>
                 </view>
               </view>
-              <button @click="clearDownloading()">停止所有下载</button>
+              <button @click="clearDownloading()">{{ $t('download.stopall') }}</button>
             </view>
           </view>
           <view else style="padding-top: 38vh;text-align: center;">
@@ -45,7 +45,7 @@
           </view>
         </swiper-item>
         <swiper-item>
-          <view v-if="progress.length > 0" style="height: 100%;overflow: auto;">
+          <view v-if="end.length > 0" style="height: 100%;overflow: auto;">
             <view style="padding: 0.5rem">
               <view v-for="it, i in end" class="item" @click="open(it)">
                 <view class="bar-o">
@@ -61,7 +61,7 @@
                       {{ formatBytes(it.downloadedSize) }}
                     </view>
                     <view style="flex: 1;text-align: right;">
-                      已完成
+                      {{ $t('download.dled') }}
                     </view>
                   </view>
                   <view
@@ -74,7 +74,7 @@
                   </view>
                 </view>
               </view>
-              <button @click="clearDownloadLogs()">清空下载记录</button>
+              <button @click="clearDownloadLogs()">{{ $t('download.clearall') }}</button>
             </view>
           </view>
           <view v-else style="padding-top: 38vh;text-align: center;">

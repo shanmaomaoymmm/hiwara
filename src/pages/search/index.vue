@@ -1,9 +1,9 @@
 <template>
   <view>
     <view class="tabs">
-      <view class="tab" :class="{ 'tab-a': tab == 0 }" @click="tab = 0">视频</view>
-      <view class="tab" :class="{ 'tab-a': tab == 1 }" @click="tab = 1">图片</view>
-      <view class="tab" :class="{ 'tab-a': tab == 2 }" @click="tab = 2">用户</view>
+      <view class="tab" :class="{ 'tab-a': tab == 0 }" @click="tab = 0">{{ $t('search.tab.video') }}</view>
+      <view class="tab" :class="{ 'tab-a': tab == 1 }" @click="tab = 1">{{ $t('search.tab.image') }}</view>
+      <view class="tab" :class="{ 'tab-a': tab == 2 }" @click="tab = 2">{{ $t('search.tab.user') }}</view>
     </view>
     <view style="padding-top: 3.2rem;">
       <video-list ref="video" :s="s" v-if="tab == 0"></video-list>

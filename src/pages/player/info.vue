@@ -9,7 +9,8 @@
 					<text style="font-size: 1rem;">{{ data.author }}</text>
 				</view>
 				<view>
-					<button size="mini" @click="followers"><text>{{ data.following ? "已关注" : "＋ 关注"
+					<button size="mini" @click="followers"><text>{{ data.following ? $t('following.opt[0]')
+						: $t('following.opt[1]')
 					}}</text></button>
 				</view>
 			</view>
@@ -41,25 +42,25 @@
 				<view class="opt" @click="like()">
 					<image class="icon" :src="data.liked ? '/static/icon/a_like.png' : '/static/icon/like.png'"></image>
 					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-						<text>{{ data.liked ? '已点赞' : '点赞' }}</text>
+						<text>{{ data.liked ? $t('liked.opt[0]') : $t('liked.opt[1]') }}</text>
 					</view>
 				</view>
 				<view class="opt" @click="share()">
 					<image class="icon" src="@/static/icon/share-one.png"></image>
 					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-						<text>分享</text>
+						<text>{{ $t('player.info.share') }}</text>
 					</view>
 				</view>
 				<view class="opt" @click="openDownloadPopup()">
 					<image class="icon" src="@/static/icon/download-four.png"></image>
 					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-						<text>下载</text>
+						<text>{{ $t('player.info.download') }}</text>
 					</view>
 				</view>
 				<view class="opt" @click="copyLinkButton = !copyLinkButton">
 					<image class="icon" src="@/static/icon/copy-link.png"></image>
 					<view :style="{ height: allinfo ? '1rem' : 0 }" style="overflow: hidden;">
-						<text>复制链接</text>
+						<text>{{ $t('player.info.copy') }}</text>
 					</view>
 				</view>
 			</view>
@@ -76,7 +77,7 @@
 		<uni-popup ref="downloadPopup" type="bottom">
 			<view class="downloadPopup">
 				<view class="downloadTitle">
-					<text>下载</text>
+					<text>{{ $t('player.info.download') }}</text>
 				</view>
 				<view v-for="item, i in data.sources" :key="'download' + i" style="padding:0.75rem 0;" @click="download(item)">
 					{{ item.name }}
@@ -132,7 +133,7 @@ export default {
 				data: val,
 				success: function () {
 					uni.showToast({
-						title: "已复制下载链接",
+						title: this.$t('player.info.copied'),
 						icon: "none",
 						duration: 3000,
 					})
@@ -144,14 +145,14 @@ export default {
 				followers(this.uid, 0, (res, code) => {
 					if (code == 204) {
 						uni.showToast({
-							title: "已取消关注",
+							title: this.$t('following.del'),
 							icon: "none",
 							duration: 3000,
 						})
 						this.data.following = !this.data.following
 					} else {
 						uni.showToast({
-							title: "操作失败",
+							title: this.$t('optFail'),
 							icon: "none",
 							duration: 3000,
 						})
@@ -161,14 +162,14 @@ export default {
 				followers(this.uid, 1, (res, code) => {
 					if (code == 201) {
 						uni.showToast({
-							title: "关注成功！！！",
+							title: this.$t('following.push'),
 							icon: "none",
 							duration: 3000,
 						})
 						this.data.following = !this.data.following
 					} else {
 						uni.showToast({
-							title: "操作失败",
+							title: this.$t('optFail'),
 							icon: "none",
 							duration: 3000,
 						})
@@ -181,14 +182,14 @@ export default {
 				likeVideo(this.vid, 0, (res, code) => {
 					if (code == 204) {
 						uni.showToast({
-							title: "已取消点赞",
+							title: this.$t('liked.del'),
 							icon: "none",
 							duration: 3000,
 						})
 						this.data.liked = !this.data.liked
 					} else {
 						uni.showToast({
-							title: "操作失败",
+							title: this.$t('optFail'),
 							icon: "none",
 							duration: 3000,
 						})
@@ -198,14 +199,14 @@ export default {
 				likeVideo(this.vid, 1, (res, code) => {
 					if (code == 201) {
 						uni.showToast({
-							title: "点赞成功！！！",
+							title: this.$t('liked.push'),
 							icon: "none",
 							duration: 3000,
 						})
 						this.data.liked = !this.data.liked
 					} else {
 						uni.showToast({
-							title: "操作失败",
+							title: this.$t('optFail'),
 							icon: "none",
 							duration: 3000,
 						})
@@ -231,7 +232,7 @@ export default {
 
 			// #ifndef APP-PLUS
 			uni.showToast({
-				title: "此操作仅手机端支持",
+				title: this.$t('player.info.device'),
 				icon: "none",
 				duration: 3000,
 			})
@@ -245,7 +246,7 @@ export default {
 			// #endif
 			// #ifndef APP-PLUS
 			uni.showToast({
-				title: "此操作仅手机端支持",
+				title: this.$t('player.info.device'),
 				icon: "none",
 				duration: 3000,
 			})

@@ -1,17 +1,17 @@
 <template>
 	<view class="panel" :style="{ width: (pad && ori) ? '50%' : 'calc(100% - 2rem)' }">
-		<view class="title">登录到你的iwara账号</view>
-		<input class="input" :disabled="disabled" v-model="username" placeholder="请输入账号" />
-		<input class="input" :disabled="disabled" v-model="passwd" password="password" placeholder="请输入密码" />
+		<view class="title">{{ $t('login.title') }}</view>
+		<input class="input" :disabled="disabled" v-model="username" :placeholder="$t('login.user')" />
+		<input class="input" :disabled="disabled" v-model="passwd" password="password" :placeholder="$t('login.passwd')" />
 		<button @click="login()" :disabled="disabled">
 			<text v-if="disabled">
 				<i class="fas fa-circle-notch fa-spin fa-fw"></i>
-				登录中
+				{{ $t('login.logining') }}
 			</text>
-			<text v-else>登录</text>
+			<text v-else>{{ $t('login.login') }}</text>
 		</button>
 		<view class="sub">
-			<navigator url="/pages/login/regist">注册账号</navigator>
+			<navigator url="/pages/login/regist">{{ $t('login.regist') }}</navigator>
 		</view>
 		<view class="float">
 			<navigator url="/pages/setup/language?init=1">
@@ -20,7 +20,7 @@
 				</view>
 			</navigator>
 			<view class="float-tip">
-				内容源自iwara.tv，本程序禁止用于商业用途
+				{{ $t('tip[2]') }}
 				<br />
 				©2019-2023 Maoerxiachuan
 			</view>
@@ -82,7 +82,7 @@ export default {
 					this.disabled = false
 					if (code == 200) {
 						uni.showToast({
-							title: '登录成功',
+							title: this.$t('login.success'),
 							icon: 'none',
 							duration: 3000
 						});
@@ -94,14 +94,14 @@ export default {
 						});
 					} else if (code == 408) {
 						uni.showToast({
-							title: '呐！少冲一点吧\r\n无法连接到服务器',
+							title: this.$t('login.dontLink'),
 							icon: 'none',
 							duration: 3000
 						});
 					} else {
 						uni.showModal({
-							title: '登录失败',
-							content: '用户名或密码错误',
+							title: this.$t('login.fail'),
+							content: this.$t('login.failMsg'),
 							showCancel: false,
 							confirmColor: '#00897B'
 						});
@@ -109,7 +109,7 @@ export default {
 				})
 			} else {
 				uni.showModal({
-					content: '用户名和密码不能为空',
+					content: this.$t('login.null'),
 					showCancel: false,
 					confirmColor: '#00897B'
 				});

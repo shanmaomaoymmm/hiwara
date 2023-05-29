@@ -14,12 +14,12 @@
           Hiwara
         </view>
         <view class="button-opt" style="padding: 1.2rem 1.5rem;">
-          开发版
+          {{ $t('setup.about.dev') }}
         </view>
       </view>
       <view class="button">
         <view class="button-title">
-          版本号
+          {{ $t('setup.about.version') }}
         </view>
         <view class="button-opt" style="padding: 1rem 1.5rem;">
           v{{ SystemInfo.appVersion }}
@@ -27,7 +27,7 @@
       </view>
       <view class="button">
         <view class="button-title">
-          webview版本
+          {{ $t('setup.about.webviewVersion') }}
         </view>
         <view class="button-opt" style="padding: 1rem 1.5rem;">
           v{{ SystemInfo.browserVersion }}
@@ -35,7 +35,7 @@
       </view>
       <view class="button">
         <view class="button-title">
-          设备平台
+          {{ $t('setup.about.device') }}
         </view>
         <view class="button-opt" style="padding: 1rem 1.5rem;">
           <i :class="osName(SystemInfo.osName, 1)"></i>
@@ -45,9 +45,9 @@
       </view>
     </view>
     <view class="float">
-      本应用遵循MPL-2.0开源协议，内容源自iwara.tv
+      {{ $t('tip[0]') }}
       <br />
-      禁止用于商业用途
+      {{ $t('tip[1]') }}
       <br />
       ©2019-2023 Maoerxiachuan
     </view>

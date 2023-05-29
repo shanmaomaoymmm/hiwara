@@ -4,7 +4,7 @@
 			<view v-show="data.length == 0" style="text-align: center;padding-top: 20vh;">
 				<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
 				<br>
-				<text>还没有评论</text>
+				<text>{{ $t('comments.null') }}</text>
 			</view>
 			<view v-show="data.length > 0" class="comment" v-for="item, i in data" :key="'comment' + i">
 				<view style="display: flex;">
@@ -16,20 +16,20 @@
 				<view class="content">{{ item.content }}</view>
 				<view class="date">
 					<text>
-						<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+						<i><b>{{ $t('comments.posted') }}</b></i>{{ ' ' }}{{ formatDate(item.date) }}
 					</text>
 				</view>
 			</view>
 		</view>
 		<view class="addComment">
 			<view style="flex: 1;">
-				<input class="input" v-model="text" placeholder="添加你的评论" @focus="commentButton = true"
+				<input class="input" v-model="text" :placeholder="$t('comments.add')" @focus="commentButton = true"
 					@blur="commentButton = false" />
 			</view>
 			<view style="overflow: hidden;white-space: nowrap;transition: width ease 100ms;"
 				:style="{ width: commentButton ? '4.5rem' : 0 }">
-				<button size="mini" style="background-color:#00897b;color: #f0f0f0;margin-top: 0.9rem"
-					@click="addComment()">发布</button>
+				<button size="mini" style="background-color:#00897b;color: #f0f0f0;margin-top: 0.9rem" @click="addComment()">{{
+					$t('comments.submit') }}</button>
 			</view>
 		</view>
 	</view>
@@ -75,14 +75,14 @@ export default {
 			addCommentForVideo(this.vid, this.text, (res, code) => {
 				if (code == 201) {
 					uni.showToast({
-						title: "评论发表成功",
+						title: this.$t('comments.success'),
 						icon: "none",
 						duration: 3000,
 					})
 					this.getComments()
 				} else {
 					uni.showToast({
-						title: "评论发表失败",
+						title: this.$t('comments.fail'),
 						icon: "none",
 						duration: 3000,
 					})

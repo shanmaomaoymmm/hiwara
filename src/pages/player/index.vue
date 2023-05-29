@@ -3,23 +3,23 @@
 		<view v-if="loading" style="text-align: center;padding-top: 40vh;">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
-			<text>资源加载中……</text>
+			<text>{{ $t('loading1') }}</text>
 		</view>
 		<view v-else style="height: 100%;">
 			<view v-if="error" class="error">
 				<view v-if="error == 1">
 					<image src="@/static/icon/leaves-two.png" style="width: 4rem;height: 4rem;"></image>
 					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
-						<text>一叶障目，不见泰山</text>
+						<text>{{ $t('player.player.ban[0]') }}</text>
 					</view>
-					<text>你没有权限查看此内容，请到别的地方看看吧</text>
+					<text>{{ $t('player.player.ban[1]') }}</text>
 				</view>
 				<view v-else>
 					<image src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;"></image>
 					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
-						<text>大漠孤烟直，长河落日圆</text>
+						<text>{{ $t('player.player.null[0]') }}</text>
 					</view>
-					<text>这里没有任何东西，请到别的地方看看吧</text>
+					<text>{{ $t('player.player.null[1]') }}</text>
 				</view>
 			</view>
 			<view v-else style="display: flex;height: 100%;">
@@ -31,8 +31,10 @@
 					</view>
 					<view class="tabs" v-if="!(ori && pad)">
 						<view style="flex: 1;">
-							<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">简介</text>
-							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
+							<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">{{
+								$t('player.player.tab.abstract') }}</text>
+							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">{{
+								$t('player.player.tab.comments') }}</text>
 						</view>
 						<view style="flex: 1;text-align: right;">
 							<span class="definitionButton" @click="$refs.definitionPopup.open()">
@@ -49,7 +51,7 @@
 								<view style="height: 100%;overflow: auto;">
 									<info :vid="vid" :uid="uid" ref="info" :data="data">
 									</info>
-									<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus" :scol="pad?null:2"></lists>
+									<lists :authorOpus="authorOpus" :relatedOpus="relatedOpus" :scol="pad ? null : 2"></lists>
 								</view>
 							</swiper-item>
 							<swiper-item>
@@ -66,8 +68,10 @@
 							</span>
 						</view>
 						<view style="flex: 1;text-align: right;">
-							<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">更多</text>
-							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">评论</text>
+							<text class="tabs-button" @click="tab = 0" :class="{ tabsActive: tab == 0 }">{{ $t('player.player.tab.more')
+							}}</text>
+							<text class="tabs-button" @click="tab = 1" :class="{ tabsActive: tab == 1 }">{{
+								$t('player.player.tab.comments') }}</text>
 						</view>
 					</view>
 					<swiper style="height: 100%;" :current="tab" @change="swiper" :duration="100">
@@ -86,7 +90,7 @@
 		<uni-popup ref="definitionPopup" type="bottom">
 			<view class="definitionPopup">
 				<view class="definitionTitle">
-					<text>画质</text>
+					<text>{{ $t('player.player.definition') }}</text>
 				</view>
 				<view v-for="item, i in data.sources" :key="'definition' + i"
 					:class="{ definitionButtonSelect: item.name == definition }" style="padding:0.75rem 0;"
@@ -354,7 +358,7 @@ export default {
 }
 
 .definitionButton {
-	padding: 0.6rem 1rem;
+	padding: 0.8rem 1rem;
 	display: inline-block;
 	color: #616161;
 }

@@ -5,31 +5,31 @@
         <image src="@/static/icon/game.png" style="width: 6rem;height: 6rem;" />
       </view>
       <view style="font-size: 1.5rem;padding:1.5rem 0;">
-        你的网络出现了问题
+        {{ $t('index.netfail[0]') }}
       </view>
       <view>
-        你已登录至iwara.tv
+        {{ $t('index.netfail[1]') }}
         <br />
-        但你的网络环境无法连接至iwara.tv
+        {{ $t('index.netfail[2]') }}
         <br />
-        请尝试以下方法解决：
+        {{ $t('index.netfail[3]') }}
       </view>
       <view style="padding:1.5rem 0;">
-        1.请检查是否连接到互联网
+        {{ $t('index.netfail[4]') }}
         <br />
-        2.请检查手机WiFi，数据网络是否正常工作
+        {{ $t('index.netfail[5]') }}
         <br />
-        3.请检查路由器是否正常工作
+        {{ $t('index.netfail[6]') }}
         <br />
-        4.请检查你的网络环境能否正常访问iwara.tv
+        {{ $t('index.netfail[7]') }}
       </view>
     </view>
     <view>
       <button @click="retry()">
-        重试
+        {{ $t('index.netfail[8]') }}
       </button>
       <button @click="outline()">
-        离线模式
+        {{ $t('index.netfail[9]') }}
       </button>
     </view>
   </view>

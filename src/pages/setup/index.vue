@@ -2,7 +2,7 @@
   <view>
     <view class="button">
       <view class="button-title">
-        自动播放
+        {{ $t("setup.setup.autoplay") }}
       </view>
       <view class="button-opt" style="padding: 0.75rem 0.25rem;">
         <switch @change="autoplayChange" :checked="autoplay" color="#00897b" style="transform:scale(0.8)" />
@@ -10,7 +10,7 @@
     </view>
     <view class="button" @click="gotoPage('/pages/setup/definition')">
       <view class="button-title">
-        默认播放清晰度
+        {{ $t("setup.setup.definition") }}
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         {{ definition }}{{ ' ' }}
@@ -19,7 +19,7 @@
     </view>
     <view class="button">
       <view class="button-title">
-        失败重连次数
+        {{ $t("setup.setup.retry") }}
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         <i class="fa-solid fa-minus" @click="retryChange(0)"></i>
@@ -29,7 +29,7 @@
     </view>
     <view class="button" @click="gotoPage('/pages/setup/language')">
       <view class="button-title">
-        语言(Language)
+        {{ $t("setup.setup.language") }}
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         {{ $languageList.find((item) => { return item.code == language }).name }}{{ ' ' }}
@@ -38,7 +38,7 @@
     </view>
     <view v-if="init == 0" class="button" @click="gotoPage('/pages/setup/userInfo')">
       <view class="button-title">
-        修改个人信息
+        {{ $t("setup.setup.userInfo") }}
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         <i class="fa-solid fa-angles-right"></i>
@@ -46,7 +46,7 @@
     </view>
     <view class="button" @click="gotoPage('/pages/setup/about')">
       <view class="button-title">
-        关于
+        {{ $t("setup.setup.about") }}
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         <i class="fa-solid fa-angle-right"></i>
@@ -62,7 +62,7 @@
     </view>
     <view v-if="init == 0" class="button" @click="logout()">
       <view class="button-title">
-        退出登录
+        {{ $t("setup.setup.logout") }}
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         <i class="fa-solid fa-door-open"></i>
@@ -166,10 +166,10 @@ export default ({
     },
     logoutopt() {
       uni.showToast({
-				title: '已退出登录',
-				icon: 'none',
-				duration: 3000
-			});
+        title: '已退出登录',
+        icon: 'none',
+        duration: 3000
+      });
       removeStorage('token', () => {
         uni.reLaunch({
           url: '/pages/index/index'

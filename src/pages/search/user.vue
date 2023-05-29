@@ -3,15 +3,15 @@
     <view v-if="onload" style="text-align: center;padding-top: 30vh;">
       <image class="loading" src="@/static/icon/loading.png"></image>
       <br>
-      <text>资源加载中……</text>
+      <text>{{ $t('loading1') }}</text>
     </view>
     <view v-else>
       <view v-if="error" style="text-align: center;padding-top: 30vh;">
         <image src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
         <view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
-          <text>大漠孤烟直，长河落日圆</text>
+          <text>{{ $t('search.notData.excerpt') }}</text>
         </view>
-        <text>找不到任何用户，请到别的地方看看吧</text>
+        <text>{{ $t('search.notData.user') }}</text>
       </view>
       <view v-else style="padding: 0.5rem;">
         <view v-for="item, i in list" class="item" @click="gotoPage(item.id, item.username)">
@@ -19,16 +19,19 @@
             <q-avatar class="img" :src="item.avatar != null
               ? 'https://i.iwara.tv/image/avatar/' +
               item.avatar.id + '/' + item.avatar.name
-              : 'https://www.iwara.tv/images/default-avatar.jpg'"/>
+              : 'https://www.iwara.tv/images/default-avatar.jpg'" />
           </view>
           <view class="lab">
             {{ item.name }}
           </view>
         </view>
         <view style="text-align: center;padding-bottom: 1rem;">
-          <text>
-            <i v-if="loading" class="fa-solid fa-circle-notch fa-spin" style="color: #00897b"></i>{{ ' ' }}{{ loading ?
-              '正在加载数据……' : '已加载完成' }}
+          <text v-if="loading">
+            <i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
+            <text>{{ $t('loading2') }}</text>
+          </text>
+          <text v-else>
+            <text><i style="transform:scale(2.5,1)" class="fa-solid fa-minus"></i></text>
           </text>
         </view>
       </view>

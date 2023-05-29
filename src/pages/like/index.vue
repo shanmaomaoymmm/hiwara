@@ -35,9 +35,9 @@ export default ({
     this.tab = parseInt(opt.tab)
     let title = null
     if (this.tab == 0) {
-      title = '我收藏的视频'
+      title = this.$t('like.video')
     } else if (this.tab == 1) {
-      title = '我收藏的图片'
+      title = this.$t('like.image')
     }
     uni.setNavigationBarTitle({
       title: title

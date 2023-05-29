@@ -14,19 +14,19 @@ export default {
 	data() {
 		return {
 			item: [{
-				label: '订阅',
+				label: this.$t('home.tab.subscribe'),
 				icon: [
 					'/static/icon/rss.png',
 					'/static/icon/a_rss.png'
 				],
 			}, {
-				label: '视频',
+				label: this.$t('home.tab.video'),
 				icon: [
 					'/static/icon/video.png',
 					'/static/icon/a_video.png'
 				],
 			}, {
-				label: '图片',
+				label: this.$t('home.tab.image'),
 				icon: [
 					'/static/icon/pic.png',
 					'/static/icon/a_pic.png'

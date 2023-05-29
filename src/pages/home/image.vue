@@ -3,7 +3,7 @@
 		<view v-if="onload" style="text-align: center;padding-top: 30vh;">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
-			<text>资源加载中……</text>
+			<text>{{ $t('loading1') }}</text>
 		</view>
 		<view v-else>
 			<view v-if="error" style="text-align: center;padding-top: 30vh;">
@@ -14,7 +14,7 @@
 				<view style="text-align: center;padding-bottom: 1rem;">
 					<text v-if="loading">
 						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
-						<text>正在加载数据……</text>
+						<text>{{ $t('loading2') }}</text>
 					</text>
 					<text v-else>
 						<text><i style="transform:scale(2.5,1)" class="fa-solid fa-minus"></i></text>
@@ -78,7 +78,7 @@ export default {
 					}
 				} else if (code == 408) {
 					uni.showToast({
-						title: "呐！少冲一点吧\r\n无法连接到服务器",
+						title: this.$t('dontLink'),
 						icon: "none",
 						duration: 3000,
 					});

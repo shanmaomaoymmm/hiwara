@@ -3,23 +3,23 @@
 		<view v-show="loading" style="text-align: center;padding-top: 40vh;">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
-			<text>资源加载中……</text>
+			<text>{{ $t('loading1') }}</text>
 		</view>
 		<view v-show="!loading">
 			<view v-show="error" class="error">
 				<view v-if="error == 1">
 					<image src="@/static/icon/leaves-two.png" style="width: 4rem;height: 4rem;"></image>
 					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
-						<text>一叶障目，不见泰山</text>
+						<text>{{ $t('image.ban[0]') }}</text>
 					</view>
-					<text>你没有权限查看此内容，请到别的地方看看吧</text>
+					<text>{{ $t('image.ban[1]') }}</text>
 				</view>
 				<view v-else>
 					<image src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;"></image>
 					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
-						<text>大漠孤烟直，长河落日圆</text>
+						<text>{{ $t('image.null[0]') }}</text>
 					</view>
-					<text>这里没有任何东西，请到别的地方看看吧</text>
+					<text>{{ $t('image.null[1]') }}</text>
 				</view>
 			</view>
 			<view v-show="!error" class="images"
@@ -36,7 +36,7 @@
 								<q-img class="picture" :src="data.files[0]" @click="unfold = !unfold" />
 							</view>
 							<text v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
-								{{ unfold ? "点击折叠" : "点击展开" }}
+								{{ unfold ? $t('image.unfold[0]') : $t('image.unfold[1]') }}
 							</text>
 						</view>
 						<view class="info">
@@ -48,7 +48,8 @@
 									<text style="font-size: 1rem;">{{ data.author }}</text>
 								</view>
 								<view>
-									<button size="mini" @click="followers">{{ data.following ? "已关注" : "＋ 关注"
+									<button size="mini" @click="followers">{{ data.following ? $t('following.opt[0]') :
+										$t('following.opt[1]')
 									}}</button>
 								</view>
 							</view>
@@ -67,13 +68,13 @@
 						</view>
 						<view class="comments">
 							<view style="font-weight: bold;padding: 0.5rem;">
-								评论
+								{{ $t('comments.title') }}
 							</view>
 							<view style="padding: 0.5rem;">
 								<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;">
 									<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
 									<br>
-									<text>还没有评论</text>
+									<text>{{ $t('comments.null') }}</text>
 								</view>
 								<view v-show="comments.length > 0" v-for="item, i in comments" :key="'comment' + i">
 									<view style="display: flex;">
@@ -85,19 +86,20 @@
 									<view style="margin: 0.4rem 0;">{{ item.content }}</view>
 									<view class="date">
 										<text>
-											<i><b>发布于</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+											<i><b>{{ $t('comments.posted') }}</b></i>{{ ' ' }}{{ formatDate(item.date) }}
 										</text>
 									</view>
 								</view>
 							</view>
 							<view class="addComment">
 								<view style="flex:1">
-									<input v-model="addCommentBody" placeholder="添加你的评论" class="addCommentInput"
+									<input v-model="addCommentBody" :placeholder="$t('comments.add')" class="addCommentInput"
 										@focus="addCommentActive = true" @blur="addCommentActive = false" />
 								</view>
 								<view :style="{ width: addCommentActive ? '4.5rem' : 0 }"
 									style="width: 4.5rem;text-align: center;transition: width ease 100ms;overflow: hidden;white-space: nowrap;">
-									<button size="mini" style="margin-top: 0.5rem" @click="addComment()">发布</button>
+									<button size="mini" style="margin-top: 0.5rem" @click="addComment()">{{ $t('comments.submit')
+									}}</button>
 								</view>
 							</view>
 						</view>
@@ -105,12 +107,12 @@
 							<view style="padding: 0 0.5rem;">
 								<view
 									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
-									更多来自用户
+									{{ $t('image.lists[0]') }}
 								</view>
 								<lists :data="authorOpus" type="image"></lists>
 								<view
 									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
-									更像这样
+									{{ $t('image.lists[1]') }}
 								</view>
 								<lists :data="relatedOpus" type="image"></lists>
 							</view>
@@ -120,12 +122,12 @@
 						<view style="padding: 0 0.5rem;">
 							<view
 								style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
-								更多来自用户
+								{{ $t('image.lists[0]') }}
 							</view>
 							<lists :scol="2" :data="authorOpus" type="image"></lists>
 							<view
 								style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
-								更像这样
+								{{ $t('image.lists[1]') }}
 							</view>
 							<lists :scol="2" :data="relatedOpus" type="image"></lists>
 						</view>
@@ -289,14 +291,14 @@ export default {
 				followers(this.uid, 0, (res, code) => {
 					if (code == 204) {
 						uni.showToast({
-							title: "已取消关注",
+							title: this.$t('following.del'),
 							icon: "none",
 							duration: 3000,
 						})
 						this.data.following = !this.data.following
 					} else {
 						uni.showToast({
-							title: "操作失败",
+							title: this.$t('optFail'),
 							icon: "none",
 							duration: 3000,
 						})
@@ -306,14 +308,14 @@ export default {
 				followers(this.uid, 1, (res, code) => {
 					if (code == 201) {
 						uni.showToast({
-							title: "关注成功！！！",
+							title: this.$t('following.push'),
 							icon: "none",
 							duration: 3000,
 						})
 						this.data.following = !this.data.following
 					} else {
 						uni.showToast({
-							title: "操作失败",
+							title: this.$t('optFail'),
 							icon: "none",
 							duration: 3000,
 						})
@@ -336,14 +338,14 @@ export default {
 			addCommentForImage(this.id, this.addCommentBody, (res, code) => {
 				if (code == 201) {
 					uni.showToast({
-						title: "评论发表成功",
+						title: this.$t('comments.success'),
 						icon: "none",
 						duration: 3000,
 					})
 					this.getComments()
 				} else {
 					uni.showToast({
-						title: "评论发表失败",
+						title: this.$t('comments.fail'),
 						icon: "none",
 						duration: 3000,
 					})

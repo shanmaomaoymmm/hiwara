@@ -14,22 +14,21 @@
 			</view>
 			<view class="profileBody">
 				<i>
-					{{ user.profile.body || "该用户是个神秘人，不喜欢被人围观。" }}
+					{{ user.profile.body || $t("home.left.nullSignature") }}
 				</i>
 			</view>
 		</view>
 		<view @click="gotoPage('/pages/user/index?uid=' + user.user.id + '&username=' + user.user.username + '&self')"
-			class="button">我的主页</view>
-		<view @click="gotoPage('/pages/like/index?tab=0')" class="button">我收藏的视频</view>
-		<view @click="gotoPage('/pages/like/index?tab=1')" class="button">我收藏的图片</view>
-		<!-- <view class="button">历史记录</view> -->
+			class="button">{{ $t('home.left.myPage') }}</view>
+		<view @click="gotoPage('/pages/like/index?tab=0')" class="button">{{ $t('home.left.favoriteVideo') }}</view>
+		<view @click="gotoPage('/pages/like/index?tab=1')" class="button">{{ $t('home.left.favoriteImage') }}</view>
 		<!-- #ifdef APP-PLUS -->
-		<view @click="gotoPage('/pages/following/index')" class="button">我的关注</view>
-		<view @click="gotoPage('/pages/history/index')" class="button">历史记录</view>
-		<view @click="gotoPage('/pages/download/index')" class="button">下载管理</view>
+		<view @click="gotoPage('/pages/following/index')" class="button">{{ $t('home.left.concerns') }}</view>
+		<view @click="gotoPage('/pages/history/index')" class="button">{{ $t('home.left.history') }}</view>
+		<view @click="gotoPage('/pages/download/index')" class="button">{{ $t('home.left.download') }}</view>
 		<!-- #endif -->
-		<view @click="gotoPage('/pages/setup/index?init=0')" class="button">设置</view>
-		<view @click="logout" class="button">退出登录</view>
+		<view @click="gotoPage('/pages/setup/index?init=0')" class="button">{{ $t('home.left.setup') }}</view>
+		<view @click="logout" class="button">{{ $t('home.left.logout') }}</view>
 	</view>
 </template>
 
@@ -43,8 +42,8 @@ export default {
 	methods: {
 		logout() {
 			uni.showModal({
-				title: '退出登录',
-				content: '是否退出此账号？\n',
+				title: this.$t('logout.title'),
+				content: this.$t('logout.confirmed'),
 				confirmColor: '#00897B',
 				success: function (res) {
 					this.logoutopt()
@@ -53,7 +52,7 @@ export default {
 		},
 		logoutopt() {
 			uni.showToast({
-				title: '已退出登录',
+				title: this.$t('logout.success'),
 				icon: 'none',
 				duration: 3000
 			});

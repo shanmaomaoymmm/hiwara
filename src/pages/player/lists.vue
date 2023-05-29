@@ -1,11 +1,11 @@
 <template>
   <view class="lists">
     <view>
-      <text>该作者的其他作品</text>
+      <text>{{ $t('player.lists[0]') }}</text>
     </view>
     <lists :scol="scol" :data="authorOpus" type="video"></lists>
     <view>
-      <text>相关作品</text>
+      <text>{{ $t('player.lists[1]') }}</text>
     </view>
     <lists :scol="scol" :data="relatedOpus" type="video"></lists>
   </view>

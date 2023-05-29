@@ -3,22 +3,22 @@
 		<view v-if="onload" style="text-align: center;padding-top: 30vh;">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
-			<text>资源加载中……</text>
+			<text>{{ $t('loading1') }}</text>
 		</view>
 		<view v-else>
 			<view v-if="error" style="text-align: center;padding-top: 30vh;">
 				<image src="@/static/icon/cactus.png" style="width: 4rem;height: 4rem;" />
 				<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
-					<text>大漠孤烟直，长河落日圆</text>
+					<text>{{ $t('like.null[0]') }}</text>
 				</view>
-				<text>你没有任何收藏，请到别的地方看看吧</text>
+				<text>{{ $t('like.null[1]') }}</text>
 			</view>
 			<view v-else>
 				<lists :data="data" ref="lists" type="image"></lists>
 				<view style="text-align: center;padding-bottom: 1rem;">
 					<text v-if="loading">
 						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
-						<text>正在加载数据……</text>
+						<text>{{ $t('loading2') }}</text>
 					</text>
 					<text v-else>
 						<text><i style="transform:scale(2.5,1)" class="fa-solid fa-minus"></i></text>
@@ -82,7 +82,7 @@ export default {
 					}
 				} else if (code == 408) {
 					uni.showToast({
-						title: "呐！少冲一点吧\r\n无法连接到服务器",
+						title: this.$t('dontLink'),
 						icon: "none",
 						duration: 3000,
 					});

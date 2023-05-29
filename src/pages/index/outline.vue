@@ -16,10 +16,10 @@ export default ({
     return {
       list: [
         {
-          name: '下载管理',
+          name: this.$t('index.outline[0]'),
           url: '/pages/download/index'
         }, {
-          name: '设置',
+          name: this.$t('index.outline[1]'),
           url: '/pages/setup/index?init=1'
         }
       ],

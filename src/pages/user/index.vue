@@ -3,14 +3,10 @@
     <view v-show="loading" style="text-align: center;padding-top: 40vh;">
       <image class="loading" src="@/static/icon/loading.png"></image>
       <br>
-      <text>资源加载中……</text>
+      <text>{{ $t('loading1') }}</text>
     </view>
     <view v-show="!loading">
       <view class="panel">
-        <!-- <view class="back">
-          <i @click="back(1)" class="fa-solid fa-angle-left backButton"></i>
-          <i @click="back(0)" class="fa-solid fa-house backButton"></i>
-        </view> -->
         <view class="bg">
           <view class="bgp" :style="{ backgroundImage: 'url(' + profile.background + ')' }"></view>
         </view>
@@ -24,11 +20,11 @@
               {{
                 profile.name }}</view>
             <view v-if="!self">
-              <button @click="followers" size="mini">{{ profile.following ? '已关注' : '＋ 关注' }}</button>
+              <button @click="followers" size="mini">{{ profile.following ? $t('following.opt[0]') :
+                $t('following.opt[1]') }}</button>
               {{ ' ' }}
-              <button size="mini">{{ profile.friend ? '已是朋友' : '＋ 朋友' }}</button>
+              <button size="mini">{{ profile.friend ? $t('user.friend[0]') : $t('user.friend[1]') }}</button>
               {{ ' ' }}
-              <!-- <button size="mini"><i class="fa-regular fa-envelope fa-fw"></i>{{ ' ' }}私信</button> -->
             </view>
           </view>
         </view>
@@ -36,8 +32,8 @@
           {{ profile.body }}
         </view>
         <view class="tabs">
-          <text class="tab" @click="tab = 0" :class="{ tabsActive: tab == 0 }">视频</text>
-          <text class="tab" @click="tab = 1" :class="{ tabsActive: tab == 1 }">图片</text>
+          <text class="tab" @click="tab = 0" :class="{ tabsActive: tab == 0 }">{{ $t('user.tab.video') }}</text>
+          <text class="tab" @click="tab = 1" :class="{ tabsActive: tab == 1 }">{{ $t('user.tab.image') }}</text>
         </view>
         <view>
           <video-list ref="video" v-if="tab == 0" :uid="uid"></video-list>
@@ -143,14 +139,14 @@ export default {
         followers(this.uid, 0, (res, code) => {
           if (code == 204) {
             uni.showToast({
-              title: "已取消关注",
+              title: this.$t('following.del'),
               icon: "none",
               duration: 3000,
             })
             this.profile.following = !this.profile.following
           } else {
             uni.showToast({
-              title: "操作失败",
+              title: this.$t('optFail'),
               icon: "none",
               duration: 3000,
             })
@@ -160,14 +156,14 @@ export default {
         followers(this.uid, 1, (res, code) => {
           if (code == 201) {
             uni.showToast({
-              title: "关注成功！！！",
+              title: this.$t('following.push'),
               icon: "none",
               duration: 3000,
             })
             this.profile.following = !this.profile.following
           } else {
             uni.showToast({
-              title: "操作失败",
+              title: this.$t('optFail'),
               icon: "none",
               duration: 3000,
             })
@@ -180,14 +176,14 @@ export default {
         friends(this.uid, 0, (res, code) => {
           if (code == 204) {
             uni.showToast({
-              title: "已删除好友",
+              title: this.$t('user.disFriend'),
               icon: "none",
               duration: 3000,
             })
             this.profile.friends = !this.profile.friends
           } else {
             uni.showToast({
-              title: "操作失败",
+              title: this.$t('optFail'),
               icon: "none",
               duration: 3000,
             })
@@ -197,13 +193,13 @@ export default {
         friends(this.uid, 1, (res, code) => {
           if (code == 201) {
             uni.showToast({
-              title: "加好友申请已发送",
+              title: this.$t('user.friending'),
               icon: "none",
               duration: 3000,
             })
           } else {
             uni.showToast({
-              title: "操作失败",
+              title: this.$t('optFail'),
               icon: "none",
               duration: 3000,
             })

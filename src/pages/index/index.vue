@@ -9,11 +9,12 @@
         </view>
       </view>
       <view class="bottom" :style="{ 'bottom': bottom + 'rem' }">
-        <i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>软件启动中
+        <i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>{{ $t('index.start')
+        }}
       </view>
       <view class="float">
         <view class="float-tip">
-          内容源自iwara.tv，本程序禁止用于商业用途
+          {{ $t('tip[2]') }}
           <br />
           ©2019-2023 Maoerxiachuan
         </view>

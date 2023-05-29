@@ -1,6 +1,5 @@
 <template>
   <view class="panel">
-    <!-- <top-bar class="topBar" @left="showLeftDrawerOpen()"></top-bar> -->
     <view style="padding:0 0 4rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart"
       @touchend="handletouchend">
       <subscribe-list ref="subscribe" v-if="tab == 0"></subscribe-list>
@@ -19,7 +18,6 @@
 </template>
 
 <script>
-import topBar from "./topBar.vue"
 import floatBar from "./floatBar.vue"
 import subscribeList from "./subscribe.vue"
 import videoList from "./video.vue"
@@ -28,7 +26,6 @@ import showLeft from "./showLeft.vue"
 import { getSelfData } from "@/api/api"
 export default {
   components: {
-    topBar,
     floatBar,
     subscribeList,
     videoList,
@@ -213,14 +210,6 @@ export default {
   height: 100%;
 }
 
-/* .topBar {
-  position: fixed;
-  width: calc(100% - 1rem);
-  padding: 0.5rem;
-  background-color: #f5f5f5;
-  z-index: 10;
-} */
-
 .floatBar {
   position: fixed;
   bottom: 0;
@@ -247,7 +236,6 @@ export default {
 
 @media (prefers-color-scheme: dark) {
 
-  /* .topBar, */
   .floatBar {
     background-color: #292929;
   }
