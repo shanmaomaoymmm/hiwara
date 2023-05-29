@@ -97,6 +97,9 @@ export default {
     };
   },
   created() {
+    uni.setNavigationBarTitle({
+      title: this.$t('label.download')
+    });
     this.getData();
   },
   methods: {

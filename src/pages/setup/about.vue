@@ -73,6 +73,9 @@ export default {
     }
   },
   created() {
+    uni.setNavigationBarTitle({
+      title: this.$t('label.about')
+    });
     uni.getSystemInfo({
       success: (res) => {
         console.log(res)

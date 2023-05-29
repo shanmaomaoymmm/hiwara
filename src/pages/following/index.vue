@@ -24,6 +24,9 @@ export default {
     }
   },
   created() {
+    uni.setNavigationBarTitle({
+      title: this.$t('label.following')
+    });
     getFollowing((res) => {
       this.data = res
     })

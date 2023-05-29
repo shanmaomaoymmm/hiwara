@@ -1,4 +1,17 @@
 {
+  "label": {
+    "netfail": "网络连接错误",
+    "login": "登录",
+    "search": "搜索",
+    "like": "我的收藏",
+    "setup": "设置",
+    "language": "语言(Language)",
+    "definition": "清晰度",
+    "about": "关于",
+    "download": "下载管理",
+    "following": "我的关注",
+    "history": "历史记录"
+  },
   "loading1": "资源加载中……",
   "loading2": "正在加载数据……",
   "dontLink": "呐！少冲一点吧\r\n无法连接到服务器",

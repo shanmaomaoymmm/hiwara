@@ -54,6 +54,9 @@ export default ({
     this.onReachBottom()
   },
   created() {
+    uni.setNavigationBarTitle({
+      title: this.$t('label.like')
+    });
   },
   methods: {
     backTop() {

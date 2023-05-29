@@ -36,6 +36,11 @@
 </template>
 <script>
 export default {
+  created() {
+    uni.setNavigationBarTitle({
+      title: this.$t('label.netfail')
+    });
+  },
   methods: {
     outline() {
       uni.navigateTo({

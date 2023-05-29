@@ -7,20 +7,20 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 /**国际化 */
-import zhHans from '@/translation/zh-hans.json'
-const messages = {
-	'zh-Hans': zhHans
+import messages from '@/locale/index.js'
+let lag = uni.getStorageSync('language')
+if (lag == '') {
+	lag = uni.getLocale()
 }
+
 let i18nConfig = {
-	locale: 'zh-Hans',
+	locale: lag,
 	messages
 }
 
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 const i18n = new VueI18n(i18nConfig)
-
-console.log(i18n)
 
 const app = new Vue({
 	...App,
@@ -43,28 +43,28 @@ Vue.prototype.$backhome = () => {
 Vue.prototype.$languageList = [
 	{
 		name: '中文(简体)',
-		code: 'zh-hans'
-		// }, {
-		// 	name: '中文(繁體)',
-		// 	code: 'zh-hant'
-		// }, {
-		// 	name: 'English',
-		// 	code: 'en-us'
-		// }, {
-		// 	name: '日本語',
-		// 	code: 'ja-jp'
-		// }, {
-		// 	name: '한국어',
-		// 	code: 'ko-kr'
-		// }, {
+		code: 'zh-Hans'
+	}, {
+		name: '中文(繁體)',
+		code: 'zh-Hant'
+	}, {
+		name: 'English',
+		code: 'en-US'
+	}, {
+		name: '日本語',
+		code: 'ja-JP'
+	}, {
+		name: '한국어',
+		code: 'ko-KR'
+	}, {
 		// 	name: 'Français',
 		// 	code: 'fr-fr'
 		// }, {
 		// 	name: 'Español',
 		// 	code: 'es-es'
 		// }, {
-		// 	name: 'Русский',
-		// 	code: 'ru-ru'
+		name: 'Русский',
+		code: 'ru-RU'
 		// }, {
 		// 	name: 'བོད་སྐད།',
 		// 	code: 'tib'

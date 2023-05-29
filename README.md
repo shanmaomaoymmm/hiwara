@@ -8,6 +8,12 @@
 
 🕹️基于uniapp的iwara应用
 
+### 招翻译！跪求翻译大佬！
+### Translator wanted! Kneeling for a translator!
+### 翻訳者募集中です！ 翻訳者募集の土下座
+### 번역가 구함! 무릎 꿇고 번역가를 구합니다!
+### Требуется переводчик! На колени для переводчика!
+
 <img src="./edit/img/logo.png" style="width:192px;height:192px" />
 
 兼容新版iwara客户端，支持Android，iOS和Web端

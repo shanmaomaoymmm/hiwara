@@ -100,7 +100,11 @@ export default ({
   onShow() {
     this.getSteup()
   },
-  created() { },
+  created() {
+    uni.setNavigationBarTitle({
+      title: this.$t('label.setup')
+    });
+  },
   methods: {
     getSteup() {
       returnStorage('autoplay', false, (res) => {
@@ -109,7 +113,7 @@ export default ({
       returnStorage('definition', 'Source', (res) => {
         this.definition = res
       })
-      returnStorage('language', 'zh-hans', (res) => {
+      returnStorage('language', 'zh-Hans', (res) => {
         this.language = res
       })
       returnStorage('retry', 16, (res) => {

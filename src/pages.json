@@ -20,7 +20,7 @@
 		{
 			"path": "pages/index/netfail",
 			"style": {
-				"navigationBarTitleText": "网络连接错误",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
 					"bounce": "none"
@@ -40,7 +40,7 @@
 		{
 			"path": "pages/login/index",
 			"style": {
-				"navigationBarTitleText": "登录",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
 					"bounce": "none"
@@ -72,7 +72,7 @@
 					},
 					"titleNView": {
 						"searchInput": {
-							"placeholder": "搜索",
+							"placeholder": "",
 							"borderRadius": "20px"
 						},
 						"buttons": [
@@ -108,7 +108,7 @@
 					},
 					"titleNView": {
 						"searchInput": {
-							"placeholder": "搜索",
+							"placeholder": "",
 							"borderRadius": "20px"
 						},
 						"buttons": [
@@ -204,7 +204,7 @@
 		{
 			"path": "pages/like/index",
 			"style": {
-				"navigationBarTitleText": "我的收藏",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": true,
 				"onReachBottonDistance": 100,
 				"app-plus": {
@@ -228,7 +228,7 @@
 		{
 			"path": "pages/setup/index",
 			"style": {
-				"navigationBarTitleText": "设置",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
 					"bounce": "none",
@@ -246,7 +246,7 @@
 		{
 			"path": "pages/setup/language",
 			"style": {
-				"navigationBarTitleText": "语言(Language)",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
 					"bounce": "none",
@@ -264,7 +264,7 @@
 		{
 			"path": "pages/setup/definition",
 			"style": {
-				"navigationBarTitleText": "清晰度",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
 					"bounce": "none",
@@ -300,7 +300,7 @@
 		{
 			"path": "pages/setup/about",
 			"style": {
-				"navigationBarTitleText": "关于",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"app-plus": {
 					"bounce": "none",
@@ -318,14 +318,14 @@
 		{
 			"path": "pages/download/index",
 			"style": {
-				"navigationBarTitleText": "下载管理",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
 		},
 		{
 			"path": "pages/following/index",
 			"style": {
-				"navigationBarTitleText": "我的关注",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"titleNView": {
 					"buttons": [
@@ -340,7 +340,7 @@
 		{
 			"path": "pages/history/index",
 			"style": {
-				"navigationBarTitleText": "历史记录",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,
 				"titleNView": {
 					"buttons": [
@@ -362,7 +362,7 @@
 		{
 			"path": "pages/debug/test",
 			"style": {
-				"navigationBarTitleText": "测试页面",
+				"navigationBarTitleText": "test",
 				"enablePullDownRefresh": false
 			}
 		}

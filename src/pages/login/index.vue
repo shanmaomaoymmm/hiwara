@@ -45,6 +45,9 @@ export default {
 		}
 	},
 	created() {
+		uni.setNavigationBarTitle({
+			title: this.$t('label.login')
+		});
 		getStorage('username', (res) => {
 			if (res) {
 				this.username = res

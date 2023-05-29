@@ -32,6 +32,9 @@ export default {
     }
   },
   created() {
+    uni.setNavigationBarTitle({
+      title: this.$t('label.history')
+    });
     getHistory((res) => {
       this.data = res
     })

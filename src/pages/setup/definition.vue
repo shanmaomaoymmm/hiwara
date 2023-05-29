@@ -31,6 +31,9 @@ export default ({
     }
   },
   created() {
+    uni.setNavigationBarTitle({
+      title: this.$t('label.definition')
+    });
   },
   methods: {
     setDefinition(def) {

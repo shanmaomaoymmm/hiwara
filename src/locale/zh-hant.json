@@ -1,0 +1,217 @@
+{
+  "label": {
+    "netfail": "網路連接錯誤",
+    "login": "登錄",
+    "search": "搜索",
+    "like": "我的收藏",
+    "setup": "設置",
+    "language": "語言(Language)",
+    "definition": "清晰度",
+    "about": "關於",
+    "download": "下載管理",
+    "following": "我的關注",
+    "history": "歷史記錄"
+  },
+  "loading1": "資源載入中……",
+  "loading2": "正在載入資料……",
+  "dontLink": "呐！少沖一點吧\r\n無法連接到伺服器",
+  "tip": [
+    "本應用遵循MPL-2.0開源協定，內容源自iwara.tv",
+    "禁止用於商業用途",
+    "內容源自iwara.tv，本程式禁止用於商業用途"
+  ],
+  "logout": {
+    "title": "退出登錄",
+    "confirmed": "是否退出此帳號？",
+    "success": "已退出登錄"
+  },
+  "liked": {
+    "title": "點贊",
+    "opt": [
+      "已點贊",
+      "點贊"
+    ],
+    "push": "點贊成功！！！",
+    "del": "已取消點贊"
+  },
+  "following": {
+    "title": "關注",
+    "opt": [
+      "已關注",
+      "＋ 關注"
+    ],
+    "push": "關注成功！！！",
+    "del": "已取消關注"
+  },
+  "comments": {
+    "title": "評論",
+    "null": "還沒有評論",
+    "posted": "發佈於",
+    "add": "添加你的評論",
+    "submit": "發佈",
+    "success": "評論發表成功",
+    "fail": "評論發表失敗"
+  },
+  "optFail": "操作失敗",
+  "index": {
+    "start": "軟體啟動中",
+    "netfail": [
+      "你的網路出現了問題",
+      "你已登錄至iwara.tv",
+      "但你的網路環境無法連接至iwara.tv",
+      "請嘗試以下方法解決：",
+      "1.請檢查是否連接到互聯網",
+      "2.請檢查手機WiFi，資料網路是否正常工作",
+      "3.請檢查路由器是否正常工作",
+      "4.請檢查你的網路環境能否正常訪問iwara.tv",
+      "重試",
+      "離線模式"
+    ],
+    "outline": [
+      "下載管理",
+      "設置"
+    ]
+  },
+  "home": {
+    "left": {
+      "myPage": "我的首頁",
+      "favoriteVideo": "我收藏的視頻",
+      "favoriteImage": "我收藏的圖片",
+      "concerns": "我的關注",
+      "history": "歷史記錄",
+      "download": "下載管理",
+      "setup": "設置",
+      "logout": "退出登錄",
+      "nullSignature": "該用戶是個神秘人，不喜歡被人圍觀。"
+    },
+    "tab": {
+      "subscribe": "訂閱",
+      "video": "視頻",
+      "image": "圖片"
+    }
+  },
+  "login": {
+    "title": "登錄到你的iwara帳號",
+    "user": "請輸入帳號",
+    "passwd": "請輸入密碼",
+    "login": "登錄",
+    "logining": "登錄中",
+    "regist": "註冊帳號",
+    "success": "登錄成功",
+    "fail": "登錄失敗",
+    "failMsg": "用戶名或密碼錯誤",
+    "null": "用戶名和密碼不能為空"
+  },
+  "setup": {
+    "setup": {
+      "autoplay": "自動播放",
+      "definition": "默認播放清晰度",
+      "retry": "失敗重連次數",
+      "language": "語言(Language)",
+      "userInfo": "修改個人資訊",
+      "about": "關於",
+      "logout": "退出登錄"
+    },
+    "about": {
+      "dev": "開發版",
+      "beta": "測試版",
+      "release": "正式版",
+      "version": "版本號",
+      "webviewVersion": "webview版本",
+      "device": "設備平臺"
+    }
+  },
+  "search": {
+    "tab": {
+      "video": "視頻",
+      "image": "圖片",
+      "user": "用戶"
+    },
+    "notData": {
+      "excerpt": "大漠孤煙直，長河落日圓",
+      "video": "搜索不到任何視頻，請到別的地方看看吧",
+      "image": "搜索不到任何圖片，請到別的地方看看吧",
+      "user": "找不到任何用戶，請到別的地方看看吧"
+    }
+  },
+  "player": {
+    "player": {
+      "ban": [
+        "一葉障目，不見泰山",
+        "你沒有許可權查看此內容，請到別的地方看看吧"
+      ],
+      "null": [
+        "大漠孤煙直，長河落日圓",
+        "這裡沒有任何東西，請到別的地方看看吧"
+      ],
+      "tab": {
+        "abstract": "簡介",
+        "comments": "評論",
+        "more": "更多"
+      },
+      "definition": "畫質"
+    },
+    "info": {
+      "share": "分享",
+      "download": "下載",
+      "copy": "複製連結",
+      "copied": "已複製下載連結",
+      "device": "此操作僅手機端支援"
+    },
+    "lists": [
+      "該作者的其他作品",
+      "相關作品"
+    ]
+  },
+  "like": {
+    "video": "我收藏的視頻",
+    "image": "我收藏的圖片",
+    "null": [
+      "大漠孤煙直，長河落日圓",
+      "你沒有任何收藏，請到別的地方看看吧"
+    ]
+  },
+  "download": {
+    "doing": "正在下載",
+    "end": "下載完成",
+    "dled": "已完成",
+    "stopall": "停止所有下載",
+    "clearall": "清空下載記錄"
+  },
+  "image": {
+    "ban": [
+      "一葉障目，不見泰山",
+      "你沒有許可權查看此內容，請到別的地方看看吧"
+    ],
+    "null": [
+      "大漠孤煙直，長河落日圓",
+      "這裡沒有任何東西，請到別的地方看看吧"
+    ],
+    "unfold": [
+      "點擊折疊",
+      "點擊展開"
+    ],
+    "lists": [
+      "更多來自用戶",
+      "更像這樣"
+    ],
+    "download": "下載圖片",
+    "tip": [
+      "第",
+      "P"
+    ]
+  },
+  "user": {
+    "friend": [
+      "已是朋友",
+      "＋ 朋友"
+    ],
+    "friending": "加好友申請已發送",
+    "disFriend": "已刪除好友",
+    "null": "沒有任何內容",
+    "tab": {
+      "video": "視頻",
+      "image": "圖片"
+    }
+  }
+}
