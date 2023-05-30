@@ -37,6 +37,7 @@ export default ({
   },
   methods: {
     setLanguage(lag) {
+      this.$languageChange(lag)
       setStorage('language', lag)
       uni.navigateBack({
         delta: 1

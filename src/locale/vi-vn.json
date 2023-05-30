@@ -1,0 +1,216 @@
+{
+  "comments": {
+    "add": "Thêm nhận xét của bạn",
+    "fail": "Đăng không thành công",
+    "null": "Không có bình luận nào",
+    "posted": "Đăng lên",
+    "submit": "Bưu kiện",
+    "success": "Đăng thành công",
+    "title": "bình luận"
+  },
+  "dontLink": "Lỗi!\r\nKhông thể kết nối tới máy chủ",
+  "download": {
+    "clearall": "Xóa lịch sử",
+    "dled": "Đã tải xuống",
+    "doing": "Đang tải xuống",
+    "end": "Hoàn thành",
+    "stopall": "Tất cả dừng lại"
+  },
+  "following": {
+    "del": "không theo dõi",
+    "opt": [
+      "Đã theo dõi",
+      "＋ Theo dõi"
+    ],
+    "push": "Đã theo dõi thành công!!!!",
+    "title": "Theo"
+  },
+  "home": {
+    "left": {
+      "concerns": "Tiếp theo",
+      "download": "Tải xuống",
+      "favoriteImage": "Hình ảnh yêu thích",
+      "favoriteVideo": "video yêu thích",
+      "history": "Lịch sử",
+      "logout": "Đăng xuất",
+      "myPage": "Trang của tôi",
+      "setup": "Cài đặt"
+    },
+    "tab": {
+      "image": "Hình ảnh",
+      "subscribe": "Đặt mua",
+      "video": "Băng hình"
+    }
+  },
+  "image": {
+    "ban": [
+      "Không kết quả",
+      "Bạn không có quyền kiểm tra điều này!"
+    ],
+    "download": "Tải hình ảnh",
+    "lists": [
+      "Thêm từ người dùng",
+      "Hơn như thế này"
+    ],
+    "null": [
+      "Không kết quả",
+      "Không có gì ở đây, hãy thử một cái gì đó khác!"
+    ],
+    "tip": [
+      "KHÔNG",
+      "P"
+    ],
+    "unfold": [
+      "Nếp gấp",
+      "mở ra"
+    ]
+  },
+  "index": {
+    "netfail": [
+      "Lỗi mạng",
+      "Bạn đã đăng nhập iwara.tv",
+      "Không thể kết nối với iwara.tv",
+      "Vui lòng thử các phương pháp sau ：",
+      "1.Kiểm tra kết nối internet",
+      "2.Kiểm tra xem WiFi và mạng dữ liệu của điện thoại có hoạt động bình thường không",
+      "3.Kiểm tra xem bộ định tuyến có hoạt động bình thường không",
+      "4.Kiểm tra xem môi trường mạng của bạn có thể kết nối với iwara.tv không",
+      "Thử lại",
+      "Chế độ ngoại tuyến"
+    ],
+    "outline": [
+      "Quản lý download",
+      "Cài đặt"
+    ],
+    "start": "bắt đầu"
+  },
+  "label": {
+    "about": "Về",
+    "definition": "Nghị quyết",
+    "download": "Quản lý download",
+    "following": "Tiếp theo",
+    "history": "Lịch sử",
+    "language": "Ngôn ngữ(Language)",
+    "like": "Mục yêu thích của tôi",
+    "login": "hát trong",
+    "netfail": "Lỗi mạng",
+    "search": "Tìm kiếm",
+    "setup": "cài đặt"
+  },
+  "like": {
+    "image": "Hình ảnh yêu thích",
+    "null": [
+      "Không kết quả",
+      "Không có gì ở đây, hãy thử một cái gì đó khác!"
+    ],
+    "video": "video yêu thích"
+  },
+  "liked": {
+    "del": "Đã hủy",
+    "opt": [
+      "Đã thích",
+      "Giống"
+    ],
+    "push": "Like thành công!!!!",
+    "title": "Giống"
+  },
+  "loading1": "Đang tải tài nguyên……",
+  "loading2": "Đang tải dữ liệu……",
+  "login": {
+    "fail": "Đăng ký không thành công",
+    "failMsg": "Tên đăng nhập hoặc mật khẩu không chính xác",
+    "login": "Đăng nhập",
+    "logining": "Đang tải",
+    "null": "Tên người dùng và mật khẩu không được để trống",
+    "passwd": "Nhập mật khẩu",
+    "regist": "Đăng ký",
+    "success": "Đã đăng nhập thành công",
+    "title": "Đăng nhập tài khoản Iwara của bạn",
+    "user": "Nhập tài khoản"
+  },
+  "logout": {
+    "confirmed": "Bạn có chắc chắn muốn đăng xuất không?",
+    "success": "Đăng xuất thành công",
+    "title": "Đăng xuất"
+  },
+  "optFail": "Lỗi hệ thống",
+  "player": {
+    "info": {
+      "copied": "Liên kết được sao chép",
+      "copy": "Sao chép đường dẫn",
+      "device": "Thao tác này chỉ được hỗ trợ trên thiết bị di động",
+      "download": "Tải xuống",
+      "share": "Chia sẻ"
+    },
+    "lists": [
+      "Các tác phẩm khác của người dùng",
+      "Công trình liên quan"
+    ],
+    "player": {
+      "ban": [
+        "Không kết quả",
+        "Bạn không có quyền kiểm tra điều này!"
+      ],
+      "definition": "Nghị quyết",
+      "null": [
+        "Không kết quả",
+        "Không có gì ở đây, hãy thử một cái gì đó khác!"
+      ],
+      "tab": {
+        "abstract": "trừu tượng",
+        "comments": "Bình luận",
+        "more": "Hơn"
+      }
+    }
+  },
+  "search": {
+    "notData": {
+      "excerpt": "Không kết quả",
+      "image": "Không kết quả",
+      "user": "Không kết quả",
+      "video": "Không kết quả"
+    },
+    "tab": {
+      "image": "Hình ảnh",
+      "user": "Người dùng",
+      "video": "Băng hình"
+    }
+  },
+  "setup": {
+    "about": {
+      "beta": "phiên bản thử nghiệm",
+      "dev": "nhà phát triển",
+      "device": "thiết bị",
+      "release": "giải phóng",
+      "version": "phiên bản",
+      "webviewVersion": "phiên bản webview"
+    },
+    "setup": {
+      "about": "Về",
+      "autoplay": "Tự chạy",
+      "definition": "Độ phân giải mặc định",
+      "language": "Ngôn ngữ(Language)",
+      "logout": "Đăng xuất",
+      "retry": "Lần không thể kết nối lại",
+      "userInfo": "Chỉnh sửa hồ sơ"
+    }
+  },
+  "tip": [
+    "Được cấp phép theo MPL-2.0, tất cả nội dung là từ iwara.tv",
+    "Chương trình này bị cấm sử dụng cho mục đích thương mại",
+    "Nội dung lấy từ iwara.tv, chương trình này bị cấm sử dụng cho mục đích thương mại"
+  ],
+  "user": {
+    "disFriend": "Đã xóa bạn bè",
+    "friend": [
+      "Bạn đã là bạn bè.",
+      "thêm vào bạn bè"
+    ],
+    "friending": "Bạn đã gửi đơn",
+    "null": "Không có thêm thông tin",
+    "tab": {
+      "image": "Hình ảnh",
+      "video": "Băng hình"
+    }
+  }
+}

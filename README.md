@@ -6,117 +6,82 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/shanmaomaoymmm/hiwara)
 ![GitHub Repo stars](https://img.shields.io/github/stars/shanmaomaoymmm/hiwara?style=social)
 
-🕹️基于uniapp的iwara应用
+🕹️ Iwara for uniapp
 
-### 招翻译！跪求翻译大佬！
-### Translator wanted! Kneeling for a translator!
-### 翻訳者募集中です！ 翻訳者募集の土下座
-### 번역가 구함! 무릎 꿇고 번역가를 구합니다!
-### Требуется переводчик! На колени для переводчика!
+[🀄中文](https://github.com/shanmaomaoymmm/hiwara/blob/main/README-zh.md)
 
 <img src="./edit/img/logo.png" style="width:192px;height:192px" />
 
-兼容新版iwara客户端，支持Android，iOS和Web端
+Compatible with new version of iwara client, supports Android, iOS and web side
 
-正在开发中，[📦Android安装包](https://github.com/shanmaomaoymmm/hiwara/releases)仅供测试使用，不代表最终成品效果
+Under development, [📦Android installer](https://github.com/shanmaomaoymmm/hiwara/releases) is for testing purposes only, does not represent the final product effect
 
-如果想拿来玩玩的话下HBuilderX编译就行
+If you want to play with it, then HBuilderX compile it!
 
-友情提示，需要梯子
+Friendly reminder, you need a ladder
 
-## 🛠️环境搭建
+## 🛠️ Environment build
 
-```
+`` ``
 npm install
-```
+`` ``
 
-## 💻H5端运行
+## 💻H5 side run
 
 ```
 npm run dev:h5
 ```
 
-## 📱Android端运行
+## 📱Android side run
 
-1.Android手机设备信息点5下版本号打开开发者模式，打开通过USB调试（小米手机需要插SIM卡同时打开通过USB安装），连接数据线至电脑；  
-2.使用HBuilderX打开本项目
-3.打开`src/manifest.json`，在基础配置->uni-app应用标识(AppID)点击右侧重新获取，此操作可能需要注册一个dcloud账号；  
-4.顶栏菜单运行->运行到手机或模拟器->运行到Android App基座；  
-5.手机上勾选一律通过此计算机调试，弹出的权限全部允许。
+1. Android phone device information point 5 under the version number to open developer mode, open via USB debugging (Xiaomi phones need to insert SIM card while open via USB installation), connect the data cable to the computer;  
+2. Use HBuilderX to open this project
+3. open `src/manifest.json`, in the basic configuration->uni-app application ID (AppID) click on the right to reacquire, this operation may require registration of a dcloud account;  
+4. top bar menu Run->Run to phone or emulator->Run to Android App dock;  
+5. check all debugging through this computer on the phone, pop-up permissions all allowed.
 
-## 📟其他平台运行方法参考uniapp官方文档
+## 📟 Other platforms running method refer to uniapp official documentation
 
 <https://uniapp.dcloud.net.cn/quickstart-cli.html>
 
-## 🗓️开发进度
+## 🗓️ Development progress
 
-### 已实现功能
+### Implemented features
 
-* ✅登录
-* ✅视频播放
-* ✅图片查看
-* ✅搜索
-* ✅关注、订阅、收藏、评论
-* ✅分享及下载外链
-* ⬜播放列表
-* ✅历史记录(本地)
-* ✅关注的人(本地)
-* ✅设置
-* ✅pad端适配
-* ✅离线缓存及下载
-* ⬜DLAN投屏
-* ⬜论坛
-* ⬜多语言支持
+* ✅Login
+* ✅Video playback
+* ✅Image view
+* ✅Search
+* ✅Follow, subscribe, favorite, comment
+* ✅Share and download external links
+* ⬜Playlist
+* ✅History (local)
+* ✅Followers (local)
+* ✅Settings
+* ✅Adaptation for pad side
+* ✅Offline caching and downloading
+* ⬜DLAN Casting
+* ⬜Forum
+* ✅Multi-language support
 
-### 不考虑支持的功能
+### Features not considered for support
 
-* ⛔微信小程序版本（你号没了）
-* ⛔下载断点续传（这是第三方下载工具的事情）
-* ⛔直连iwara（都什么年代了还在用传统网络？）
-* ⛔投稿功能（请用网站版，给大佬递杯子.jpg）
+* ⛔ WeChat mini program (FBI! OPEN THE DOOR!)
+* ⛔ Download breakpoints (Please use BitComet)
+* ⛔ Direct connection to iwara (What age is it still using traditional network?)
+* ⛔ Contribution function (I WALLETS IS NULL!)
 
-## ⚠️已知问题
+## ⚠️ Known issues
 
-1.uniapp对于暗黑模式的支持不是很完善，在Android端使用HBuilderX真机调试及离线打包时暗黑模式不会生效，只有使用云打包才能使暗黑模式生效；  
-2.用户头像无法正常显示是iwara网站为了安全对获取用户头像进行了403限制，正在尝试其他方法获取用户头像；  
-3.使用pad端浮窗模式打开后将无法切换至横屏模式，目前暂无解决方案；  
-4.未对iOS及折叠屏设备进行适配（问就是没钱）。
+1. uniapp's support for dark mode is not very perfect, dark mode will not take effect when using HBuilderX real debugging and offline packaging on the Android side, only using cloud packaging can make dark mode take effect;;  
+2. user avatar can't be displayed normally because iwara website has 403 restrictions on getting user avatar for security, we are trying other methods to get user avatar;  
+3. not adapted to iOS and folding screen devices (I DON'T HAVE MONEY).
 
-## 📒其他
+## 📒 Other
 
-<!-- i站hosts直通
+Plan to support multilingual, invite translation big brother to help develop (if there is no will have to rely on machine turning power)
 
-```
-2606:4700:20::ac43:479a iwara.tv
-2606:4700:20::ac43:479a i.iwara.tv
-2606:4700:20::681a:d60 www.iwara.tv
-66.206.15.50 ecchi.iwara.tv
-2606:4700:20::ac43:479a api.iwara.tv
-72.52.83.100 hime.iwara.tv
-163.172.40.145 aku.iwara.tv
-163.172.42.175 sukone.iwara.tv
-163.172.81.17 xin.iwara.tv
-163.172.40.123 uta.iwara.tv
-72.52.83.99 mikoto.iwara.tv
-163.172.44.153 miki.iwara.tv
-66.165.240.194 files.iwara.tv
-51.15.162.198 a.iwara.tv
-85.187.128.60 service.iwara.tv
-163.172.80.31 uni.iwara.tv
-163.172.39.227 cul.iwara.tv
-163.172.62.89 momo.iwara.tv
-163.172.40.123 uta.iwara.tv
-163.172.61.193 ruko.iwara.tv
-163.172.56.87 yukari.iwara.tv
-163.172.57.3 piko.iwara.tv
-163.172.61.159 merli.iwara.tv
-163.172.42.175 sukone.iwara.tv
-163.172.40.81 tei.iwara.tv
-2606:4700::6812:33f www.erolabs.com
-2606:4700::6812:9ca www.ero-labs.com
-``` -->
+## 🥰PLEASE FOLLOW ACE TAFFY NYA!
+## 🤗PLEASE FOLLOW ACE TAFFY THINK YOU NYA!
 
-计划支持多语种，诚邀翻译大佬协助开发（如果没有就只能靠机翻力）
-
-## 🥰关注永雏塔菲喵！
-## 🤗关注永雏塔菲谢谢喵！
+Translated with www.DeepL.com/Translator (free version)

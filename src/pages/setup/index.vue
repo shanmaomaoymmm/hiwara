@@ -98,15 +98,13 @@ export default ({
     }
   },
   onShow() {
-    this.getSteup()
-  },
-  created() {
+    this.getSetup()
     uni.setNavigationBarTitle({
       title: this.$t('label.setup')
     });
   },
   methods: {
-    getSteup() {
+    getSetup() {
       returnStorage('autoplay', false, (res) => {
         this.autoplay = res
       })

@@ -1,29 +1,29 @@
 {
   "label": {
-    "netfail": "Network connection error",
-    "login": "login",
+    "netfail": "Network Error",
+    "login": "Sing In",
     "search": "Search",
-    "like": "My Collection",
-    "setup": "Settings",
+    "like": "My Favorites",
+    "setup": "settings",
     "language": "Language",
-    "definition": "clarity",
+    "definition": "Resolution",
     "about": "About",
-    "download": "Download Management",
-    "following": "My Concerns",
+    "download": "Download Manager",
+    "following": "Following",
     "history": "History"
   },
-  "loading1": "Resource loading...",
-  "loading2": "Loading data...",
-  "dontLink": "Unable to connect to the server",
+  "loading1": "Loading Resources……",
+  "loading2": "Loading Data……",
+  "dontLink": "Error!\r\nCannot connect to server ",
   "tip": [
-    "This application follows the MPL-2.0 open source license,\n\r and the content is derived from iwara.tv",
-    "Commercial use is prohibited",
-    "The content originates from iwara.tv and commercial use is prohibited in this program"
+    "Licensed under the MPL-2.0,all content is from iwara.tv",
+    "This program is prohibited for commercial use",
+    "The content is from iwara.tv, this program is prohibited for commercial use"
   ],
   "logout": {
-    "title": "Sign out",
-    "confirmed": "Do you want to log out of this account?",
-    "success": "Logged out"
+    "title": "Sign Out",
+    "confirmed": "Are you sure you want to sign out？",
+    "success": "Signed out successfully"
   },
   "liked": {
     "title": "Like",
@@ -31,187 +31,187 @@
       "Liked",
       "Like"
     ],
-    "push": "Like successful !!!",
-    "del": "Like canceled"
+    "push": "Liked successfully！！！",
+    "del": "Canceled"
   },
   "following": {
     "title": "Follow",
     "opt": [
       "Followed",
-      "+ Follow"
+      "＋ Follow"
     ],
-    "push": "Focus on successful !!!",
-    "del": "Unfollowed"
+    "push": "Followed successfully！！！",
+    "del": "Unfollwed"
   },
   "comments": {
-    "title": "Comment",
-    "null": "No comments yet",
-    "posted": "Posted on",
-    "add": "Add your comment",
-    "submit": "publish",
-    "success": "Comment published successfully",
-    "fail": "Comment failed to publish"
+    "title": "comment",
+    "null": "There are no comments yet",
+    "posted": "Posted On",
+    "add": "Add Your Comment",
+    "submit": "Post",
+    "success": "Posted successfully",
+    "fail": "Post failed"
   },
   "optFail": "Operation failed",
   "index": {
-    "start": "Software starting",
+    "start": "Starting",
     "netfail": [
-      "There is a problem with your network.",
-      "You're signed in to iwara.tv",
-      "But your network environment cannot connect to iwara.tv",
-      "Try the following to resolve:",
-      "1. Please check whether you are connected to the Internet",
-      "2. Please check the mobile WiFi, whether the data network is working properly",
-      "3. Please check if the router is working properly",
-      "4. Please check whether your network environment can access iwara.tv normally",
+      "Network Error",
+      "You have signed in iwara.tv",
+      "Failed to connect to iwara.tv",
+      "Please try the following methods ：",
+      "1.Check the internet connection",
+      "2.Check if your phone's WiFi and data network are working properly",
+      "3.Check if the router is working properly",
+      "4.Check if your network environment can connect to iwara.tv",
       "Retry",
       "Offline Mode"
     ],
     "outline": [
-      "Download Management",
+      "Download Manager",
       "Settings"
     ]
   },
   "home": {
     "left": {
       "myPage": "My Page",
-      "favoriteVideo": "My favorite videos",
-      "favoriteImage": "My favorite images",
-      "concerns": "My concerns",
-      "history": "history",
-      "download": "Download Management",
+      "favoriteVideo": "Favorite Video",
+      "favoriteImage": "Favorite Image",
+      "concerns": "Following",
+      "history": "History",
+      "download": "Download",
       "setup": "Settings",
-      "logout": "Sign out",
-      "nullSignature": "The user is a mystery person and does not like to be watched."
+      "logout": "Sign Out",
+      "nullSignature": "No futher information"
     },
     "tab": {
-      "subscribe": "subscribe",
-      "video": "video",
-      "image": "image"
+      "subscribe": "Subscribe",
+      "video": "Video",
+      "image": "Image"
     }
   },
   "login": {
-    "title": "Log in to your iWara account",
-    "user": "Please enter account number",
-    "passwd": "Please enter password",
-    "login": "login",
-    "logining": "Logging in",
-    "regist": "Register Account",
-    "success": "Login succeeded",
-    "fail": "Login failed",
-    "failMsg": "Wrong username or password",
-    "null": "The user name and password cannot be empty"
+    "title": "Sign in your Iwara account",
+    "user": "Enter Account",
+    "passwd": "Enter Password",
+    "login": "Sign In",
+    "logining": "Loading",
+    "regist": "Sign Up",
+    "success": "Signed in successfully",
+    "fail": "Failed to sign up",
+    "failMsg": "Incorrect username or password",
+    "null": "User name and password cannot be empty"
   },
   "setup": {
     "setup": {
-      "autoplay": "Autoplay",
-      "definition": "Default playback clarity",
-      "retry": "Number of failed reconnects",
+      "autoplay": "Auto Play",
+      "definition": "Default Resolution",
+      "retry": "Times failed to reconnect",
       "language": "Language",
-      "userInfo": "Modify personal information",
-      "about": "About",
-      "logout": "Sign out"
+      "userInfo": "Edit Profile",
+      "about": "about",
+      "logout": "Sign Out"
     },
     "about": {
-      "dev": "Development Edition",
+      "dev": "dev",
       "beta": "beta",
-      "release": "Production",
-      "version": "version number",
+      "release": "release",
+      "version": "version",
       "webviewVersion": "webview version",
-      "device": "Device platform"
+      "device": "device"
     }
   },
   "search": {
     "tab": {
-      "video": "video",
-      "image": "image",
+      "video": "Video",
+      "image": "Image",
       "user": "User"
     },
     "notData": {
-      "excerpt": "The desert is lonely and straight, and the sun sets on the long river",
-      "video": "Can't find any videos, please look elsewhere",
-      "image": "Can't find any images, please look elsewhere",
-      "user": "Can't find any users, please look elsewhere"
+      "excerpt": "No Result",
+      "video": "No Result",
+      "image": "No Result",
+      "user": "No Result"
     }
   },
   "player": {
     "player": {
       "ban": [
-        "A leaf blinds, no Tarzan",
-        "You don't have permission to view this, please look elsewhere"
+        "No Result",
+        "You don't have the permission to check this!"
       ],
       "null": [
-        "The desert is lonely and straight, and the sun sets on the long river",
-        "There's nothing here, please look elsewhere"
+        "No Result",
+        "Nothing here,try something else!"
       ],
       "tab": {
-        "abstract": "Introduction",
-        "comments": "comments",
-        "more": "more"
+        "abstract": "Abstract",
+        "comments": "Comment",
+        "more": "More"
       },
-      "definition": "Image quality"
+      "definition": "Resolution"
     },
     "info": {
-      "share": "share",
-      "download": "download",
-      "copy": "Copy link",
-      "copied": "Copied download link",
-      "device": "This operation is only supported on mobile"
+      "share": "Share",
+      "download": "Download",
+      "copy": "Copy Link",
+      "copied": "Copied Link",
+      "device": "This operation is only supported on mobile devices"
     },
     "lists": [
-      "Other works of this author",
-      "Related works"
+      "Other works of the user",
+      "Related Works"
     ]
   },
   "like": {
-    "video": "My favorite videos",
-    "image": "My favorite pictures",
+    "video": "Favorite Video",
+    "image": "Favorite Image",
     "null": [
-      "The desert is lonely and straight, and the sun sets on the long river",
-      "You don't have any collection, please look elsewhere"
+      "No Result",
+      "Nothing here,try something else!"
     ]
   },
   "download": {
     "doing": "Downloading",
-    "end": "Download complete",
-    "dled": "completed",
-    "stopall": "Stop all downloads",
-    "clearall": "Clear download history"
+    "end": "Complete",
+    "dled": "Downloaded",
+    "stopall": "Stop All",
+    "clearall": "Clear History"
   },
   "image": {
     "ban": [
-      "A leaf blinds, no Tarzan",
-      "You don't have permission to view this, please look elsewhere"
+      "No Result",
+      "You don't have the permission to check this!"
     ],
     "null": [
-      "The desert is lonely and straight, and the sun sets on the long river",
-      "There's nothing here, please look elsewhere"
+      "No Result",
+      "Nothing here,try something else!"
     ],
     "unfold": [
-      "Click to collapse",
-      "Click to expand"
+      "Fold",
+      "Unfold"
     ],
     "lists": [
-      "More from users",
-      "More like this"
+      "More From User",
+      "More Like This"
     ],
-    "download": "Download image",
+    "download": "Download Image",
     "tip": [
-      "No.",
+      "No",
       "P"
     ]
   },
   "user": {
     "friend": [
-      "Already friends",
-      "+ Friend"
+      "You are already friends.",
+      "Add To Friend "
     ],
-    "friending": "Friend request sent",
-    "disFriend": "Friends removed",
-    "null": "Nothing in content",
+    "friending": "You have sent the application",
+    "disFriend": "Deleted Friend",
+    "null": "No futher information",
     "tab": {
-      "video": "video",
-      "image": "image"
+      "video": "Video",
+      "image": "Image"
     }
   }
 }

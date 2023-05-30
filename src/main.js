@@ -15,6 +15,7 @@ if (lag == '') {
 
 let i18nConfig = {
 	locale: lag,
+	fallbackLocale: 'en-US',
 	messages
 }
 
@@ -42,14 +43,14 @@ Vue.prototype.$backhome = () => {
 // 语言列表
 Vue.prototype.$languageList = [
 	{
+		name: 'English',
+		code: 'en-US'
+	}, {
 		name: '中文(简体)',
 		code: 'zh-Hans'
 	}, {
 		name: '中文(繁體)',
 		code: 'zh-Hant'
-	}, {
-		name: 'English',
-		code: 'en-US'
 	}, {
 		name: '日本語',
 		code: 'ja-JP'
@@ -57,28 +58,35 @@ Vue.prototype.$languageList = [
 		name: '한국어',
 		code: 'ko-KR'
 	}, {
-		// 	name: 'Français',
-		// 	code: 'fr-fr'
-		// }, {
-		// 	name: 'Español',
-		// 	code: 'es-es'
-		// }, {
+		name: 'Français',
+		code: 'fr-FR'
+	}, {
+		name: 'Deutsch',
+		code: 'de-DE'
+	}, {
+		name: 'Español',
+		code: 'es-ES'
+	}, {
+		name: 'Italiano',
+		code: 'it-IT'
+	}, {
 		name: 'Русский',
 		code: 'ru-RU'
-		// }, {
-		// 	name: 'བོད་སྐད།',
-		// 	code: 'tib'
-		// }, {
-		// 	name: 'ئۇيغۇر تىلى',
-		// 	code: 'uey'
-		// }, {
-		// 	name: 'Tiếng Việt',
-		// 	code: 'vi'
-		// }, {
-		// 	name: 'اللغة العربية',
-		// 	code: 'ar-sa'
+	}, {
+		name: 'اللغة العربية',
+		code: 'ar-SA'
+	}, {
+		name: 'ภาษาไทย',
+		code: 'th-TH'
+	}, {
+		name: 'Tiếng Việt',
+		code: 'vi-VN'
 	}
 ]
+// 更改语言
+Vue.prototype.$languageChange = (l) => {
+	i18n.locale = l
+}
 
 /**全局组件 */
 import qImg from '@/pages/component/q-img.vue'

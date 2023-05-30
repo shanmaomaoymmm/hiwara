@@ -1,0 +1,217 @@
+{
+  "comments": {
+    "add": "Añada su comentario",
+    "fail": "Publicación fallida",
+    "null": "Todavía no hay comentarios",
+    "posted": "Publicado en",
+    "submit": "Correo",
+    "success": "Publicado con éxito",
+    "title": "comentario"
+  },
+  "dontLink": "¡Error!\r\nNo es posible conectar con el servidor",
+  "download": {
+    "clearall": "Borrar historial",
+    "dled": "descargado",
+    "doing": "Descargando",
+    "end": "Completo",
+    "stopall": "Para todo"
+  },
+  "following": {
+    "del": "Dejar de seguir",
+    "opt": [
+      "Seguido",
+      "＋ Seguir"
+    ],
+    "push": "¡Seguido con éxito!",
+    "title": "Seguir"
+  },
+  "home": {
+    "left": {
+      "concerns": "Siguiente",
+      "download": "Descargar",
+      "favoriteImage": "Imagen favorita",
+      "favoriteVideo": "video favorito",
+      "history": "Historia",
+      "logout": "Desconectar",
+      "myPage": "Mi página",
+      "nullSignature": "Sin más información",
+      "setup": "Ajustes"
+    },
+    "tab": {
+      "image": "Imagen",
+      "subscribe": "Suscribir",
+      "video": "Video"
+    }
+  },
+  "image": {
+    "ban": [
+      "Sin resultados",
+      "¡No tienes permiso para revisar esto!"
+    ],
+    "download": "Descargar imagen",
+    "lists": [
+      "Más del usuario",
+      "Más como esto"
+    ],
+    "null": [
+      "Sin resultados",
+      "¡Nada aquí, intenta otra cosa!"
+    ],
+    "tip": [
+      "No",
+      "PAG"
+    ],
+    "unfold": [
+      "Doblar",
+      "Desplegar"
+    ]
+  },
+  "index": {
+    "netfail": [
+      "Error de red",
+      "Te has registrado en iwara.tv",
+      "No se pudo conectar a iwara.tv",
+      "Intente los siguientes métodos:",
+      "1.Compruebe la conexión a Internet",
+      "2.Compruebe si la red WiFi y de datos de su teléfono funcionan correctamente",
+      "3.Compruebe si el enrutador funciona correctamente",
+      "4.Compruebe si su entorno de red puede conectarse a iwara.tv",
+      "Rever",
+      "Modo offline"
+    ],
+    "outline": [
+      "Gestor de descargas",
+      "Ajustes"
+    ],
+    "start": "A partir de"
+  },
+  "label": {
+    "about": "Acerca de",
+    "definition": "Resolución",
+    "download": "Gestor de descargas",
+    "following": "Siguiente",
+    "history": "Historia",
+    "language": "Idioma(Language)",
+    "like": "Mis favoritos",
+    "login": "Canta",
+    "netfail": "Error de red",
+    "search": "Buscar",
+    "setup": "ajustes"
+  },
+  "like": {
+    "image": "Imagen favorita",
+    "null": [
+      "Sin resultados",
+      "¡Nada aquí, intenta otra cosa!"
+    ],
+    "video": "video favorito"
+  },
+  "liked": {
+    "del": "Cancelado",
+    "opt": [
+      "Apreciado",
+      "Como"
+    ],
+    "push": "¡Me gustó con éxito!",
+    "title": "Como"
+  },
+  "loading1": "Cargando recursos……",
+  "loading2": "Cargando datos……",
+  "login": {
+    "fail": "No se pudo registrar",
+    "failMsg": "Nombre de usuario o contraseña incorrecta",
+    "login": "Iniciar sesión",
+    "logining": "Cargando",
+    "null": "El nombre de usuario y la contraseña no pueden estar vacíos",
+    "passwd": "Introducir la contraseña",
+    "regist": "Inscribirse",
+    "success": "Iniciado sesión con éxito",
+    "title": "Inicie sesión en su cuenta Iwara",
+    "user": "Ingresar cuenta"
+  },
+  "logout": {
+    "confirmed": "¿Seguro que quieres cerrar sesión?",
+    "success": "Salió con éxito",
+    "title": "Desconectar"
+  },
+  "optFail": "Operación fallida",
+  "player": {
+    "info": {
+      "copied": "Enlace copiado",
+      "copy": "Copiar link",
+      "device": "Esta operación solo es compatible con dispositivos móviles",
+      "download": "Descargar",
+      "share": "Compartir"
+    },
+    "lists": [
+      "Otros trabajos del usuario",
+      "Obras relacionadas"
+    ],
+    "player": {
+      "ban": [
+        "Sin resultados",
+        "¡No tienes permiso para revisar esto!"
+      ],
+      "definition": "Resolución",
+      "null": [
+        "Sin resultados",
+        "¡Nada aquí, intenta otra cosa!"
+      ],
+      "tab": {
+        "abstract": "Abstracto",
+        "comments": "Comentario",
+        "more": "Más"
+      }
+    }
+  },
+  "search": {
+    "notData": {
+      "excerpt": "Sin resultados",
+      "image": "Sin resultados",
+      "user": "Sin resultados",
+      "video": "Sin resultados"
+    },
+    "tab": {
+      "image": "Imagen",
+      "user": "Usuario",
+      "video": "Video"
+    }
+  },
+  "setup": {
+    "about": {
+      "beta": "beta",
+      "dev": "desarrollador",
+      "device": "dispositivo",
+      "release": "liberar",
+      "version": "versión",
+      "webviewVersion": "versión de vista web"
+    },
+    "setup": {
+      "about": "acerca de",
+      "autoplay": "Auto-reproducción",
+      "definition": "Resolución predeterminada",
+      "language": "Idioma(Language)",
+      "logout": "Desconectar",
+      "retry": "Veces no se pudo volver a conectar",
+      "userInfo": "Editar perfil"
+    }
+  },
+  "tip": [
+    "Licenciado bajo MPL-2.0, todo el contenido es de iwara.tv",
+    "Este programa está prohibido para uso comercial.",
+    "El contenido es de iwara.tv, este programa está prohibido para uso comercial"
+  ],
+  "user": {
+    "disFriend": "Amigo eliminado",
+    "friend": [
+      "Ya sois amigos.",
+      "Añadir a un amigo"
+    ],
+    "friending": "Has enviado la solicitud",
+    "null": "Sin más información",
+    "tab": {
+      "image": "Imagen",
+      "video": "Video"
+    }
+  }
+}
