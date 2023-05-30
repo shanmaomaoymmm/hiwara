@@ -22,9 +22,9 @@ Friendly reminder, you need a ladder
 
 ## 🛠️ Environment build
 
-`` ``
+```
 npm install
-`` ``
+```
 
 ## 💻H5 side run
 
