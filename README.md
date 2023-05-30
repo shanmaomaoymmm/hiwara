@@ -36,9 +36,9 @@ npm run dev:h5
 
 1. Android phone device information point 5 under the version number to open developer mode, open via USB debugging (Xiaomi phones need to insert SIM card while open via USB installation), connect the data cable to the computer;  
 2. Use HBuilderX to open this project
-3. open `src/manifest.json`, in the basic configuration->uni-app application ID (AppID) click on the right to reacquire, this operation may require registration of a dcloud account;  
-4. top bar menu Run->Run to phone or emulator->Run to Android App dock;  
-5. check all debugging through this computer on the phone, pop-up permissions all allowed.
+3. Open `src/manifest.json`, in the basic configuration->uni-app application ID (AppID) click on the right to reacquire, this operation may require registration of a dcloud account;  
+4. Top bar menu Run->Run to phone or emulator->Run to Android App dock;  
+5. Check all debugging through this computer on the phone, pop-up permissions all allowed.
 
 ## 📟 Other platforms running method refer to uniapp official documentation
 
@@ -49,7 +49,7 @@ npm run dev:h5
 ### Implemented features
 
 * ✅Login
-* ✅Video playback
+* ✅Video play
 * ✅Image view
 * ✅Search
 * ✅Follow, subscribe, favorite, comment
@@ -60,7 +60,7 @@ npm run dev:h5
 * ✅Settings
 * ✅Adaptation for pad side
 * ✅Offline caching and downloading
-* ⬜DLAN Casting
+* ⬜DLAN
 * ⬜Forum
 * ✅Multi-language support
 
@@ -73,9 +73,9 @@ npm run dev:h5
 
 ## ⚠️ Known issues
 
-1. uniapp's support for dark mode is not very perfect, dark mode will not take effect when using HBuilderX real debugging and offline packaging on the Android side, only using cloud packaging can make dark mode take effect;;  
-2. user avatar can't be displayed normally because iwara website has 403 restrictions on getting user avatar for security, we are trying other methods to get user avatar;  
-3. not adapted to iOS and folding screen devices (I DON'T HAVE MONEY).
+1. Uniapp's support for dark mode is not very perfect, dark mode will not take effect when using HBuilderX real debugging and offline packaging on the Android side, only using cloud packaging can make dark mode take effect;;  
+2. User avatar can't be displayed normally because iwara website has 403 restrictions on getting user avatar for security, we are trying other methods to get user avatar;  
+3. Not adapted to iOS and folding screen devices (I DON'T HAVE MONEY).
 
 ## 📒 Other
 
