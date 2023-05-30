@@ -80,6 +80,7 @@ npm run dev:h5
 ## 📒 Other
 
 Plan to support multilingual, invite translation big brother to help develop (if there is no will have to rely on machine turning power)
+shanmaomaoymmm@yandex.com
 
 ## 🥰PLEASE FOLLOW ACE TAFFY NYA!
 ## 🤗PLEASE FOLLOW ACE TAFFY THINK YOU NYA!
