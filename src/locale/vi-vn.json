@@ -14,7 +14,10 @@
     "dled": "Đã tải xuống",
     "doing": "Đang tải xuống",
     "end": "Hoàn thành",
-    "stopall": "Tất cả dừng lại"
+    "stopall": "Tất cả dừng lại",
+    "downloadFail": "Tải xuống không thành công",
+    "downloadStart": "Đã bắt đầu tải xuống",
+    "downloadSuccess": "Quá trình tải xuống hoàn tất và đã được lưu vào"
   },
   "following": {
     "del": "không theo dõi",

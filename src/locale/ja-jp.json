@@ -14,7 +14,10 @@
     "dled": "ダウンロード済み",
     "doing": "ダウンロード中",
     "end": "完了",
-    "stopall": "すべて停止"
+    "stopall": "すべて停止",
+    "downloadFail": "ダウンロードに失敗しました",
+    "downloadStart": "ダウンロード開始",
+    "downloadSuccess": "ダウンロードが完了し、次の場所に保存されました"
   },
   "following": {
     "del": "フォローされていません",

@@ -14,7 +14,10 @@
     "dled": "다운로드됨",
     "doing": "다운로드 중",
     "end": "완벽한",
-    "stopall": "모두 중지"
+    "stopall": "모두 중지",
+    "downloadFail": "다운로드 실패",
+    "downloadStart": "다운로드 시작됨",
+    "downloadSuccess": "다운로드가 완료되어 다음 위치에 저장되었습니다."
   },
   "following": {
     "del": "언팔로우",

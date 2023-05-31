@@ -176,7 +176,10 @@
     "end": "下載完成",
     "dled": "已完成",
     "stopall": "停止所有下載",
-    "clearall": "清空下載記錄"
+    "clearall": "清空下載記錄",
+    "downloadFail": "下載失敗",
+    "downloadStart": "已開始下載",
+    "downloadSuccess": "下載完成，已保存至"
   },
   "image": {
     "ban": [

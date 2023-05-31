@@ -14,7 +14,10 @@
     "dled": "Téléchargé",
     "doing": "Téléchargement",
     "end": "Complet",
-    "stopall": "Arrête tout"
+    "stopall": "Arrête tout",
+    "downloadFail": "Échec du téléchargement",
+    "downloadStart": "Téléchargement commencé",
+    "downloadSuccess": "Le téléchargement est terminé et a été enregistré dans"
   },
   "following": {
     "del": "Non suivi",

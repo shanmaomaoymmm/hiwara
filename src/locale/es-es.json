@@ -14,7 +14,10 @@
     "dled": "descargado",
     "doing": "Descargando",
     "end": "Completo",
-    "stopall": "Para todo"
+    "stopall": "Para todo",
+    "downloadFail": "Descarga fracasó",
+    "downloadStart": "Descarga iniciada",
+    "downloadSuccess": "La descarga está completa y se ha guardado en"
   },
   "following": {
     "del": "Dejar de seguir",

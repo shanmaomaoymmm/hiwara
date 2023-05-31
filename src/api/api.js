@@ -638,9 +638,9 @@ export function search(type, query, page, cb) {
 
 // 下载
 export function download(type, url, name, cb) {
-	plus.nativeUI.toast('已开始下载')
+	plus.nativeUI.toast($t('download.downloadStart'))
 	uni.createPushMessage({
-		content: '已开始下载' + name
+		content: $t('download.downloadStart'+': ') + name
 	})
 	let path
 	let exte
@@ -660,16 +660,16 @@ export function download(type, url, name, cb) {
 		//d为下载的文件对象
 		if (status == 200) {
 			uni.createPushMessage({
-				content: '下载完成，已保存至' + path + name + exte
+				content: $t('download.downloadSuccess') + path + name + exte
 			})
-			plus.nativeUI.toast('下载完成，已保存至' + path + name + exte)
+			plus.nativeUI.toast($t('download.downloadSuccess') + path + name + exte)
 		}
 		if (status != 200) {
 			//下载失败
 			console.log('失败')
 			dtask.abort() //清除下载任务
 			uni.createPushMessage({
-				content: '下载失败：' + name
+				content: $t('download.downloadFail')+': ' + name
 			})
 		}
 	})

@@ -14,7 +14,10 @@
     "dled": "تم التنزيل",
     "doing": "جارى التحميل",
     "end": "مكتمل",
-    "stopall": "توقفو جميعا"
+    "stopall": "توقفو جميعا",
+    "downloadFail": "التحميل فشل",
+    "downloadStart": "بدأ التنزيل",
+    "downloadSuccess": "اكتمل التنزيل وتم حفظه في"
   },
   "following": {
     "del": "غير ملفوف",

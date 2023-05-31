@@ -14,7 +14,10 @@
     "dled": "Heruntergeladen",
     "end": "Vollständig",
     "stopall": "Alles stoppen",
-    "doing": "wird heruntergeladen"
+    "doing": "wird heruntergeladen",
+    "downloadFail": "Herunterladen fehlgeschlagen",
+    "downloadStart": "Download gestartet",
+    "downloadSuccess": "Der Download ist abgeschlossen und wurde gespeichert"
   },
   "following": {
     "del": "Nicht befolgt",

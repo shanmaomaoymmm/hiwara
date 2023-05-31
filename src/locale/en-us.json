@@ -176,7 +176,10 @@
     "end": "Complete",
     "dled": "Downloaded",
     "stopall": "Stop All",
-    "clearall": "Clear History"
+    "clearall": "Clear History",
+    "downloadFail": "Download Failed",
+    "downloadStart": "Download Started",
+    "downloadSuccess": "The download is complete and has been saved to"
   },
   "image": {
     "ban": [
