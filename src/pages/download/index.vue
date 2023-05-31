@@ -140,7 +140,8 @@ export default {
       this.getData();
     },
     open(it) {
-      plus.runtime.openFiles(it.filename, (err) => {
+      console.log(it.filename)
+      plus.runtime.openFile(it.filename, (err) => {
         console.log(err);
       });
     },
