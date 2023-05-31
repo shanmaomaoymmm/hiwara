@@ -161,9 +161,11 @@ export default {
     },
     clearDownloading() {
       plus.downloader.clear();
+      this.getData();
     },
     clearDownloadLogs() {
       plus.downloader.clear(4);
+      this.getData();
     }
   },
   components: { Image }

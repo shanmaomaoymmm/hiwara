@@ -2,8 +2,8 @@
     "name" : "Hiwara",
     "appid" : "__UNI__9B9DA16",
     "description" : "",
-    "versionName" : "0.0.12",
-    "versionCode" : 12,
+    "versionName" : "0.1.0",
+    "versionCode" : 1,
     "transformPx" : false,
     "app-plus" : {
         "darkmode" : true,
