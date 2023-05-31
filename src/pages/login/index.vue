@@ -11,14 +11,12 @@
 			<text v-else>{{ $t('login.login') }}</text>
 		</button>
 		<view class="sub">
-			<navigator url="/pages/login/regist">{{ $t('login.regist') }}</navigator>
+			<text @click="gotoPage('/pages/login/regist')">{{ $t('login.regist') }}</text>
 		</view>
 		<view class="float">
-			<navigator url="/pages/setup/language?init=1">
-				<view style="padding: 1rem;">
-					<i class="fa-solid fa-language" style="margin-right: 0.4rem;"></i>Language
-				</view>
-			</navigator>
+			<view style="padding: 1rem;" @click="gotoPage('/pages/setup/language?init=1')">
+				<i class="fa-solid fa-language" style="margin-right: 0.4rem;"></i>Language
+			</view>
 			<view class="float-tip">
 				{{ $t('tip[2]') }}
 				<br />
@@ -117,6 +115,13 @@ export default {
 					confirmColor: '#00897B'
 				});
 			}
+		},
+		gotoPage(url) {
+			uni.navigateTo({
+				url: url,
+				animationType: 'slide-in-right',
+				animationDuration: 100
+			})
 		}
 	}
 }
