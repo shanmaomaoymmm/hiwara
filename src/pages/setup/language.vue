@@ -39,9 +39,9 @@ export default ({
     setLanguage(lag) {
       this.$languageChange(lag)
       setStorage('language', lag)
-      uni.navigateBack({
-        delta: 1
-      })
+      uni.reLaunch({
+        url: '/pages/index/index?check=1'
+      });
     }
   }
 })

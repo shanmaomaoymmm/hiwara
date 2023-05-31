@@ -75,9 +75,7 @@ export default {
 
 <style scoped>
 .showLeft {
-	background-color: #f5f5f5;
-	height: 100%;
-	padding-top: 2rem;
+	padding: 2rem 0 1rem 0;
 }
 
 .user {
@@ -108,10 +106,6 @@ export default {
 }
 
 @media (prefers-color-scheme: dark) {
-	.showLeft {
-		background-color: #101010;
-	}
-
 
 	.avatar {
 		box-shadow: 0 0 0.2rem #fffa;

@@ -97,7 +97,7 @@ export default {
 						});
 					} else if (code == 408) {
 						uni.showToast({
-							title: this.$t('login.dontLink'),
+							title: this.$t('dontLink'),
 							icon: 'none',
 							duration: 3000
 						});

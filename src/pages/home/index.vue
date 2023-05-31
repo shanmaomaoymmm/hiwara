@@ -7,8 +7,12 @@
       <image-list ref="image" v-else-if="tab == 2"></image-list>
     </view>
     <float-bar ref="floatBar" class="floatBar" @alter="tab = $event"></float-bar>
-    <uni-drawer ref="showLeftDrawer" mode="left" :width="250" style="overflow: auto;">
-      <show-left ref="showLeft" :user="user"></show-left>
+    <uni-drawer ref="showLeftDrawer" mode="left" :width="250">
+      <view class="show-left">
+        <scroll-view class="svb" scroll-y="true">
+          <show-left ref="showLeft" :user="user"></show-left>
+        </scroll-view>
+      </view>
     </uni-drawer>
     <uni-transition @click="backTop()" custom-class="back-top" mode-class="zoom-in" :duration="50"
       :show="scrollTop > 300">
@@ -234,7 +238,24 @@ export default {
   box-shadow: 0 0 0.25rem #0002;
 }
 
+.show-left {
+  background-color: #f5f5f5;
+  flex: 1
+}
+
+.svb {
+  flex: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 @media (prefers-color-scheme: dark) {
+  .show-left {
+    background-color: #101010;
+  }
 
   .floatBar {
     background-color: #292929;
@@ -243,5 +264,4 @@ export default {
   .back-top {
     box-shadow: 0 0 0.25rem #fff2;
   }
-}
-</style>
+}</style>

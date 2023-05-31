@@ -75,7 +75,7 @@ export default {
       setTimeout(() => {
         this.logop = -5
         this.titlep = -4.6
-        this.bottom = 4
+        this.bottom = 5
       }, 200)
     },
     gotoPage(page) {
