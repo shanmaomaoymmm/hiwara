@@ -103,7 +103,8 @@
       "Nessun risultato",
       "Niente qui, prova qualcos'altro!"
     ],
-    "video": "Video preferito"
+    "video": "Video preferito",
+    "image": "Immagine preferita"
   },
   "liked": {
     "del": "Annullato",
@@ -147,7 +148,6 @@
       "Lavori correlati"
     ],
     "player": {
-      "ban": "Nessun risultato",
       "definition": "Risoluzione",
       "null": [
         "Nessun risultato",
@@ -157,7 +157,11 @@
         "abstract": "Astratto",
         "comments": "Commento",
         "more": "Di più"
-      }
+      },
+      "ban": [
+        "Nessun risultato",
+        "Non hai il permesso per controllare questo!"
+      ]
     }
   },
   "search": {

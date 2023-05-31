@@ -13,7 +13,8 @@
     "clearall": "Verlauf löschen",
     "dled": "Heruntergeladen",
     "end": "Vollständig",
-    "stopall": "Alles stoppen"
+    "stopall": "Alles stoppen",
+    "doing": "wird heruntergeladen"
   },
   "following": {
     "del": "Nicht befolgt",
@@ -151,11 +152,11 @@
         "Kein Ergebnis",
         "Sie haben nicht die Berechtigung, dies zu überprüfen!"
       ],
-      "definition": [
-        "Auflösung",
-        "Kein Ergebnis"
+      "definition": "Auflösung",
+      "null": [
+        "Kein Ergebnis",
+        "Hier gibt es nichts, versuchen Sie etwas anderes!"
       ],
-      "null": "Hier gibt es nichts, versuchen Sie etwas anderes!",
       "tab": {
         "abstract": "Abstrakt",
         "comments": "Kommentar",

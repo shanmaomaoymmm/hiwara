@@ -34,7 +34,8 @@
       "history": "Lịch sử",
       "logout": "Đăng xuất",
       "myPage": "Trang của tôi",
-      "setup": "Cài đặt"
+      "setup": "Cài đặt",
+      "nullSignature": "Không có thêm thông tin"
     },
     "tab": {
       "image": "Hình ảnh",
