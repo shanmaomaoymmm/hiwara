@@ -14,7 +14,9 @@
 
 Compatible with new version of iwara client, supports Android, iOS and web side
 
-Under development, [📦Android installer](https://github.com/shanmaomaoymmm/hiwara/releases) is for testing purposes only, does not represent the final product effect
+Beta version released, Android only [📦Beta](https://github.com/shanmaomaoymmm/hiwara/releases/latest)
+
+Some features are under development, The [📦Development Version](https://github.com/shanmaomaoymmm/hiwara/releases) is for development testing only and does not represent the final product.
 
 If you want to play with it, then HBuilderX compile it!
 

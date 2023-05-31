@@ -12,7 +12,9 @@
 
 兼容新版iwara客户端，支持Android，iOS和Web端
 
-正在开发中，[📦Android安装包](https://github.com/shanmaomaoymmm/hiwara/releases)仅供测试使用，不代表最终成品效果
+测试版本已发布，仅限Android平台 [📦测试版](https://github.com/shanmaomaoymmm/hiwara/releases/latest)
+
+部分功能正在开发中，[📦开发版](https://github.com/shanmaomaoymmm/hiwara/releases)仅供开发测试使用，不代表最终成品效果
 
 如果想拿来玩玩的话下HBuilderX编译就行
 
