@@ -44,7 +44,7 @@ npm run dev:h5
 
 ## 📟 Other device running method refer to uniapp official documentation
 
-<https://uniapp.dcloud.net.cn/quickstart-cli.html>
+<https://en.uniapp.dcloud.io/quickstart-cli.html>
 
 ## 🗓️ Development progress
 
