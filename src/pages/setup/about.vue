@@ -65,7 +65,7 @@ export default {
     this.init = opt.init
   },
   onNavigationBarButtonTap(e) {
-    console.log(e)
+    
     if (e.type == 'home') {
       uni.reLaunch({
         url: '/pages/index/index?check=' + this.init

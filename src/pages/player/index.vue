@@ -81,7 +81,9 @@
 							</view>
 						</swiper-item>
 						<swiper-item>
-							<comments :vid="vid"></comments>
+							<view style="height: 100%;overflow: auto;">
+								<comments :vid="vid"></comments>
+							</view>
 						</swiper-item>
 					</swiper>
 				</view>
@@ -175,7 +177,7 @@ export default {
 		}
 	},
 	onNavigationBarButtonTap(e) {
-		console.log(e)
+		
 		if (e.type == 'home') {
 			this.$backhome()
 		}

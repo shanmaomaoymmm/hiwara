@@ -26,7 +26,7 @@ export default ({
     this.scrollTop = e.scrollTop
   },
   onNavigationBarButtonTap(e) {
-    console.log(e)
+    
     if (e.type == 'home') {
       this.$backhome()
     }

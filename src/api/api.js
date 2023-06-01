@@ -751,7 +751,7 @@ plus.sqlite.openDatabase({
 		console.log('success')
 	},
 	fail: function (e) {
-		console.log(e);
+		
 	}
 });
 
@@ -779,7 +779,7 @@ function enquiryDBTableName(name, cb) {
 			cb(data)
 		},
 		fail: function (e) {
-			console.log(e)
+			
 			cb(null)
 		}
 	})
@@ -793,7 +793,7 @@ function createDBTable(name, field) {
 			console.log('success')
 		},
 		fail: function (e) {
-			console.log(e);
+			
 		}
 	});
 }
@@ -813,7 +813,7 @@ function addDataForDB(table, arr) {
 			console.log('success')
 		},
 		fail: function (e) {
-			console.log(e);
+			
 		}
 	});
 }
@@ -827,7 +827,7 @@ function enquiryDBTable(table, sort, cb) {
 			cb(data)
 		},
 		fail: function (e) {
-			console.log(e)
+			
 			cb(null)
 		}
 	})

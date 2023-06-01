@@ -99,7 +99,7 @@ export default {
     })
   },
   onNavigationBarButtonTap(e) {
-    console.log(e)
+    
     if (e.type == 'home') {
       this.$backhome()
     }

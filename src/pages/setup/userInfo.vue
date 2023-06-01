@@ -6,7 +6,7 @@
 <script>
 export default {
   onNavigationBarButtonTap(e) {
-    console.log(e)
+    
     if (e.type == 'home') {
       uni.reLaunch({
         url: '/pages/index/index?check=1'

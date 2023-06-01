@@ -62,13 +62,12 @@ export default {
     this.scrollTop = e.scrollTop
   },
   onNavigationBarButtonTap(e) {
-    console.log(e)
     if (e.type == 'menu') {
       this.showLeftDrawerOpen()
     }
   },
   onNavigationBarSearchInputConfirmed(e) {
-    console.log(e)
+    
     uni.navigateTo({
       url: '/pages/search/index?tab=0&s=' + e.text
     });

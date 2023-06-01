@@ -186,7 +186,6 @@ export default {
 		this.uid = opt.uid
 	},
 	onNavigationBarButtonTap(e) {
-		console.log(e)
 		if (e.type == 'home') {
 			this.$backhome()
 		}
