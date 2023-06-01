@@ -239,7 +239,6 @@ export default {
 }
 
 .show-left {
-  background-color: #f5f5f5;
   flex: 1
 }
 
@@ -250,10 +249,11 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+  background-color: #f5f5f5;
 }
 
 @media (prefers-color-scheme: dark) {
-  .show-left {
+  .svb {
     background-color: #101010;
   }
 

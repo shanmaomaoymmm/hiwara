@@ -3,7 +3,7 @@
 		<view style="padding:0 1rem;">
 			<view style="display: flex;">
 				<view @click="gotoUser()">
-					<image class="avatar" :src="data.avatar"></image>
+					<q-avatar class="avatar" :src="data.avatar" />
 				</view>
 				<view @click="gotoUser()" style="flex: 1;padding:0 0.5rem;line-height: 2rem;">
 					<text style="font-size: 1rem;">{{ data.author }}</text>

@@ -12,7 +12,7 @@
         </view>
         <view style="display: flex;position: relative;z-index: 3;">
           <view>
-            <image class="avatar" :src="profile.avatar" />
+            <q-avatar class="avatar" :src="profile.avatar" />
           </view>
           <view style="flex: 1;">
             <view
