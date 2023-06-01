@@ -41,13 +41,11 @@ export default ({
     this.tab = parseInt(o.tab)
   },
   onNavigationBarButtonTap(e) {
-    console.log(e)
     if (e.type == 'home') {
       this.$backhome()
     }
   },
   onNavigationBarSearchInputConfirmed(e) {
-    console.log(e)
     uni.navigateTo({
       url: '/pages/search/index?s=' + e.text + '&tab=' + this.tab
     });
