@@ -28,13 +28,13 @@ Friendly reminder, you need a ladder
 npm install
 ```
 
-## 💻H5 side run
+## 💻Run for H5
 
 ```
 npm run dev:h5
 ```
 
-## 📱Android side run
+## 📱Run for Android
 
 1. Android phone device information point 5 under the version number to open developer mode, open via USB debugging (Xiaomi phones need to insert SIM card while open via USB installation), connect the data cable to the computer;  
 2. Use HBuilderX to open this project
@@ -42,9 +42,9 @@ npm run dev:h5
 4. Top bar menu Run->Run to phone or emulator->Run to Android App dock;  
 5. Check all debugging through this computer on the phone, pop-up permissions all allowed.
 
-## 📟 Other platforms running method refer to uniapp official documentation
+## 📟 Other device running method refer to uniapp official documentation
 
-<https://uniapp.dcloud.net.cn/quickstart-cli.html>
+<https://en.uniapp.dcloud.io/quickstart-cli.html>
 
 ## 🗓️ Development progress
 
