@@ -29,43 +29,64 @@ Vue.prototype.$backhome = () => {
 Vue.prototype.$languageList = [
 	{
 		name: 'English',
-		code: 'en-US'
+		code: 'en-US',
+		author: ""
 	}, {
 		name: '中文(简体)',
-		code: 'zh-Hans'
+		code: 'zh-Hans',
+		author: ""
 	}, {
 		name: '中文(繁體)',
-		code: 'zh-Hant'
+		code: 'zh-Hant',
+		author: ""
 	}, {
 		name: '日本語',
-		code: 'ja-JP'
+		code: 'ja-JP',
+		author: "google"
 	}, {
 		name: '한국어',
-		code: 'ko-KR'
+		code: 'ko-KR',
+		author: "google"
+	}, {
+		name: 'ئۇيغۇر تىلى',
+		code: 'ug-CN',
+		author: "google"
+	}, {
+		name: 'བོད་སྐད།',
+		code: 'bo-CN',
+		author: "google"
 	}, {
 		name: 'Français',
-		code: 'fr-FR'
+		code: 'fr-FR',
+		author: "google"
 	}, {
 		name: 'Deutsch',
-		code: 'de-DE'
+		code: 'de-DE',
+		author: "google"
 	}, {
 		name: 'Español',
-		code: 'es-ES'
+		code: 'es-ES',
+		author: "google"
 	}, {
 		name: 'Italiano',
-		code: 'it-IT'
+		code: 'it-IT',
+		author: "google"
 	}, {
 		name: 'Русский',
-		code: 'ru-RU'
+		code: 'ru-RU',
+		author: "google"
 	}, {
 		name: 'اللغة العربية',
-		code: 'ar-SA'
+		code: 'ar-SA',
+		author: "google"
 	}, {
 		name: 'ภาษาไทย',
-		code: 'th-TH'
+		code: 'th-TH',
+		author: "google"
 	}, {
 		name: 'Tiếng Việt',
-		code: 'vi-VN'
+		code: 'vi-VN',
+		author: "google"
 	}
 ]
 // 更改语言

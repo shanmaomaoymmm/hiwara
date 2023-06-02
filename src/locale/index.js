@@ -3,6 +3,8 @@ import zhHans from './zh-hans.json'
 import zhHant from './zh-hant.json'
 import jajp from './ja-jp.json'
 import kokr from './ko-kr.json'
+import ugcn from './ug-cn.json'
+import bocn from './bo-cn.json'
 import ruru from './ru-ru.json'
 import frfr from './fr-fr.json'
 import dede from './de-de.json'
@@ -24,6 +26,8 @@ let messages = {
   'zh-Hant': zhHant,
   'ja-JP': jajp,
   'ko-KR': kokr,
+  'ug-CN': ugcn,
+  'bo-CN': bocn,
   'ru-RU': ruru,
   'fr-FR': frfr,
   'de-DE': dede,

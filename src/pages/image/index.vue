@@ -3,10 +3,10 @@
 		<view v-show="loading" style="text-align: center;padding-top: 40vh;">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
-			<text dir="auto">{{ $t('loading1') }}</text>
+			<text>{{ $t('loading1') }}</text>
 		</view>
 		<view v-show="!loading">
-			<view v-show="error" class="error" dir="auto">
+			<view v-show="error" class="error">
 				<view v-if="error == 1">
 					<image src="@/static/icon/leaves-two.png" style="width: 4rem;height: 4rem;"></image>
 					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">

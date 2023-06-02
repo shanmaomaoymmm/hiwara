@@ -3,6 +3,10 @@
     <view class="button" v-for="item, i in $languageList" @click="setLanguage(item.code)">
       <view class="button-title">
         {{ item.name }}
+        <i v-if="item.author == 'google'" class="fa-brands fa-google au"></i>
+        <text v-else class="au">
+          {{ item.author }}
+        </text>
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         {{ item.code }}{{ ' ' }}
@@ -23,7 +27,7 @@ export default ({
     this.init = opt.init
   },
   onNavigationBarButtonTap(e) {
-    
+
     if (e.type == 'home') {
       uni.reLaunch({
         url: '/pages/index/index?check=' + this.init
@@ -66,6 +70,12 @@ export default ({
 
 .fa-solid {
   color: #616161;
+}
+
+.au {
+  margin: 0 1rem;
+  font-size: 0.8rem;
+  color:#888888;
 }
 
 @media (prefers-color-scheme: dark) {

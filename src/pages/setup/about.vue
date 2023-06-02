@@ -14,7 +14,7 @@
           Hiwara
         </view>
         <view class="button-opt" style="padding: 1.2rem 1.5rem;">
-          {{ $t('setup.about.beta') }}
+          {{ $t('setup.about.dev') }}
         </view>
       </view>
       <view class="button">
