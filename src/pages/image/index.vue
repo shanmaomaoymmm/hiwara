@@ -65,6 +65,15 @@
 									<text>{{ formatDate(data.date) }}</text>
 								</text>
 							</view>
+							<view class="opts">
+								<view style="flex: 1;">
+									<image class="opt" :src="data.liked ? '/static/icon/a_like.png' : '/static/icon/like.png'"
+										@click="like"></image>
+								</view>
+								<view style="flex: 1;">
+									<image class="opt" src="/static/icon/share-one.png" @click="share()"></image>
+								</view>
+							</view>
 						</view>
 						<view class="comments">
 							<view style="font-weight: bold;padding: 0.5rem;">
@@ -170,7 +179,7 @@ export default {
 			loading: true,
 			error: false,
 			pad: false,
-			ori: false,
+			ori: false
 		}
 	},
 	mounted() {
@@ -365,7 +374,61 @@ export default {
 				animationType: 'slide-in-right',
 				animationDuration: 100,
 			});
-		}
+		},
+		share() {
+			// #ifdef APP-PLUS
+			uni.shareWithSystem({
+				type: 'text',
+				summary: this.data.title,
+				href: 'https://www.iwara.tv/video/' + this.data.id + '/' + this.data.slug
+			})
+			// #endif
+
+			// #ifndef APP-PLUS
+			uni.showToast({
+				title: this.$t('player.info.device'),
+				icon: "none",
+				duration: 3000,
+			})
+			// #endif
+		},
+		like() {
+			if (this.data.liked) {
+				likeImage(this.id, 0, (res, code) => {
+					if (code == 204) {
+						uni.showToast({
+							title: this.$t('liked.del'),
+							icon: "none",
+							duration: 3000,
+						})
+						this.data.liked = !this.data.liked
+					} else {
+						uni.showToast({
+							title: this.$t('optFail'),
+							icon: "none",
+							duration: 3000,
+						})
+					}
+				})
+			} else {
+				likeImage(this.id, 1, (res, code) => {
+					if (code == 201) {
+						uni.showToast({
+							title: this.$t('liked.push'),
+							icon: "none",
+							duration: 3000,
+						})
+						this.data.liked = !this.data.liked
+					} else {
+						uni.showToast({
+							title: this.$t('optFail'),
+							icon: "none",
+							duration: 3000,
+						})
+					}
+				})
+			}
+		},
 	}
 }
 </script>
@@ -532,6 +595,17 @@ button {
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+.opts {
+	display: flex;
+	text-align: center;
+	padding-top: 1rem;
+}
+
+.opt {
+	width: 1.6rem;
+	height: 1.6rem;
 }
 
 @media (prefers-color-scheme: dark) {

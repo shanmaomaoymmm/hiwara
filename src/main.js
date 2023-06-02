@@ -7,22 +7,7 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 /**国际化 */
-import messages from '@/locale/index.js'
-let lag = uni.getStorageSync('language')
-if (lag == '') {
-	lag = uni.getLocale()
-}
-
-let i18nConfig = {
-	locale: lag,
-	fallbackLocale: 'en-US',
-	messages
-}
-
-import VueI18n from 'vue-i18n'
-Vue.use(VueI18n)
-const i18n = new VueI18n(i18nConfig)
-
+import i18n from '@/locale/index.js'
 const app = new Vue({
 	...App,
 	i18n

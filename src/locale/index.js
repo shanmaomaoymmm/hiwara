@@ -11,7 +11,14 @@ import itit from './it-it.json'
 import arsa from './ar-sa.json'
 import thth from './th-th.json'
 import vivn from './vi-vn.json'
-export default {
+import VueI18n from 'vue-i18n'
+import Vue from 'vue'
+Vue.use(VueI18n)
+let lag = uni.getStorageSync('language')
+if (lag == '') {
+  lag = uni.getLocale()
+}
+let messages = {
   'en-US': enus,
   'zh-Hans': zhHans,
   'zh-Hant': zhHant,
@@ -26,3 +33,10 @@ export default {
   'th-TH': thth,
   'vi-VN': vivn,
 }
+console.log(VueI18n)
+let i18n = new VueI18n({
+  locale: lag,
+  fallbackLocale: 'en-US',
+  messages
+})
+export default i18n

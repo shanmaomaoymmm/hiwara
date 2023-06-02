@@ -1,3 +1,4 @@
+import i18n from '@/locale/index.js'
 var CryptoJS = require('crypto-js')
 
 var xVersion = '5nFp9kmbNnHdAFhaqMvt'
@@ -433,7 +434,8 @@ export function getImage(id, cb) {
 				following: res.user.following,
 				avatar: res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar.id + '/' + res.user.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
 				files: [],
-				username: res.user.username
+				username: res.user.username,
+				liked: res.liked
 			}
 			for (let i = 0; i < res.files.length; i++) {
 				resData.files.push('https://i.iwara.tv/image/large/' + res.files[i].id + '/' + res.files[i].name)
@@ -638,9 +640,9 @@ export function search(type, query, page, cb) {
 
 // 下载
 export function download(type, url, name, cb) {
-	plus.nativeUI.toast($t('download.downloadStart'))
+	plus.nativeUI.toast(i18n.t('download.downloadStart'))
 	uni.createPushMessage({
-		content: $t('download.downloadStart'+': ') + name
+		content: i18n.t('download.downloadStart') + ': ' + name
 	})
 	let path
 	let exte
@@ -660,16 +662,16 @@ export function download(type, url, name, cb) {
 		//d为下载的文件对象
 		if (status == 200) {
 			uni.createPushMessage({
-				content: $t('download.downloadSuccess') + path + name + exte
+				content: i18n.t('download.downloadSuccess') + path + name + exte
 			})
-			plus.nativeUI.toast($t('download.downloadSuccess') + path + name + exte)
+			plus.nativeUI.toast(i18n.t('download.downloadSuccess') + path + name + exte)
 		}
 		if (status != 200) {
 			//下载失败
 			console.log('失败')
 			dtask.abort() //清除下载任务
 			uni.createPushMessage({
-				content: $t('download.downloadFail')+': ' + name
+				content: i18n.t('download.downloadFail') + ': ' + name
 			})
 		}
 	})
@@ -751,7 +753,7 @@ plus.sqlite.openDatabase({
 		console.log('success')
 	},
 	fail: function (e) {
-		
+
 	}
 });
 
@@ -779,7 +781,6 @@ function enquiryDBTableName(name, cb) {
 			cb(data)
 		},
 		fail: function (e) {
-			
 			cb(null)
 		}
 	})
@@ -793,7 +794,6 @@ function createDBTable(name, field) {
 			console.log('success')
 		},
 		fail: function (e) {
-			
 		}
 	});
 }
@@ -812,8 +812,8 @@ function addDataForDB(table, arr) {
 		success: function () {
 			console.log('success')
 		},
-		fail: function (e) {
-			
+		fail: function (err) {
+			console.log(err)
 		}
 	});
 }
@@ -827,7 +827,6 @@ function enquiryDBTable(table, sort, cb) {
 			cb(data)
 		},
 		fail: function (e) {
-			
 			cb(null)
 		}
 	})
