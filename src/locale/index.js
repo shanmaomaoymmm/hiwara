@@ -33,7 +33,6 @@ let messages = {
   'th-TH': thth,
   'vi-VN': vivn,
 }
-console.log(VueI18n)
 let i18n = new VueI18n({
   locale: lag,
   fallbackLocale: 'en-US',

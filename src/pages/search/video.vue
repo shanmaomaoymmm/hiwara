@@ -15,7 +15,7 @@
 			</view>
 			<view v-else>
 				<lists :data="data" ref="lists" type="video"></lists>
-				<view style="text-align: center;padding-bottom: 1rem;">
+				<view style="text-align: center;padding-bottom: 1rem;" dir="auto">
 					<text v-if="loading">
 						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
 						<text>{{ $t('loading2') }}</text>
@@ -126,9 +126,9 @@ export default {
 			let month = t.slice(5, 7);
 			let day = t.slice(8, 10);
 			if (d.getFullYear() == year) {
-				t = month + "月" + day + "日";
+				t = month + "-" + day;
 			} else {
-				t = year + "年" + month + "月" + day + "日";
+				t = year + "-" + month + "-" + day;
 			}
 			return t;
 		},

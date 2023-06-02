@@ -1,10 +1,10 @@
 <template>
   <view class="lists">
-    <view>
+    <view dir="auto">
       <text>{{ $t('player.lists[0]') }}</text>
     </view>
     <lists :scol="scol" :data="authorOpus" type="video"></lists>
-    <view>
+    <view dir="auto">
       <text>{{ $t('player.lists[1]') }}</text>
     </view>
     <lists :scol="scol" :data="relatedOpus" type="video"></lists>

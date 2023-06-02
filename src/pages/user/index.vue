@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view dir="auto">
     <view v-show="loading" style="text-align: center;padding-top: 40vh;">
       <image class="loading" src="@/static/icon/loading.png"></image>
       <br>
@@ -99,7 +99,7 @@ export default {
     })
   },
   onNavigationBarButtonTap(e) {
-    
+
     if (e.type == 'home') {
       this.$backhome()
     }

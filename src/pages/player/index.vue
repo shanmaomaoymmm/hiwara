@@ -1,12 +1,12 @@
 <template>
 	<view style="height: 100%;">
-		<view v-if="loading" style="text-align: center;padding-top: 40vh;">
+		<view v-if="loading" style="text-align: center;padding-top: 40vh;" dir="auto">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
 			<text>{{ $t('loading1') }}</text>
 		</view>
 		<view v-else style="height: 100%;">
-			<view v-if="error" class="error">
+			<view v-if="error" class="error" dir="auto">
 				<view v-if="error == 1">
 					<image src="@/static/icon/leaves-two.png" style="width: 4rem;height: 4rem;"></image>
 					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">

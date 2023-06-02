@@ -8,11 +8,11 @@
           Hiwara
         </view>
       </view>
-      <view class="bottom" :style="{ 'bottom': bottom + 'rem' }">
+      <view class="bottom" :style="{ 'bottom': bottom + 'rem' }" dir="auto">
         <i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>{{ $t('index.start')
         }}
       </view>
-      <view class="float">
+      <view class="float" dir="auto">
         <view class="float-tip">
           {{ $t('tip[2]') }}
           <br />

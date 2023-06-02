@@ -25,7 +25,7 @@
             {{ item.name }}
           </view>
         </view>
-        <view style="text-align: center;padding-bottom: 1rem;">
+        <view style="text-align: center;padding-bottom: 1rem;" dir="auto">
           <text v-if="loading">
             <i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
             <text>{{ $t('loading2') }}</text>

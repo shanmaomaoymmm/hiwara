@@ -67,7 +67,7 @@ export default {
     }
   },
   onNavigationBarSearchInputConfirmed(e) {
-    
+
     uni.navigateTo({
       url: '/pages/search/index?tab=0&s=' + e.text
     });
@@ -263,4 +263,5 @@ export default {
   .back-top {
     box-shadow: 0 0 0.25rem #fff2;
   }
-}</style>
+}
+</style>

@@ -14,8 +14,8 @@
       {{ $t('image.download') }}
     </view>
     <!-- #endif -->
-    <view class="tips">
-      {{ $t('image.tip[0]') }} {{ ' ' + (p + 1) + '/' + data.files.length + ' ' }}{{ $t('image.tip[1]') }}
+    <view class="tips" dir="auto">
+      {{ $t('image.tip[0]') }}{{ ' ' }}{{ p + 1 }}/{{ data.files.length }}{{ ' ' }}{{ $t('image.tip[1]') }}
     </view>
   </view>
 </template>

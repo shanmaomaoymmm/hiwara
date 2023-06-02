@@ -1,5 +1,5 @@
 <template>
-	<view class="panel" :style="{ width: (pad && ori) ? '50%' : 'calc(100% - 2rem)' }">
+	<view dir="auto" class="panel" :style="{ width: (pad && ori) ? '50%' : 'calc(100% - 2rem)' }">
 		<view class="title">{{ $t('login.title') }}</view>
 		<input class="input" :disabled="disabled" v-model="username" :placeholder="$t('login.user')" />
 		<input class="input" :disabled="disabled" v-model="passwd" password="password" :placeholder="$t('login.passwd')" />

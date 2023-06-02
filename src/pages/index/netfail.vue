@@ -4,33 +4,35 @@
       <view>
         <image src="@/static/icon/game.png" style="width: 6rem;height: 6rem;" />
       </view>
-      <view style="font-size: 1.5rem;padding:1.5rem 0;">
-        {{ $t('index.netfail[0]') }}
+      <view dir="auto">
+        <view style="font-size: 1.5rem;padding:1.5rem 0;">
+          {{ $t('index.netfail[0]') }}
+        </view>
+        <view>
+          {{ $t('index.netfail[1]') }}
+          <br />
+          {{ $t('index.netfail[2]') }}
+          <br />
+          {{ $t('index.netfail[3]') }}
+        </view>
+        <view style="padding:1.5rem 0;">
+          {{ $t('index.netfail[4]') }}
+          <br />
+          {{ $t('index.netfail[5]') }}
+          <br />
+          {{ $t('index.netfail[6]') }}
+          <br />
+          {{ $t('index.netfail[7]') }}
+        </view>
       </view>
       <view>
-        {{ $t('index.netfail[1]') }}
-        <br />
-        {{ $t('index.netfail[2]') }}
-        <br />
-        {{ $t('index.netfail[3]') }}
+        <button @click="retry()">
+          {{ $t('index.netfail[8]') }}
+        </button>
+        <button @click="outline()">
+          {{ $t('index.netfail[9]') }}
+        </button>
       </view>
-      <view style="padding:1.5rem 0;">
-        {{ $t('index.netfail[4]') }}
-        <br />
-        {{ $t('index.netfail[5]') }}
-        <br />
-        {{ $t('index.netfail[6]') }}
-        <br />
-        {{ $t('index.netfail[7]') }}
-      </view>
-    </view>
-    <view>
-      <button @click="retry()">
-        {{ $t('index.netfail[8]') }}
-      </button>
-      <button @click="outline()">
-        {{ $t('index.netfail[9]') }}
-      </button>
     </view>
   </view>
 </template>

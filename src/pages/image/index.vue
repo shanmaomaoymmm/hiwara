@@ -3,10 +3,10 @@
 		<view v-show="loading" style="text-align: center;padding-top: 40vh;">
 			<image class="loading" src="@/static/icon/loading.png"></image>
 			<br>
-			<text>{{ $t('loading1') }}</text>
+			<text dir="auto">{{ $t('loading1') }}</text>
 		</view>
 		<view v-show="!loading">
-			<view v-show="error" class="error">
+			<view v-show="error" class="error" dir="auto">
 				<view v-if="error == 1">
 					<image src="@/static/icon/leaves-two.png" style="width: 4rem;height: 4rem;"></image>
 					<view style="font-size: 1.3rem;font-weight: bold;;color: #00897B;margin: 0.5rem 0;">
@@ -35,7 +35,7 @@
 								<!-- 单图 -->
 								<q-img class="picture" :src="data.files[0]" @click="unfold = !unfold" />
 							</view>
-							<text v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
+							<text dir="auto" v-if="data.files.length > 1" class="unfold" @click="unfold = !unfold">
 								{{ unfold ? $t('image.unfold[0]') : $t('image.unfold[1]') }}
 							</text>
 						</view>
@@ -76,11 +76,11 @@
 							</view>
 						</view>
 						<view class="comments">
-							<view style="font-weight: bold;padding: 0.5rem;">
+							<view style="font-weight: bold;padding: 0.5rem;" dir="auto">
 								{{ $t('comments.title') }}
 							</view>
 							<view style="padding: 0.5rem;">
-								<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;">
+								<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;" dir="auto">
 									<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
 									<br>
 									<text>{{ $t('comments.null') }}</text>
@@ -93,14 +93,14 @@
 										<view style="flex:1;padding: 0.25rem 0.5rem;">{{ item.user }}</view>
 									</view>
 									<view style="margin: 0.4rem 0;">{{ item.content }}</view>
-									<view class="date">
+									<view class="date" dir="auto">
 										<text>
 											<i><b>{{ $t('comments.posted') }}</b></i>{{ ' ' }}{{ formatDate(item.date) }}
 										</text>
 									</view>
 								</view>
 							</view>
-							<view class="addComment">
+							<view class="addComment" dir="auto">
 								<view style="flex:1">
 									<input v-model="addCommentBody" :placeholder="$t('comments.add')" class="addCommentInput"
 										@focus="addCommentActive = true" @blur="addCommentActive = false" />
@@ -114,12 +114,12 @@
 						</view>
 						<view v-if="!(ori && pad)">
 							<view style="padding: 0 0.5rem;">
-								<view
+								<view dir="auto"
 									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
 									{{ $t('image.lists[0]') }}
 								</view>
 								<lists :data="authorOpus" type="image"></lists>
-								<view
+								<view dir="auto"
 									style="color: #f5f5f5;text-shadow: 0 0 0.125rem #0006;font-weight: bold;font-size: 1rem;padding:0.5rem 1rem">
 									{{ $t('image.lists[1]') }}
 								</view>

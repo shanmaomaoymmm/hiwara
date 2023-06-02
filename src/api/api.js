@@ -164,7 +164,7 @@ export function formatDate(t) {
 		let hour = t.slice(11, 13)
 		let minute = t.slice(14, 16)
 		let second = t.slice(17, 19)
-		return (year + '年' + month + '月' + day + '日' + ' ' + hour + ':' + minute + ':' + second)
+		return (year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second)
 	} else {
 		return null
 	}

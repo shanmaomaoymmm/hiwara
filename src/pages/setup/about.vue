@@ -44,7 +44,7 @@
         </view>
       </view>
     </view>
-    <view class="float">
+    <view class="float" dir="auto">
       {{ $t('tip[0]') }}
       <br />
       {{ $t('tip[1]') }}

@@ -1,5 +1,5 @@
 <template>
-	<view class="floatBar">
+	<view class="floatBar" dir="auto">
 		<view class="item" :class="{ active: i == tab }" v-for="item, i in item" :key="item.label" @click="clickTab(i)">
 			<image class="icon" v-if="i == tab" :src="item.icon[1]"></image>
 			<image class="icon" v-else :src="item.icon[0]"></image>

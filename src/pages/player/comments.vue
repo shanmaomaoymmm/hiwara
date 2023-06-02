@@ -2,7 +2,7 @@
 	<view class="comments-view">
 		<view style="min-height: 100%; width: 100%;position: relative;">
 			<view class="comments">
-				<view v-show="data.length == 0" style="text-align: center;padding-top: 20vh;">
+				<view v-show="data.length == 0" style="text-align: center;padding-top: 20vh;" dir="auto">
 					<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
 					<br>
 					<text>{{ $t('comments.null') }}</text>
@@ -15,7 +15,7 @@
 						<view style="flex:1" class="user">{{ item.user }}</view>
 					</view>
 					<view class="content">{{ item.content }}</view>
-					<view class="date">
+					<view class="date" dir="auto">
 						<text>
 							<i><b>{{ $t('comments.posted') }}</b></i>{{ ' ' }}{{ formatDate(item.date) }}
 						</text>
@@ -23,7 +23,7 @@
 				</view>
 			</view>
 			<view class="bottom">
-				<text v-if="loading">
+				<text v-if="loading" dir="auto">
 					<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
 					<text>{{ $t('loading2') }}</text>
 				</text>
@@ -31,7 +31,7 @@
 					<text><i style="transform:scale(2.5,1)" class="fa-solid fa-minus"></i></text>
 				</text>
 			</view>
-			<view class="addComment">
+			<view class="addComment" dir="auto">
 				<view style="flex: 1;">
 					<input class="input" v-model="text" :placeholder="$t('comments.add')" @focus="commentButton = true"
 						@blur="commentButton = false" />
