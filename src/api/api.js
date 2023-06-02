@@ -204,23 +204,28 @@ export function login(username, passwd, cb) {
 }
 
 // 获取订阅列表
-export function getSubscribeList(index, cb) {
+export function getSubscribeList(type, index, cb) {
 	let data = {
 		limit: 24,
 		subscribed: true,
 		page: index
 	}
 	creatHeader((h) => {
-		ajax(api + '/videos', data, h, 'GET', (res, code) => {
-			cb(res, code)
-		})
+		if (type == 'video') {
+			ajax(api + '/videos', data, h, 'GET', (res, code) => {
+				cb(res, code)
+			})
+		} else if (type == 'image')
+			ajax(api + '/images', data, h, 'GET', (res, code) => {
+				cb(res, code)
+			})
 	})
 }
 
 // 获取视频列表
-export function getVideoList(index, cb) {
+export function getVideoList(sort, index, cb) {
 	let data = {
-		sort: 'date',
+		sort: sort,
 		rating: 'all',
 		page: index,
 		limit: 24

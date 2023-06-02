@@ -88,6 +88,13 @@
       "subscribe": "订阅",
       "video": "视频",
       "image": "图片"
+    },
+    "sort":{
+      "date":"最新",
+      "trending":"流行",
+      "popularity":"人气",
+      "views":"观看量",
+      "likes":"点赞量"
     }
   },
   "login": {

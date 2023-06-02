@@ -67,7 +67,6 @@ export default {
     }
   },
   onNavigationBarSearchInputConfirmed(e) {
-
     uni.navigateTo({
       url: '/pages/search/index?tab=0&s=' + e.text
     });
@@ -201,7 +200,7 @@ export default {
         break
     }
     if (refs) {
-      refs.getData(() => {
+      refs.onBottom(() => {
       })
     }
   }
