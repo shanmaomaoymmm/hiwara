@@ -120,9 +120,30 @@ export default {
           cb()
           break
       }
-      if (refs) {
+      if (refs != null) {
         refs.refresh(() => {
           cb()
+        })
+      }
+    },
+    onReachBottom() {
+      let refs
+      switch (this.tab) {
+        case 0:
+          refs = this.$refs.subscribe
+          break
+        case 1:
+          refs = this.$refs.video
+          break
+        case 2:
+          refs = this.$refs.image
+          break
+        default:
+          refs = null
+          break
+      }
+      if (refs != null) {
+        refs.onBottom(() => {
         })
       }
     },
@@ -182,27 +203,6 @@ export default {
         duration: 100
       })
     }
-  },
-  onReachBottom() {
-    let refs
-    switch (this.tab) {
-      case 0:
-        refs = this.$refs.subscribe
-        break
-      case 1:
-        refs = this.$refs.video
-        break
-      case 2:
-        refs = this.$refs.image
-        break
-      default:
-        refs = null
-        break
-    }
-    if (refs) {
-      refs.onBottom(() => {
-      })
-    }
   }
 }
 </script>
@@ -218,7 +218,7 @@ export default {
   width: calc(100% - 0.4rem);
   padding: 0.2rem;
   background-color: #eeeeee;
-  z-index: 11;
+  z-index: 8;
 }
 
 .back-top {

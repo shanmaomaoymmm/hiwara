@@ -44,6 +44,29 @@
       "image": "Immagine",
       "subscribe": "sottoscrivi",
       "video": "video"
+    },
+    "date": {
+      "April": "aprile",
+      "August": "agosto",
+      "December": "Dicembre",
+      "February": "Febbraio",
+      "January": "Gennaio",
+      "July": "Luglio",
+      "June": "Giugno",
+      "March": "Marzo",
+      "May": "Maggio",
+      "November": "novembre",
+      "October": "ottobre",
+      "September": "settembre",
+      "month": "tutti i mesi",
+      "year": "tutti gli anni"
+    },
+    "sort": {
+      "date": "Data",
+      "likes": "Piace",
+      "popularity": "Popolarità",
+      "trending": "Di tendenza",
+      "views": "Visualizzazioni"
     }
   },
   "image": {

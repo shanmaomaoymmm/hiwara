@@ -44,6 +44,29 @@
       "image": "Hình ảnh",
       "subscribe": "Đặt mua",
       "video": "Băng hình"
+    },
+    "date": {
+      "April": "Tháng tư",
+      "August": "Tháng tám",
+      "December": "Tháng 12",
+      "February": "Tháng hai",
+      "January": "Tháng Một",
+      "July": "Tháng bảy",
+      "June": "Tháng sáu",
+      "March": "Bước đều",
+      "May": "Có thể",
+      "November": "Tháng mười một",
+      "October": "Tháng Mười",
+      "September": "Tháng 9",
+      "month": "tất cả các tháng",
+      "year": "mọi năm"
+    },
+    "sort": {
+      "date": "Ngày",
+      "likes": "lượt thích",
+      "popularity": "Phổ biến",
+      "trending": "xu hướng",
+      "views": "Lượt xem"
     }
   },
   "image": {

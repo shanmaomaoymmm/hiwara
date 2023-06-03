@@ -44,6 +44,29 @@
       "image": "画像",
       "subscribe": "購読",
       "video": "ビデオ"
+    },
+    "sort": {
+      "date": "日にち",
+      "likes": "いいね！",
+      "popularity": "人気",
+      "trending": "トレンド",
+      "views": "ビュー"
+    },
+    "date": {
+      "April": "4月",
+      "August": "8月",
+      "December": "12月",
+      "February": "2月",
+      "January": "1月",
+      "July": "7月",
+      "June": "6月",
+      "March": "3月",
+      "May": "5月",
+      "November": "11月",
+      "October": "10月",
+      "September": "9月",
+      "month": "すべての月",
+      "year": "すべての年"
     }
   },
   "image": {

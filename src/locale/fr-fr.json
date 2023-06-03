@@ -44,6 +44,29 @@
       "image": "Image",
       "subscribe": "S'abonner",
       "video": "Vidéo"
+    },
+    "date": {
+      "April": "Avril",
+      "August": "Août",
+      "December": "Décembre",
+      "February": "Février",
+      "January": "Janvier",
+      "July": "Juillet",
+      "June": "Juin",
+      "March": "Mars",
+      "May": "Peut",
+      "November": "Novembre",
+      "October": "Octobre",
+      "September": "Septembre",
+      "month": "tous les mois",
+      "year": "toutes les années"
+    },
+    "sort": {
+      "date": "Date",
+      "likes": "Aime",
+      "popularity": "Popularité",
+      "trending": "Tendance",
+      "views": "Vues"
     }
   },
   "image": {

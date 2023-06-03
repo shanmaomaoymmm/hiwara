@@ -44,6 +44,29 @@
       "image": "صورة",
       "subscribe": "يشترك",
       "video": "فيديو"
+    },
+    "date": {
+      "April": "أبريل",
+      "August": "أغسطس",
+      "December": "ديسمبر",
+      "February": "شهر فبراير",
+      "January": "يناير",
+      "July": "يوليو",
+      "June": "يونيو",
+      "March": "يمشي",
+      "May": "يمكن",
+      "November": "شهر نوفمبر",
+      "October": "اكتوبر",
+      "September": "سبتمبر",
+      "month": "كل الشهور",
+      "year": "جميع السنوات"
+    },
+    "sort": {
+      "date": "تاريخ",
+      "likes": "الإعجابات",
+      "popularity": "شعبية",
+      "trending": "الشائع",
+      "views": "الآراء"
     }
   },
   "image": {

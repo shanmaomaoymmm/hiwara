@@ -89,12 +89,28 @@
       "video": "视频",
       "image": "图片"
     },
-    "sort":{
-      "date":"最新",
-      "trending":"流行",
-      "popularity":"人气",
-      "views":"观看量",
-      "likes":"点赞量"
+    "sort": {
+      "date": "最新",
+      "trending": "流行",
+      "popularity": "人气",
+      "views": "观看量",
+      "likes": "点赞量"
+    },
+    "date": {
+      "year": "全部年份",
+      "month": "全部月份",
+      "January": "一月",
+      "February": "二月",
+      "March": "三月",
+      "April": "四月",
+      "May": "五月",
+      "June": "六月",
+      "July": "七月",
+      "August": "八月",
+      "September": "九月",
+      "October": "十月",
+      "November": "十一月",
+      "December": "十二月"
     }
   },
   "login": {
@@ -184,9 +200,9 @@
     "dled": "已完成",
     "stopall": "停止所有下载",
     "clearall": "清空下载记录",
-    "downloadStart":"已开始下载",
-    "downloadSuccess":"下载完成，已保存至",
-    "downloadFail":"下载失败"
+    "downloadStart": "已开始下载",
+    "downloadSuccess": "下载完成，已保存至",
+    "downloadFail": "下载失败"
   },
   "image": {
     "ban": [

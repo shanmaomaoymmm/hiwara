@@ -223,11 +223,12 @@ export function getSubscribeList(type, index, cb) {
 }
 
 // 获取视频列表
-export function getVideoList(sort, index, cb) {
+export function getVideoList(sort, index, date, cb) {
 	let data = {
 		sort: sort,
 		rating: 'all',
 		page: index,
+		date: date,
 		limit: 24
 	}
 	creatHeader((h) => {

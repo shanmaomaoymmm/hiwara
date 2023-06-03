@@ -44,6 +44,29 @@
       "image": "영상",
       "subscribe": "구독하다",
       "video": "동영상"
+    },
+    "date": {
+      "April": "4월",
+      "August": "8월",
+      "December": "12월",
+      "February": "2월",
+      "January": "1월",
+      "July": "7월",
+      "June": "6월",
+      "March": "3월",
+      "May": "5월",
+      "November": "11월",
+      "October": "10월",
+      "September": "9월",
+      "month": "모든 달",
+      "year": "모든 년"
+    },
+    "sort": {
+      "date": "날짜",
+      "likes": "좋아요",
+      "popularity": "인기",
+      "trending": "트렌드",
+      "views": "견해"
     }
   },
   "image": {

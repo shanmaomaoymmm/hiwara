@@ -88,6 +88,29 @@
       "subscribe": "Subscribe",
       "video": "Video",
       "image": "Image"
+    },
+    "date": {
+      "April": "April",
+      "August": "August",
+      "December": "December",
+      "February": "February",
+      "January": "January",
+      "July": "July",
+      "June": "June",
+      "March": "March",
+      "May": "May",
+      "November": "November",
+      "October": "October",
+      "September": "September",
+      "month": "all months",
+      "year": "all years"
+    },
+    "sort": {
+      "date": "Date",
+      "likes": "Likes",
+      "popularity": "Popularity",
+      "trending": "Trending",
+      "views": "Views"
     }
   },
   "login": {

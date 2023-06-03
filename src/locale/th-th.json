@@ -44,6 +44,29 @@
       "image": "ภาพ",
       "subscribe": "ติดตาม",
       "video": "วิดีโอ"
+    },
+    "date": {
+      "April": "เมษายน",
+      "August": "สิงหาคม",
+      "December": "ธันวาคม",
+      "February": "กุมภาพันธ์",
+      "January": "มกราคม",
+      "July": "กรกฎาคม",
+      "June": "มิถุนายน",
+      "March": "มีนาคม",
+      "May": "อาจ",
+      "November": "พฤศจิกายน",
+      "October": "ตุลาคม",
+      "September": "กันยายน",
+      "month": "ทุกเดือน",
+      "year": "ทุกปี"
+    },
+    "sort": {
+      "date": "วันที่",
+      "likes": "ชอบ",
+      "popularity": "ความนิยม",
+      "trending": "มาแรง",
+      "views": "มุมมอง"
     }
   },
   "image": {

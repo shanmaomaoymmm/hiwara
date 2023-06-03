@@ -88,6 +88,29 @@
       "subscribe": "訂閱",
       "video": "視頻",
       "image": "圖片"
+    },
+    "date": {
+      "April": "四月",
+      "August": "八月",
+      "December": "十二月",
+      "February": "二月",
+      "January": "一月",
+      "July": "七月",
+      "June": "六月",
+      "March": "三月",
+      "May": "五月",
+      "November": "十一月",
+      "October": "十月",
+      "September": "九月",
+      "month": "全部月份",
+      "year": "全部年份"
+    },
+    "sort": {
+      "date": "最新",
+      "likes": "點贊量",
+      "popularity": "人氣",
+      "trending": "流行",
+      "views": "觀看量"
     }
   },
   "login": {
