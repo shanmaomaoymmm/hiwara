@@ -79,6 +79,26 @@ npm run dev:h5
 2. User avatar can't be displayed normally because iwara website has 403 restrictions on getting user avatar for security, we are trying other methods to get user avatar;  
 3. Not adapted to iOS and folding screen devices (I DON'T HAVE MONEY).
 
+## 🌏Multilingual support
+
+ * English
+ * Simplified Chinese(简体中文)
+ * Traditional Chinese(繁體中文)
+ * Japanese(日本語)🤖
+ * Korean(한국어)🤖
+ * Uighur(ئۇيغۇر تىلى)🤖
+ * Tibetan(བོད་སྐད།)🤖
+ * French(Français)🤖
+ * German(Deutsch)🤖
+ * Spanish(Español)🤖
+ * Italian(Italiano)🤖
+ * Russian(Русский)🤖
+ * Arabic(اللغة العربية)🤖
+ * Thai(ภาษาไทย)🤖
+ * Vietnamese(Tiếng Việt)🤖
+
+Note: marked with 🤖 for machine translation, there is inaccurate translation
+
 ## 📒 Other
 
 Plan to support multilingual, invite translation big brother to help develop (if there is no will have to rely on machine turning power)
