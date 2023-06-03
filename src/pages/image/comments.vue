@@ -7,7 +7,7 @@
     </view>
     <view v-else class="comments">
       <view style="padding-bottom: 4rem;">
-        <view v-if="data.length == 0" style="text-align: center;padding: 2rem;" dir="auto">
+        <view v-if="data.length == 0" style="text-align: center;padding-top: 30vh;" dir="auto">
           <image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
           <br>
           <text>{{ $t('comments.null') }}</text>
