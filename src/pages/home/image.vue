@@ -1,142 +1,182 @@
 <template>
 	<view>
-		<view v-if="onload" style="text-align: center;padding-top: 30vh;">
-			<image class="loading" src="@/static/icon/loading.png"></image>
-			<br>
-			<text>{{ $t('loading1') }}</text>
+		<view class="tabs">
+			<view class="tab" :class="{ 'tab-a': tab == 0 }" @click="tab = 0">{{ $t('home.sort.date') }}</view>
+			<view class="tab" :class="{ 'tab-a': tab == 1 }" @click="tab = 1">{{ $t('home.sort.trending') }}</view>
+			<view class="tab" :class="{ 'tab-a': tab == 2 }" @click="tab = 2">{{ $t('home.sort.popularity') }}</view>
+			<view class="tab" :class="{ 'tab-a': tab == 3 }" @click="tab = 3">{{ $t('home.sort.views') }}</view>
+			<view class="tab" :class="{ 'tab-a': tab == 4 }" @click="tab = 4">{{ $t('home.sort.likes') }}</view>
+			<view class="filters">
+				<picker @change="filters" :range="dataList" mode="multiSelector">
+					<i class="fa-regular fa-clock"></i>
+				</picker>
+			</view>
 		</view>
-		<view v-else>
-			<view v-if="error" style="text-align: center;padding-top: 30vh;">
-				<image src="@/static/icon/game.png" style="width: 4rem;height: 4rem;" />
-			</view>
-			<view v-else>
-				<lists :data="data" ref="lists" type="image"></lists>
-				<view style="text-align: center;padding-bottom: 1rem;">
-					<text v-if="loading">
-						<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
-						<text>{{ $t('loading2') }}</text>
-					</text>
-					<text v-else>
-						<text><i style="transform:scale(2.5,1)" class="fa-solid fa-minus"></i></text>
-					</text>
-				</view>
-			</view>
+		<view class="content">
+			<lists0 v-if="tab == 0" :date="date" sort="date" ref="date" />
+			<lists1 v-if="tab == 1" :date="date" sort="trending" ref="trending" />
+			<lists2 v-if="tab == 2" :date="date" sort="popularity" ref="popularity" />
+			<lists3 v-if="tab == 3" :date="date" sort="views" ref="views" />
+			<lists4 v-if="tab == 4" :date="date" sort="likes" ref="likes" />
 		</view>
 	</view>
 </template>
 
 <script>
-import lists from "@/pages/lists/index.vue";
-import { getImageList } from "@/api/api.js";
+import lists0 from './image/image.vue'
+import lists1 from './image/image.vue'
+import lists2 from './image/image.vue'
+import lists3 from './image/image.vue'
+import lists4 from './image/image.vue'
 export default {
 	components: {
-		lists,
+		lists0,
+		lists1,
+		lists2,
+		lists3,
+		lists4
 	},
 	data() {
 		return {
-			data: [],
-			page: 0,
-			onload: true,
-			loading: false,
-			error: false
+			tab: 0,
+			date: null,
+			dataList: [
+				[this.$t('home.date.year')],
+				[
+				this.$t('home.date.January'),
+				this.$t('home.date.February'),
+				this.$t('home.date.March'),
+				this.$t('home.date.April'),
+				this.$t('home.date.May'),
+				this.$t('home.date.June'),
+				this.$t('home.date.July'),
+				this.$t('home.date.August'),
+				this.$t('home.date.September'),
+				this.$t('home.date.October'),
+				this.$t('home.date.November'),
+				this.$t('home.date.December'),
+				]
+			]
 		}
 	},
 	created() {
-		this.getData(() => {
-			this.onload = false
-		})
+		let date = new Date()
+		let y = date.getFullYear()
+		let sty = 2014
+		while (y >= sty) {
+			this.dataList[0].push(y)
+			y--
+		}
 	},
 	methods: {
 		// 刷新
 		refresh(cb) {
-			this.onload = true
-			this.data = []
-			this.page = 0
-			this.getData(() => {
-				this.onload = false
-				cb()
-			})
+			let refs
+			switch (this.tab) {
+				case 0:
+					refs = this.$refs.date
+					break
+				case 1:
+					refs = this.$refs.trending
+					break
+				case 2:
+					refs = this.$refs.popularity
+					break
+				case 3:
+					refs = this.$refs.views
+					break
+				case 4:
+					refs = this.$refs.likes
+					break
+				default:
+					refs = null
+					break
+			}
+			if (refs != null) {
+				refs.refresh(() => {
+					cb()
+				})
+			}
 		},
 		onBottom() {
-			if (this.error == false && this.loading == false) {
-				this.getData(() => { })
+			let refs
+			switch (this.tab) {
+				case 0:
+					refs = this.$refs.date
+					break
+				case 1:
+					refs = this.$refs.trending
+					break
+				case 2:
+					refs = this.$refs.popularity
+					break
+				case 3:
+					refs = this.$refs.views
+					break
+				case 4:
+					refs = this.$refs.likes
+					break
+				default:
+					refs = null
+					break
+			}
+			if (refs != null) {
+				refs.onBottom(() => { })
 			}
 		},
-		// 获取列表
-		getData(cb) {
-			this.loading = true
-			getImageList(this.page, (res, code) => {
-				this.loading = false
-				if (code == 200) {
-					if (res.results.length > 0) {
-						this.setPageData(res, code);
-						this.page++
-					} else {
-						if (this.page == 0) {
-							this.error = true
-						}
-					}
-				} else if (code == 408) {
-					uni.showToast({
-						title: this.$t('dontLink'),
-						icon: "none",
-						duration: 3000,
-					});
-				} else { }
-				cb()
-			})
-		},
-		// 生成列表
-		setPageData(res) {
-			for (let i = 0; i < res.results.length; i++) {
-				let rs = res.results[i];
-				this.data.push({
-					id: rs.id,
-					label: rs.title,
-					img:
-						rs.thumbnail != null
-							? "https://i.iwara.tv/image/thumbnail/" +
-							rs.thumbnail.id +
-							"/" +
-							rs.thumbnail.name
-							: null,
-					date: this.formatDate(rs.createdAt),
-					author: rs.user.name,
-					avatar:
-						rs.user.avatar != null
-							? "https://i.iwara.tv/image/avatar/" +
-							rs.user.avatar.id +
-							"/" +
-							rs.user.avatar.name
-							: "https://www.iwara.tv/images/default-avatar.jpg",
-					watch: rs.numViews,
-					like: rs.numLikes,
-					uid: rs.user.id,
-				});
-			}
-		},
-		// 时间格式化
-		formatDate(t) {
-			let d = new Date();
-			let year = t.slice(0, 4);
-			let month = t.slice(5, 7);
-			let day = t.slice(8, 10);
-			if (d.getFullYear() == year) {
-				t = month + "-" + day;
+		filters: function (e) {
+			let yi = e.detail.value[0]
+			let mi = e.detail.value[1]
+			let date
+			if (yi == 0) {
+				// 不选择年份
+				date = null
 			} else {
-				t = year + "-" + month + "-" + day;
+				if (mi == 0) {
+					// 不选择月份
+					date = this.dataList[0][yi]
+				} else {
+					date = this.dataList[0][yi] + '-' + mi
+				}
 			}
-			return t;
-		},
+			this.date = date
+		}
 	}
 }
 </script>
 
 <style scoped>
-.loading {
-	width: 4rem;
-	height: 4rem;
-	animation: rotate 350ms linear infinite;
+.tabs {
+	box-shadow: 0 0.1rem 0.25rem #0002;
+	background-color: #f5f5f5;
+	display: flex;
+	width: 100%;
+	z-index: 10;
+	position: fixed;
+}
+
+.tab {
+	flex: 1;
+	padding: 0.75rem 0;
+	text-align: center;
+	border-bottom: solid 0.125rem #f5f5f5;
+}
+
+.filters {
+	padding: 0.9rem 0rem 0.5rem 0rem;
+	width: 2.5rem;
+	text-align: center;
+	border-bottom: solid 0.125rem #f5f5f5;
+	color: #808080;
+}
+
+.tab-a {
+	border-color: #00897b !important;
+	color: #00897b;
+}
+
+.content {
+	padding-top: 2.75rem;
 }
 
 @keyframes rotate {
@@ -158,6 +198,18 @@ export default {
 
 	100% {
 		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.tabs {
+		background-color: #101010;
+		box-shadow: 0 0.1rem 0.25rem #fff2;
+	}
+
+	.tab,
+	.filters {
+		border-color: #101010;
 	}
 }
 </style>

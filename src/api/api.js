@@ -239,11 +239,12 @@ export function getVideoList(sort, index, date, cb) {
 }
 
 // 获取图片列表
-export function getImageList(index, cb) {
+export function getImageList(sort, index, date, cb) {
 	let data = {
-		sort: 'date',
+		sort: sort,
 		rating: 'all',
 		page: index,
+		date: date,
 		limit: 24,
 	}
 	creatHeader((h) => {
