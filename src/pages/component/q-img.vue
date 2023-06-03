@@ -3,7 +3,9 @@
     <view v-show="loading" class="loading">
       <i class="fa-brands fa-digital-ocean "></i>
     </view>
-    <img v-show="!loading" class="img" :src="path" @load="imgLoad()" @error="imgError()" />
+    <transition name="fade">
+      <img v-show="!loading" class="img" :src="path" @load="imgLoad()" @error="imgError()" />
+    </transition>
   </view>
 </template>
 <script>
@@ -84,5 +86,15 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 100ms;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

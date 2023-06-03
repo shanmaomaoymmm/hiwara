@@ -73,42 +73,8 @@
 								<view style="flex: 1;">
 									<image class="opt" src="/static/icon/share-one.png" @click="share()"></image>
 								</view>
-							</view>
-						</view>
-						<view class="comments">
-							<view style="font-weight: bold;padding: 0.5rem;" dir="auto">
-								{{ $t('comments.title') }}
-							</view>
-							<view style="padding: 0.5rem;">
-								<view v-show="comments.length == 0" style="text-align: center;padding: 2rem;" dir="auto">
-									<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
-									<br>
-									<text>{{ $t('comments.null') }}</text>
-								</view>
-								<view v-show="comments.length > 0" v-for="item, i in comments" :key="'comment' + i">
-									<view style="display: flex;">
-										<view>
-											<image class="avatar" :src="item.avatar"></image>
-										</view>
-										<view style="flex:1;padding: 0.25rem 0.5rem;">{{ item.user }}</view>
-									</view>
-									<view style="margin: 0.4rem 0;">{{ item.content }}</view>
-									<view class="date" dir="auto">
-										<text>
-											<i><b>{{ $t('comments.posted') }}</b></i>{{ ' ' }}{{ formatDate(item.date) }}
-										</text>
-									</view>
-								</view>
-							</view>
-							<view class="addComment" dir="auto">
-								<view style="flex:1">
-									<input v-model="addCommentBody" :placeholder="$t('comments.add')" class="addCommentInput"
-										@focus="addCommentActive = true" @blur="addCommentActive = false" />
-								</view>
-								<view :style="{ width: addCommentActive ? '4.5rem' : 0 }"
-									style="width: 4.5rem;text-align: center;transition: width ease 100ms;overflow: hidden;white-space: nowrap;">
-									<button size="mini" style="margin-top: 0.5rem" @click="addComment()">{{ $t('comments.submit')
-									}}</button>
+								<view style="flex: 1;">
+									<image class="opt" src="/static/icon/comment-one.png" @click="comments()"></image>
 								</view>
 							</view>
 						</view>
@@ -152,10 +118,10 @@ import {
 	getImage,
 	followers,
 	formatDate,
-	getImageInfoComments,
+	// getImageInfoComments,
 	getImageListForImageInfoRelated,
 	getImageListForImageInfoUser,
-	addCommentForImage,
+	// addCommentForImage,
 	likeImage
 } from '@/api/api'
 import lists from "@/pages/lists/index.vue";
@@ -171,11 +137,11 @@ export default {
 			id: null,
 			uid: null,
 			unfold: false,
-			comments: [],
+			// comments: [],
 			authorOpus: [],
 			relatedOpus: [],
-			addCommentActive: false,
-			addCommentBody: null,
+			// addCommentActive: false,
+			// addCommentBody: null,
 			loading: true,
 			error: false,
 			pad: false,
@@ -274,25 +240,10 @@ export default {
 				})
 			}
 		})
-		this.getComments()
 	},
 	methods: {
 		formatDate(t) {
 			return formatDate(t)
-		},
-		getComments() {
-			getImageInfoComments(this.id, 0, (res) => {
-				for (let i = 0; i < res.results.length; i++) {
-					this.comments.push({
-						user: res.results[i].user.name,
-						content: res.results[i].body,
-						date: res.results[i].createdAt,
-						avatar: res.results[i].user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.results[i].user.avatar
-							.id + '/' + res.results[i].user
-								.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg'
-					})
-				}
-			})
 		},
 		followers() {
 			if (this.data.following) {
@@ -341,24 +292,6 @@ export default {
 					delta: v
 				});
 			}
-		},
-		addComment() {
-			addCommentForImage(this.id, this.addCommentBody, (res, code) => {
-				if (code == 201) {
-					uni.showToast({
-						title: this.$t('comments.success'),
-						icon: "none",
-						duration: 3000,
-					})
-					this.getComments()
-				} else {
-					uni.showToast({
-						title: this.$t('comments.fail'),
-						icon: "none",
-						duration: 3000,
-					})
-				}
-			})
 		},
 		gotoUser() {
 			uni.navigateTo({
@@ -429,6 +362,13 @@ export default {
 				})
 			}
 		},
+		comments() {
+			uni.navigateTo({
+				url: '/pages/image/comments?id=' + this.id,
+				animationType: 'slide-in-right',
+				animationDuration: 100,
+			});
+		}
 	}
 }
 </script>
@@ -438,31 +378,6 @@ export default {
 	background: #acacac no-repeat fixed center;
 	background-size: cover;
 	color: #f5f5f5;
-}
-
-.top {
-	padding-top: 2rem;
-	display: flex;
-	top: 0;
-	position: fixed;
-	width: 100%;
-	z-index: 1;
-	text-shadow: 0 0 0.125rem #0006;
-}
-
-.title {
-	padding: 0.5rem 1rem 0.5rem 0;
-	flex: 1;
-	font-size: 1.2rem;
-	font-weight: bold;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-
-.backButton {
-	display: inline-block;
-	padding: 0.8rem 0.8rem;
 }
 
 .panel {
@@ -518,23 +433,6 @@ export default {
 	background-color: #f5f5f5;
 }
 
-.comments {
-	border-radius: 0.25rem;
-	margin: 1rem;
-	box-shadow: 0 0 0.125rem #0006;
-	background-color: #f5f5f5;
-	padding: 0.5rem;
-}
-
-.addComment {
-	display: flex;
-}
-
-.addCommentInput {
-	padding: 0.5rem;
-	border-bottom: solid 2px #00897b;
-}
-
 .avatar {
 	width: 2rem;
 	height: 2rem;
@@ -556,12 +454,6 @@ button {
 
 .status {
 	font-size: 0.85rem;
-}
-
-.date {
-	text-align: right;
-	color: #616161;
-	font-size: 0.9rem;
 }
 
 .error {

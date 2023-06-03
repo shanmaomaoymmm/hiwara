@@ -1,10 +1,12 @@
 <template>
   <view class="avatar">
-    <view class="tips" v-if="!show">
+    <view class="tips" v-show="!show">
       <i v-if="error" class="fa-solid fa-circle-user error"></i>
       <i v-else class="fa-brands fa-digital-ocean loading"></i>
     </view>
-    <img v-show="show" :src="path" @error="imgError" @load="imgLoad" class="img" />
+    <transition name="fade">
+      <img v-show="show" :src="path" @error="imgError" @load="imgLoad" class="img" />
+    </transition>
   </view>
 </template>
 <script>
@@ -90,5 +92,15 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 100ms;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
