@@ -8,7 +8,7 @@
     <view v-else class="comments">
       <view style="padding-bottom: 4rem;">
         <view v-if="data.length == 0" style="text-align: center;padding-top: 30vh;" dir="auto">
-          <image @click="refresh()" src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
+          <image @click="refresh(() => { })" src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
           <br>
           <text>{{ $t('comments.null') }}</text>
         </view>
@@ -67,7 +67,9 @@ export default {
     }
   },
   onPullDownRefresh() {
-    this.refresh()
+    this.refresh(() => {
+      uni.stopPullDownRefresh()
+    })
   },
   onReachBottom() {
     this.getComments(() => { })
@@ -90,12 +92,13 @@ export default {
     })
   },
   methods: {
-    refresh() {
+    refresh(cb) {
       this.onload = true
       this.data = []
       this.page = 0
       this.getComments(() => {
-        uni.stopPullDownRefresh()
+        this.onload = false
+        cb()
       })
     },
     formatDate(t) {
