@@ -1,5 +1,5 @@
 <template>
-  <view class="avatar">
+  <view class="qavatar">
     <view class="tips" v-show="!show">
       <i v-if="error" class="fa-solid fa-circle-user error"></i>
       <i v-else class="fa-brands fa-digital-ocean loading"></i>
@@ -39,7 +39,7 @@ export default {
 }
 </script>
 <style scoped>
-.avatar {
+.qavatar {
   height: 100%;
   width: 100%;
   font-size: 0;
