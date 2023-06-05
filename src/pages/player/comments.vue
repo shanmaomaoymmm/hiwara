@@ -2,34 +2,36 @@
 	<view class="comments-view">
 		<view style="min-height: 100%; width: 100%;position: relative;">
 			<view class="comments">
-				<view v-show="data.length == 0" style="text-align: center;padding-top: 20vh;" dir="auto">
-					<image src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
+				<view v-if="data.length == 0" style="text-align: center;padding-top: 20vh;" dir="auto">
+					<image @click="getComments()" src="@/static/icon/cactus.png" style="width: 3rem;height: 3rem;"></image>
 					<br>
 					<text>{{ $t('comments.null') }}</text>
 				</view>
-				<view v-show="data.length > 0" class="comment" v-for="item, i in data" :key="'comment' + i">
-					<view style="display: flex;">
-						<view>
-							<image class="avatar" :src="item.avatar"></image>
+				<view v-else>
+					<view v-show="data.length > 0" class="comment" v-for="item, i in data" :key="'comment' + i">
+						<view style="display: flex;">
+							<view>
+								<image class="avatar" :src="item.avatar"></image>
+							</view>
+							<view style="flex:1" class="user">{{ item.user }}</view>
 						</view>
-						<view style="flex:1" class="user">{{ item.user }}</view>
+						<view class="content">{{ item.content }}</view>
+						<view class="date" dir="auto">
+							<text>
+								<i><b>{{ $t('comments.posted') }}</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+							</text>
+						</view>
 					</view>
-					<view class="content">{{ item.content }}</view>
-					<view class="date" dir="auto">
-						<text>
-							<i><b>{{ $t('comments.posted') }}</b></i>{{ ' ' }}{{ formatDate(item.date) }}
+					<view class="bottom">
+						<text v-if="loading" dir="auto">
+							<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
+							<text>{{ $t('loading2') }}</text>
+						</text>
+						<text v-else>
+							<text><i style="transform:scale(2.5,1)" class="fa-solid fa-minus"></i></text>
 						</text>
 					</view>
 				</view>
-			</view>
-			<view class="bottom">
-				<text v-if="loading" dir="auto">
-					<i class="fa-solid fa-circle-notch fa-spin" style="color: #00897b;margin-right: 0.4rem;"></i>
-					<text>{{ $t('loading2') }}</text>
-				</text>
-				<text v-else>
-					<text><i style="transform:scale(2.5,1)" class="fa-solid fa-minus"></i></text>
-				</text>
 			</view>
 			<view class="addComment" dir="auto">
 				<view style="flex: 1;">

@@ -6,7 +6,7 @@
 			<text>{{ $t('loading1') }}</text>
 		</view>
 		<view v-else>
-			<view v-if="error" style="text-align: center;padding-top: 30vh;">
+			<view v-if="error" @click="refresh(() => { })" style="text-align: center;padding-top: 30vh;">
 				<image src="@/static/icon/game.png" style="width: 4rem;height: 4rem;" />
 			</view>
 			<view v-else>
