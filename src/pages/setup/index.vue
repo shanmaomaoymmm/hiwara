@@ -52,14 +52,14 @@
         <i class="fa-solid fa-angle-right"></i>
       </view>
     </view>
-    <view class="button" @click="gotoPage('/pages/debug/index')">
+    <!-- <view class="button" @click="gotoPage('/pages/debug/index')">
       <view class="button-title">
         Debug
       </view>
       <view class="button-opt" style="padding: 1.2rem 1.5rem;">
         <i class="fa-solid fa-angle-right"></i>
       </view>
-    </view>
+    </view> -->
     <view v-if="init == 0" class="button" @click="logout()">
       <view class="button-title">
         {{ $t("setup.setup.logout") }}

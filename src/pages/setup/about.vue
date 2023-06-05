@@ -2,7 +2,7 @@
   <view>
     <view style="padding: 2rem;text-align: center;">
       <view>
-        <image src="@/static/logo-beta.png" class="logo"></image>
+        <image src="@/static/logo.png" class="logo"></image>
       </view>
       <view class="lable">
         Hiwara
@@ -14,7 +14,7 @@
           Hiwara
         </view>
         <view class="button-opt" style="padding: 1.2rem 1.5rem;">
-          {{ $t('setup.about.dev') }}
+          {{ $t('setup.about.beta') }}
         </view>
       </view>
       <view class="button">
