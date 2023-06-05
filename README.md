@@ -74,7 +74,7 @@ npm run dev:h5
 * ⛔ WeChat mini program (FBI! OPEN THE DOOR!)
 * ⛔ Download breakpoints (Please use BitComet)
 * ⛔ Direct connection to iwara (What age is it still using traditional network?)
-* ⛔ Contribution function (I WALLETS IS NULL!)
+* ⛔ Contribution function (Please use source website)
 
 ## ⚠️ Known issues
 
