@@ -104,7 +104,7 @@ Note: marked with 🤖 for machine translation, there is inaccurate translation
 
 ## 📒 Other
 
-Plan to support multilingual, invite translation big brother to help develop (if there is no will have to rely on machine turning power)
+Plan to support multilingual, invite translation big brother to help develop (if there is no will have to rely on machine turning power)  
 shanmaomaoymmm@yandex.com
 
 ## 🥰FOLLOW ACE TAFFY NYA!🥰
