@@ -8,11 +8,11 @@
 
 🕹️ Iwara for uniapp
 
-[🀄中文](https://github.com/shanmaomaoymmm/hiwara/blob/main/README-zh.md)
+[🇨🇳中文](https://github.com/shanmaomaoymmm/hiwara/blob/main/README-zh.md)
 
 <img src="./edit/img/logo.png" style="width:192px;height:192px" />
 
-Compatible with new version of iwara client, supports Android, iOS and web side
+Compatible with new version of iwara client, supports Android, iOS and web side. Already adapted for Pad
 
 Beta version released, Android only [📦Beta](https://github.com/shanmaomaoymmm/hiwara/releases/latest)
 
@@ -62,9 +62,12 @@ npm run dev:h5
 * ✅Settings
 * ✅Adaptation for pad side
 * ✅Offline caching and downloading
-* ⬜DLAN
 * ⬜Forum
 * ✅Multi-language support
+
+### Planned but unachievable functions
+
+* 🛑DLAN
 
 ### Features not considered for support
 

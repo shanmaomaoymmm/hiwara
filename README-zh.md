@@ -10,7 +10,7 @@
 
 <img src="./edit/img/logo.png" style="width:192px;height:192px" />
 
-兼容新版iwara客户端，支持Android，iOS和Web端
+兼容新版iwara客户端，支持Android，iOS和Web端，已适配平板电脑
 
 测试版本已发布，仅限Android平台 [📦测试版](https://github.com/shanmaomaoymmm/hiwara/releases/latest)
 
@@ -60,9 +60,12 @@ npm run dev:h5
 * ✅设置
 * ✅pad端适配
 * ✅离线缓存及下载
-* ⬜DLAN投屏
 * ⬜论坛
 * ✅多语言支持
+
+### 计划却无法实现的功能
+
+* 🛑DLAN投屏
 
 ### 不考虑支持的功能
 
