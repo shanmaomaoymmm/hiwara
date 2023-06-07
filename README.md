@@ -59,6 +59,7 @@ npm run dev:h5
 * ⬜Playlist
 * ✅History (local)
 * ✅Followers (local)
+* ⬜Followers
 * ✅Settings
 * ✅Adaptation for pad side
 * ✅Offline caching and downloading
@@ -73,7 +74,7 @@ npm run dev:h5
 
 * ⛔ WeChat mini program (FBI! OPEN THE DOOR!)
 * ⛔ Download breakpoints (Please use BitComet)
-* ⛔ Direct connection to iwara (What age is it still using traditional network?)
+* ⛔ Direct connection to iwara (ma ma sheng te)
 * ⛔ Contribution function (Please use source website)
 
 ## ⚠️ Known issues
