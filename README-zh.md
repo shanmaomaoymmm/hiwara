@@ -102,7 +102,8 @@ npm run dev:h5
 
 ## 📒其他
 
-<!-- i站hosts直通
+<!-- 
+i站hosts直通
 
 ```
 2606:4700:20::ac43:479a iwara.tv
@@ -132,7 +133,10 @@ npm run dev:h5
 163.172.40.81 tei.iwara.tv
 2606:4700::6812:33f www.erolabs.com
 2606:4700::6812:9ca www.ero-labs.com
-``` -->
+``` 
+
+嘘！不要告诉别人哦🤫
+-->
 
 计划支持多语种，诚邀翻译大佬协助开发（如果没有就只能靠机翻力）  
 shanmaomaoymmm@yandex.com
