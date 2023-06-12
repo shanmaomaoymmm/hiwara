@@ -10,6 +10,8 @@
 
 <img src="./edit/img/logo.png" style="width:192px;height:192px" />
 
+考研去了，近段时间不更新新功能了，有bug提issues或发邮箱
+
 兼容新版iwara客户端，支持Android，iOS和Web端，已适配平板电脑
 
 测试版本已发布，仅限Android平台 [📦测试版](https://github.com/shanmaomaoymmm/hiwara/releases/latest)
