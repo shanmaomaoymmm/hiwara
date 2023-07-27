@@ -20,7 +20,7 @@ Some features are under development, The [📦Development Version](https://githu
 
 If you want to play with it, then HBuilderX compile it!
 
-Friendly reminder, you need a ladder
+Friendly reminder, if you are in China, Iran, Saudi and Korea, you must use VPN.
 
 ## 🛠️ Environment build
 
