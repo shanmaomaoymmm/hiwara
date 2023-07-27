@@ -8,7 +8,7 @@
 
 🕹️ Iwara for uniapp
 
-[🇨🇳 中文](https://github.com/shanmaomaoymmm/hiwara/blob/main/README-zh.md)
+[🇭🇰 中文](https://github.com/shanmaomaoymmm/hiwara/blob/main/README-zh.md)
 
 <img src="./edit/img/logo.png" style="width:192px;height:192px" />
 
