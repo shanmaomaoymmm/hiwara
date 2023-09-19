@@ -27,7 +27,6 @@ import subscribeList from "./subscribe.vue"
 import videoList from "./video.vue"
 import imageList from "./image.vue"
 import showLeft from "./showLeft.vue"
-import { getSelfData } from "@/api/api"
 export default {
   components: {
     floatBar,
@@ -78,19 +77,6 @@ export default {
   },
   onReachBottom() {
     this.onReachBottom()
-  },
-  created() {
-    getSelfData((res, code) => {
-      if (code == 200) {
-        this.user = res
-      }
-      this.$refs.floatBar.avatar = this.user.user.avatar != null
-        ? "https://i.iwara.tv/image/avatar/" +
-        this.user.user.avatar.id +
-        "/" +
-        this.user.user.avatar.name
-        : "https://www.iwara.tv/images/default-avatar.jpg"
-    })
   },
   watch: {
     mode(n) {

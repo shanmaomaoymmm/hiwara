@@ -23,8 +23,8 @@
 				class="button">{{ $t('home.left.myPage') }}</view>
 			<view @click="gotoPage('/pages/like/index?tab=0')" class="button">{{ $t('home.left.favoriteVideo') }}</view>
 			<view @click="gotoPage('/pages/like/index?tab=1')" class="button">{{ $t('home.left.favoriteImage') }}</view>
-			<!-- #ifdef APP-PLUS -->
 			<view @click="gotoPage('/pages/following/index')" class="button">{{ $t('home.left.concerns') }}</view>
+			<!-- #ifdef APP-PLUS -->
 			<view @click="gotoPage('/pages/history/index')" class="button">{{ $t('home.left.history') }}</view>
 			<view @click="gotoPage('/pages/download/index')" class="button">{{ $t('home.left.download') }}</view>
 			<!-- #endif -->
@@ -35,12 +35,26 @@
 </template>
 
 <script>
-import { removeStorage } from '@/api/api'
+import { getSelfData, removeStorage } from '@/api/api'
 export default {
 	data() {
-		return {}
+		return {
+			user: {
+				user: {
+					avatar: null,
+					name: '加载中……',
+				},
+				profile: {
+					body: '加载中……'
+				}
+			},
+		}
 	},
-	props: ['user'],
+	created() {
+		getSelfData((res) => {
+			this.user = res
+		})
+	},
 	methods: {
 		logout() {
 			uni.showModal({

@@ -25,7 +25,7 @@
   </view>
 </template>
 <script>
-import { getAccessToken, getStorage } from '@/api/api';
+import { getAccessToken, getUser, getStorage } from '@/api/api';
 export default {
   data() {
     return {
@@ -44,6 +44,7 @@ export default {
     if (this.check) {
       this.anime()
       getAccessToken((at) => {
+        getUser(() => { })
         getStorage('token', (ln) => {
           if (ln) {
             if (at) {

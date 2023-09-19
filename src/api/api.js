@@ -5,6 +5,7 @@ var xVersion = '5nFp9kmbNnHdAFhaqMvt'
 var token = null
 var accessToken = null
 var retry = 16
+var user = null
 
 var files = '/files'
 var api = '/api'
@@ -152,6 +153,24 @@ export function getAccessToken(cb) {
 			cb(false)
 		}
 	})
+}
+
+// 获取用户信息
+export function getUser(cb) {
+	if (user == null) {
+		creatHeader((h) => {
+			ajax(api + '/user', null, h, 'GET', (res, code) => {
+				if (code == 200) {
+					user = res
+					cb(user)
+				} else {
+					cb(false)
+				}
+			})
+		})
+	} else {
+		cb(user)
+	}
 }
 
 // 时间格式化
@@ -420,10 +439,8 @@ export function friends(uid, opt, cb) {
 
 // 获取本用户信息
 export function getSelfData(cb) {
-	creatHeader((h) => {
-		ajax(api + '/user', null, h, 'GET', (res, code) => {
-			cb(res, code)
-		})
+	getUser((res) => {
+		cb(res)
 	})
 }
 
@@ -735,9 +752,21 @@ export function storagePermission() {
 }
 
 // 获取关注
-export function getFollowing(cb) {
-	enquiryDBTable('following', 0, (res) => {
-		cb(res)
+export function getFollowing(page,cb) {
+	getUser((res) => {
+		if (res != false) {
+			let uid = user.user.id
+			let data = {
+				page: page
+			}
+			creatHeader((h) => {
+				ajax(api + '/user/' + uid + '/following', data, h, 'GET', (res, code) => {
+					cb(res, code)
+				})
+			})
+		} else {
+			cb(false)
+		}
 	})
 }
 
