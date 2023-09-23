@@ -1,11 +1,11 @@
 <template>
-	<view class="item" @click="gotoPage(item.id, item.uid)">
-		<q-img :src="item.img || '/static/img/not-img.jpg'" class="img" />
+	<view class="item">
+		<q-img :src="item.img || '/static/img/not-img.jpg'" class="img" @click="gotoPage(item.id, item.uid)" />
 		<view style="padding:0.25rem;">
-			<view class="label">
+			<view class="label" @click="gotoPage(item.id, item.uid)">
 				<text>{{ item.label }}</text>
 			</view>
-			<view style="display: flex;padding: 0.1rem 0;">
+			<view style="display: flex;padding: 0.1rem 0;" @click="gotoUser(item.uid, item.username)">
 				<view>
 					<q-avatar class="avatar" :src="item.avatar" />
 				</view>
@@ -41,7 +41,14 @@ export default {
 					animationDuration: 100
 				});
 			}
-		}
+		},
+		gotoUser(uid, username) {
+			uni.navigateTo({
+				url: '/pages/user/index?uid=' + uid + '&username=' + username,
+				animationType: 'slide-in-right',
+				animationDuration: 100
+			});
+		},
 	}
 }
 </script>

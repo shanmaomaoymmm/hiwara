@@ -225,7 +225,7 @@ export function login(username, passwd, cb) {
 // 获取订阅列表
 export function getSubscribeList(type, index, cb) {
 	let data = {
-		limit: 24,
+		limit: 32,
 		subscribed: true,
 		page: index
 	}
@@ -248,7 +248,7 @@ export function getVideoList(sort, index, date, cb) {
 		rating: 'all',
 		page: index,
 		date: date,
-		limit: 24
+		limit: 32
 	}
 	creatHeader((h) => {
 		ajax(api + '/videos', data, h, 'GET', (res, code) => {
@@ -264,7 +264,7 @@ export function getImageList(sort, index, date, cb) {
 		rating: 'all',
 		page: index,
 		date: date,
-		limit: 24,
+		limit: 32
 	}
 	creatHeader((h) => {
 		ajax(api + '/images', data, h, 'GET', (res, code) => {
@@ -561,7 +561,7 @@ export function getVideoListForUser(index, uid, cb) {
 		sort: 'date',
 		page: index,
 		user: uid,
-		limit: 24,
+		limit: 32
 	}
 	creatHeader((h) => {
 		ajax(api + '/videos', data, h, 'GET', (res, code) => {
@@ -576,7 +576,7 @@ export function getImageListForUser(index, uid, cb) {
 		sort: 'date',
 		page: index,
 		user: uid,
-		limit: 24,
+		limit: 32
 	}
 	creatHeader((h) => {
 		ajax(api + '/images', data, h, 'GET', (res, code) => {
@@ -637,7 +637,7 @@ export function search(type, query, page, cb) {
 		type: type,
 		query: query,
 		page: page,
-		limit: 24,
+		limit: 32
 	}
 	ajax(api + '/search', data, null, 'GET', (res, code) => {
 		cb(res, code)

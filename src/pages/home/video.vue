@@ -43,18 +43,18 @@ export default {
 			dataList: [
 				[this.$t('home.date.year')],
 				[
-				this.$t('home.date.January'),
-				this.$t('home.date.February'),
-				this.$t('home.date.March'),
-				this.$t('home.date.April'),
-				this.$t('home.date.May'),
-				this.$t('home.date.June'),
-				this.$t('home.date.July'),
-				this.$t('home.date.August'),
-				this.$t('home.date.September'),
-				this.$t('home.date.October'),
-				this.$t('home.date.November'),
-				this.$t('home.date.December'),
+					this.$t('home.date.January'),
+					this.$t('home.date.February'),
+					this.$t('home.date.March'),
+					this.$t('home.date.April'),
+					this.$t('home.date.May'),
+					this.$t('home.date.June'),
+					this.$t('home.date.July'),
+					this.$t('home.date.August'),
+					this.$t('home.date.September'),
+					this.$t('home.date.October'),
+					this.$t('home.date.November'),
+					this.$t('home.date.December'),
 				]
 			]
 		}
@@ -132,12 +132,7 @@ export default {
 				// 不选择年份
 				date = null
 			} else {
-				if (mi == 0) {
-					// 不选择月份
-					date = this.dataList[0][yi]
-				} else {
-					date = this.dataList[0][yi] + '-' + mi
-				}
+				date = this.dataList[0][yi] + '-' + (mi + 1)
 			}
 			this.date = date
 		}

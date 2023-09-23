@@ -177,7 +177,7 @@ export default {
 		}
 	},
 	onNavigationBarButtonTap(e) {
-		
+
 		if (e.type == 'home') {
 			this.$backhome()
 		}
@@ -235,7 +235,8 @@ export default {
 							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
 					watch: rs.numViews,
 					like: rs.numLikes,
-					uid: rs.user.id
+					uid: rs.user.id,
+					username: rs.user.username
 				})
 			}
 		})
@@ -254,7 +255,8 @@ export default {
 							.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
 					watch: rs.numViews,
 					like: rs.numLikes,
-					uid: rs.user.id
+					uid: rs.user.id,
+					username: rs.user.username
 				})
 			}
 		})

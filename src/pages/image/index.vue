@@ -206,6 +206,7 @@ export default {
 					watch: rs.numViews,
 					like: rs.numLikes,
 					uid: rs.user.id,
+					username: rs.user.username
 				})
 			}
 		})
@@ -234,6 +235,7 @@ export default {
 					watch: rs.numViews,
 					like: rs.numLikes,
 					uid: rs.user.id,
+					username: rs.user.username
 				})
 			}
 		})

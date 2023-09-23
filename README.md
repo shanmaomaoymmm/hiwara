@@ -58,8 +58,7 @@ npm run dev:h5
 * ✅Share and download external links
 * ⬜Playlist
 * ✅History (local)
-* ✅Followers (local)
-* ⬜Followers
+* ✅Followers
 * ✅Settings
 * ✅Adaptation for pad side
 * ✅Offline caching and downloading
@@ -76,6 +75,10 @@ npm run dev:h5
 * ⛔ Download breakpoints (Please use BitComet)
 * ⛔ Direct connection to iwara (ma ma sheng te)
 * ⛔ Contribution function (Please use source website)
+
+### Deprecated functionality
+
+* 🚮Followers (local)
 
 ## ⚠️ Known issues
 
