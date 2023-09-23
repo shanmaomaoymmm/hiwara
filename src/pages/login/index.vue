@@ -31,6 +31,7 @@ import {
 	login,
 	setStorage,
 	getStorage,
+	getUser
 } from '@/api/api.js'
 export default {
 	data() {
@@ -90,6 +91,8 @@ export default {
 						// 缓存用户名密码
 						setStorage('username', this.username)
 						setStorage('passwd', this.passwd)
+						// 获取用户信息
+						getUser(() => { })
 						uni.redirectTo({
 							url: '/pages/home/index'
 						});

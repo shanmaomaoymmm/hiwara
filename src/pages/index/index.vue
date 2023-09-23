@@ -44,10 +44,11 @@ export default {
     if (this.check) {
       this.anime()
       getAccessToken((at) => {
-        getUser(() => { })
         getStorage('token', (ln) => {
           if (ln) {
             if (at) {
+              // 获取用户信息
+              getUser(() => { })
               this.gotoPage('/pages/home/index')
             } else {
               this.gotoPage('/pages/index/netfail')

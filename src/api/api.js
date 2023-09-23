@@ -331,15 +331,6 @@ export function getVideo(id, cb) {
 					'video',
 					d.getTime()
 				])
-				if (res.user.following) {
-					addDataForDB('following', [
-						res.user.id,
-						res.user.username,
-						res.user.name,
-						res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar.id + '/' + res.user.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-						d.getTime()
-					])
-				}
 				// #endif
 			} else {
 				resData = null
@@ -478,15 +469,6 @@ export function getImage(id, cb) {
 				'image',
 				d.getTime()
 			])
-			if (res.user.following) {
-				addDataForDB('following', [
-					res.user.id,
-					res.user.username,
-					res.user.name,
-					res.user.avatar ? 'https://i.iwara.tv/image/avatar/' + res.user.avatar.id + '/' + res.user.avatar.name : 'https://www.iwara.tv/images/default-avatar.jpg',
-					d.getTime()
-				])
-			}
 			// #endif
 		})
 	})
@@ -752,7 +734,7 @@ export function storagePermission() {
 }
 
 // 获取关注
-export function getFollowing(page,cb) {
+export function getFollowing(page, cb) {
 	getUser((res) => {
 		if (res != false) {
 			let uid = user.user.id
@@ -799,11 +781,6 @@ plus.sqlite.openDatabase({
 enquiryDBTableName('history', (res) => {
 	if (res.length == 0) {
 		createDBTable('history', 'id TEXT NOT NULL, uid TEXT NOT NULL, title TEXT, username TEXT, date TEXT, preview TEXT, avatar TEXT, type TEXT, logdate TEXT')
-	}
-})
-enquiryDBTableName('following', (res) => {
-	if (res.length == 0) {
-		createDBTable('following', 'id TEXT PRIMARY KEY NOT NULL, username TEXT, name TEXT, avatar TEXT, logdate TEXT')
 	}
 })
 

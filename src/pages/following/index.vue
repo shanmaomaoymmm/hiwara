@@ -30,7 +30,8 @@ export default {
     return {
       data: [],
       page: 0,
-      onload: true
+      onload: true,
+      loading: false,
     }
   },
   created() {
@@ -54,7 +55,9 @@ export default {
   },
   // 滑到底部
   onReachBottom() {
-    this.onBottom()
+    if (this.loading == false) {
+      this.onBottom()
+    }
   },
   methods: {
     // 刷新
@@ -72,14 +75,18 @@ export default {
     },
     // 获取列表
     getData(cb) {
+      this.loading = true
       getFollowing(this.page, (res, code) => {
+        this.loading = false
         if (res != false) {
           if (code == 200) {
             for (let i = 0; i < res.results.length; i++) {
               this.data.push(res.results[i])
               cb()
             }
-            this.page++
+            if (res.results.length > 0) {
+              this.page++
+            }
           }
         }
       })
