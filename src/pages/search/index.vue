@@ -102,8 +102,7 @@ export default ({
           break
       }
       if (refs) {
-        refs.getData(() => {
-        })
+        refs.onBottom()
       }
     },
     backTop() {

@@ -66,6 +66,11 @@ export default {
         cb()
       })
     },
+    onBottom() {
+      if (this.error == false && this.loading == false) {
+        this.getData(() => { })
+      }
+    },
     getData(cb) {
       this.loading = true
       search('user', this.s, this.page, (res, code) => {

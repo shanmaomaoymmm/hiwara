@@ -61,7 +61,7 @@ export default {
 			})
 		},
 		onBottom() {
-			if (!this.error) {
+			if (this.error == false && this.loading == false) {
 				this.getData(() => { })
 			}
 		},

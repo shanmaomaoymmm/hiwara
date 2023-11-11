@@ -67,7 +67,7 @@ export default {
 					break
 			}
 			if (refs != null) {
-				refs.onBottom(() => { })
+				refs.onBottom()
 			}
 		}
 	}

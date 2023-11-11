@@ -63,7 +63,9 @@ export default {
 			})
 		},
 		onBottom() {
-			if (!this.error) {
+			console.log(this.error)
+			console.log(this.loading)
+			if (this.error == false && this.loading == false) {
 				this.getData(() => { })
 			}
 		},
