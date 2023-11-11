@@ -164,8 +164,12 @@ Plan to support multilingual, invite translation big brother to help develop (if
 計畫支持多語種，誠邀翻譯大佬協助開發（如果沒有就只能靠機翻力）    
 shanmaomaoymmm@yandex.com
 
-## 🥰FOLLOW ACE TAFFY NYA!🥰
-## 🤗FOLLOW ACE TAFFY THINK YOU NYA!🤗
+---
 
-## 🥰關注永雛塔菲喵！🥰
-## 🤗關注永雛塔菲謝謝喵！🤗
+🥰FOLLOW ACE TAFFY NYA!🥰  
+🤗FOLLOW ACE TAFFY THINK YOU NYA!🤗
+
+<img src="https://i0.hdslb.com/bfs/article/c0b9be927f60456f06e21ac063787c418837e8c3.png@1256w_1256h_!web-article-pic.webp" alt="taffy" width="100px">
+
+🥰關注永雛塔菲喵！🥰  
+🤗關注永雛塔菲謝謝喵！🤗
