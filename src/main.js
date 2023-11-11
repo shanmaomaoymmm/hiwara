@@ -28,6 +28,10 @@ Vue.prototype.$backhome = () => {
 // 语言列表
 Vue.prototype.$languageList = [
 	{
+		name: 'Auto',
+		code: 'auto'
+	},
+	{
 		name: 'English',
 		code: 'en-US',
 		author: ""
@@ -91,6 +95,9 @@ Vue.prototype.$languageList = [
 ]
 // 更改语言
 Vue.prototype.$languageChange = (l) => {
+	if (l === 'auto') {
+		l = uni.getLocale()
+	}
 	i18n.locale = l
 }
 

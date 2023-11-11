@@ -17,25 +17,56 @@ import VueI18n from 'vue-i18n'
 import Vue from 'vue'
 Vue.use(VueI18n)
 let lag = uni.getStorageSync('language')
-if (lag == '') {
+if (lag === 'auto' || lag === '') {
   lag = uni.getLocale()
 }
 let messages = {
+  'en': enus,
   'en-US': enus,
+  'en-us': enus,
   'zh-Hans': zhHans,
+  'zh-CN': zhHans,
+  'zh-cn': zhHans,
   'zh-Hant': zhHant,
+  'zh-HK': zhHant,
+  'zh-hk': zhHant,
+  'zh-MO': zhHant,
+  'zh-mo': zhHant,
+  'zh-TW': zhHant,
+  'zh-tw': zhHant,
+  'ja': jajp,
   'ja-JP': jajp,
+  'ja-jp': jajp,
+  'ko': kokr,
   'ko-KR': kokr,
+  'ko-kr': kokr,
   'ug-CN': ugcn,
+  'ug-cn': ugcn,
   'bo-CN': bocn,
+  'bo-cn': bocn,
+  'ru': ruru,
   'ru-RU': ruru,
+  'ru-ru': ruru,
+  'fr': frfr,
   'fr-FR': frfr,
-  'de-DE': dede,
+  'fr-fr': frfr,
+  'de': dede,
+  'de-de': dede,
+  'es': eses,
   'es-ES': eses,
+  'es-es': eses,
+  'it': itit,
   'it-IT': itit,
+  'it-it': itit,
+  'ar': arsa,
   'ar-SA': arsa,
+  'ar-sa': arsa,
+  'th': thth,
   'th-TH': thth,
+  'th-th': thth,
+  'vi': vivn,
   'vi-VN': vivn,
+  'vi-vn': vivn,
 }
 let i18n = new VueI18n({
   locale: lag,
