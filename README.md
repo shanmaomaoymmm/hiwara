@@ -76,6 +76,7 @@ Please refer to the official documentation of uniapp
 * ✅Offline caching and downloading | 離線緩存及下載
 * ⬜Forum | 論壇
 * ✅Multi-language support | 多語言支援
+* ✅Aria2 support | Aria2支援
 
 ### Planned but unachievable functions | 計畫卻無法實現的功能
 
