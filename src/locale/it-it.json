@@ -219,7 +219,8 @@
       "language": "Lingua(Language)",
       "logout": "Disconnessione",
       "retry": "I tempi non sono riusciti a riconnettersi",
-      "userInfo": "Modifica Profilo"
+      "userInfo": "Modifica Profilo",
+      "aria2": "Impostazioni push Aira2"
     }
   },
   "tip": [
@@ -239,5 +240,15 @@
       "image": "Immagine",
       "video": "video"
     }
+  },
+  "aria2": {
+    "ariaon": "Interruttore a pulsante Aria2",
+    "path": "Scarica il percorso",
+    "tips": [
+      "Istruzioni per l'uso:",
+      "Dopo aver attivato questa funzione, quando aggiungi un video ai preferiti, il video verrà automaticamente scaricato e salvato.",
+      "Per utilizzare questa funzione, devi prima configurare un server Aria2. Alcuni NAS già pronti forniscono i servizi Aria2. In secondo luogo, devi inserire l'indirizzo RPC, la password di verifica e il percorso di download sul server del tuo server Aria nella configurazione sopra.",
+      "Nota: questa funzione non scarica video sul telefono. E per la sicurezza dei tuoi dati, non utilizzarlo con server Aria2 pubblici."
+    ]
   }
 }

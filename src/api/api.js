@@ -759,6 +759,37 @@ export function getHistory(cb) {
 	})
 }
 
+// Aria2
+export function ariaDownload(url, name) {
+	const ariarpc = uni.getStorageSync('ariarpc')
+	const ariatoken = uni.getStorageSync('ariatoken')
+	const ariapath = uni.getStorageSync('ariapath')
+	const download = {
+		"id": "hiwara_aira_download",
+		"jsonrpc": "2.0",
+		"method": "aria2.addUri",
+		"params": [
+			"token:" + ariatoken,
+			[url],
+			{
+				"dir": ariapath,
+				"out": name,
+				"referer": "*"
+			}
+		]
+	}
+	uni.request({
+		url: ariarpc,
+		data: download,
+		method: 'POST',
+		success: res => {
+			console.log(res)
+		}, fail: (res) => {
+			console.log(res)
+		}
+	})
+}
+
 // #ifdef APP-PLUS
 
 /**数据库操作 */

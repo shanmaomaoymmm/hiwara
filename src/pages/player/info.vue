@@ -93,7 +93,9 @@ import {
 	followers,
 	likeVideo,
 	download,
-	storagePermission
+	storagePermission,
+	getStorage,
+	ariaDownload,
 } from '@/api/api.js'
 export default {
 	data() {
@@ -107,9 +109,21 @@ export default {
 			copyLinkButton: false,
 			authorOpus: [],
 			relatedOpus: [],
+			ariaon: false,
 		}
 	},
 	props: ['vid', 'uid', 'data'],
+	created() {
+		getStorage('ariaon', (a) => {
+			let b
+			if (a) {
+				b = a
+			} else {
+				b = false
+			}
+			this.ariaon = b
+		})
+	},
 	mounted() {
 		this.setHeight()
 	},
@@ -212,6 +226,11 @@ export default {
 						})
 					}
 				})
+				if (this.ariaon) {
+					const url = 'https:' + this.data.sources[this.data.sources.length - 1].download
+					const name = this.data.title + '[' + this.data.id + ']' + this.data.username + '.mp4'
+					ariaDownload(url, name)
+				}
 			}
 		},
 		gotoUser() {

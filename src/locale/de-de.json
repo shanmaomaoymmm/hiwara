@@ -219,7 +219,8 @@
       "language": "Sprache(Language)",
       "logout": "Austragen",
       "retry": "Mal konnte die Verbindung nicht wiederhergestellt werden",
-      "userInfo": "Profil bearbeiten"
+      "userInfo": "Profil bearbeiten",
+      "aria2": "Aira2-Push-Einstellungen"
     }
   },
   "tip": [
@@ -239,5 +240,15 @@
       "image": "Bild",
       "video": "Video"
     }
+  },
+  "aria2": {
+    "ariaon": "Aria2-Druckschalter",
+    "path": "Pfad herunterladen",
+    "tips": [
+      "Gebrauchsanweisung:",
+      "Wenn diese Funktion aktiviert ist und Sie ein Video zu Ihren Favoriten hinzufügen, wird das Video automatisch heruntergeladen und gespeichert.",
+      "Um diese Funktion nutzen zu können, müssen Sie zunächst einen Aria2-Server einrichten. Einige fertige NAS bieten Aria2-Dienste an. Zweitens müssen Sie die RPC-Adresse, das Bestätigungskennwort und den Download-Pfad zum Server Ihres Aria-Servers in die obige Konfiguration eingeben.",
+      "Hinweis: Mit dieser Funktion werden keine Videos auf Ihr Telefon heruntergeladen. Und aus Gründen Ihrer Datensicherheit verwenden Sie es bitte nicht mit öffentlichen Aria2-Servern."
+    ]
   }
 }

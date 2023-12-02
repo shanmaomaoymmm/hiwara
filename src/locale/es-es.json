@@ -219,7 +219,8 @@
       "language": "Idioma(Language)",
       "logout": "Desconectar",
       "retry": "Veces no se pudo volver a conectar",
-      "userInfo": "Editar perfil"
+      "userInfo": "Editar perfil",
+      "aria2": "Configuración de empuje de Aira2"
     }
   },
   "tip": [
@@ -239,5 +240,15 @@
       "image": "Imagen",
       "video": "Video"
     }
+  },
+  "aria2": {
+    "ariaon": "Interruptor pulsador Aria2",
+    "path": "Ruta de descarga",
+    "tips": [
+      "Instrucciones de uso:",
+      "Después de activar esta función, cuando seleccione un video como favorito, el video se descargará y guardará automáticamente.",
+      "Para utilizar esta función, primero debe configurar un servidor Aria2. Algunos NAS terminados brindan servicios Aria2. En segundo lugar, debe completar la dirección RPC, la contraseña de verificación y la ruta de descarga al servidor de su servidor Aria en la configuración anterior.",
+      "Nota: esta función no descarga videos a su teléfono. Y para la seguridad de sus datos, no lo utilice con servidores públicos Aria2."
+    ]
   }
 }

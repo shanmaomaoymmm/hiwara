@@ -219,7 +219,8 @@
       "language": "Ngôn ngữ(Language)",
       "logout": "Đăng xuất",
       "retry": "Lần không thể kết nối lại",
-      "userInfo": "Chỉnh sửa hồ sơ"
+      "userInfo": "Chỉnh sửa hồ sơ",
+      "aria2": "Cài đặt đẩy Aira2"
     }
   },
   "tip": [
@@ -239,5 +240,15 @@
       "image": "Hình ảnh",
       "video": "Băng hình"
     }
+  },
+  "aria2": {
+    "ariaon": "Công tắc đẩy Aria2",
+    "path": "Đường dẫn tải xuống",
+    "tips": [
+      "Hướng dẫn sử dụng:",
+      "Sau khi bật chức năng này, khi bạn yêu thích một video nào đó, video đó sẽ tự động được tải xuống và lưu lại.",
+      "Để sử dụng chức năng này, trước tiên bạn cần thiết lập máy chủ Aria2. Một số NAS đã hoàn thiện cung cấp dịch vụ Aria2. Thứ hai, bạn cần điền địa chỉ RPC, mật khẩu xác minh và đường dẫn tải xuống máy chủ của máy chủ Aria của bạn vào cấu hình trên.",
+      "Lưu ý: Tính năng này không tải video về điện thoại của bạn. Và để bảo mật dữ liệu của bạn, vui lòng không sử dụng nó với các máy chủ Aria2 công cộng."
+    ]
   }
 }

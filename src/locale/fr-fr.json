@@ -219,7 +219,8 @@
       "language": "Langue(Language)",
       "logout": "Se déconnecter",
       "retry": "Times n'a pas réussi à se reconnecter",
-      "userInfo": "Editer le profil"
+      "userInfo": "Editer le profil",
+      "aria2": "Paramètres push d'Aira2"
     }
   },
   "tip": [
@@ -239,5 +240,15 @@
       "image": "Image",
       "video": "Vidéo"
     }
+  },
+  "aria2": {
+    "ariaon": "Interrupteur poussoir Aria2",
+    "path": "Chemin de téléchargement",
+    "tips": [
+      "Mode d'emploi:",
+      "Une fois cette fonction activée, lorsque vous ajoutez une vidéo à vos favoris, la vidéo sera automatiquement téléchargée et enregistrée.",
+      "Pour utiliser cette fonction, vous devez d'abord configurer un serveur Aria2. Certains NAS finis fournissent des services Aria2. Deuxièmement, vous devez renseigner l'adresse RPC, le mot de passe de vérification et le chemin de téléchargement vers le serveur de votre serveur Aria dans la configuration ci-dessus.",
+      "Remarque : Cette fonctionnalité ne télécharge pas de vidéos sur votre téléphone. Et pour la sécurité de vos données, veuillez ne pas l'utiliser avec des serveurs Aria2 publics."
+    ]
   }
 }

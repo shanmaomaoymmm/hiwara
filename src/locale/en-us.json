@@ -133,7 +133,8 @@
       "language": "Language",
       "userInfo": "Edit Profile",
       "about": "About",
-      "logout": "Sign Out"
+      "logout": "Sign Out",
+      "aria2": "Aira2 push settings"
     },
     "about": {
       "dev": "dev",
@@ -239,5 +240,15 @@
       "video": "Video",
       "image": "Image"
     }
+  },
+  "aria2": {
+    "ariaon": "Aria2 push switch",
+    "path": "Download path",
+    "tips": [
+      "Instructions for use:",
+      "After this function is turned on, when you favorite a video, the video will be automatically downloaded and saved.",
+      "To use this function, you first need to set up an Aria2 server. Some finished NASs provide Aria2 services. Secondly, you need to fill in the RPC address, verification password and download path to the server of your Aria server into the configuration above.",
+      "Note: This feature does not download videos to your phone. And for your data security, please do not use it with public Aria2 servers."
+    ]
   }
 }

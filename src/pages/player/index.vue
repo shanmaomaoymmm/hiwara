@@ -119,6 +119,7 @@ import {
 	fill0,
 	formatDate,
 } from '@/api/api.js'
+import { object } from '@dcloudio/vue-cli-plugin-uni/packages/postcss/tags'
 export default {
 	components: {
 		info,
@@ -210,6 +211,9 @@ export default {
 			if (code == 200) {
 				this.error = 0
 				this.data = res
+				if (!this.data.sources.some(obj => obj.name === this.definition)) {
+					this.definition = this.data.sources[this.data.sources.length - 1].name
+				}
 			} else if (code == 403) {
 				this.error = 1
 			} else if (code == 408) {

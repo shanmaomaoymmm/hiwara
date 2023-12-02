@@ -286,6 +286,24 @@
 			}
 		},
 		{
+			"path": "pages/setup/aria",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [
+							{
+								"type": "home",
+								"float": "left"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/setup/definition",
 			"style": {
 				"navigationBarTitleText": "",
