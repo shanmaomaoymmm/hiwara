@@ -34,7 +34,7 @@
     </view>
     <view class="tips">
       <i class="fa-solid fa-circle-question fa-fw"></i>
-      {{ $t('aria2.tips') }}<br>
+      {{ $t('aria2.tips[0]') }}<br>
       {{ $t('aria2.tips[1]') }}<br>
       {{ $t('aria2.tips[2]') }}<br>
       {{ $t('aria2.tips[3]') }}
