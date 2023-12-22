@@ -228,7 +228,9 @@ export default {
 				})
 				if (this.ariaon) {
 					const url = 'https:' + this.data.sources[this.data.sources.length - 1].download
-					const name = this.data.title + '[' + this.data.id + ']' + this.data.username + '.mp4'
+					const replaceSpecialCharacters = (str, replacement = '_') => str.replace(/([ /?*:\<\>\\|@#\$%&()]+)/g, replacement);
+					const title = replaceSpecialCharacters(this.data.title)
+					const name = title + '[' + this.data.id.toLowerCase() + ']' + this.data.username + '.mp4'
 					ariaDownload(url, name)
 				}
 			}
@@ -273,7 +275,9 @@ export default {
 		},
 		download(it) {
 			let dlUrl = 'https:' + it.download
-			download('video', dlUrl, this.data.title, () => {
+			const replaceSpecialCharacters = (str, replacement = '_') => str.replace(/([ /?*:\<\>\\|@#\$%&()]+)/g, replacement);
+			const title = replaceSpecialCharacters(this.data.title)
+			download('video', dlUrl, title, () => {
 				this.$refs.downloadPopup.close()
 			})
 		}
