@@ -1,10 +1,10 @@
 <template>
   <view class="qimg" @click="$emit('click')">
-    <view v-show="loading" class="loading">
-      <i class="fa-brands fa-digital-ocean "></i>
-    </view>
+    <img class="img" :src="path" @load="imgLoad()" @error="imgError()" />
     <transition name="fade">
-      <img v-show="!loading" class="img" :src="path" @load="imgLoad()" @error="imgError()" />
+      <view v-show="loading" class="loading">
+        <i class="fa-brands fa-digital-ocean "></i>
+      </view>
     </transition>
   </view>
 </template>
@@ -44,6 +44,7 @@ export default {
   height: 100%;
   overflow: hidden;
   display: inline-block;
+  position: relative;
 }
 
 .img {
@@ -53,17 +54,21 @@ export default {
 }
 
 .loading {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   font-size: 2rem;
-  text-align: center;
-  height: inherit;
-  width: inherit;
+  margin: auto;
   display: flex;
+  justify-content: center;
   align-items: center;
+  backdrop-filter: blur(0.4rem);
 }
 
 .fa-digital-ocean {
   animation: rotate 175ms steps(1) infinite;
-  width: 100%;
 }
 
 @keyframes rotate {

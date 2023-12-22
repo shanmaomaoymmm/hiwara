@@ -62,6 +62,7 @@ export default {
 	background-color: #fff;
 	font-size: 0;
 	overflow: hidden;
+	min-height: 12rem;
 }
 
 .img {
