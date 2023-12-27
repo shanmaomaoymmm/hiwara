@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view :style="{ opacity: hideopa }">
     <view v-if="data.length > 0">
       <view v-for="it, i in data" class="item" @click="gotoPage(it.id, it.uid, it.type)">
         <view style="flex: 1;overflow: hidden;">
@@ -28,8 +28,63 @@ import { getHistory } from '@/api/api.js'
 export default {
   data() {
     return {
-      data: []
+      data: [],
+      scrollTop: 0,
+      ori: false,
+      scrollTopCacheX: 0,
+      scrollTopCacheY: 0,
+      hideopa: 1
     }
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop
+  },
+  onHide: function () {
+    this.hideopa = 0
+    if (this.ori) {
+      this.scrollTopCacheX = this.scrollTop
+    } else {
+      this.scrollTopCacheY = this.scrollTop
+    }
+  },
+  onShow: function () {
+    if (this.scrollTop > 0) {
+      if (this.ori) {
+        if (this.scrollTopCacheX !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheX,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      } else {
+        if (this.scrollTopCacheY !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheY,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      }
+    } else {
+      this.hideopa = 1
+    }
+  },
+  mounted() {
+    let media = uni.createMediaQueryObserver(this)
+    media.observe({
+      orientation: 'landscape'
+    }, (res) => {
+      this.ori = res
+    })
   },
   created() {
     uni.setNavigationBarTitle({

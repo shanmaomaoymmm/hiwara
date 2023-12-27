@@ -5,7 +5,7 @@
       <br>
       <text>{{ $t('loading1') }}</text>
     </view>
-    <view v-else>
+    <view v-else :style="{ opacity: hideopa }">
       <view v-if="data.length > 0" style="padding:0 0.5rem;">
         <view v-for="item, i in data" class="item" @click="gotoPage(item.user.id, item.user.username)">
           <view class="ava">
@@ -32,7 +32,62 @@ export default {
       page: 0,
       onload: true,
       loading: false,
+      scrollTop: 0,
+      ori: false,
+      scrollTopCacheX: 0,
+      scrollTopCacheY: 0,
+      hideopa: 1
     }
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop
+  },
+  onHide: function () {
+    this.hideopa = 0
+    if (this.ori) {
+      this.scrollTopCacheX = this.scrollTop
+    } else {
+      this.scrollTopCacheY = this.scrollTop
+    }
+  },
+  onShow: function () {
+    if (this.scrollTop > 0) {
+      if (this.ori) {
+        if (this.scrollTopCacheX !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheX,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      } else {
+        if (this.scrollTopCacheY !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheY,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      }
+    } else {
+      this.hideopa = 1
+    }
+  },
+  mounted() {
+    let media = uni.createMediaQueryObserver(this)
+    media.observe({
+      orientation: 'landscape'
+    }, (res) => {
+      this.ori = res
+    })
   },
   created() {
     uni.setNavigationBarTitle({

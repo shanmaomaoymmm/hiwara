@@ -1,7 +1,7 @@
 <template>
   <view class="panel">
     <view style="padding:0 0 4rem 0" @touchmove="handletouchmove" @touchstart="handletouchstart"
-      @touchend="handletouchend">
+      @touchend="handletouchend" :style="{ opacity: hideopa }">
       <subscribe-list ref="subscribe" v-if="tab == 0"></subscribe-list>
       <video-list ref="video" v-else-if="tab == 1"></video-list>
       <image-list ref="image" v-else-if="tab == 2"></image-list>
@@ -55,10 +55,61 @@ export default {
       lastX: 0,
       lastY: 0,
       scrollTop: 0,
+      ori: false,
+      scrollTopCacheX: 0,
+      scrollTopCacheY: 0,
+      hideopa: 1
     }
   },
   onPageScroll(e) {
     this.scrollTop = e.scrollTop
+  },
+  onHide: function () {
+    this.hideopa = 0
+    if (this.ori) {
+      this.scrollTopCacheX = this.scrollTop
+    } else {
+      this.scrollTopCacheY = this.scrollTop
+    }
+  },
+  onShow: function () {
+    if (this.scrollTop > 0) {
+      if (this.ori) {
+        if (this.scrollTopCacheX !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheX,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      } else {
+        if (this.scrollTopCacheY !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheY,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      }
+    } else {
+      this.hideopa = 1
+    }
+  },
+  mounted() {
+    let media = uni.createMediaQueryObserver(this)
+    media.observe({
+      orientation: 'landscape'
+    }, (res) => {
+      this.ori = res
+    })
   },
   onNavigationBarButtonTap(e) {
     if (e.type == 'menu') {

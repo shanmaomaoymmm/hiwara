@@ -35,7 +35,7 @@
           <text class="tab" @click="tab = 0" :class="{ tabsActive: tab == 0 }">{{ $t('user.tab.video') }}</text>
           <text class="tab" @click="tab = 1" :class="{ tabsActive: tab == 1 }">{{ $t('user.tab.image') }}</text>
         </view>
-        <view>
+        <view :style="{ opacity: hideopa }">
           <video-list ref="video" v-if="tab == 0" :uid="uid"></video-list>
           <image-list ref="image" v-if="tab == 1" :uid="uid"></image-list>
         </view>
@@ -68,10 +68,61 @@ export default {
       tab: 0,
       loading: true,
       scrollTop: 0,
+      ori: false,
+      scrollTopCacheX: 0,
+      scrollTopCacheY: 0,
+      hideopa: 1
     }
   },
   onPageScroll(e) {
     this.scrollTop = e.scrollTop
+  },
+  onHide: function () {
+    this.hideopa = 0
+    if (this.ori) {
+      this.scrollTopCacheX = this.scrollTop
+    } else {
+      this.scrollTopCacheY = this.scrollTop
+    }
+  },
+  onShow: function () {
+    if (this.scrollTop > 0) {
+      if (this.ori) {
+        if (this.scrollTopCacheX !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheX,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      } else {
+        if (this.scrollTopCacheY !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheY,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      }
+    } else {
+      this.hideopa = 1
+    }
+  },
+  mounted() {
+    let media = uni.createMediaQueryObserver(this)
+    media.observe({
+      orientation: 'landscape'
+    }, (res) => {
+      this.ori = res
+    })
   },
   onLoad: function (opt) {
     this.uid = opt.uid

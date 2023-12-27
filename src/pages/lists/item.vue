@@ -47,8 +47,8 @@ export default {
 				url: '/pages/user/index?uid=' + uid + '&username=' + username,
 				animationType: 'slide-in-right',
 				animationDuration: 100
-			});
-		},
+			})
+		}
 	}
 }
 </script>

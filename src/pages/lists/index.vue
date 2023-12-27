@@ -18,7 +18,6 @@ export default {
 		return {
 			col: 0,
 			limit: 24,
-			ori: false,
 		}
 	},
 	props: ['data', 'type', 'scol'],
@@ -29,10 +28,11 @@ export default {
 .lists {
 	padding: 0.125rem;
 	display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  justify-content: space-between;
+	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+	justify-content: space-between;
 }
-.item{
+
+.item {
 	min-width: 10rem;
 }
 </style>

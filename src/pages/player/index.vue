@@ -178,7 +178,6 @@ export default {
 		}
 	},
 	onNavigationBarButtonTap(e) {
-
 		if (e.type == 'home') {
 			this.$backhome()
 		}

@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view :style="{ opacity: hideopa }">
     <video-list ref="video" v-if="tab == 0"></video-list>
     <image-list ref="image" v-else-if="tab == 1"></image-list>
     <uni-transition @click="backTop()" custom-class="back-top" mode-class="zoom-in" :duration="50"
@@ -20,13 +20,64 @@ export default ({
     return {
       tab: 0,
       scrollTop: 0,
+      ori: false,
+      scrollTopCacheX: 0,
+      scrollTopCacheY: 0,
+      hideopa: 1
     }
   },
   onPageScroll(e) {
     this.scrollTop = e.scrollTop
   },
+  onHide: function () {
+    this.hideopa = 0
+    if (this.ori) {
+      this.scrollTopCacheX = this.scrollTop
+    } else {
+      this.scrollTopCacheY = this.scrollTop
+    }
+  },
+  onShow: function () {
+    if (this.scrollTop > 0) {
+      if (this.ori) {
+        if (this.scrollTopCacheX !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheX,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      } else {
+        if (this.scrollTopCacheY !== this.scrollTop) {
+          uni.pageScrollTo({
+            scrollTop: this.scrollTopCacheY,
+            duration: 0,
+            complete: () => {
+              this.hideopa = 1
+            }
+          })
+        } else {
+          this.hideopa = 1
+        }
+      }
+    } else {
+      this.hideopa = 1
+    }
+  },
+  mounted() {
+    let media = uni.createMediaQueryObserver(this)
+    media.observe({
+      orientation: 'landscape'
+    }, (res) => {
+      this.ori = res
+    })
+  },
   onNavigationBarButtonTap(e) {
-    
+
     if (e.type == 'home') {
       this.$backhome()
     }

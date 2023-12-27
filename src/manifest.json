@@ -2,8 +2,8 @@
     "name" : "Hiwara",
     "appid" : "__UNI__9B9DA16",
     "description" : "",
-    "versionName" : "0.1.10",
-    "versionCode" : 23,
+    "versionName" : "0.1.11",
+    "versionCode" : 24,
     "transformPx" : false,
     "app-plus" : {
         "darkmode" : true,
@@ -141,6 +141,9 @@
                     }
                 }
             }
+        },
+        "router" : {
+            "mode" : "history"
         }
     },
     "locale" : "auto",
