@@ -1,6 +1,6 @@
 <template>
   <view class="qimg" @click="$emit('click')">
-    <image class="img" :src="path" @load="imgLoad()" @error="imgError()"></image>
+    <image class="img" :src="path" mode="aspectFill" @load="imgLoad()" @error="imgError()"></image>
     <transition name="fade">
       <view v-show="loading" class="loading">
         <i class="fa-brands fa-digital-ocean "></i>

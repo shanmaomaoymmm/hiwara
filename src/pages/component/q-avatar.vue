@@ -5,7 +5,7 @@
       <i v-else class="fa-brands fa-digital-ocean loading"></i>
     </view>
     <transition name="fade">
-      <image v-show="show" :src="path" @error="imgError" @load="imgLoad" class="img"></image>
+      <image v-show="show" :src="path" mode="aspectFill" @error="imgError" @load="imgLoad" class="img"></image>
     </transition>
   </view>
 </template>
