@@ -19,11 +19,6 @@ Beta version released, Android only [📦Beta](https://github.com/shanmaomaoymmm
 Some features are under development, The [📦Development Version](https://github.com/shanmaomaoymmm/hiwara/releases) is for development testing only and does not represent the final product  
 部分功能正在開發中，[📦開發版](https://github.com/shanmaomaoymmm/hiwara/releases)僅供開發測試使用，不代表最終成品效果
 
-I'm taking the teacher qualification exam. After that, I'll fix the bugs.  
-哥們在考教資，考完就繼續完善  
-v2
-[https://github.com/shanmaomaoymmm/hiwara](https://github.com/shanmaomaoymmm/hiwara)
-
 If you want to play with it, then HBuilderX compile it!
 如果想拿來玩玩的話下HBuilderX編譯就行
 
