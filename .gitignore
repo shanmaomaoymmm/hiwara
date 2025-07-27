@@ -1,0 +1,75 @@
+### 通用操作系统文件 ###
+.DS_Store
+Thumbs.db
+*.lnk
+
+### 编辑器/IDE ###
+# VS Code
+.vscode/
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+### Rust编译产物 ###
+# Rust的构建目录（包含二进制和中间文件）
+/target/
+# Rust的Cargo包管理锁文件（不需要忽略，但可排除调试符号）
+Cargo.lock
+
+### 前端依赖 ###
+node_modules/
+dist/          # 前端构建输出目录（如Vite打包结果）
+.cache/        # 前端工具缓存（如Vite）
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+### Tauri生成文件 ###
+/src-tauri/target/  # Tauri的Rust构建目录
+/src-tauri/Cargo.lock
+/src-tauri/build/   # Tauri CLI生成的临时文件
+/src-tauri/.rpt2_cache/ # Rust类型缓存
+
+### Android平台 ###
+# Android构建目录
+android/app/build/
+android/build/
+# Gradle缓存
+.gradle/
+# 本地SDK路径配置（含敏感路径）
+android/local.properties
+# 签名密钥文件（必须忽略！）
+*.jks
+*.keystore
+# APK/AAB包
+*.apk
+*.aab
+
+### iOS平台 ###
+# Xcode生成文件
+ios/DerivedData/
+ios/**/build/
+# CocoaPods依赖
+ios/Pods/
+# 用户工作区设置
+*.xcworkspace/xcuserdata
+*.xcuserstate
+# 自动签名配置文件
+ios/**/*.xccheckout
+ios/**/*.xcscmblueprint
+
+### 环境变量 ###
+.env            # 包含敏感信息的配置
+.env.local      # 本地覆盖配置
+
+### 日志文件 ###
+*.log
+npm-debug.log*
+yarn-error.log*

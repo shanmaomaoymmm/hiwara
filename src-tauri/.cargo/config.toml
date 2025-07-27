@@ -1,0 +1,18 @@
+# 注册国内镜像源（协议为 HTTPS）
+[source.crates-io]
+replace-with = 'ustc'  # 使用 USTC 镜像源替代默认源
+
+[source.ustc]
+registry = "https://mirrors.ustc.edu.cn/crates.io-index/"
+
+[source.tuna]
+registry = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"
+
+[source.sjtu]
+registry = "https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/"
+
+# 可选：保留注册表定义（但非必需）
+[registries]
+ustc = { index = "https://mirrors.ustc.edu.cn/crates.io-index/" }
+tuna = { index = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git" }
+sjtu = { index = "https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/" }
