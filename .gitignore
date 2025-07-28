@@ -73,3 +73,6 @@ ios/**/*.xcscmblueprint
 *.log
 npm-debug.log*
 yarn-error.log*
+
+### 临时文件 ###
+src/tmp/

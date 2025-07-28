@@ -1,6 +1,6 @@
 # 注册国内镜像源（协议为 HTTPS）
 [source.crates-io]
-replace-with = 'ustc'  # 使用 USTC 镜像源替代默认源
+replace-with = 'tuna'  # 使用 USTC 镜像源替代默认源
 
 [source.ustc]
 registry = "https://mirrors.ustc.edu.cn/crates.io-index/"
