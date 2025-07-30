@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "Hiwara",
-        "width": 800,
-        "height": 600
+        "width": 440,
+        "height": 880
       }
     ],
     "security": {
