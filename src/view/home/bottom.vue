@@ -6,7 +6,7 @@ import {
   Comments as iconComments,
   User as iconUser
 } from '@icon-park/vue-next';
-import { ref, watch, defineEmits } from 'vue';
+import { ref, watch } from 'vue';
 const tab = ref<
   'video' | 'image' | 'subscribe' | 'forum' | 'my'
 >('subscribe');

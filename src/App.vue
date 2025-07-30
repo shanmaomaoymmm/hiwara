@@ -5,6 +5,7 @@ import { RouterView } from 'vue-router'
 <template>
   <div class="stateBar"></div>
   <RouterView />
+  <div class="navigationBar"></div>
 </template>
 
 <style scoped>
@@ -19,4 +20,6 @@ import { RouterView } from 'vue-router'
     height: calc(env(safe-area-inset-left) + env(safe-area-inset-right));
   }
 }
+
+.navigation {}
 </style>

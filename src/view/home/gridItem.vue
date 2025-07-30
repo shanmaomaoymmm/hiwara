@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue'
+import { ref } from 'vue'
 const props = defineProps<{
   type: 'video' | 'image'
 }>()
@@ -104,14 +104,14 @@ const props = defineProps<{
   }
 
   .msg {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     padding: 0.5rem 0.2rem;
     width: calc(100% - 0.4rem);
     position: absolute;
     bottom: 0;
     color: #fff;
     // text-shadow: 0.05rem 0.05rem 0.1rem #616161;
-    filter: drop-shadow(0.1rem 0.1rem 0.04rem #757575);
+    filter: drop-shadow(0.04rem 0.04rem 0.04rem #616161);
 
     .duration,
     .imgNum {

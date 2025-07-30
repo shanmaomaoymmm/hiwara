@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import gridItem from './gridItem.vue'
-import { ref, defineProps } from 'vue'
+import { ref } from 'vue'
 const items = ref<number[]>([])
 const props = defineProps<{
   type: 'video' | 'image'
