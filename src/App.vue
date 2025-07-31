@@ -3,9 +3,11 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div class="stateBar"></div>
-  <RouterView />
-  <div class="navigationBar"></div>
+  <div class="app">
+    <div class="stateBar"></div>
+    <RouterView class="main" />
+    <div class="navigationBar"></div>
+  </div>
 </template>
 
 <style scoped>
@@ -13,7 +15,7 @@ import { RouterView } from 'vue-router'
   background: #00796B;
 
   @media (orientation: portrait) {
-    height: calc(env(safe-area-inset-top) + env(safe-area-inset-bottom));
+    height: env(safe-area-inset-top);
   }
 
   @media (orientation: landscape) {
@@ -21,5 +23,7 @@ import { RouterView } from 'vue-router'
   }
 }
 
-.navigation {}
+.navigation {
+  height: env(safe-area-inset-bottom);
+}
 </style>

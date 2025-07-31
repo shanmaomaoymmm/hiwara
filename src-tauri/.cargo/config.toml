@@ -16,3 +16,6 @@ registry = "https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/"
 ustc = { index = "https://mirrors.ustc.edu.cn/crates.io-index/" }
 tuna = { index = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git" }
 sjtu = { index = "https://mirrors.sjtug.sjtu.edu.cn/git/crates.io-index/" }
+
+[build]
+incremental = true

@@ -6,7 +6,7 @@ const props = defineProps<{
   type: 'video' | 'image'
 }>()
 // 初始化测试数据
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < 100; i++) {
   items.value.push(i)
 }
 </script>

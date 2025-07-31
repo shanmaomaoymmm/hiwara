@@ -16,7 +16,7 @@ const props = defineProps<{
         </template>
       </v-img>
       <div class="tips">
-        <div class="r-18">
+        <div class="r-18" v-if="0">
           R-18
         </div>
         <div class="msg">

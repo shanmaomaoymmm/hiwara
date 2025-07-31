@@ -19,7 +19,7 @@ watch(tab, (val) => {
 <template>
   <div class="bottom">
     <v-layout>
-      <v-bottom-navigation v-model="tab" color="#00796B" mode="shift" :mandatory="true" grow>
+      <v-bottom-navigation v-model="tab" color="#00796B" mode="shift" :mandatory="true" :absolute="true" grow>
         <v-btn value="video">
           <v-icon class="btn-icon">
             <iconVideo theme="outline" size="24" :fill="tab == 'video' ? '#00796B' : '#424242'" />
@@ -57,7 +57,7 @@ watch(tab, (val) => {
 <style lang="scss" scoped>
 .bottom {
   height: 4rem;
-
+position: relative;
   .v-layout,
   .v-bottom-navigation {
     height: inherit !important;
