@@ -111,7 +111,7 @@ const props = defineProps<{
     bottom: 0;
     color: #fff;
     // text-shadow: 0.05rem 0.05rem 0.1rem #616161;
-    filter: drop-shadow(0.04rem 0.04rem 0.04rem #616161);
+    filter: drop-shadow(0.1rem 0.1rem 0.04rem #616161);
 
     .duration,
     .imgNum {

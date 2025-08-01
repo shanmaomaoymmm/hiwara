@@ -13,7 +13,7 @@ const tab = ref(0)
         </v-tabs>
       </v-layout>
     </div>
-    <div>
+    <div class="content">
       <v-layout>
         <v-tabs-window v-model="tab">
           <v-tabs-window-item :value="0">
@@ -50,5 +50,9 @@ const tab = ref(0)
       overflow: auto;
     }
   }
+}
+
+.content {
+  background-color: #fafafa;
 }
 </style>

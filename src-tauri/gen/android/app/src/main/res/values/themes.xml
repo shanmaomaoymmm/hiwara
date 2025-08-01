@@ -2,5 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.hiwara" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/dark_green</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

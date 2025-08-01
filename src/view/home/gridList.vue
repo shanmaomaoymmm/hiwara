@@ -21,7 +21,6 @@ for (let i = 0; i < 100; i++) {
 </template>
 <style lang="scss" scoped>
 .grid-list {
-  background-color: #fafafa;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   ;
