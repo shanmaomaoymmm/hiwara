@@ -364,8 +364,9 @@ function handleScroll(e: Event): void {
 // 进入全屏
 const enterFullscreen = async () => {
   try {
-    // 推入历史记录，用于捕获返回键
-    history.pushState({ fullscreen: true }, '');
+    // Android 返回键由 App.vue 的 onBackButtonPress 统一拦截并分发 image-back-pressed 事件，
+    // image.vue 的 handleImageBackPressed 已负责关闭评论。
+    // 不再 pushState 插入假历史记录，避免残留历史导致返回需要多次点击。
     isFullscreen.value = true;
   } catch (err) {
     console.error('进入全屏失败:', err);
@@ -384,15 +385,6 @@ const exitFullscreen = async () => {
   }
 };
 
-// 监听手机返回键 (popstate)
-const handlePopState = () => {
-  // 如果用户按了返回键，且当前处于全屏，则退出全屏
-  if (isFullscreen.value) {
-    exitFullscreen();
-    emit('close');
-  }
-};
-
 // 关闭评论
 const handleClose = async () => {
   await exitFullscreen();
@@ -405,12 +397,10 @@ defineExpose({
 
 // 组件挂载时监听 popstate 事件
 onMounted(() => {
-  window.addEventListener('popstate', handlePopState);
+  // 返回键由 App.vue 统一拦截并分发 image-back-pressed 事件，无需监听 popstate
 });
 
 onUnmounted(() => {
-  // 移除 popstate 监听
-  window.removeEventListener('popstate', handlePopState);
   // 确保退出全屏状态
   if (isFullscreen.value) {
     exitFullscreen();
