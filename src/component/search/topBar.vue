@@ -16,12 +16,12 @@ const emit = defineEmits<{
 
 const searchText = ref('');
 
-// 监听 keyword 变化，同步到输入框
+// 监听 keyword 变化，同步到输入框（immediate 以支持从标签点击跳转进入时显示初始关键词）
 watch(() => props.keyword, (newKeyword) => {
   if (newKeyword !== undefined) {
     searchText.value = newKeyword;
   }
-});
+}, { immediate: true });
 
 const handleBack = () => {
   emit('back');

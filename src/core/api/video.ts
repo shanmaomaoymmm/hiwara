@@ -249,3 +249,25 @@ export async function search(text: string, page: number, type: 'videos' | 'image
     throw error;
   }
 }
+
+// 标签搜索视频（参考 API: https://api.iwara.tv/videos?rating=all&tags=furry&sort=date）
+export async function searchVideoByTag(tag: string, page: number, isAI: boolean): Promise<any> {
+  const path = `${API_URL}/videos`;
+  const headers = {
+    Authorization: `Bearer ${await getAccessToken()}`,
+  };
+  const query = {
+    rating: 'all',
+    tags: tag,
+    sort: 'date',
+    page: page,
+    limit: 32,
+  };
+  try {
+    const response = await getSendRequestIwara(path, isAI, headers, query);
+    return response;
+  } catch (error) {
+    console.error('Search video by tag failed:', error);
+    throw error;
+  }
+}

@@ -440,6 +440,13 @@ function toZone() {
     path: `/zone/${props.username}`,
   });
 }
+// 点击标签跳转到搜索页（标签搜索）
+function searchByTag(tag: string) {
+  router.push({
+    path: '/search',
+    query: { type: 'tag', keyword: tag },
+  });
+}
 
 // 格式化时间（支持多语言）
 const formatDate = (dateString: string) => {
@@ -593,7 +600,7 @@ function detectDarkMode(): boolean {
       </div>
     </div>
     <div class="tags" ref="tagsContainerRef" :style="{ height: tagsContainerHeight }">
-      <v-chip class="tag" v-for="tag in tags" :key="tag" size="small">{{ tag }}</v-chip>
+      <v-chip class="tag" v-for="tag in tags" :key="tag" size="small" @click="searchByTag(tag)">{{ tag }}</v-chip>
     </div>
     <div class="calculateHeight">
       <div class="titleCollapseHeight" ref="titleCollapseHeightRef">

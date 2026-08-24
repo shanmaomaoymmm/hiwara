@@ -12,6 +12,8 @@ const { t } = useI18n();
 
 const props = defineProps<{
   keyword: string;
+  // 搜索方式：keyword = 关键词搜索，tag = 标签搜索
+  searchType?: 'keyword' | 'tag';
 }>();
 
 const tab = ref<'video' | 'image' | 'user'>('video');
@@ -73,10 +75,10 @@ onMounted(() => {
     
     <swiper class="tabs-window" :slides-per-view="1" :space-between="0" @swiper="onSwiper" @slide-change="onSlideChange">
       <swiper-slide>
-        <SearchVideo ref="videoRef" :keyword="keyword" />
+        <SearchVideo ref="videoRef" :keyword="keyword" :searchType="searchType" />
       </swiper-slide>
       <swiper-slide>
-        <SearchImage ref="imageRef" :keyword="keyword" />
+        <SearchImage ref="imageRef" :keyword="keyword" :searchType="searchType" />
       </swiper-slide>
       <swiper-slide>
         <SearchUsers ref="usersRef" :keyword="keyword" />

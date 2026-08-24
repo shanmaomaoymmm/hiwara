@@ -3,7 +3,7 @@ import { onActivated, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import cardButton from '../cardButton.vue';
 import { ai } from '../../core/store';
-import { search } from '../../core/api/video';
+import { search, searchVideoByTag } from '../../core/api/video';
 import loadingHuawu from '../loadingHuawu.vue';
 import errorHuawu from '../errorHuawu.vue';
 import { showShortToast } from '../../core/toast';
@@ -14,6 +14,8 @@ const { t } = useI18n();
 
 const props = defineProps<{
   keyword: string;
+  // 搜索方式：keyword = 关键词搜索（/search），tag = 标签搜索（/videos?tags=）
+  searchType?: 'keyword' | 'tag';
 }>();
 
 interface VideoItem {
@@ -46,7 +48,10 @@ const loadMoreVideoData = async ({ done }: any = { done: () => { } }) => {
   videoIsLoading.value = true;
 
   try {
-    const res = await search(props.keyword, videoPage.value, 'videos', aiStore.value);
+    // 根据搜索方式选择接口：标签搜索使用 /videos?tags=，否则使用 /search
+    const res = props.searchType === 'tag'
+      ? await searchVideoByTag(props.keyword, videoPage.value, aiStore.value)
+      : await search(props.keyword, videoPage.value, 'videos', aiStore.value);
     console.log('视频搜索 API 返回值:', res);
     if (!res.ok) throw new Error(`状态码：${res.status}, 错误信息：${res.statusText}`);
 
@@ -106,6 +111,19 @@ watch(() => props.keyword, (newKeyword) => {
     console.log('视频组件关键词变化，重新搜索:', newKeyword);
     videoResult.value = [];
     videoPage.value = 1;
+    videoHasFinished.value = false;
+    videoLoadMoreFailed.value = false;
+    videoState.value = 'loading';
+    loadMoreVideoData();
+  }
+});
+
+// 监听搜索方式变化（关键词搜索 / 标签搜索），重新搜索
+watch(() => props.searchType, () => {
+  if (props.keyword && videoState.value !== 'loading') {
+    console.log('视频组件搜索方式变化，重新搜索:', props.searchType, props.keyword);
+    videoResult.value = [];
+    videoPage.value = 0;
     videoHasFinished.value = false;
     videoLoadMoreFailed.value = false;
     videoState.value = 'loading';

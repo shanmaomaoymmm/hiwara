@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import cardButton from '../cardButton.vue';
 import { ai } from '../../core/store';
 import { search } from '../../core/api/video';
+import { searchImageByTag } from '../../core/api/image';
 import loadingHuawu from '../loadingHuawu.vue';
 import errorHuawu from '../errorHuawu.vue';
 import { showShortToast } from '../../core/toast';
@@ -14,6 +15,8 @@ const { t } = useI18n();
 
 const props = defineProps<{
   keyword: string;
+  // 搜索方式：keyword = 关键词搜索（/search），tag = 标签搜索（/images?tags=）
+  searchType?: 'keyword' | 'tag';
 }>();
 
 interface ImageItem {
@@ -45,7 +48,10 @@ const loadMoreImageData = async ({ done }: any = { done: () => { } }) => {
   imageIsLoading.value = true;
 
   try {
-    const res = await search(props.keyword, imagePage.value, 'images', aiStore.value);
+    // 根据搜索方式选择接口：标签搜索使用 /images?tags=，否则使用 /search
+    const res = props.searchType === 'tag'
+      ? await searchImageByTag(props.keyword, imagePage.value, aiStore.value)
+      : await search(props.keyword, imagePage.value, 'images', aiStore.value);
     console.log('插画搜索 API 返回值:', res);
     if (!res.ok) throw new Error(`状态码：${res.status}, 错误信息：${res.statusText}`);
 
@@ -102,6 +108,19 @@ const startSearch = () => {
 watch(() => props.keyword, (newKeyword) => {
   if (newKeyword && imageState.value !== 'loading') {
     console.log('插画组件关键词变化，重新搜索:', newKeyword);
+    imageResult.value = [];
+    imagePage.value = 0;
+    imageHasFinished.value = false;
+    imageLoadMoreFailed.value = false;
+    imageState.value = 'loading';
+    loadMoreImageData();
+  }
+});
+
+// 监听搜索方式变化（关键词搜索 / 标签搜索），重新搜索
+watch(() => props.searchType, () => {
+  if (props.keyword && imageState.value !== 'loading') {
+    console.log('插画组件搜索方式变化，重新搜索:', props.searchType, props.keyword);
     imageResult.value = [];
     imagePage.value = 0;
     imageHasFinished.value = false;

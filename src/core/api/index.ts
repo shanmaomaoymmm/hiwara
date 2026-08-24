@@ -24,7 +24,8 @@ export {
   getVideoComments,
   getVideoCommentReplies,
   postVideoComment,
-  search
+  search,
+  searchVideoByTag
 } from './video';
 
 // 插画 API
@@ -39,7 +40,8 @@ export {
   getImageRecommendByOther,
   getImageComments,
   getImageCommentReplies,
-  postImageComment
+  postImageComment,
+  searchImageByTag
 } from './image';
 
 // 用户 API
