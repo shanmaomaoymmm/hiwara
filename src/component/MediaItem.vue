@@ -18,6 +18,7 @@ interface MediaItem {
   createTime: string;
   longNum: number;
   isR18: boolean;
+  ai?: boolean; // 是否为AI站（依据 API 返回的 siteId 判定），未传时回退到全局 AI 开关
   dateText: string;
   timestamp?: number;
 }
@@ -74,7 +75,7 @@ function clickItem() {
     console.error('缺少id');
     return;
   }
-  const queryIsAI = (props.item as any).ai !== undefined ? ((props.item as any).ai ? 'true' : 'false') : (aiStore.value ? 'true' : 'false');
+  const queryIsAI = props.item.ai !== undefined ? (props.item.ai ? 'true' : 'false') : (aiStore.value ? 'true' : 'false');
   if (props.type === 'video') {
     router.push({ path: `/player/${props.item.id}/${Math.random().toString(36).substring(2, 8)}`, query: { isAI: queryIsAI } });
   } else if (props.type === 'image') {
@@ -85,8 +86,9 @@ function clickItem() {
 onMounted(async () => {
   if (props.item.img) {
     // 使用 API 获取图片，避免直接从网页获取导致的 403 错误
+    // 封面归属站点由 item.ai 判定（基于 siteId），未传时回退到全局 AI 开关
     try {
-      displayImg.value = await getImageIwara(props.item.img, aiStore.value);
+      displayImg.value = await getImageIwara(props.item.img, props.item.ai ?? aiStore.value);
     } catch (error) {
       console.error(`${props.type === 'video' ? '视频' : '插画'}封面加载失败:`, props.item.id, error);
       displayImg.value = notImg;

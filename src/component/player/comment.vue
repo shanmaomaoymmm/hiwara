@@ -44,6 +44,7 @@ const commentListRef = ref<HTMLElement>()
 // 接收视频ID prop
 const props = defineProps<{
   vid: string
+  isAI?: boolean // 是否AI站（由页面基于 siteId 判定），未传时回退到全局开关
 }>()
 
 let commentPage = 0
@@ -85,7 +86,7 @@ async function loadUserAvatar(user: CommentUser): Promise<string> {
       // 先拼接头像URL
       const avatarImageUrl = `https://i.iwara.tv/image/avatar/${user.avatar.id}/${user.avatar.name}`
       // 通过 API 获取图片数据
-      avatarUrl = await getImageIwara(avatarImageUrl, aiStore.value)
+      avatarUrl = await getImageIwara(avatarImageUrl, props.isAI ?? aiStore.value)
     }
   } catch (error) {
     console.error('Failed to load avatar:', error)
@@ -208,7 +209,7 @@ async function getCommentList(): Promise<any> {
   }
 
   try {
-    const res = await getVideoComments(props.vid, commentPage, aiStore.value);
+    const res = await getVideoComments(props.vid, commentPage, props.isAI ?? aiStore.value);
     if (res.ok) {
       if (res.data.results && res.data.results.length > 0) {
         const newComments = res.data.results.map((item: any) => {
@@ -296,7 +297,7 @@ async function toggleReplies(comment: Comment) {
   // 加载回复
   repliesLoading.value[id] = true
   try {
-    const res = await getVideoCommentReplies(props.vid, id, 0, 50, aiStore.value)
+    const res = await getVideoCommentReplies(props.vid, id, 0, 50, props.isAI ?? aiStore.value)
     if (res.ok && res.data.results) {
       const replies = res.data.results.map((item: any) => ({
         id: item.id,
@@ -469,7 +470,7 @@ onActivated(() => {
     <!-- 评论输入组件 -->
     <CommentInput
       :content-id="props.vid"
-      :post-comment="(vid: string, body: string, parentId?: string) => postVideoComment(vid, body, aiStore.value, parentId)"
+      :post-comment="(vid: string, body: string, parentId?: string) => postVideoComment(vid, body, props.isAI ?? aiStore.value, parentId)"
       :reply-to="replyTarget"
       @posted="handleCommentPosted"
       @cancel-reply="handleCancelReply"

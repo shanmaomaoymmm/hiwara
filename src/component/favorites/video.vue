@@ -17,6 +17,7 @@ interface ListItem {
   createTime: string;
   longNum: number;
   isR18: boolean;
+  ai: boolean; // 是否为AI站（依据 API 返回的 siteId 判定）
   dateText: string;
   timestamp?: number;
 }
@@ -66,6 +67,7 @@ const loadMoreVideoData = async ({ done }: any = { done: () => { } }) => {
           likeNum: item.video.numLikes || 0,
           longNum: item.video.file?.duration ?? 0,
           isR18: item.video.rating === 'ecchi' || item.video.rating === 'r18',
+          ai: item.video.siteId === 'iwara_ai', // 是否为AI站（依据 API 返回的 siteId 判定）
           dateText: item.createdAt.split('T')[0], // 使用 createdAt 作为收藏日期
           timestamp: new Date(item.createdAt).getTime() // 保留完整时间戳用于显示时间
         };

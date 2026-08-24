@@ -46,6 +46,7 @@ const isFullscreen = ref(false);
 // 接收图片ID prop
 const props = defineProps<{
   pid: string
+  isAI?: boolean // 是否AI站（由页面基于 siteId 判定），未传时回退到全局开关
 }>();
 
 const commentList = ref<Comment[]>([])
@@ -90,7 +91,7 @@ async function loadUserAvatar(user: CommentUser): Promise<string> {
       // 先拼接头像URL
       const avatarImageUrl = `https://i.iwara.tv/image/avatar/${user.avatar.id}/${user.avatar.name}`
       // 通过 API 获取图片数据
-      avatarUrl = await getImageIwara(avatarImageUrl, aiStore.value)
+      avatarUrl = await getImageIwara(avatarImageUrl, props.isAI ?? aiStore.value)
     }
   } catch (error) {
     console.error('Failed to load avatar:', error)
@@ -217,7 +218,7 @@ async function getCommentList(): Promise<any> {
   }
 
   try {
-    const res = await getImageComments(props.pid, commentPage, aiStore.value);
+    const res = await getImageComments(props.pid, commentPage, props.isAI ?? aiStore.value);
     if (res.ok) {
       if (res.data.results && res.data.results.length > 0) {
         const newComments = res.data.results.map((item: any) => {
@@ -289,7 +290,7 @@ async function toggleReplies(comment: Comment) {
   }
   repliesLoading.value[id] = true
   try {
-    const res = await getImageCommentReplies(props.pid, id, 0, 50, aiStore.value)
+    const res = await getImageCommentReplies(props.pid, id, 0, 50, props.isAI ?? aiStore.value)
     if (res.ok && res.data.results) {
       const replies = res.data.results.map((item: any) => ({
         id: item.id,
@@ -524,7 +525,7 @@ onUnmounted(() => {
       <!-- 评论输入组件 -->
       <CommentInput
         :content-id="props.pid"
-        :post-comment="(pid: string, body: string, parentId?: string) => postImageComment(pid, body, aiStore.value, parentId)"
+        :post-comment="(pid: string, body: string, parentId?: string) => postImageComment(pid, body, props.isAI ?? aiStore.value, parentId)"
         :reply-to="replyTarget"
         @posted="handleCommentPosted"
         @cancel-reply="handleCancelReply"

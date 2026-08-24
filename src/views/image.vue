@@ -189,11 +189,27 @@ onBeforeUnmount(() => {
 onUnmounted(() => {
   // 清理不再需要，滚动事件绑定在模板中处理
 })
+// 获取插画信息，若站点归属判定错误（API 返回 301 重定向）则自动切换站点重试一次
+const fetchImageInfoWithRetry = async (): Promise<any> => {
+  try {
+    return await api_getImageInfo(pid.value as string, isAI.value);
+  } catch (error: any) {
+    // 以错误站点（Referer/X-Site）请求时，api.iwara.tv 会对归属他站的作品返回 301，
+    // 切换站点（isAI）后重试即可正常获取
+    if (error?.message && String(error.message).includes('301')) {
+      isAI.value = !isAI.value;
+      router.replace({ query: { ...route.query, isAI: isAI.value ? 'true' : 'false' } });
+      return await api_getImageInfo(pid.value as string, isAI.value);
+    }
+    throw error;
+  }
+};
+
 // 获取插画信息
 getImageInfo();
 async function getImageInfo(): Promise<void> {
   try {
-    const res = await api_getImageInfo(pid.value as string, isAI.value);
+    const res = await fetchImageInfoWithRetry();
     console.log(res);
     if (!res.ok)
       throw new Error(`状态码：${res.status}, 错误信息：${res.statusText}`);
@@ -250,7 +266,7 @@ async function getImageInfo(): Promise<void> {
         coverUrl,
         illustrationImages.value.length, // 插画张数
         createTimeTimestamp, // 作品发布时间
-        isAI.value // 是否为AI站
+        imageInfo.siteId === 'iwara_ai' // 是否为AI站（依据 API 返回的 siteId 判定）
       );
       console.log('插画历史记录已添加:', pid.value);
     } catch (error) {
@@ -349,8 +365,8 @@ const handleFollow = (isFollowed: boolean) => {
         <RecommendList :pid="pid" :uid="uid" :isAI="isAI" />
       </div>
     </div>
-    <comment class="drawer" :pid="pid" :style="{ transform: commentVisible ? 'translateX(0)' : 'translateX(100%)' }"
-      @close="commentVisible = false" />
+    <comment class="drawer" :pid="pid" :isAI="isAI"
+      :style="{ transform: commentVisible ? 'translateX(0)' : 'translateX(100%)' }" @close="commentVisible = false" />
     <fullScreen class="drawer" :style="{ transform: fullScreenVisible ? 'translateX(0)' : 'translateX(100%)' }"
       ref="fullScreenRef" @close="fullScreenVisible = false" :images="illustrationImages" />
   </div>

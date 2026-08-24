@@ -159,7 +159,21 @@ const onFullscreenChange = () => {
 const fetchVideoInfo = async () => {
   videoInfoState.value = 'loading'; // 开始加载
   try {
-    const res = await api_getVideoInfo(id.value as string, isAI.value);
+    // 若站点归属判定错误（API 返回 301 重定向）则自动切换站点重试一次
+    let res: any;
+    try {
+      res = await api_getVideoInfo(id.value as string, isAI.value);
+    } catch (error: any) {
+      // 以错误站点（Referer/X-Site）请求时，api.iwara.tv 会对归属他站的作品返回 301，
+      // 切换站点（isAI）后重试即可正常获取
+      if (error?.message && String(error.message).includes('301')) {
+        isAI.value = !isAI.value;
+        router.replace({ query: { ...route.query, isAI: isAI.value ? 'true' : 'false' } });
+        res = await api_getVideoInfo(id.value as string, isAI.value);
+      } else {
+        throw error;
+      }
+    }
     // console.log(res);
     if (res.ok) {
       const data = res.data;
@@ -218,7 +232,7 @@ const fetchVideoInfo = async () => {
           poster.value,
           data.file?.duration || 0, // 视频时长（秒）
           createTimeTimestamp, // 作品发布时间
-          isAI.value // 是否为AI站
+          data.siteId === 'iwara_ai' // 是否为AI站（依据 API 返回的 siteId 判定）
         );
         console.log('视频历史记录已添加:', data.id);
       } catch (error) {
@@ -574,7 +588,7 @@ onUnmounted(() => {
                 :download="currentDownloadUrl" :slug="slug" :poster="poster" @like="likeTrigger" @follow="followTrigger" />
             </swiper-slide>
             <swiper-slide v-if="!isDesktop">
-              <commentView :vid="id as string" />
+              <commentView :vid="id as string" :isAI="isAI" />
             </swiper-slide>
           </swiper>
         </div>
@@ -628,7 +642,7 @@ onUnmounted(() => {
               <recommend :vid="id as string" :uid="uid" :isAI="isAI" @data-loaded="onSideDataLoaded" />
             </swiper-slide>
             <swiper-slide>
-              <commentView :vid="id as string" />
+              <commentView :vid="id as string" :isAI="isAI" />
             </swiper-slide>
           </swiper>
         </div>
