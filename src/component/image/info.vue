@@ -183,8 +183,6 @@ function calculateHeights() {
   heights.value.tagsExpand = tagsExpandHeightRef.value?.offsetHeight || 0;
 }
 
-// 点赞状态
-const isLike = ref(false);
 // 操作状态
 const isFollowing = ref(false); // 关注操作进行中状态
 const isLiking = ref(false); // 点赞操作进行中状态

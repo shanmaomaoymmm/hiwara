@@ -2,28 +2,28 @@
 # Docker 仅用于打包，无需安全更新源，减少 apt update 时间
 
 # 清华
-Types: deb
-URIs: https://mirrors.tuna.tsinghua.edu.cn/debian
-Suites: trixie trixie-updates trixie-backports
-Components: main contrib non-free non-free-firmware
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
-
-# 官方
-Types: deb
-URIs: https://security.debian.org/debian-security
-Suites: trixie-security
-Components: main contrib non-free non-free-firmware
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
-
-# 中科大
 #Types: deb
-#URIs: http://mirrors.ustc.edu.cn/debian
-#Suites: trixie trixie-updates
+#URIs: https://mirrors.tuna.tsinghua.edu.cn/debian
+#Suites: trixie trixie-updates trixie-backports
 #Components: main contrib non-free non-free-firmware
 #Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 
+# 官方
 #Types: deb
-#URIs: http://mirrors.ustc.edu.cn/debian-security
+#URIs: https://security.debian.org/debian-security
 #Suites: trixie-security
 #Components: main contrib non-free non-free-firmware
 #Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+# 中科大
+Types: deb
+URIs: http://mirrors.ustc.edu.cn/debian
+Suites: trixie trixie-updates
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb
+URIs: http://mirrors.ustc.edu.cn/debian-security
+Suites: trixie-security
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg

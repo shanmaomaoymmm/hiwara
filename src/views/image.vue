@@ -61,12 +61,15 @@ const avatar = ref<string>(''); // 作者头像URL
 const fansNum = ref<number>(0); // 粉丝数
 const imageNum = ref<number>(0);  // 插画数量
 const isFollow = ref<boolean>(false); // 是否已关注作者
+const isMyFans = ref<boolean>(false); // 作者是否关注我（我是否是作者的粉丝，互粉状态）
 const isLike = ref<boolean>(false); // 是否已点赞
 
 // 顶部导航栏颜色状态
 const isTopGreen = ref(false);
 const viewMainRef = ref<HTMLElement | null>(null);
 const viewSideRef = ref<HTMLElement | null>(null);
+const viewMainOuterRef = ref<HTMLElement | null>(null); // .view-main（横屏时的滚动源）
+const topRef = ref<HTMLElement | null>(null); // 顶部导航栏元素
 
 // 自动状态栏文字颜色自适应
 // 初始时顶部透明，透出页面背景色；滚动后 .top-green 启用 --color-primary-90
@@ -95,7 +98,7 @@ onUnmounted(() => {
 
 // 返回顶部
 function scrollToTop() {
-  const container = viewMainRef.value;
+  const container = isLandscape.value ? viewMainOuterRef.value : viewMainRef.value;
   if (container)
     container.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -129,22 +132,29 @@ function goHome() {
 let viewMainScrollTop = 0;
 let viewSideScrollTop = 0;
 
-// 处理 view-main 滚动事件
+// 处理 view-main 滚动事件（竖屏滚动源：.image-container；横屏滚动源：.view-main）
 function handleMainScroll(e: Event) {
+  const target = e.target as HTMLElement;
+  viewMainScrollTop = target.scrollTop;
+
   const container = viewMainRef.value;
-  const topElement = document.querySelector('.top') as HTMLElement;
-
-  viewMainScrollTop = (e.target as HTMLElement).scrollTop;
-
+  const topElement = topRef.value;
   if (!container || !topElement) return;
 
-  // 获取 imgPreview 的位置
+  // top 元素的高度（包括 padding 和 safe-area-inset）
+  const topHeight = topElement.offsetHeight;
+
+  // 横屏：主区域顶部为全高预览区，滚动超过顶栏高度即切换顶栏颜色
+  if (isLandscape.value) {
+    isTopGreen.value = target.scrollTop > topHeight;
+    return;
+  }
+
+  // 竖屏：获取 imgPreview 的位置
   const imgPreview = container.querySelector('.imgPreview') as HTMLElement;
   if (imgPreview) {
     // 计算 imgPreview 底部相对于容器视口的位置
-    const imgPreviewBottomInViewport = imgPreview.offsetTop + imgPreview.offsetHeight - container.scrollTop;
-    // top 元素的高度（包括 padding 和 safe-area-inset）
-    const topHeight = topElement.offsetHeight;
+    const imgPreviewBottomInViewport = imgPreview.offsetTop + imgPreview.offsetHeight - target.scrollTop;
     // 当 imgPreview 的底部在视口中的位置 < top 元素的高度时
     isTopGreen.value = imgPreviewBottomInViewport < topHeight;
   }
@@ -156,8 +166,8 @@ function handleSideScroll(e: Event) {
 }
 
 onActivated(() => {
-  // 恢复 view-main 滚动条位置
-  const mainContainer = viewMainRef.value;
+  // 恢复 view-main 滚动条位置（横屏滚 .view-main，竖屏滚 .image-container）
+  const mainContainer = isLandscape.value ? viewMainOuterRef.value : viewMainRef.value;
   if (mainContainer && typeof mainContainer.scrollTo === 'function')
     mainContainer.scrollTo({ top: viewMainScrollTop });
   // 恢复 view-side 滚动条位置
@@ -191,7 +201,7 @@ async function getImageInfo(): Promise<void> {
     // 插画信息
     title.value = imageInfo.title;
     slug.value = imageInfo.slug || '';
-    viewCount.value = imageInfo.numViews;
+    viewCount.value = imageInfo.numViews || 0;
     createdAt.value = imageInfo.createdAt;
     synopsis.value = imageInfo.body ? imageInfo.body : '-';
     interface Tag {
@@ -199,13 +209,18 @@ async function getImageInfo(): Promise<void> {
       type: string;
       sensitive: boolean;
     }
-    tags.value = imageInfo.tags.map((tag: Tag) => tag.id);
+    tags.value = Array.isArray(imageInfo.tags)
+      ? imageInfo.tags.map((tag: Tag) => tag.id)
+      : [];
     // 用户信息
     authorname.value = imageInfo.user.name;
     username.value = imageInfo.user.username;
     uid.value = imageInfo.user.id;
-    avatar.value = imageInfo.user.avatar; // 作者头像
-    isFollow.value = imageInfo.user.followedBy;
+    avatar.value = imageInfo.user.avatar
+      ? `https://i.iwara.tv/image/avatar/${imageInfo.user.avatar.id}/${imageInfo.user.avatar.name}`
+      : ''; // 作者头像
+    isFollow.value = imageInfo.user.following || false;
+    isMyFans.value = imageInfo.user.followedBy || false;
     isLike.value = imageInfo.liked || false;
     // 插画文件数组
     illustrationImages.value = imageInfo.files.map((file: any) => {
@@ -281,8 +296,8 @@ const handleFollow = (isFollowed: boolean) => {
 </script>
 <template>
   <div id="imageView">
-    <div class="view-main">
-      <div class="top" :class="{ 'top-green': isTopGreen }" @click="scrollToTop">
+    <div class="view-main" ref="viewMainOuterRef" @scroll="handleMainScroll">
+      <div class="top" ref="topRef" :class="{ 'top-green': isTopGreen }" @click="scrollToTop">
         <span class="btn" @click="goBack">
           <font-awesome-icon icon="fa-solid fa-angle-left" />
         </span>
@@ -315,7 +330,7 @@ const handleFollow = (isFollowed: boolean) => {
           <ImageInfo v-if="isState === 'success'" :title="title" :view-count="viewCount" :created-at="createdAt"
             :pid="pid" :slug="slug" :resolution="resolution" :synopsis="synopsis" :tags="tags" :authorname="authorname"
             :username="username" :uid="uid" :avatar="avatar" :fans-num="fansNum" :image-num="imageNum"
-            :is-follow="isFollow" :is-like="isLike" @commentTrigger="handleCommentTrigger" @like="handleLike"
+            :is-follow="isFollow" :is-my-fans="isMyFans" :is-like="isLike" @commentTrigger="handleCommentTrigger" @like="handleLike"
             @follow="handleFollow" />
           <!-- 第三部分：推荐列表（已拆分为子组件） -->
           <RecommendList :pid="pid" :uid="uid" :isAI="isAI" />
@@ -328,7 +343,7 @@ const handleFollow = (isFollowed: boolean) => {
         <ImageInfo v-if="isState === 'success'" :title="title" :view-count="viewCount" :created-at="createdAt"
           :pid="pid" :slug="slug" :resolution="resolution" :synopsis="synopsis" :tags="tags" :authorname="authorname"
           :username="username" :uid="uid" :avatar="avatar" :fans-num="fansNum" :image-num="imageNum"
-          :is-follow="isFollow" :is-like="isLike" @commentTrigger="handleCommentTrigger" @like="handleLike"
+          :is-follow="isFollow" :is-my-fans="isMyFans" :is-like="isLike" @commentTrigger="handleCommentTrigger" @like="handleLike"
           @follow="handleFollow" />
         <!-- 第三部分：推荐列表（已拆分为子组件） -->
         <RecommendList :pid="pid" :uid="uid" :isAI="isAI" />
