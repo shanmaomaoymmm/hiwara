@@ -350,6 +350,8 @@
     "like": "Like",
     "liked": "Liked",
     "share": "Share",
+    "download": "Download",
+    "alreadyCaching": "This image is already in the cache queue",
     "comment": "Comment",
     "link": "Link",
     "follow": "Follow",

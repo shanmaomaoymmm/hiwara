@@ -350,6 +350,8 @@
     "like": "按讚",
     "liked": "已按讚",
     "share": "分享",
+    "download": "下載",
+    "alreadyCaching": "該插畫已在快取佇列中",
     "comment": "評論",
     "link": "連結",
     "follow": "關注",

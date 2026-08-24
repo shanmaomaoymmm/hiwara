@@ -350,6 +350,8 @@
     "like": "点赞",
     "liked": "已点赞",
     "share": "分享",
+    "download": "下载",
+    "alreadyCaching": "该插画已在缓存队列中",
     "comment": "评论",
     "link": "链接",
     "follow": "关注",

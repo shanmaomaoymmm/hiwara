@@ -346,8 +346,8 @@ const handleFollow = (isFollowed: boolean) => {
           <ImageInfo v-if="isState === 'success'" :title="title" :view-count="viewCount" :created-at="createdAt"
             :pid="pid" :slug="slug" :resolution="resolution" :synopsis="synopsis" :tags="tags" :authorname="authorname"
             :username="username" :uid="uid" :avatar="avatar" :fans-num="fansNum" :image-num="imageNum"
-            :is-follow="isFollow" :is-my-fans="isMyFans" :is-like="isLike" @commentTrigger="handleCommentTrigger" @like="handleLike"
-            @follow="handleFollow" />
+            :is-follow="isFollow" :is-my-fans="isMyFans" :is-like="isLike" :images="illustrationImages" :isAI="isAI"
+            @commentTrigger="handleCommentTrigger" @like="handleLike" @follow="handleFollow" />
           <!-- 第三部分：推荐列表（已拆分为子组件） -->
           <RecommendList :pid="pid" :uid="uid" :isAI="isAI" />
         </div>
@@ -359,8 +359,8 @@ const handleFollow = (isFollowed: boolean) => {
         <ImageInfo v-if="isState === 'success'" :title="title" :view-count="viewCount" :created-at="createdAt"
           :pid="pid" :slug="slug" :resolution="resolution" :synopsis="synopsis" :tags="tags" :authorname="authorname"
           :username="username" :uid="uid" :avatar="avatar" :fans-num="fansNum" :image-num="imageNum"
-          :is-follow="isFollow" :is-my-fans="isMyFans" :is-like="isLike" @commentTrigger="handleCommentTrigger" @like="handleLike"
-          @follow="handleFollow" />
+          :is-follow="isFollow" :is-my-fans="isMyFans" :is-like="isLike" :images="illustrationImages" :isAI="isAI"
+          @commentTrigger="handleCommentTrigger" @like="handleLike" @follow="handleFollow" />
         <!-- 第三部分：推荐列表（已拆分为子组件） -->
         <RecommendList :pid="pid" :uid="uid" :isAI="isAI" />
       </div>

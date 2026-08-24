@@ -6,20 +6,22 @@ import {
   Like as iconLike,
   ShareOne as iconShareOne,
   DownloadFour as iconDownloadFour,
-  CopyLink as iconCopyLink,
   Comments as iconComments
 } from '@icon-park/vue-next';
 import defaultAvatarImg from '../../static/img/avatar-default.jpg';
 import avatarPlaceholderImg from '../../static/img/avatar-placeholder.png';
 import avatarErrorImg from '../../static/img/avatar-error.png';
-import { ai } from '../../core/store';
+import { invoke } from '@tauri-apps/api/core';
+import { ai, setupStore } from '../../core/store';
 import {
   likeImage,
   unlikeImage,
   followUser,
   unfollowUser,
   getImageIwara,
+  sanitizeFilename,
 } from '../../core/api';
+import { upsertDownloadCache, updateDownloadProgress } from '../../core/database';
 import { showShortToast } from '../../core/toast';
 
 const aiStore = ai();
@@ -52,6 +54,12 @@ const heights = ref({
 });
 
 // 接收父组件传递的插画信息数据
+interface ImageFile {
+  id: string;
+  name: string;
+  width: number;
+  height: number;
+}
 interface ImageInfoProps {
   title: string;
   viewCount: number;
@@ -70,6 +78,8 @@ interface ImageInfoProps {
   isFollow: boolean;
   isMyFans?: boolean;  // 是否是粉丝（互粉状态）
   isLike: boolean;
+  images: ImageFile[];  // 插画图片文件数组（用于下载）
+  isAI?: boolean;  // 站点标记（AI 站 / 普通站）
 }
 
 const props = defineProps<ImageInfoProps>();
@@ -212,26 +222,6 @@ watch(() => props.avatar, () => {
   loadAvatar();
 }, { immediate: true });
 
-// 复制下载链接到剪贴板
-async function copyDownloadLink() {
-  if (!props.pid) {
-    showShortToast(t('common.fetchDownloadFailed'));
-    return;
-  }
-  try {
-    let shareUrl: string;
-    if (props.slug === '')
-      shareUrl = `https://iwara.tv/image/${props.pid}`;
-    else
-      shareUrl = `https://iwara.tv/image/${props.pid}/${props.slug}`;
-    await navigator.clipboard.writeText(shareUrl);
-    showShortToast(t('common.linkCopied'));
-  } catch (err) {
-    console.error('复制失败:', err);
-    showShortToast(t('common.copyLinkFailed'));
-  }
-}
-
 // 使用 Web Share API 分享插画
 async function shareImage() {
   if (!props.pid) {
@@ -261,6 +251,97 @@ async function shareImage() {
       console.error('分享失败:', err);
       showShortToast(t('common.shareFailed'));
     }
+  }
+}
+
+// 下载缓存（只负责发起下载，管理在离线缓存页）——参考 player/info.vue
+const isDownloading = ref(false)
+
+// 获取图片文件扩展名
+const getImageExtension = (name: string): string => {
+  const idx = name.lastIndexOf('.')
+  return idx !== -1 ? name.substring(idx) : '.jpg'
+}
+
+// 下载插画全部图片到本地（离线缓存）
+async function downloadImages() {
+  if (isDownloading.value) return
+  if (!props.images || props.images.length === 0) {
+    showShortToast(t('common.fetchDownloadFailed'))
+    return
+  }
+
+  isDownloading.value = true
+  const setup = setupStore()
+  const saveDir = setup.imageSavePath
+  const aiFlag = props.isAI ?? aiStore.value
+  const maxConcurrent = setup.maxConcurrentDownloads || 2
+
+  try {
+    let startedCount = 0
+    for (let i = 0; i < props.images.length; i++) {
+      const file = props.images[i]
+      const downloadId = `${props.pid}_${i}`
+
+      // 检查是否已在下载队列中或等待队列中
+      try {
+        const [inDownloading, inQueue] = await Promise.all([
+          invoke<boolean>('is_downloading', { downloadId }),
+          invoke<boolean>('is_in_queue', { downloadId }),
+        ])
+        if (inDownloading || inQueue) continue
+      } catch { /* 忽略检查错误 */ }
+
+      // 构建图片下载直链与文件名
+      const url = `https://i.iwara.tv/image/large/${file.id}/${file.name}`
+      const filename = sanitizeFilename(
+        `${props.title}[${props.pid}]_${String(i + 1).padStart(2, '0')}${getImageExtension(file.name)}`
+      )
+      const filePath = saveDir ? `${saveDir}/${filename}` : filename
+
+      try {
+        // 写入数据库（离线缓存页根据此记录展示状态）
+        await upsertDownloadCache(
+          downloadId,
+          `${props.title} (${i + 1}/${props.images.length})`,
+          props.authorname,
+          url,
+          props.images.length,
+          0,
+          0,
+          false,
+          aiFlag,
+          url
+        )
+        startedCount++
+
+        // 发起 Rust 下载，传入 download_id 实现并发隔离，不等待完成
+        invoke('download_video', {
+          url,
+          filePath,
+          downloadId,
+          maxConcurrent,
+        }).catch((e) => {
+          console.error('发起图片下载失败:', e)
+          updateDownloadProgress(downloadId, 0, 'failed')
+        })
+      } catch (error) {
+        const errMsg = String(error)
+        if (errMsg.includes('已取消')) {
+          showShortToast(t('player.cacheCancelled'))
+        } else {
+          console.error('图片缓存失败:', error)
+          await updateDownloadProgress(downloadId, 0, 'failed')
+        }
+      }
+    }
+    if (startedCount > 0) {
+      showShortToast(t('player.cacheQueued'))
+    } else {
+      showShortToast(t('imageView.alreadyCaching'))
+    }
+  } finally {
+    isDownloading.value = false
   }
 }
 
@@ -504,11 +585,11 @@ function detectDarkMode(): boolean {
       <div @click="shareImage">
         <iconShareOne theme="two-tone" size="22" :fill="[iconFirstFill, '#00796B']" /><br>{{ t('imageView.share') }}
       </div>
+      <div @click="downloadImages">
+        <iconDownloadFour theme="two-tone" size="22" :fill="[iconFirstFill, '#00796B']" /><br>{{ t('imageView.download') }}
+      </div>
       <div @click="emit('commentTrigger')">
         <iconComments theme="multi-color" size="22" :fill="[iconCommentsFill, '#00796B', '#FFFFFF', '#00796B']" /><br>{{ t('imageView.comment') }}
-      </div>
-      <div @click="copyDownloadLink">
-        <iconCopyLink theme="multi-color" size="22" :fill="[iconFirstFill, '#00796B', '#FFF', '#00796B']" /><br>{{ t('imageView.link') }}
       </div>
     </div>
     <div class="tags" ref="tagsContainerRef" :style="{ height: tagsContainerHeight }">

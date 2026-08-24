@@ -350,6 +350,8 @@
     "like": "Mi piace",
     "liked": "Mi piace",
     "share": "Condividi",
+    "download": "Scarica",
+    "alreadyCaching": "Questa illustrazione è già nella coda di cache",
     "comment": "Commenta",
     "link": "Link",
     "follow": "Segui",

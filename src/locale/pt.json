@@ -350,6 +350,8 @@
     "like": "Curtir",
     "liked": "Curti",
     "share": "Compartilhar",
+    "download": "Baixar",
+    "alreadyCaching": "Esta ilustração já está na fila de cache",
     "comment": "Comentar",
     "link": "Link",
     "follow": "Seguir",

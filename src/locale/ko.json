@@ -350,6 +350,8 @@
     "like": "좋아요",
     "liked": "좋아요",
     "share": "공유",
+    "download": "다운로드",
+    "alreadyCaching": "이 일러스트는 이미 캐시 대기열에 있습니다",
     "comment": "댓글",
     "link": "링크",
     "follow": "팔로우",

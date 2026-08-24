@@ -350,6 +350,8 @@
     "like": "Me gusta",
     "liked": "Me gusta",
     "share": "Compartir",
+    "download": "Descargar",
+    "alreadyCaching": "Esta ilustración ya está en la cola de caché",
     "comment": "Comentar",
     "link": "Enlace",
     "follow": "Seguir",

@@ -350,6 +350,8 @@
     "like": "J'aime",
     "liked": "J'aime",
     "share": "Partager",
+    "download": "Télécharger",
+    "alreadyCaching": "Cette illustration est déjà dans la file d'attente du cache",
     "comment": "Commenter",
     "link": "Lien",
     "follow": "Suivre",

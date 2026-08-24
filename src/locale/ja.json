@@ -350,6 +350,8 @@
     "like": "いいね",
     "liked": "いいね済み",
     "share": "シェア",
+    "download": "ダウンロード",
+    "alreadyCaching": "このイラストはすでにキャッシュキューにあります",
     "comment": "コメント",
     "link": "リンク",
     "follow": "フォロー",
