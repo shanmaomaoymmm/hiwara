@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
+import { ref, watch, onMounted, onUnmounted, computed, nextTick } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -37,6 +37,24 @@ const modules = [Navigation];
 const swiperNavigation: any = { enabled: true };
 // Swiper 实例
 let swiperInstance: SwiperType | null = null;
+
+// ---------- 图片手势缩放相关 ----------
+const MAX_SCALE = 5;
+// 双击放大到 2 倍
+const DOUBLE_TAP_SCALE = 2;
+
+interface ZoomState {
+  scale: number;
+  x: number;
+  y: number;
+}
+
+// 每张图片的缩放状态（非响应式，直接操作 DOM transform）
+const zoomStates = new Map<number, ZoomState>();
+// slide 元素引用
+let slideEls: (HTMLElement | null)[] = [];
+// 事件监听清理函数列表
+const touchCleanups: (() => void)[] = [];
 // 按钮显示状态
 const showButtons = ref(false);
 // 按钮元素引用
@@ -85,10 +103,343 @@ watch(() => props.images, () => {
   loadImages();
 }, { immediate: true });
 
+// 图片加载完成后重新初始化手势（slide 数量可能变化）
+watch(processedImages, () => {
+  if (processedImages.value.length > 0) {
+    nextTick(() => initGestures());
+  }
+});
+
+// ---------- 图片双指捏合缩放 / 拖动 / 双击 手势 ----------
+const getZoomState = (index: number): ZoomState => {
+  let state = zoomStates.get(index);
+  if (!state) {
+    state = { scale: 1, x: 0, y: 0 };
+    zoomStates.set(index, state);
+  }
+  return state;
+};
+
+// 获取 slide 内实际渲染的 <img> 元素（Vuetify v-img 的内层图片）
+const getImageEl = (slideEl: HTMLElement): HTMLImageElement | null => {
+  return slideEl.querySelector('.fullscreen-image img') as HTMLImageElement | null;
+};
+
+// 将缩放/平移状态应用到外层容器 .zoom-wrapper 的 transform
+// （外层容器 overflow: visible，避免 v-img 内部 overflow: hidden 裁切放大后的图片）
+const applyTransform = (slideEl: HTMLElement, state: ZoomState) => {
+  const wrapper = slideEl.querySelector('.zoom-wrapper') as HTMLElement | null;
+  if (wrapper) {
+    wrapper.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+    wrapper.style.willChange = 'transform';
+  }
+};
+
+const clampNum = (v: number, min: number, max: number): number => {
+  return Math.min(max, Math.max(min, v));
+};
+
+// 限制平移范围，防止图片被拖出视口
+const clampTranslate = (slideEl: HTMLElement, index: number, state: ZoomState) => {
+  const img = getImageEl(slideEl);
+  if (!img) return;
+  const container = slideEl.getBoundingClientRect();
+  const cw = container.width;
+  const ch = container.height;
+  const nw = img.naturalWidth || cw;
+  const nh = img.naturalHeight || ch;
+  const baseScale = Math.min(cw / nw, ch / nh);
+  const w = nw * baseScale * state.scale;
+  const h = nh * baseScale * state.scale;
+  const maxX = Math.max(0, (w - cw) / 2);
+  const maxY = Math.max(0, (h - ch) / 2);
+  state.x = clampNum(state.x, -maxX, maxX);
+  state.y = clampNum(state.y, -maxY, maxY);
+};
+
+// 控制 Swiper 是否响应触摸滑动（缩放时禁用，避免手势冲突）
+const setSwiperTouchMove = (allowed: boolean) => {
+  if (swiperInstance) {
+    swiperInstance.allowTouchMove = allowed;
+  }
+};
+
+// 重置指定图片的缩放状态
+const resetZoomState = (index: number) => {
+  const state = zoomStates.get(index);
+  if (!state) return;
+  state.scale = 1;
+  state.x = 0;
+  state.y = 0;
+  const el = slideEls[index];
+  if (el) applyTransform(el, state);
+};
+
+// 销毁所有手势事件监听
+const destroyGestures = () => {
+  touchCleanups.forEach((cleanup) => cleanup());
+  touchCleanups.length = 0;
+  slideEls = [];
+};
+
+// 为每个 slide 初始化手势（双指捏合缩放 / 单指拖动 / 双击 / 滚轮缩放）
+const initGestures = () => {
+  destroyGestures();
+  if (!swiperInstance) return;
+  const swiperEl = swiperInstance.el;
+  slideEls = Array.from(swiperEl.querySelectorAll<HTMLElement>('.slide-content'));
+
+  slideEls.forEach((el, index) => {
+    if (!el) return;
+    const state = getZoomState(index);
+
+    // 单次手势临时数据
+    let mode: 'none' | 'pan' | 'pinch' = 'none';
+    let startDist = 0;
+    let startScale = 1;
+    let startX = 0;
+    let startY = 0;
+    let startTouchX = 0;
+    let startTouchY = 0;
+    let baseX = 0;
+    let baseY = 0;
+    let isMouseDown = false;
+    let mouseStartX = 0;
+    let mouseStartY = 0;
+    let mouseStartStateX = 0;
+    let mouseStartStateY = 0;
+    // 双击检测临时数据（兼容桌面与移动端，不依赖原生 dblclick）
+    let lastTapTime = 0;
+    let lastTapX = 0;
+    let lastTapY = 0;
+
+    // 双指捏合开始 / 单指拖动开始
+    const onTouchStart = (e: TouchEvent) => {
+      // 触摸开始立即停止双击过渡，保证捏合/拖动实时响应
+      clearWrapperTransition();
+      const touches = Array.from(e.touches);
+      if (touches.length >= 2) {
+        mode = 'pinch';
+        const [a, b] = touches;
+        startDist = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) || 1;
+        startScale = state.scale;
+        startX = state.x;
+        startY = state.y;
+        const wrapper = el.querySelector('.zoom-wrapper') as HTMLElement | null;
+        const rect = wrapper ? wrapper.getBoundingClientRect() : el.getBoundingClientRect();
+        baseX = rect.left + rect.width / 2 - state.x;
+        baseY = rect.top + rect.height / 2 - state.y;
+        // 双指手势期间禁用 Swiper 滑动，避免冲突
+        setSwiperTouchMove(false);
+        e.preventDefault();
+      } else if (touches.length === 1 && state.scale > 1) {
+        // 单指且已放大：进入拖动模式
+        mode = 'pan';
+        startX = state.x;
+        startY = state.y;
+        startTouchX = touches[0].clientX;
+        startTouchY = touches[0].clientY;
+        setSwiperTouchMove(false);
+      } else {
+        mode = 'none';
+      }
+    };
+
+    // 双指捏合移动（任意方向均可缩放）/ 单指拖动平移
+    const onTouchMove = (e: TouchEvent) => {
+      const touches = Array.from(e.touches);
+      if (mode === 'pinch' && touches.length >= 2) {
+        const [a, b] = touches;
+        const curDist = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) || 1;
+        const cx = (a.clientX + b.clientX) / 2;
+        const cy = (a.clientY + b.clientY) / 2;
+        const newScale = clampNum(startScale * (curDist / startDist), 1, MAX_SCALE);
+        const ratio = newScale / state.scale;
+        // 以手指中心为锚点缩放（含平移补偿）
+        const offX = cx - (baseX + state.x);
+        const offY = cy - (baseY + state.y);
+        state.x += offX - offX * ratio;
+        state.y += offY - offY * ratio;
+        state.scale = newScale;
+        clampTranslate(el, index, state);
+        applyTransform(el, state);
+        setSwiperTouchMove(false);
+        e.preventDefault();
+      } else if (mode === 'pan' && touches.length === 1) {
+        const t = touches[0];
+        state.x = startX + (t.clientX - startTouchX);
+        state.y = startY + (t.clientY - startTouchY);
+        clampTranslate(el, index, state);
+        applyTransform(el, state);
+        e.preventDefault();
+      }
+    };
+
+    // 触摸结束：全部抬起时回弹/恢复滑动；抬起一指则切换为拖动
+    const onTouchEnd = (e: TouchEvent) => {
+      const remaining = Array.from(e.touches);
+      if (remaining.length === 0) {
+        mode = 'none';
+        if (state.scale <= 1) {
+          state.scale = 1;
+          state.x = 0;
+          state.y = 0;
+        } else {
+          clampTranslate(el, index, state);
+        }
+        applyTransform(el, state);
+        setSwiperTouchMove(true);
+      } else if (remaining.length === 1 && mode === 'pinch') {
+        mode = 'pan';
+        startX = state.x;
+        startY = state.y;
+        startTouchX = remaining[0].clientX;
+        startTouchY = remaining[0].clientY;
+      }
+    };
+
+    // 鼠标拖动平移（桌面端，放大后生效）
+    const onMouseDown = (e: MouseEvent) => {
+      clearWrapperTransition();
+      if (e.button !== 0) return;
+      if (state.scale <= 1) return; // 未放大时交给 Swiper 滑动
+      isMouseDown = true;
+      mouseStartX = e.clientX;
+      mouseStartY = e.clientY;
+      mouseStartStateX = state.x;
+      mouseStartStateY = state.y;
+      setSwiperTouchMove(false);
+      e.preventDefault();
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isMouseDown) return;
+      state.x = mouseStartStateX + (e.clientX - mouseStartX);
+      state.y = mouseStartStateY + (e.clientY - mouseStartY);
+      clampTranslate(el, index, state);
+      applyTransform(el, state);
+    };
+
+    const onMouseUp = () => {
+      if (!isMouseDown) return;
+      isMouseDown = false;
+      setSwiperTouchMove(true);
+    };
+
+    const onMouseLeave = () => {
+      if (isMouseDown) {
+        isMouseDown = false;
+        setSwiperTouchMove(true);
+      }
+    };
+
+    // 清除外层容器的 transform 过渡（捏合/拖动/滚轮需实时响应，不能带过渡）
+    const clearWrapperTransition = () => {
+      const wrapper = el.querySelector('.zoom-wrapper') as HTMLElement | null;
+      if (wrapper) wrapper.style.transition = '';
+    };
+
+    // 双击缩放：低于 2 倍时放大到 2 倍；2 倍及以上时恢复原大小
+    // 通过短暂的 transform 过渡让缩放平滑不突兀
+    const applyDoubleTapZoom = () => {
+      const wrapper = el.querySelector('.zoom-wrapper') as HTMLElement | null;
+      if (wrapper) {
+        wrapper.style.transition = 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)';
+      }
+      if (state.scale >= DOUBLE_TAP_SCALE) {
+        state.scale = 1;
+        state.x = 0;
+        state.y = 0;
+        setSwiperTouchMove(true);
+      } else {
+        state.scale = DOUBLE_TAP_SCALE;
+        state.x = 0;
+        state.y = 0;
+        setSwiperTouchMove(false);
+      }
+      applyTransform(el, state);
+      // 动画结束后移除过渡，避免影响后续实时手势
+      if (wrapper) {
+        const clear = () => { wrapper.style.transition = ''; };
+        wrapper.addEventListener('transitionend', clear, { once: true });
+        window.setTimeout(clear, 350); // 兜底：动画被中断时也能清除残留过渡
+      }
+    };
+
+    // 通过 click 事件计时 + 坐标距离检测双击
+    const onClick = (e: MouseEvent) => {
+      const now = Date.now();
+      if (
+        now - lastTapTime < 300 &&
+        Math.abs(e.clientX - lastTapX) < 30 &&
+        Math.abs(e.clientY - lastTapY) < 30
+      ) {
+        // 两次快速点击视为双击
+        lastTapTime = 0;
+        applyDoubleTapZoom();
+      } else {
+        lastTapTime = now;
+        lastTapX = e.clientX;
+        lastTapY = e.clientY;
+      }
+    };
+
+    // 滚轮缩放（桌面端，以鼠标位置为锚点）
+    const onWheel = (e: WheelEvent) => {
+      clearWrapperTransition();
+      const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+      const newScale = clampNum(state.scale * factor, 1, MAX_SCALE);
+      if (newScale === state.scale) return;
+      const ratio = newScale / state.scale;
+      const wrapper = el.querySelector('.zoom-wrapper') as HTMLElement | null;
+      const rect = wrapper ? wrapper.getBoundingClientRect() : el.getBoundingClientRect();
+      const bx = rect.left + rect.width / 2 - state.x;
+      const by = rect.top + rect.height / 2 - state.y;
+      const offX = e.clientX - (bx + state.x);
+      const offY = e.clientY - (by + state.y);
+      state.x += offX - offX * ratio;
+      state.y += offY - offY * ratio;
+      state.scale = newScale;
+      clampTranslate(el, index, state);
+      applyTransform(el, state);
+      if (newScale > 1) setSwiperTouchMove(false);
+      else setSwiperTouchMove(true);
+      e.preventDefault();
+    };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd);
+    el.addEventListener('touchcancel', onTouchEnd);
+    el.addEventListener('mousedown', onMouseDown);
+    el.addEventListener('mousemove', onMouseMove);
+    el.addEventListener('mouseup', onMouseUp);
+    el.addEventListener('mouseleave', onMouseLeave);
+    el.addEventListener('click', onClick);
+    el.addEventListener('wheel', onWheel, { passive: false });
+
+    touchCleanups.push(() => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('touchcancel', onTouchEnd);
+      el.removeEventListener('mousedown', onMouseDown);
+      el.removeEventListener('mousemove', onMouseMove);
+      el.removeEventListener('mouseup', onMouseUp);
+      el.removeEventListener('mouseleave', onMouseLeave);
+      el.removeEventListener('click', onClick);
+      el.removeEventListener('wheel', onWheel);
+    });
+  });
+};
+
 // Swiper 初始化回调
 const onSwiper = (swiper: SwiperType) => {
   swiperInstance = swiper;
   currentIndex.value = 1;
+
+  // 初始化每张图片的捏合缩放手势
+  initGestures();
 
   // 获取按钮元素并添加事件监听
   setTimeout(() => {
@@ -117,6 +468,13 @@ const onSwiper = (swiper: SwiperType) => {
 // Swiper 滑动回调
 const onSlideChange = (swiper: SwiperType) => {
   currentIndex.value = swiper.activeIndex + 1;
+  // 切换页面时重置其它图片的缩放状态
+  const activeIndex = swiper.activeIndex;
+  slideEls.forEach((_, i) => {
+    if (i !== activeIndex) resetZoomState(i);
+  });
+  // 恢复 Swiper 滑动
+  setSwiperTouchMove(true);
 };
 
 // 判断是否显示左按钮（不在第一张时显示）
@@ -212,6 +570,8 @@ onUnmounted(() => {
   if (prevButton && nextButton) {
     // 清理事件监听器（如果需要的话）
   }
+  // 销毁所有手势实例
+  destroyGestures();
   // 移除 popstate 监听
   window.removeEventListener('popstate', handlePopState);
   // 确保退出全屏状态
@@ -245,11 +605,13 @@ onUnmounted(() => {
       :space-between="0" class="swiper-container" @swiper="onSwiper" @slide-change="onSlideChange">
       <SwiperSlide v-for="(img, index) in processedImages" :key="index">
         <div class="slide-content">
-          <v-img :src="img" contain max-height="100vh" max-width="100vw" class="fullscreen-image">
-            <template v-slot:placeholder>
-              <v-img cover :src="placeholderImg" class="placeholder"></v-img>
-            </template>
-          </v-img>
+          <div class="zoom-wrapper">
+            <v-img :src="img" contain max-height="100vh" max-width="100vw" class="fullscreen-image">
+              <template v-slot:placeholder>
+                <v-img cover :src="placeholderImg" class="placeholder"></v-img>
+              </template>
+            </v-img>
+          </div>
         </div>
       </SwiperSlide>
     </Swiper>
@@ -370,11 +732,28 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  touch-action: none;
+  overflow: visible;
+
+  // 外层缩放容器：承载 transform，overflow: visible 避免裁切放大后的图片
+  .zoom-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center center;
+    overflow: visible;
+    touch-action: none;
+    cursor: zoom-in;
+    will-change: transform;
+  }
 
   .fullscreen-image {
     max-width: 100vw;
     max-height: 100vh;
     object-fit: contain;
+    touch-action: none;
   }
 
   .placeholder {
