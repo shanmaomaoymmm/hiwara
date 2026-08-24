@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import ForumSyntaxGuide from '../ForumSyntaxGuide.vue';
 import { replyForumPost } from '../../core/api';
 import { showShortToast } from '../../core/toast';
+import { useKeyboardOffset } from '../../composables/useKeyboardOffset';
 
 const { t } = useI18n();
 
@@ -16,6 +17,9 @@ const isFocused = ref(false);
 const showExpanded = ref(false);
 const showSyntaxDrawer = ref(false);
 const sending = ref(false);
+
+// 软键盘弹出时仅抬升回复输入组件（配合原生 adjustNothing），页面其余内容保持不动
+const { keyboardOffset } = useKeyboardOffset();
 
 const emit = defineEmits<{
   posted: [reply: any]
@@ -75,7 +79,8 @@ function handleDrawerClose() {
     <ForumSyntaxGuide v-if="showSyntaxDrawer" @close="handleDrawerClose" />
   </Transition>
 
-  <div class="reply" :class="{ expanded: showExpanded }">
+  <div class="reply" :class="{ expanded: showExpanded }"
+    :style="keyboardOffset ? { transform: `translateY(-${keyboardOffset}px)` } : undefined">
     <div>
       <v-textarea v-model="replyContent" label="评论" :rows="showExpanded ? 6 : 1" density="compact" hide-details
         variant="outlined" no-resize color="#00796B" @focus="handleFocus" @blur="handleBlur"></v-textarea>
@@ -142,6 +147,8 @@ function handleDrawerClose() {
   background-color: var(--color-bg-card);
   box-shadow: var(--shadow-bottom-bar);
   padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0)) 12px;
+  /* 跟随软键盘弹出/收起平滑过渡，仅作用于输入组件自身 */
+  transition: transform 0.2s ease;
 
   &.expanded {
     padding-top: 24px;

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { showShortToast } from '../core/toast'
+import { useKeyboardOffset } from '../composables/useKeyboardOffset'
 
 const { t } = useI18n()
 
@@ -21,6 +22,9 @@ const commentContent = ref('')
 const isFocused = ref(false)
 const showExpanded = ref(false)
 const sending = ref(false)
+
+// 软键盘弹出时仅抬升评论输入组件（配合原生 adjustNothing），页面其余内容保持不动
+const { keyboardOffset } = useKeyboardOffset()
 
 async function handleSend() {
   if (!commentContent.value.trim() || sending.value) return
@@ -72,7 +76,8 @@ function handleSyntaxClick() {
     <div v-if="showExpanded" class="overlay" @click="handleOverlayClick"></div>
   </Transition>
 
-  <div class="comment-input-area" :class="{ expanded: showExpanded }">
+  <div class="comment-input-area" :class="{ expanded: showExpanded }"
+    :style="keyboardOffset ? { transform: `translateY(-${keyboardOffset}px)` } : undefined">
     <div v-if="replyTo" class="reply-hint">
       <span>{{ t('comment.replyTo', { name: replyTo.userName }) }}</span>
       <font-awesome-icon class="cancel-reply-btn" icon="fa-solid fa-xmark" @click="handleCancelReply" />
@@ -118,6 +123,8 @@ function handleSyntaxClick() {
   background-color: var(--color-bg-card);
   box-shadow: var(--shadow-bottom-bar);
   padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0)) 12px;
+  /* 跟随软键盘弹出/收起平滑过渡，仅作用于输入组件自身 */
+  transition: transform 0.2s ease;
 
   &.expanded {
     padding-top: 24px;

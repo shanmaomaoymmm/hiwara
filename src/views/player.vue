@@ -509,11 +509,12 @@ const isDesktop = ref(window.innerWidth >= 720);
 // 导致退出全屏后 isDesktop 残留 true，界面停留在平板/PC 布局。
 const updateDesktopState = () => {
   const desktop = window.innerWidth >= 720;
-  isDesktop.value = desktop;
-  // 从桌面切回移动端时，重置 tab 防止评论 slide 仍处于选中状态
-  if (!desktop && tab.value === 'comment') {
+  // 仅在从桌面布局切换回移动端布局时，重置 tab 防止评论 slide 仍处于选中状态；
+  // 通过旧值 isDesktop 判断“真切换”，避免移动端软键盘弹出触发 resize 时误把评论页重置回简介页
+  if (!desktop && isDesktop.value && tab.value === 'comment') {
     tab.value = 'info';
   }
+  isDesktop.value = desktop;
 };
 
 const mql = window.matchMedia('(min-width: 720px)');
