@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Hiwara",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "identifier": "com.qisato.hiwara",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -44,7 +44,7 @@
     "android": {
       "autoIncrementVersionCode": false,
       "minSdkVersion": 24,
-      "versionCode": 8
+      "versionCode": 9
     }
   }
 }
