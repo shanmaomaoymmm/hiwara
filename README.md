@@ -376,7 +376,7 @@ hdiutil create -volname "Hiwara" -srcfolder Hiwara.app -ov -format UDZO Hiwara-u
 * ✅ 空间查看 | Space view
 * ✅ 搜索 | Search
 * ✅ 关注、订阅、收藏、评论 | Follow, subscribe, favorite, comment
-* ⬜ 分析及外链下载 | Analysis and external link downloads
+* ✅ 分析及外链下载 | Analysis and external link downloads
 * ⬜ 播放列表 | Playlist
 * ✅ 历史记录 | History
 * ✅ 关注列表 | Following list
@@ -385,7 +385,7 @@ hdiutil create -volname "Hiwara" -srcfolder Hiwara.app -ov -format UDZO Hiwara-u
 * ✅ 桌面端适配 | Desktop adaptation
 * ✅ 平板电脑适配 | Tablet adaptation
 * ✅ 暗黑模式 | Dark mode
-* ⬜ 离线缓存及下载 | Offline caching and downloading
+* ✅ 离线缓存及下载 | Offline caching and downloading
 * ✅ 论坛浏览 | Forum browsing
 * ✅ 论坛发帖 | Forum posting
 * ✅ 多语言支持 | Multi-language support
