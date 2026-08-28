@@ -132,8 +132,9 @@ async function getImageRecommendByOther() {
   padding: 0 10px 10px 10px;
 
   .label {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin: 10px 0;
+    color: var(--color-text-primary);
   }
 
   .lists {

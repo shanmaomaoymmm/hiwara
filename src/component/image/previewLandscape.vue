@@ -43,7 +43,8 @@ const isServerUrl = (url: string): boolean => {
 
 const processImageFile = async (file: ImageFile): Promise<string> => {
   try {
-    const url = `https://i.iwara.tv/image/large/${file.id}/${file.name}`;
+    // 非全屏预览使用 large 尺寸，文件名固定为 {id}.jpg（iwara 会将该变体转为 jpg）
+    const url = `https://i.iwara.tv/image/large/${file.id}/${file.id}.jpg`;
     return await getImageIwara(url, aiStore.value);
   } catch (error) {
     console.error('Failed to load image:', file, error);

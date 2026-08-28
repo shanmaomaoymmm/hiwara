@@ -292,8 +292,8 @@ async function downloadImages() {
         if (inDownloading || inQueue) continue
       } catch { /* 忽略检查错误 */ }
 
-      // 构建图片下载直链与文件名
-      const url = `https://i.iwara.tv/image/large/${file.id}/${file.name}`
+      // 构建图片下载直链与文件名（下载使用 original 原图，保留原始扩展名）
+      const url = `https://i.iwara.tv/image/original/${file.id}/${file.name}`
       const filename = sanitizeFilename(
         `${props.title}[${props.pid}]_${String(i + 1).padStart(2, '0')}${getImageExtension(file.name)}`
       )

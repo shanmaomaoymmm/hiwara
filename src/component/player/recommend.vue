@@ -151,9 +151,9 @@ watch(() => props.uid, (newUid) => {
   padding-top: 10px;
 
   .label {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     padding: 0 10px;
-    color: var(--color-text-muted);
+    color: var(--color-text-primary);
   }
 
   .lists {

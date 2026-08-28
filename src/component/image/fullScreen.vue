@@ -38,6 +38,15 @@ const swiperNavigation: any = { enabled: true };
 // Swiper 实例
 let swiperInstance: SwiperType | null = null;
 
+// 是否手机界面（UA 检测，分辨率信息仅在非手机界面显示）
+const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+// 当前图片的分辨率信息（右上角显示）
+const currentResolution = computed(() => {
+  const file = props.images[currentIndex.value - 1];
+  return file && file.width && file.height ? `${file.width} × ${file.height}` : '';
+});
+
 // ---------- 图片手势缩放相关 ----------
 const MAX_SCALE = 5;
 // 双击放大到 2 倍
@@ -71,7 +80,8 @@ const isServerUrl = (url: string): boolean => {
 // 处理单个图片文件对象
 const processImageFile = async (file: ImageFile): Promise<string> => {
   try {
-    const url = `https://i.iwara.tv/image/large/${file.id}/${file.name}`;
+    // 全屏预览使用 original 原图，文件名保留原始 name（如 .png）
+    const url = `https://i.iwara.tv/image/original/${file.id}/${file.name}`;
     return await getImageIwara(url, aiStore.value);
   } catch (error) {
     console.error('Failed to load image:', file, error);
@@ -578,6 +588,10 @@ onUnmounted(() => {
       <span class="btn" @click="handleClose">
         <font-awesome-icon icon="fa-solid fa-angle-left" />
       </span>
+      <!-- 右上角：当前图像分辨率（仅非手机界面显示） -->
+      <span v-if="!isMobileUA && currentResolution" class="resolution-info">
+        {{ currentResolution }}
+      </span>
     </div>
 
     <!-- 底部页码指示器 -->
@@ -636,6 +650,9 @@ onUnmounted(() => {
   color: #fff;
   filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .btn {
     display: inline-flex;
@@ -647,6 +664,17 @@ onUnmounted(() => {
     font-size: 1.2rem;
     cursor: pointer;
     user-select: none;
+  }
+
+  .resolution-info {
+    margin: 4px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+    user-select: none;
+    white-space: nowrap;
   }
 }
 
