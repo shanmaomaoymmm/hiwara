@@ -12,6 +12,8 @@ struct DownloadTask {
     download_id: String,
     paused: bool,
     cancelled: bool,
+    // 是否为 AI 站（决定下载 i.iwara.tv 图片时携带的 Referer/X-Site 头）
+    is_ai: bool,
 }
 
 // 单一有序队列：位置决定优先级
@@ -24,7 +26,8 @@ static ACTIVE_DOWNLOADS: once_cell::sync::Lazy<Mutex<HashSet<String>>> =
     once_cell::sync::Lazy::new(|| Mutex::new(HashSet::new()));
 
 
-/// 下载视频文件到本地（支持队列）
+/// 下载视频/图片文件到本地（支持队列）
+/// is_ai: 可选参数，用于 i.iwara.tv 图片下载时区分主站(www.iwara.tv)与AI站(www.iwara.ai)的 Referer/X-Site
 #[tauri::command]
 async fn download_video(
     app: tauri::AppHandle,
@@ -32,6 +35,7 @@ async fn download_video(
     file_path: String,
     download_id: String,
     max_concurrent: usize,
+    is_ai: Option<bool>,
 ) -> Result<String, String> {
     // 1. 检查是否已在队列中（防重复入队）
     {
@@ -42,13 +46,14 @@ async fn download_video(
             return if active.contains(&download_id) {
                 Ok("downloading".to_string())
             } else {
-                // 更新 url 和 file_path（可能前台传了更新的路径）
+                // 更新 url、file_path 和 is_ai（可能前台传了更新的路径/站点）
                 drop(active);
                 drop(queue);
                 let mut queue = DOWNLOAD_QUEUE.lock().unwrap();
                 if let Some(task) = queue.iter_mut().find(|t| t.download_id == download_id) {
                     task.url = url;
                     task.file_path = file_path;
+                    task.is_ai = is_ai.unwrap_or(false);
                 }
                 Ok("queued".to_string())
             };
@@ -64,6 +69,7 @@ async fn download_video(
             download_id: download_id.clone(),
             paused: false,
             cancelled: false,
+            is_ai: is_ai.unwrap_or(false),
         });
     }
 
@@ -139,17 +145,17 @@ async fn execute_download(
     max_concurrent: usize,
 ) -> Result<String, String> {
     // 从队列中获取下载参数
-    let (url, file_path) = {
+    let (url, file_path, is_ai) = {
         let queue = DOWNLOAD_QUEUE.lock().unwrap();
         let task = queue.iter().find(|t| t.download_id == download_id);
         match task {
-            Some(t) => (t.url.clone(), t.file_path.clone()),
+            Some(t) => (t.url.clone(), t.file_path.clone(), t.is_ai),
             // cancel_download 已移除队列项，视为已取消
             None => return Err("下载已取消_从队列移除".to_string()),
         }
     };
 
-    let result = download_inner(&app, &url, &file_path, &download_id).await;
+    let result = download_inner(&app, &url, &file_path, &download_id, is_ai).await;
 
     // 根据结果处理队列和事件
     match &result {
@@ -204,6 +210,7 @@ async fn download_inner(
     url: &str,
     file_path: &str,
     download_id: &str,
+    is_ai: bool,
 ) -> Result<String, String> {
     let original_path = Path::new(file_path);
 
@@ -226,13 +233,33 @@ async fn download_inner(
         request = request.header("Range", format!("bytes={}-", existing_size));
     }
 
+    // i.iwara.tv 图片存在防盗链，需携带 Referer/X-Site 头（与前端 getImageIwara 保持一致），
+    // 否则服务器返回 403，导致插画离线缓存失败。
+    // 主站与 AI 站的 Referer/X-Site 不同，需根据 is_ai 区分（is_ai=true → www.iwara.ai）。
+    if url.contains("i.iwara.tv") || url.contains("www.iwara.tv") || url.contains("iwara.ai") {
+        let (referer, x_site) = if is_ai {
+            ("https://www.iwara.ai/", "www.iwara.ai")
+        } else {
+            ("https://www.iwara.tv/", "www.iwara.tv")
+        };
+        request = request.header("Referer", referer);
+        request = request.header("X-Site", x_site);
+    }
+
     let response = request
         .send()
         .await
         .map_err(|e| format!("请求失败: {}", e))?;
 
-    // 判断服务器是否支持续传（206 Partial Content）
-    let is_partial = response.status() == reqwest::StatusCode::PARTIAL_CONTENT;
+    // 检查响应状态码：非 2xx（如 403 防盗链、404 不存在）直接报错，
+    // 避免把错误页面内容当作图片写入本地文件。
+    let status = response.status();
+    if !status.is_success() {
+        return Err(format!("下载失败: 服务器返回 HTTP {}", status.as_u16()));
+    }
+
+    // 判断服务器是否支持续传（206 Partial Content，属 2xx 范围）
+    let is_partial = status == reqwest::StatusCode::PARTIAL_CONTENT;
 
     // 确定最终文件名和初始偏移量
     let (final_path, initial_offset) = if try_resume && is_partial {

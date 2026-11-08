@@ -414,7 +414,13 @@
     "retry": "Click to retry",
     "reachedBottom": "Reached bottom",
     "views": " plays",
-    "likes": " likes"
+    "likes": " likes",
+    "clearTitle": "Clear Records",
+    "clearConfirm": "Clear all completed and failed download records? This only clears the records; downloaded files will not be deleted.",
+    "confirmClear": "Clear",
+    "clearSuccess": "Cleared",
+    "clearFailed": "Failed to clear",
+    "clearEmpty": "Nothing to clear"
   },
   "search": {
     "placeholder": "Enter search keywords",

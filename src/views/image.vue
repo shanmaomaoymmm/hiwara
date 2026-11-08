@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, onBeforeUnmount, onActivated } from 'vue';
+import { ref, computed, onMounted, onUnmounted, onBeforeUnmount, onActivated, watch } from 'vue';
 import { useAutoStatusBar } from '../composables/useAutoStatusBar'
 import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { imageBackStore } from '../core/store';
 import ImageInfo from '../component/image/info.vue';
 import RecommendList from '../component/image/recommend.vue';
 import imgPreview from '../component/image/preview.vue';
@@ -25,6 +26,8 @@ defineOptions({
 
 const router = useRouter();
 const route = useRoute();
+// 插画页抽屉（全屏/评论）状态同步到全局 store，供 App.vue 处理安卓返回键判断
+const imageBack = imageBackStore();
 
 // 从路由查询参数获取 isAI（由前一个页面传入），不存在时默认为 false
 const isAI = ref(route.query.isAI === 'true');
@@ -104,6 +107,8 @@ function scrollToTop() {
 }
 
 // 处理安卓返回键事件（来自 App.vue）
+// 与视频播放页一致：真正的返回动作由 App.vue 统一处理（router.back() 只执行一次），
+// 这里仅在抽屉（全屏/评论）打开时关闭抽屉，不放行返回键
 const handleImageBackPressed = () => {
   // 1. 如果全屏打开 → 关闭全屏
   if (fullScreenVisible.value) {
@@ -115,9 +120,12 @@ const handleImageBackPressed = () => {
     commentVisible.value = false;
     return;
   }
-  // 3. 无抽屉打开 → 回退到上一页
-  router.back();
 };
+
+// 同步抽屉状态到全局 store，供 App.vue 判断返回键是否需要先关闭抽屉（参照播放页的全屏判断逻辑）
+watch([fullScreenVisible, commentVisible], ([fs, cm]) => {
+  imageBack.setDrawerOpen(fs || cm);
+}, { immediate: true });
 
 // 返回
 function goBack() {

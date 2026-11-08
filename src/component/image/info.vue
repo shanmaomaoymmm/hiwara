@@ -316,11 +316,13 @@ async function downloadImages() {
         startedCount++
 
         // 发起 Rust 下载，传入 download_id 实现并发隔离，不等待完成
+        // isAI 用于区分主站/AI站的 Referer（i.iwara.tv 图片防盗链）
         invoke('download_video', {
           url,
           filePath,
           downloadId,
           maxConcurrent,
+          isAI: aiFlag,
         }).catch((e) => {
           console.error('发起图片下载失败:', e)
           updateDownloadProgress(downloadId, 0, 'failed')

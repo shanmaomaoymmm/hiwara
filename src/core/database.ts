@@ -712,3 +712,20 @@ export function deleteDownloadCache(id: string): Promise<void> {
     }
   });
 }
+
+// 清除已结束的下载记录（completed/failed），仅清理记录，不影响磁盘文件
+// 保留 paused / downloading 等仍在进行中的记录
+export function clearFinishedDownloadCache(): Promise<void> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await sqlDB.execute(
+        `DELETE FROM download_cache WHERE status IN ('completed', 'failed')`
+      );
+      console.log('已清除已完成/失败的下载记录');
+      resolve();
+    } catch (error) {
+      console.error('清除下载记录失败:', error);
+      reject(error);
+    }
+  });
+}

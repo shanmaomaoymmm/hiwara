@@ -4,7 +4,7 @@ import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted } fro
 import { useI18n } from 'vue-i18n';
 import { SettingOne as iconDownloadSetup } from '@icon-park/vue-next';
 import { useAutoStatusBar } from '../composables/useAutoStatusBar'
-import { getDownloadCacheList, deleteDownloadCache, updateDownloadProgress, upsertDownloadCache } from '../core/database'
+import { getDownloadCacheList, deleteDownloadCache, updateDownloadProgress, upsertDownloadCache, clearFinishedDownloadCache } from '../core/database'
 import { getImageIwara, buildAria2Filename } from '../core/api'
 import iwaraSVG from '../assets/svg/iwara.svg'
 import { listen } from '@tauri-apps/api/event'
@@ -119,6 +119,7 @@ async function syncDownloadStates() {
                 filePath: restorePath,
                 downloadId: item.id,
                 maxConcurrent,
+                isAI: item.ai,
               }).then((result: string) => {
                 if (result === 'queued') {
                   invoke<number>('get_queue_position', { downloadId: item.id }).then(qpos => {
@@ -208,6 +209,7 @@ async function togglePause(downloadId: string) {
           filePath: cacheItem?.filePath || downloadId,
           downloadId,
           maxConcurrent,
+          isAI: cacheItem?.ai,
         })
         pauseStates.value.set(downloadId, false)
         queuePositions.value.delete(downloadId)
@@ -371,6 +373,7 @@ async function retryDownload(id: string) {
       filePath: item.filePath || item.id,
       downloadId: id,
       maxConcurrent: setup.maxConcurrentDownloads,
+      isAI: item.ai,
     })
     if (result === 'queued') {
       // 加入等待队列，由 progress 事件监听器更新进度和状态
@@ -453,6 +456,55 @@ const removeCache = async () => {
   } finally {
     deleteDialog.value = false
     deleteTargetId.value = null
+  }
+}
+
+// 清除已结束的下载记录（仅清理记录，不影响磁盘文件；保留暂停/下载中）
+const clearDialog = ref(false)
+
+const confirmClearRecords = () => {
+  clearDialog.value = true
+}
+
+const cancelClear = () => {
+  clearDialog.value = false
+}
+
+const clearFinishedRecords = async () => {
+  clearDialog.value = false
+  try {
+    // 统计要清理的记录（已完成 / 失败）
+    const finishedIds = videoCache.value
+      .filter(item => item.status === 'completed' || item.status === 'failed')
+      .map(item => item.id)
+
+    if (finishedIds.length === 0) {
+      showShortToast(t('offlineCache.clearEmpty'))
+      return
+    }
+
+    // 清理对应的封面 objectURL
+    finishedIds.forEach(id => {
+      const url = coverUrls.value.get(id)
+      if (url) URL.revokeObjectURL(url)
+      coverUrls.value.delete(id)
+    })
+    coverUrls.value = new Map(coverUrls.value)
+
+    // 仅清理数据库记录，不影响磁盘文件
+    await clearFinishedDownloadCache()
+    videoCache.value = videoCache.value.filter(
+      item => item.status !== 'completed' && item.status !== 'failed'
+    )
+
+    if (videoCache.value.length === 0) {
+      videoState.value = 'empty'
+      videoHasFinished.value = true
+    }
+    showShortToast(t('offlineCache.clearSuccess'))
+  } catch (error) {
+    console.error('清除下载记录失败:', error)
+    showShortToast(t('offlineCache.clearFailed'))
   }
 }
 
@@ -666,6 +718,9 @@ onDeactivated(() => {
         <div class="label">
           {{ t('offlineCache.title') }}
         </div>
+        <div class="clear-btn" @click="confirmClearRecords">
+          <font-awesome-icon icon="fa-solid fa-broom" />
+        </div>
         <div class="setup-btn" @click="goToSetupDownload">
           <iconDownloadSetup theme="outline" :size="24" />
         </div>
@@ -811,6 +866,27 @@ onDeactivated(() => {
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- 清除下载记录确认对话框 -->
+    <v-dialog v-model="clearDialog" max-width="320" scrim="transparent">
+      <v-card>
+        <v-card-title>
+          {{ t('offlineCache.clearTitle') }}
+        </v-card-title>
+        <v-card-text>
+          {{ t('offlineCache.clearConfirm') }}
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="justify-end">
+          <v-btn variant="text" @click="cancelClear">
+            {{ t('offlineCache.cancel') }}
+          </v-btn>
+          <v-btn variant="text" color="#00796B" @click="clearFinishedRecords">
+            {{ t('offlineCache.confirmClear') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -872,6 +948,23 @@ onDeactivated(() => {
 
       svg {
         font-size: 1.3rem;
+        color: white;
+      }
+
+      &:active {
+        opacity: 0.7;
+      }
+    }
+
+    .clear-btn {
+      padding: 0 16px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      svg {
+        font-size: 1.15rem;
         color: white;
       }
 

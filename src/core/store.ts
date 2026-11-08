@@ -135,6 +135,19 @@ export const ai = defineStore('ai', {
   }
 })
 
+// 插画页抽屉（全屏/评论）状态：供 App.vue 处理安卓返回键时判断是否需要先关闭抽屉
+// （对应播放页使用 document.fullscreenElement 判断全屏状态的逻辑）
+export const imageBackStore = defineStore('imageBack', {
+  state: () => ({
+    drawerOpen: false, // 插画页是否有打开的抽屉
+  }),
+  actions: {
+    setDrawerOpen(open: boolean) {
+      this.drawerOpen = open;
+    }
+  }
+})
+
 // 定义设置状态的接口
 interface SetupState {
   autoPlay: boolean;

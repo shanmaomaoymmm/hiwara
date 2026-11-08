@@ -414,7 +414,13 @@
     "retry": "点击重试",
     "reachedBottom": "已经到底了",
     "views": "播放",
-    "likes": "点赞"
+    "likes": "点赞",
+    "clearTitle": "清除记录",
+    "clearConfirm": "确定要清除所有已完成和失败的下载记录吗？仅清理记录，不会删除已下载的文件。",
+    "confirmClear": "清除",
+    "clearSuccess": "清除成功",
+    "clearFailed": "清除失败",
+    "clearEmpty": "没有可清除的记录"
   },
   "search": {
     "placeholder": "输入搜索关键词",

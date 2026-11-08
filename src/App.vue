@@ -8,9 +8,12 @@ import { showShortToast } from './core/toast'
 import { isTauri } from '@tauri-apps/api/core'
 import { moveTaskToBack } from './plugins/appControl'
 import { getCachedComponentNames } from './router/index'
+import { imageBackStore } from './core/store'
 
 const route = useRoute()
 const router = useRouter()
+// 插画页抽屉状态（全屏/评论），用于安卓返回键时判断是否需要先让插画页关闭抽屉
+const imageBack = imageBackStore()
 
 // 存储需要缓存的组件名称（供 keep-alive :include 使用）
 const cachedPages = ref<string[]>([])
@@ -87,6 +90,13 @@ const snackbarText = ref('')
 const snackbarTimeout = ref(2000)
 const snackbarColor = ref('#424242')
 
+// 离开插画页时重置抽屉状态，避免残留状态导致后续返回键误判
+watch(() => route.name, (name) => {
+  if (name !== 'Image') {
+    imageBack.setDrawerOpen(false)
+  }
+})
+
 // 监听自定义事件来显示 snackbar
 onMounted(() => {
   window.addEventListener('show-snackbar', ((event: CustomEvent) => {
@@ -126,8 +136,9 @@ onMounted(() => {
             return
           }
 
-          // 2.6 如果当前在插画页，分发事件给 image.vue 自行处理
-          if (route.name === 'Image') {
+          // 2.6 如果当前在插画页且打开了抽屉（全屏/评论）：通知插画页关闭抽屉，不放行返回键
+          // （与播放页全屏处理一致：仅特殊状态交由页面处理，普通返回统一走 router.back()，避免重复返回）
+          if (route.name === 'Image' && imageBack.drawerOpen) {
             window.dispatchEvent(new CustomEvent('image-back-pressed'))
             return
           }
