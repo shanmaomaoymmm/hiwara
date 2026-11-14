@@ -57,6 +57,14 @@ plans
 docker/release/
 docker/logs/
 
+# AppImage / tar.gz 打包产物与「现下现用」的依赖，不入库
+#   官方 runtime:   bash docker/config/appimage/fetch-runtimes.sh
+#   riscv64 runtime: docker/appimage/build-riscv64-runtime.sh 交叉编译生成
+docker/config/appimage/runtime-*
+docker/config/appimage/*.sha256
+# 上游源码与依赖包缓存（fetch-sources.sh 下载）
+docker/config/appimage/src/
+
 # Tauri Android keystore (contains sensitive credentials)
 src-tauri/gen/android/keystore.properties
 

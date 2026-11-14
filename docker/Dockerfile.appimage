@@ -1,0 +1,24 @@
+# ============================================================
+# Dockerfile.appimage - AppImage / tar.gz 组装环境（架构无关）
+#
+# 基于 hiwara-linux-sysroot（内含 amd64/arm64/riscv64 三套
+# WebKitGTK + GTK3 依赖树），用于产出「内嵌依赖」的
+# AppImage 与便携 tar.gz。
+#
+# 构建顺序（脚本会自动处理）:
+#   docker build -t hiwara-linux-sysroot  -f docker/Dockerfile.sysroot  .
+#   docker build -t hiwara-appimage-tools -f docker/Dockerfile.appimage .
+# ============================================================
+FROM hiwara-linux-sysroot
+
+# squashfs-tools: mksquashfs / unsquashfs（sysroot 镜像已带 binutils/patchelf/file）
+RUN apt update && apt install -y --no-install-recommends \
+      squashfs-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# AppImage type2 runtime（x86_64 / aarch64 / riscv64）+ 排除清单
+COPY docker/config/appimage /tools/appimage
+
+WORKDIR /work
+ENTRYPOINT ["/bin/bash"]
+CMD ["/work/docker/appimage/build-package.sh"]

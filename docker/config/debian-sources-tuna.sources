@@ -1,0 +1,20 @@
+# ============================================================
+# Debian 软件源（TUNA 清华镜像）
+#
+# 用于 docker/Dockerfile.sysroot：
+# USTC 镜像对 debian-security 的部分路径会返回 403（限流/防盗链），
+# 而 sysroot 需要完整下载 security 池里的包（如 libbrotli1）。
+#
+# 如需换回 USTC，改 docker/config/debian-sources.sources 即可。
+# ============================================================
+Types: deb
+URIs: http://mirrors.tuna.tsinghua.edu.cn/debian
+Suites: trixie trixie-updates
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb
+URIs: http://mirrors.tuna.tsinghua.edu.cn/debian-security
+Suites: trixie-security
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg

@@ -249,6 +249,72 @@ The base image is built locally via `debootstrap` from USTC mirror, no Docker Hu
 > 依赖详见 [`docker/setup-docker-base.sh`](docker/setup-docker-base.sh) 和 Dockerfile 中的 apt 安装步骤。
 > See [`docker/setup-docker-base.sh`](docker/setup-docker-base.sh) and the apt install steps in the Dockerfiles for details.
 
+#### AppImage / tar.gz 打包 | AppImage & tar.gz packaging
+
+[`package_app_linux_appimage_targz.sh`](package_app_linux_appimage_targz.sh) 基于已有 `.deb` 产物组装标准 type-2 AppImage 与便携 tar.gz，一次产出**两个变体**：`linux`（与 deb/rpm 一致，不内嵌依赖）和 `linux_full`（内嵌 WebKitGTK 4.1 / GTK3 及其整条依赖链共 225 个共享库）。全程离线，不依赖 tauri 打包时从 GitHub 下载 linuxdeploy / AppRun。
+The [`package_app_linux_appimage_targz.sh`](package_app_linux_appimage_targz.sh) script assembles a standard type-2 AppImage and a portable tar.gz from the existing `.deb` artifacts and produces **two variants**: `linux` (no bundled deps, same as deb/rpm) and `linux_full` (bundles WebKitGTK 4.1 / GTK3 plus their full chain, 225 shared libraries). Everything runs offline, without tauri downloading linuxdeploy / AppRun from GitHub.
+
+```bash
+# 三个架构（x64 / arm64 / riscv64）
+./package_app_linux_appimage_targz.sh
+
+# 指定架构
+./package_app_linux_appimage_targz.sh --arch x64 arm64
+
+# 只要其中一个变体（linux = 不内嵌依赖；linux_full = 内嵌全部依赖）
+./package_app_linux_appimage_targz.sh --variant linux_full
+
+# Windows 下通过 WSL 执行
+.\package_app_linux_appimage_targz.ps1 -Arch x64,arm64
+```
+
+输出 | Output：
+
+| 文件 | 说明 | Description |
+|------|------|-------------|
+| `release/hiwara_{version}_linux_{arch}.AppImage` | type-2 AppImage，不内嵌依赖（同 deb/rpm） | type-2 AppImage, no bundled deps (same as deb/rpm) |
+| `release/hiwara_{version}_linux_{arch}.tar.gz` | 便携包，不内嵌依赖 | portable archive, no bundled deps |
+| `release/hiwara_{version}_linux_full_{arch}.AppImage` | type-2 AppImage，**内嵌全部运行时依赖** | type-2 AppImage with **all runtime deps bundled** |
+| `release/hiwara_{version}_linux_full_{arch}.tar.gz` | 便携包，**内嵌全部运行时依赖** | portable archive with **all runtime deps bundled** |
+
+> 两个变体都复用 `.deb` 的文件布局（`usr/bin/hiwara` + `usr/lib/Hiwara`）。`linux` 与 deb/rpm 一致，要求宿主装 `libwebkit2gtk-4.1-0`、`libgtk-3-0`；`linux_full` 内嵌 WebKitGTK 4.1、GTK3、GLib、ICU、GStreamer 插件、gio TLS 模块、glib schema、WebKit helper 进程等（225 个共享库），宿主只需 glibc 与显卡/音频驱动栈。
+> Both variants reuse the `.deb` layout (`usr/bin/hiwara` + `usr/lib/Hiwara`). `linux` matches deb/rpm and requires `libwebkit2gtk-4.1-0` + `libgtk-3-0` on the host; `linux_full` bundles WebKitGTK 4.1, GTK3, GLib, ICU, GStreamer plugins, gio TLS modules, glib schemas and the WebKit helper processes (225 shared libraries), so the host only supplies glibc plus the graphics/audio driver stack.
+
+> 体积较大的「现下现用」文件不入库（见 [.gitignore](.gitignore)）：官方 AppImage runtime、交叉编译出的 `runtime-riscv64`、以及 libfuse/squashfuse 源码包与 type2-runtime 源码，首次构建时由 [fetch-runtimes.sh](docker/config/appimage/fetch-runtimes.sh) / [fetch-sources.sh](docker/config/appimage/fetch-sources.sh) 自动下载并校验 SHA256。
+> Large 「fetch on demand」 assets are not committed (see [.gitignore](.gitignore)): the official AppImage runtimes, the cross-built `runtime-riscv64`, the libfuse/squashfuse source tarballs and type2-runtime sources. They are downloaded and SHA256-verified on first build by [fetch-runtimes.sh](docker/config/appimage/fetch-runtimes.sh) / [fetch-sources.sh](docker/config/appimage/fetch-sources.sh).
+
+#### RISC-V AppImage（附加脚本）| RISC-V AppImage (add-on script)
+
+AppImage 官方 type2-runtime 只发布 x86_64/i686/armhf/aarch64，riscv64 支持仍 open（[AppImage/type2-runtime#156](https://github.com/AppImage/type2-runtime/issues/156)），tauri bundler 也直接报 `Unsupported architecture: Riscv64`。在官方支持到来之前，附加脚本 [`package_app_linux_riscv64_appimage.sh`](package_app_linux_riscv64_appimage.sh) 用上游同一份 `runtime.c` + libfuse 3.15.0（上游补丁）+ squashfuse 0.5.2 源码，通过 Debian 的 riscv64 交叉工具链自行编译 `runtime-riscv64`，再组装标准 type-2 AppImage。
+
+Upstream only ships type2-runtime for x86_64/i686/armhf/aarch64 (riscv64 support is still open: [type2-runtime#156](https://github.com/AppImage/type2-runtime/issues/156)) and tauri bundler errors with `Unsupported architecture: Riscv64`. Until then, the add-on script builds `runtime-riscv64` from the same upstream `runtime.c` + libfuse 3.15.0 (upstream patch) + squashfuse 0.5.2 with Debian's riscv64 cross toolchain, then assembles a standard type-2 AppImage.
+
+`package_app_linux_appimage_targz.sh` 打包 riscv64 时会自动调用它，通常无需单独执行：
+`package_app_linux_appimage_targz.sh` calls it automatically when packaging riscv64, so manual invocation is usually unnecessary:
+
+```bash
+# 由主脚本自动调用；也可单独运行
+./package_app_linux_riscv64_appimage.sh
+
+# 强制重新交叉编译 runtime
+./package_app_linux_riscv64_appimage.sh -F
+
+# 只出 AppImage / 跳过 qemu 结构校验
+./package_app_linux_riscv64_appimage.sh --no-tar --no-verify
+```
+
+| 文件 | 作用 | Purpose |
+|------|------|---------|
+| [`package_app_linux_riscv64_appimage.sh`](package_app_linux_riscv64_appimage.sh) | 附加脚本：确保 runtime + 打包 RISC-V AppImage | add-on script: ensure runtime + build RISC-V AppImage |
+| [`docker/Dockerfile.riscv64-runtime`](docker/Dockerfile.riscv64-runtime) | riscv64 交叉编译环境（工具链 + qemu-user） | riscv64 cross toolchain + qemu-user |
+| [`docker/appimage/build-riscv64-runtime.sh`](docker/appimage/build-riscv64-runtime.sh) | 容器内编译 runtime（libfuse → squashfuse → runtime.c） | in-container runtime build |
+| [`docker/appimage/verify-riscv64-appimage.sh`](docker/appimage/verify-riscv64-appimage.sh) | 容器内用 qemu 校验 AppImage（ELF/squashfs/提取） | qemu-based validation |
+| `docker/config/appimage/src/` | 上游源码缓存（离线构建用） | cached upstream sources for offline builds |
+
+> 产物结构与其它架构一致：`ELF(riscv64) + squashfs(zstd)`，魔数 `AI\x02`。校验通过 qemu-riscv64 实跑 runtime 并完整解包 squashfs；**GUI 启动仍需在 RISC-V 真机上验证**（本机无 riscv64 的 webkit2gtk 运行库）。
+> Same structure as other architectures: `ELF(riscv64) + squashfs(zstd)` with the `AI\x02` magic. Validation runs the runtime under qemu-riscv64 and fully extracts the squashfs; **GUI startup still needs verification on real RISC-V hardware** (no riscv64 webkit2gtk runtime available here).
+
+
 #### 手动打包 | Manual packaging
 
 **安装 Linux 构建依赖 | Install build dependencies：**

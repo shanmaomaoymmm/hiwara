@@ -1,0 +1,38 @@
+# ============================================================
+# Dockerfile.sysroot - 准备三架构运行时依赖 sysroot
+#
+# 用于构建「内嵌依赖」的 AppImage / tar.gz：
+#   amd64 / arm64 / riscv64 三套 WebKitGTK + GTK3 依赖树，
+#   由 apt 解析依赖、dpkg -x 解包到 /sysroot/<arch>/root，
+#   不做真实安装，因此三套可以在同一镜像里共存。
+#
+# 构建:
+#   docker build -t hiwara-linux-sysroot -f docker/Dockerfile.sysroot .
+# ============================================================
+FROM debian:trixie-slim
+
+COPY docker/config/debian-sources-tuna.sources /etc/apt/sources.list.d/debian.sources
+RUN rm -f /etc/apt/sources.list
+
+# 三臂 + 下载/解包工具；patchelf 用于改 rpath；
+# libglib2.0-bin 提供 glib-compile-schemas / gio-querymodules（宿主工具，处理数据文件用）
+RUN dpkg --add-architecture arm64 && \
+    dpkg --add-architecture riscv64 && \
+    apt update && apt install -y --no-install-recommends \
+      curl ca-certificates xz-utils zstd file \
+      dpkg-dev binutils patchelf \
+      libglib2.0-bin \
+    && rm -rf /var/cache/apt/archives/*.deb
+# 注意: 保留 /var/lib/apt/lists，下一步 sysroot 解析依赖需要三臂包索引
+
+COPY docker/appimage/fetch-sysroot.sh /usr/local/bin/fetch-sysroot.sh
+
+RUN bash /usr/local/bin/fetch-sysroot.sh amd64   /sysroot/amd64   && \
+    bash /usr/local/bin/fetch-sysroot.sh arm64   /sysroot/arm64   && \
+    bash /usr/local/bin/fetch-sysroot.sh riscv64 /sysroot/riscv64
+
+# 清理下载的 deb，只保留解包后的文件树
+RUN rm -rf /sysroot/*/.debs /sysroot/*/uris.txt /sysroot/*/urls.txt
+
+ENV SYSROOT_BASE=/sysroot
+ENTRYPOINT ["/bin/bash"]

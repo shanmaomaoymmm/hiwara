@@ -1,0 +1,41 @@
+# ============================================================
+# Dockerfile.riscv64-runtime - 为 RISC-V 64 交叉编译 AppImage runtime
+#
+# 背景:
+#   AppImage 官方 type2-runtime 仅发布 x86_64/i686/armhf/aarch64，
+#   riscv64 支持请求仍处于 open 状态（AppImage/type2-runtime#156）。
+#   在官方支持到来之前，这里用 Debian 的 riscv64 交叉工具链，
+#   按上游同一份源码（runtime.c）、同一套依赖（libfuse3 + squashfuse）
+#   交叉编译出一个 riscv64 runtime，供构建 RISC-V AppImage 使用。
+#
+# 构建:
+#   docker build -t hiwara-riscv64-runtime -f docker/Dockerfile.riscv64-runtime .
+# ============================================================
+FROM debian:trixie-slim
+
+# 与其它 Dockerfile 一致：使用 USTC/TUNA 镜像源
+COPY docker/config/debian-sources.sources /etc/apt/sources.list.d/debian.sources
+RUN rm -f /etc/apt/sources.list
+
+# riscv64 交叉工具链 + 交叉静态库（zlib/zstd）+ 构建工具
+# libfuse3 使用 meson/ninja 构建，squashfuse 使用 autotools 构建
+RUN dpkg --add-architecture riscv64 && \
+    apt update && apt install -y --no-install-recommends \
+      gcc-riscv64-linux-gnu \
+      make cmake meson ninja-build pkg-config \
+      autoconf automake libtool patch \
+      xz-utils file ca-certificates \
+      qemu-user-static \
+      zlib1g-dev:riscv64 libzstd-dev:riscv64 \
+    && rm -rf /var/lib/apt/lists/*
+
+# 上游 type2-runtime 源码（runtime.c / data_sections.ld / mount.c.diff）
+# 以及 libfuse / squashfuse 源码包
+COPY docker/config/appimage/src /src
+
+# 允许以宿主 uid 运行（产物不落成 root 所有）
+RUN mkdir -p /build /out && chmod 0777 /build /out
+
+WORKDIR /build
+ENTRYPOINT ["/bin/bash"]
+CMD ["/work/docker/appimage/build-riscv64-runtime.sh"]

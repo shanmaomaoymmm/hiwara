@@ -1,0 +1,57 @@
+# ============================================================
+# 自定义「最小排除清单」——用于本项目的内嵌依赖打包
+#
+# 与 AppImage 官方 excludelist（同目录 excludelist）的区别：
+# 官方清单假设宿主一定有大量基础库（freetype/harfbuzz/fribidi/X11/...），
+# 那是"体积优先"的取舍；本项目的 AppImage / tar.gz 是**保底发行包**，
+# 目标是宿主什么都没装也能跑，因此只排除两类真的不能打包的库：
+#   1) glibc 系列：必须与宿主的 ld.so / 内核配套
+#   2) 图形驱动 / 音频服务栈：必须用宿主的那一份（显卡/声卡驱动）
+#
+# 其余（freetype、fontconfig、harfbuzz、fribidi、expat、zlib、libX11、
+# libxcb、wayland-client、png/jpeg/webp 等）全部内嵌。
+# ============================================================
+
+# ---- glibc 系列 ----
+ld-linux.so.2
+ld-linux-x86-64.so.2
+ld-linux-aarch64.so.1
+ld-linux-riscv64-lp64d.so.1
+libanl.so.1
+libBrokenLocale.so.1
+libcidn.so.1
+libc.so.6
+libdl.so.2
+libm.so.6
+libmvec.so.1
+libnss_compat.so.2
+libnss_dns.so.2
+libnss_files.so.2
+libnss_hesiod.so.2
+libnss_nisplus.so.2
+libnss_nis.so.2
+libpthread.so.0
+libresolv.so.2
+librt.so.1
+libthread_db.so.1
+libutil.so.1
+
+# ---- GCC/C++ 运行时（与显卡驱动混用不同版本会崩）----
+libstdc++.so.6
+libgcc_s.so.1
+
+# ---- 图形驱动栈 ----
+libGL.so.1
+libGLX.so.0
+libGLdispatch.so.0
+libOpenGL.so.0
+libEGL.so.1
+libglapi.so.0
+libdrm.so.2
+libgbm.so.1
+libxcb-dri2.so.0
+libxcb-dri3.so.0
+
+# ---- 音频服务栈（jack/pipewire 属于可选后端，ALSA 直接内嵌）----
+libjack.so.0
+libpipewire-0.3.so.0
