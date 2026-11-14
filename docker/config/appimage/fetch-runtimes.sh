@@ -28,6 +28,6 @@ for rt in x86_64 aarch64; do
 done
 
 echo "[i] 校验 SHA256 ..."
-sha256sum -c SHA256SUMS
+sha256sum -c <(tr -d '\r' < SHA256SUMS)
 chmod 0755 runtime-x86_64 runtime-aarch64
 echo "[✓] 完成"

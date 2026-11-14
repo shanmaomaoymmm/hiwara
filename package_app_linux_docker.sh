@@ -7,19 +7,19 @@
 # 输出文件: hiwara_{version}_linux_{arch}.{deb,rpm,AppImage}
 #
 # 使用方式:
-#   ./package_app_linux_docker.sh                             # x64 + ARM64 + RISC-V 64, 全部格式
+#   ./package_app_linux_docker.sh                             # amd64 + ARM64 + RISC-V 64, 全部格式
 #   ./package_app_linux_docker.sh -F                          # 强制重建本地基础镜像（含 debootstrap）
 #   ./package_app_linux_docker.sh --pull                      # 改为从 Docker Hub 拉取基础镜像
 #   ./package_app_linux_docker.sh --pull -F                   # 强制从 Docker Hub 重新拉取
-#   ./package_app_linux_docker.sh --arch x64 arm64            # 两个架构
-#   ./package_app_linux_docker.sh --arch x64                  # 仅 x64
+#   ./package_app_linux_docker.sh --arch amd64 arm64          # 两个架构
+#   ./package_app_linux_docker.sh --arch amd64                # 仅 amd64
 #   ./package_app_linux_docker.sh --arch arm64                # 仅 ARM64
 #   ./package_app_linux_docker.sh --arch riscv64              # 仅 RISC-V 64
-#   ./package_app_linux_docker.sh --arch x64 arm64 riscv64    # 三个架构全量构建
+#   ./package_app_linux_docker.sh --arch amd64 arm64 riscv64  # 三个架构全量构建
 #   ./package_app_linux_docker.sh --bundle deb rpm            # 指定格式
 #   ./package_app_linux_docker.sh --bundle deb                # 仅 deb
 #   ./package_app_linux_docker.sh --bundle appimage           # 仅 appimage
-#   ./package_app_linux_docker.sh --arch x64 arm64 --bundle deb rpm  # 组合使用
+#   ./package_app_linux_docker.sh --arch amd64 arm64 --bundle deb rpm  # 组合使用
 #
 # 基础镜像来源优先级:
 #   1. 本地已有 debian:trixie-slim → 直接使用
@@ -31,7 +31,7 @@ set -e
 
 DOCKER_OUTPUT_DIR="docker/release"
 LOG_DIR="docker/logs"
-BUILD_X64=false
+BUILD_AMD64=false
 BUILD_ARM64=false
 BUILD_RISCV64=false
 BUNDLES=()
@@ -75,10 +75,10 @@ while [ $# -gt 0 ]; do
             shift
             while [ $# -gt 0 ] && ! [[ "$1" =~ ^-- ]] && ! [[ "$1" =~ ^- ]]; do
                 case "$1" in
-                    x64)     BUILD_X64=true ;;
+                    amd64|x64) BUILD_AMD64=true ;;
                     arm64)   BUILD_ARM64=true ;;
                     riscv64) BUILD_RISCV64=true ;;
-                    *)       echo "[!] 不支持的架构: $1 (可用: x64, arm64, riscv64)"; exit 1 ;;
+                    *)       echo "[!] 不支持的架构: $1 (可用: amd64, arm64, riscv64)"; exit 1 ;;
                 esac
                 shift
             done
@@ -98,15 +98,15 @@ while [ $# -gt 0 ]; do
             exit 0
             ;;
         *)
-            echo "[!] 未知参数: $1 (使用 --arch x64|arm64|riscv64, --bundle, --pull, --local-base, -F, 或 -h)"
+            echo "[!] 未知参数: $1 (使用 --arch amd64|arm64|riscv64, --bundle, --pull, --local-base, -F, 或 -h)"
             exit 1
             ;;
     esac
 done
 
 # 默认值（未指定架构时构建全部）
-if [ "$BUILD_X64" = false ] && [ "$BUILD_ARM64" = false ] && [ "$BUILD_RISCV64" = false ]; then
-    BUILD_X64=true
+if [ "$BUILD_AMD64" = false ] && [ "$BUILD_ARM64" = false ] && [ "$BUILD_RISCV64" = false ]; then
+    BUILD_AMD64=true
     BUILD_ARM64=true
     BUILD_RISCV64=true
 fi
@@ -115,7 +115,7 @@ if [ ${#BUNDLES[@]} -eq 0 ]; then
 fi
 
 BUNDLES_STR="${BUNDLES[*]}"
-echo "[i] 架构: $([ "$BUILD_X64" = true ] && echo 'x64 ')$([ "$BUILD_ARM64" = true ] && echo 'ARM64 ')$([ "$BUILD_RISCV64" = true ] && echo 'RISC-V64')"
+echo "[i] 架构: $([ "$BUILD_AMD64" = true ] && echo 'amd64 ')$([ "$BUILD_ARM64" = true ] && echo 'ARM64 ')$([ "$BUILD_RISCV64" = true ] && echo 'RISC-V64')"
 echo "[i] 格式: ${BUNDLES[*]}"
 echo "[i] 版本: $VERSION"
 echo "[i] 输出: $RELEASE_DIR/"
@@ -183,7 +183,7 @@ highlight_log() {
 # ============================================================
 run_build() {
     local name=$1
-    local arch_dir=$2      # 例如 x64, arm64, riscv64
+    local arch_dir=$2      # 例如 amd64, arm64, riscv64
     local short_arch=$3
     shift 3
 
@@ -248,11 +248,11 @@ BUILD_ARGS="$(read_build_args)"
 # ============================================================
 # 构建 x86_64
 # ============================================================
-build_x64() {
+build_amd64() {
     docker build $BUILD_ARGS --build-arg "BUNDLES=$BUNDLES_STR" \
-        -t hiwara-builder-x64 -f docker/Dockerfile.x64 .
+        -t hiwara-builder-amd64 -f docker/Dockerfile.x64 .
     docker run --rm --user "$(id -u):$(id -g)" \
-        -v "$(pwd)/$DOCKER_OUTPUT_DIR/x64:/output" hiwara-builder-x64
+        -v "$(pwd)/$DOCKER_OUTPUT_DIR/amd64:/output" hiwara-builder-amd64
 }
 
 # ============================================================
@@ -279,8 +279,8 @@ build_riscv64() {
 # 顺序执行各架构构建
 # ============================================================
 FAILED=0
-if [ "$BUILD_X64" = true ]; then
-    run_build "x86_64" "x64" "x64" build_x64 || FAILED=1
+if [ "$BUILD_AMD64" = true ]; then
+    run_build "amd64" "amd64" "amd64" build_amd64 || FAILED=1
 fi
 if [ "$BUILD_ARM64" = true ]; then
     run_build "ARM64" "arm64" "arm64" build_arm64 || FAILED=1

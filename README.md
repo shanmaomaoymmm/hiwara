@@ -204,21 +204,21 @@ The [`package_app_linux_docker.sh`](package_app_linux_docker.sh) script builds i
 
 | 架构 | Dockerfile | 构建方式 | Build type | 输出目录 | Output dir |
 |------|-----------|---------|------------|---------|------------|
-| x86_64 | [`docker/Dockerfile.x64`](docker/Dockerfile.x64) | 原生编译 | Native | `docker/release/x64/` |
+| amd64 | [`docker/Dockerfile.x64`](docker/Dockerfile.x64) | 原生编译 | Native | `docker/release/amd64/` |
 | ARM64 | [`docker/Dockerfile.arm64`](docker/Dockerfile.arm64) | 交叉编译 | Cross-compile | `docker/release/arm64/` |
 | RISC-V 64 | [`docker/Dockerfile.riscv64`](docker/Dockerfile.riscv64) | 交叉编译 | Cross-compile | `docker/release/riscv64/` |
 
 **基本使用 | Basic usage：**
 
 ```bash
-# x64 + ARM64 all formats (default)
+# amd64 + ARM64 all formats (default)
 ./package_app_linux_docker.sh
 
 # Specify architectures and bundle formats
-./package_app_linux_docker.sh --arch x64 arm64 --bundle deb rpm
+./package_app_linux_docker.sh --arch amd64 arm64 --bundle deb rpm
 
-# Build only x64 deb package
-./package_app_linux_docker.sh --arch x64 --bundle deb
+# Build only amd64 deb package
+./package_app_linux_docker.sh --arch amd64 --bundle deb
 
 # Build only RISC-V 64
 ./package_app_linux_docker.sh --arch riscv64
@@ -251,21 +251,21 @@ The base image is built locally via `debootstrap` from USTC mirror, no Docker Hu
 
 #### AppImage / tar.gz 打包 | AppImage & tar.gz packaging
 
-[`package_app_linux_appimage_targz.sh`](package_app_linux_appimage_targz.sh) 基于已有 `.deb` 产物组装标准 type-2 AppImage 与便携 tar.gz，一次产出**两个变体**：`linux`（与 deb/rpm 一致，不内嵌依赖）和 `linux_full`（内嵌 WebKitGTK 4.1 / GTK3 及其整条依赖链共 225 个共享库）。全程离线，不依赖 tauri 打包时从 GitHub 下载 linuxdeploy / AppRun。
-The [`package_app_linux_appimage_targz.sh`](package_app_linux_appimage_targz.sh) script assembles a standard type-2 AppImage and a portable tar.gz from the existing `.deb` artifacts and produces **two variants**: `linux` (no bundled deps, same as deb/rpm) and `linux_full` (bundles WebKitGTK 4.1 / GTK3 plus their full chain, 225 shared libraries). Everything runs offline, without tauri downloading linuxdeploy / AppRun from GitHub.
+[`package_app_linux_appimage_targz.sh`](package_app_linux_appimage_targz.sh) 基于已有 `.deb` 产物组装标准 type-2 AppImage 与便携 tar.gz，一次产出**两个变体**：`linux`（与 deb/rpm 一致，不内嵌依赖）和 `linux-full`（内嵌 WebKitGTK 4.1 / GTK3 及其整条依赖链共 225 个共享库）。全程离线，不依赖 tauri 打包时从 GitHub 下载 linuxdeploy / AppRun。
+The [`package_app_linux_appimage_targz.sh`](package_app_linux_appimage_targz.sh) script assembles a standard type-2 AppImage and a portable tar.gz from the existing `.deb` artifacts and produces **two variants**: `linux` (no bundled deps, same as deb/rpm) and `linux-full` (bundles WebKitGTK 4.1 / GTK3 plus their full chain, 225 shared libraries). Everything runs offline, without tauri downloading linuxdeploy / AppRun from GitHub.
 
 ```bash
-# 三个架构（x64 / arm64 / riscv64）
+# 三个架构（amd64 / arm64 / riscv64）
 ./package_app_linux_appimage_targz.sh
 
 # 指定架构
-./package_app_linux_appimage_targz.sh --arch x64 arm64
+./package_app_linux_appimage_targz.sh --arch amd64 arm64
 
-# 只要其中一个变体（linux = 不内嵌依赖；linux_full = 内嵌全部依赖）
-./package_app_linux_appimage_targz.sh --variant linux_full
+# 只要其中一个变体（linux = 不内嵌依赖；linux-full = 内嵌全部依赖）
+./package_app_linux_appimage_targz.sh --variant linux-full
 
 # Windows 下通过 WSL 执行
-.\package_app_linux_appimage_targz.ps1 -Arch x64,arm64
+.\package_app_linux_appimage_targz.ps1 -Arch amd64,arm64
 ```
 
 输出 | Output：
@@ -274,14 +274,23 @@ The [`package_app_linux_appimage_targz.sh`](package_app_linux_appimage_targz.sh)
 |------|------|-------------|
 | `release/hiwara_{version}_linux_{arch}.AppImage` | type-2 AppImage，不内嵌依赖（同 deb/rpm） | type-2 AppImage, no bundled deps (same as deb/rpm) |
 | `release/hiwara_{version}_linux_{arch}.tar.gz` | 便携包，不内嵌依赖 | portable archive, no bundled deps |
-| `release/hiwara_{version}_linux_full_{arch}.AppImage` | type-2 AppImage，**内嵌全部运行时依赖** | type-2 AppImage with **all runtime deps bundled** |
-| `release/hiwara_{version}_linux_full_{arch}.tar.gz` | 便携包，**内嵌全部运行时依赖** | portable archive with **all runtime deps bundled** |
+| `release/hiwara_{version}_linux-full_{arch}.AppImage` | type-2 AppImage，**内嵌全部运行时依赖** | type-2 AppImage with **all runtime deps bundled** |
+| `release/hiwara_{version}_linux-full_{arch}.tar.gz` | 便携包，**内嵌全部运行时依赖** | portable archive with **all runtime deps bundled** |
 
-> 两个变体都复用 `.deb` 的文件布局（`usr/bin/hiwara` + `usr/lib/Hiwara`）。`linux` 与 deb/rpm 一致，要求宿主装 `libwebkit2gtk-4.1-0`、`libgtk-3-0`；`linux_full` 内嵌 WebKitGTK 4.1、GTK3、GLib、ICU、GStreamer 插件、gio TLS 模块、glib schema、WebKit helper 进程等（225 个共享库），宿主只需 glibc 与显卡/音频驱动栈。
-> Both variants reuse the `.deb` layout (`usr/bin/hiwara` + `usr/lib/Hiwara`). `linux` matches deb/rpm and requires `libwebkit2gtk-4.1-0` + `libgtk-3-0` on the host; `linux_full` bundles WebKitGTK 4.1, GTK3, GLib, ICU, GStreamer plugins, gio TLS modules, glib schemas and the WebKit helper processes (225 shared libraries), so the host only supplies glibc plus the graphics/audio driver stack.
+> 两个变体都复用 `.deb` 的文件布局（`usr/bin/hiwara` + `usr/lib/Hiwara`）。`linux` 与 deb/rpm 一致，要求宿主装 `libwebkit2gtk-4.1-0`、`libgtk-3-0`；`linux-full` 内嵌 WebKitGTK 4.1、GTK3、GLib、ICU、GStreamer 插件、gio TLS 模块、glib schema、WebKit helper 进程等（225 个共享库），宿主只需 glibc 与显卡/音频驱动栈。
+> Both variants reuse the `.deb` layout (`usr/bin/hiwara` + `usr/lib/Hiwara`). `linux` matches deb/rpm and requires `libwebkit2gtk-4.1-0` + `libgtk-3-0` on the host; `linux-full` bundles WebKitGTK 4.1, GTK3, GLib, ICU, GStreamer plugins, gio TLS modules, glib schemas and the WebKit helper processes (225 shared libraries), so the host only supplies glibc plus the graphics/audio driver stack.
 
 > 体积较大的「现下现用」文件不入库（见 [.gitignore](.gitignore)）：官方 AppImage runtime、交叉编译出的 `runtime-riscv64`、以及 libfuse/squashfuse 源码包与 type2-runtime 源码，首次构建时由 [fetch-runtimes.sh](docker/config/appimage/fetch-runtimes.sh) / [fetch-sources.sh](docker/config/appimage/fetch-sources.sh) 自动下载并校验 SHA256。
 > Large 「fetch on demand」 assets are not committed (see [.gitignore](.gitignore)): the official AppImage runtimes, the cross-built `runtime-riscv64`, the libfuse/squashfuse source tarballs and type2-runtime sources. They are downloaded and SHA256-verified on first build by [fetch-runtimes.sh](docker/config/appimage/fetch-runtimes.sh) / [fetch-sources.sh](docker/config/appimage/fetch-sources.sh).
+
+**产物命名约定 | Artifact naming**
+
+| 平台 | 架构后缀 | 示例 |
+|------|----------|------|
+| Linux | `amd64` / `arm64` / `riscv64`（与 deb/rpm 一致） | `hiwara_0.3.8_linux-full_amd64.AppImage` |
+| Android | `armv7` / `aarch64` / `x86` / `x86_64` | `hiwara_0.3.8_android_aarch64.apk` |
+| Windows | `x86` / `x64` / `arm64` | `hiwara_0.3.8_win_x64.exe` |
+| macOS | `x86_64` / `arm64` / `universal` | `hiwara_0.3.8_mac_arm64.dmg` |
 
 #### RISC-V AppImage（附加脚本）| RISC-V AppImage (add-on script)
 

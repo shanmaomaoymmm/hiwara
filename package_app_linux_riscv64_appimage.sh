@@ -17,20 +17,20 @@
 #
 # 变体:
 #   linux       不内嵌依赖（与 deb/rpm 一致）
-#   linux_full  内嵌全部运行时依赖
+#   linux-full  内嵌全部运行时依赖
 #
 # 使用方式:
-#   ./package_app_linux_riscv64_appimage.sh                      # 两个变体
-#   ./package_app_linux_riscv64_appimage.sh --variant linux       # 只出不内嵌依赖的
-#   ./package_app_linux_riscv64_appimage.sh --variant linux_full  # 只出全依赖的
-#   ./package_app_linux_riscv64_appimage.sh -F                    # 强制重新编译 runtime
-#   ./package_app_linux_riscv64_appimage.sh --no-tar              # 只出 AppImage
-#   ./package_app_linux_riscv64_appimage.sh --no-verify           # 跳过 qemu 校验
-#   ./package_app_linux_riscv64_appimage.sh -h                    # 帮助
+#   ./package_app_linux_riscv64_appimage.sh                       # 两个变体
+#   ./package_app_linux_riscv64_appimage.sh --variant linux        # 只出不内嵌依赖的
+#   ./package_app_linux_riscv64_appimage.sh --variant linux-full   # 只出全依赖的
+#   ./package_app_linux_riscv64_appimage.sh -F                     # 强制重新编译 runtime
+#   ./package_app_linux_riscv64_appimage.sh --no-tar               # 只出 AppImage
+#   ./package_app_linux_riscv64_appimage.sh --no-verify            # 跳过 qemu 校验
+#   ./package_app_linux_riscv64_appimage.sh -h                     # 帮助
 #
 # 输出:
 #   release/hiwara_{version}_linux_riscv64.{AppImage,tar.gz}
-#   release/hiwara_{version}_linux_full_riscv64.{AppImage,tar.gz}
+#   release/hiwara_{version}_linux-full_riscv64.{AppImage,tar.gz}
 # ============================================================
 
 set -euo pipefail
@@ -41,7 +41,7 @@ RUNTIME="docker/config/appimage/runtime-riscv64"
 BUILDER_IMAGE="hiwara-riscv64-runtime"
 TOOLS_IMAGE="hiwara-appimage-tools"
 SYSROOT_IMAGE="hiwara-linux-sysroot"
-ALL_VARIANTS=(linux linux_full)
+ALL_VARIANTS=(linux linux-full)
 SELECTED_VARIANTS=()
 FORCE_RUNTIME=false
 WITH_TAR=true
@@ -59,16 +59,17 @@ while [ $# -gt 0 ]; do
             shift
             while [ $# -gt 0 ] && ! [[ "$1" =~ ^- ]]; do
                 case "$1" in
-                    linux|linux_full) SELECTED_VARIANTS+=("$1") ;;
+                    linux|linux-full) SELECTED_VARIANTS+=("$1") ;;
+                    linux_full)       SELECTED_VARIANTS+=("linux-full") ;;   # 兼容旧写法
                     both|full)        SELECTED_VARIANTS=("${ALL_VARIANTS[@]}") ;;
-                    *) echo "[!] 不支持的变体: $1 (可用: linux, linux_full, both)"; exit 1 ;;
+                    *) echo "[!] 不支持的变体: $1 (可用: linux, linux-full, both)"; exit 1 ;;
                 esac
                 shift
             done
             ;;
         --no-deps)          SELECTED_VARIANTS=("linux"); shift ;;   # 兼容旧参数
         -h|--help)          sed -n '2,36p' "$0"; exit 0 ;;
-        *) echo "[!] 未知参数: $1 (可用: -F, --variant linux|linux_full|both, --no-tar, --no-verify, -h)"; exit 1 ;;
+        *) echo "[!] 未知参数: $1 (可用: -F, --variant linux|linux-full|both, --no-tar, --no-verify, -h)"; exit 1 ;;
     esac
 done
 
@@ -84,7 +85,7 @@ SELECTED_VARIANTS=("${UNIQ[@]}")
 
 NEED_FULL=false
 for v in "${SELECTED_VARIANTS[@]}"; do
-    [ "$v" = "linux_full" ] && NEED_FULL=true
+    [ "$v" = "linux-full" ] && NEED_FULL=true
 done
 
 log() { echo "[i] $*"; }
@@ -178,7 +179,7 @@ if [ "$FORCE_RUNTIME" = true ] || ! docker image inspect "$SYSROOT_IMAGE" >/dev/
         echo "[!] sysroot 镜像构建失败"; exit 1; }
 fi
 if [ "$NEED_FULL" = false ]; then
-    log "本次不构建 linux_full 变体，sysroot 镜像仅作为组装镜像的基础"
+    log "本次不构建 linux-full 变体，sysroot 镜像仅作为组装镜像的基础"
 fi
 if ! docker image inspect "$TOOLS_IMAGE" >/dev/null 2>&1; then
     log "构建组装镜像 $TOOLS_IMAGE ..."
@@ -196,7 +197,7 @@ for variant in "${SELECTED_VARIANTS[@]}"; do
     echo "----------------------------------------"
 
     BUNDLE_DEPS=0
-    [ "$variant" = "linux_full" ] && BUNDLE_DEPS=1
+    [ "$variant" = "linux-full" ] && BUNDLE_DEPS=1
 
     docker run --rm \
         --user "$(id -u):$(id -g)" \

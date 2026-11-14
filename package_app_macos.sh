@@ -49,7 +49,7 @@ VERSION=$(grep '"version"' src-tauri/tauri.conf.json | head -1 | sed 's/.*"versi
 
 # 架构列表: (target_triple, short_name)
 ARCHITECTURES=(
-    "x86_64-apple-darwin:x64"    # Intel Mac (64-bit)
+    "x86_64-apple-darwin:x86_64"    # Intel Mac (64-bit)
     "aarch64-apple-darwin:arm64" # Apple Silicon (M 系列)
 )
 

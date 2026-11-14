@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # ============================================================
-# Linux x64 打包脚本
+# Linux amd64 打包脚本
 # 支持格式: deb, rpm, appimage
 # 架构: x86_64 (64-bit) - 本机构建
 # 输出目录: release/
-# 输出文件: hiwara_{version}_linux_x64.{deb,rpm,AppImage}
+# 输出文件: hiwara_{version}_linux_amd64.{deb,rpm,AppImage}
 # ============================================================
 
 ARCH="x86_64-unknown-linux-gnu"
@@ -16,7 +16,7 @@ RELEASE_DIR="release"
 VERSION=$(grep '"version"' src-tauri/tauri.conf.json | head -1 | sed 's/.*"version": *"\([^"]*\)".*/\1/')
 
 # 架构简称
-SHORT_ARCH="x64"
+SHORT_ARCH="amd64"
 
 # 格式→扩展名映射
 declare -A EXT_MAP
@@ -95,7 +95,7 @@ done
 
 echo ""
 echo "========================================"
-echo "Linux x64 打包完成"
+echo "Linux amd64 打包完成"
 echo "输出目录: $RELEASE_DIR/"
 echo "成功: $SUCCESS | 失败: $FAILED"
 echo "========================================"

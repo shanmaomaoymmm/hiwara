@@ -1,2 +1,9 @@
 *.ps1 -text
 *.sh -text
+# 以下文件被脚本按行解析（SHA256 校验 / patch / 排除清单），必须保持 LF
+*.sources -text
+*.diff -text
+*.ld -text
+docker/config/appimage/SHA256SUMS -text
+docker/config/appimage/excludelist -text
+docker/config/appimage/excludelist-minimal -text

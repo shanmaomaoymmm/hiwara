@@ -3,7 +3,7 @@
 # build-package.sh - 在容器内组装 AppImage 与 tar.gz
 #
 # 输入（环境变量）:
-#   ARCH        架构短名: x64 | arm64 | riscv64
+#   ARCH        架构名: amd64 | arm64 | riscv64（与 deb/rpm 一致）
 #   VERSION     版本号，例如 0.3.8
 #   PRODUCT     产品名，例如 Hiwara
 #   DEB         源 .deb 路径
@@ -11,7 +11,7 @@
 #   RUNTIME     AppImage type2 runtime 路径；为空表示该架构无 runtime，
 #               只生成 tar.gz
 #   VARIANT     发行变体: linux（不含依赖，与 deb/rpm 一致）
-#                       linux_full（内嵌全部运行时依赖）
+#                       linux-full（内嵌全部运行时依赖）
 #   BUNDLE_DEPS 可覆盖：1=内嵌依赖，0=依赖系统包（默认由 VARIANT 决定）
 #   SYSROOT     对应架构的 sysroot（内嵌依赖时必需）
 #   EXCLUDELIST 排除清单路径，默认 /tools/appimage/excludelist-minimal
@@ -19,7 +19,7 @@
 # 输出:
 #   ${OUT_DIR}/hiwara_${VERSION}_${VARIANT}_${ARCH}.AppImage
 #   ${OUT_DIR}/hiwara_${VERSION}_${VARIANT}_${ARCH}.tar.gz
-#   例: hiwara_0.3.8_linux_x64.AppImage / hiwara_0.3.8_linux_full_x64.AppImage
+#   例: hiwara_0.3.8_linux_amd64.AppImage / hiwara_0.3.8_linux-full_amd64.AppImage
 # ============================================================
 set -euo pipefail
 
@@ -29,24 +29,24 @@ PRODUCT="${PRODUCT:-Hiwara}"
 DEB="${DEB:?DEB 未设置}"
 OUT_DIR="${OUT_DIR:-/work/release}"
 RUNTIME="${RUNTIME:-}"
-VARIANT="${VARIANT:-linux_full}"
+VARIANT="${VARIANT:-linux}"
 SYSROOT="${SYSROOT:-}"
 EXCLUDELIST="${EXCLUDELIST:-/tools/appimage/excludelist-minimal}"
 
 case "$VARIANT" in
     linux)      BUNDLE_DEPS="${BUNDLE_DEPS:-0}" ;;
-    linux_full) BUNDLE_DEPS="${BUNDLE_DEPS:-1}" ;;
-    *) echo "[!] 不支持的变体: $VARIANT (可用: linux, linux_full)"; exit 1 ;;
+    linux-full) BUNDLE_DEPS="${BUNDLE_DEPS:-1}" ;;
+    *) echo "[!] 不支持的变体: $VARIANT (可用: linux, linux-full)"; exit 1 ;;
 esac
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 APPIMAGE_ARCH=""
 case "$ARCH" in
-    x64)     APPIMAGE_ARCH="x86_64" ;;
+    amd64)   APPIMAGE_ARCH="x86_64" ;;
     arm64)   APPIMAGE_ARCH="aarch64" ;;
     riscv64) APPIMAGE_ARCH="riscv64" ;;
-    *) echo "[!] 不支持的架构: $ARCH"; exit 1 ;;
+    *) echo "[!] 不支持的架构: $ARCH (可用: amd64, arm64, riscv64)"; exit 1 ;;
 esac
 
 BUNDLE_NAME="hiwara_${VERSION}_${VARIANT}_${ARCH}"

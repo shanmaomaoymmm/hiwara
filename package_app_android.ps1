@@ -2,7 +2,7 @@
 # Android 打包脚本
 # 生成 split-per-abi APK
 # 输出目录: release/
-# 输出文件: hiwara_{version}_android_{arch}.apk
+# 输出文件: hiwara_{version}_android_{arch}.apk（arch: armv7 / aarch64 / x86 / x86_64）
 # ============================================================
 
 Write-Host "========================================"
@@ -33,10 +33,10 @@ Write-Host "========================================"
 
 # ABI → 简称映射（键为实际输出目录名，按长度降序排列以防子串误匹配）
 $abiMap = @{
-    "x86_64"  = "x64"
-    "arm64"   = "arm64"
+    "x86_64"  = "x86_64"
+    "arm64"   = "aarch64"
     "x86"     = "x86"
-    "arm"     = "arm32"
+    "arm"     = "armv7"
 }
 
 $apkDir = "src-tauri/gen/android/app/build/outputs/apk"

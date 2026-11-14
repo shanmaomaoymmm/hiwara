@@ -38,7 +38,7 @@ declare -A EXCLUDED
 if [ -f "$EXCLUDELIST" ]; then
     while IFS= read -r line; do
         line="${line%%#*}"
-        line="$(echo "$line" | xargs)"
+        line="$(echo "$line" | tr -d '\r' | xargs)"
         [ -n "$line" ] && EXCLUDED["$line"]=1
     done < "$EXCLUDELIST"
 fi

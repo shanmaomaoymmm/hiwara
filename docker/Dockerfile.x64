@@ -1,7 +1,7 @@
 # ============================================================
 # Dockerfile.x64 - 构建 x86_64 (deb + rpm + appimage)
 # 使用 debian:trixie 基础镜像（与 ARM64 保持一致）
-# 输出: hiwara_{version}_linux_x64.{deb,rpm,AppImage}
+# 输出: hiwara_{version}_linux_amd64.{deb,rpm,AppImage}
 # 构建: docker build -t hiwara-builder-x64 -f Dockerfile.x64 .
 # 提取: docker run --rm -v $(pwd)/dist-x64:/output hiwara-builder-x64
 # ============================================================
@@ -78,11 +78,11 @@ RUN VERSION=$(grep '"version"' src-tauri/tauri.conf.json | head -1 | sed 's/.*"v
         for f in $(find src-tauri/target/x86_64-unknown-linux-gnu/release/bundle/$dir -type f \( -name '*.deb' -o -name '*.rpm' -o -name '*.AppImage' \) 2>/dev/null); do \
             ext="${f##*.}"; \
             if [ "$ext" = "deb" ]; then \
-                cp "$f" "/build-output/hiwara_${VERSION}_linux_x64.deb"; \
+                cp "$f" "/build-output/hiwara_${VERSION}_linux_amd64.deb"; \
             elif [ "$ext" = "rpm" ]; then \
-                cp "$f" "/build-output/hiwara_${VERSION}_linux_x64.rpm"; \
+                cp "$f" "/build-output/hiwara_${VERSION}_linux_amd64.rpm"; \
             elif [ "$ext" = "AppImage" ]; then \
-                cp "$f" "/build-output/hiwara_${VERSION}_linux_x64.AppImage"; \
+                cp "$f" "/build-output/hiwara_${VERSION}_linux_amd64.AppImage"; \
             fi; \
         done; \
     done && \
