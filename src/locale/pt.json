@@ -414,7 +414,13 @@
     "retry": "Clique para tentar novamente",
     "reachedBottom": "Chegou ao fim",
     "views": " reproduções",
-    "likes": " curtidas"
+    "likes": " curtidas",
+    "clearTitle": "Limpar registros",
+    "clearConfirm": "Limpar todos os registros de downloads concluídos e falhados? Apenas os registros são limpos; os arquivos baixados não serão excluídos.",
+    "confirmClear": "Limpar",
+    "clearSuccess": "Registros limpos",
+    "clearFailed": "Falha ao limpar",
+    "clearEmpty": "Nada para limpar"
   },
   "search": {
     "placeholder": "Insira palavras-chave de pesquisa",

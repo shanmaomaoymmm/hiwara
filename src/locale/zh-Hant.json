@@ -288,7 +288,7 @@
     "passwordLabel": "請輸入密碼",
     "loginBtn": "登入",
     "loggingIn": "登入中",
-    "languageBtn": "Language/语言",
+    "languageBtn": "Language/語言",
     "aboutText": "本應用程式遵循MPL-2.0開源協議，請勿用於任何商業用途。",
     "usernameRequired": "使用者名稱不得為空",
     "passwordRequired": "密碼不得為空",
@@ -414,7 +414,13 @@
     "retry": "點擊重試",
     "reachedBottom": "已經到底了",
     "views": "播放",
-    "likes": "讚"
+    "likes": "讚",
+    "clearTitle": "清除記錄",
+    "clearConfirm": "確定要清除所有已完成和失敗的下載記錄嗎？僅清理記錄，不會刪除已下載的檔案。",
+    "confirmClear": "清除",
+    "clearSuccess": "清除成功",
+    "clearFailed": "清除失敗",
+    "clearEmpty": "沒有可清除的記錄"
   },
   "search": {
     "placeholder": "輸入搜尋關鍵詞",

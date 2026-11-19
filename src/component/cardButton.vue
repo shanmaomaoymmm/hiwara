@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { ai } from '../core/store';
 import { getImageIwara } from '../core/api';
+import { formatCardDate } from '../utils/dateFormat';
 
 const aiStore = ai();
 const router = useRouter();
@@ -122,68 +123,8 @@ const formatTime = (seconds: number): string => {
   }
 };
 
-// 时间显示格式化函数（多语言支持）
-const formatTimeDisplay = (timeStr: string | undefined): string => {
-  if (!timeStr) return ''
-
-  const now = new Date()
-  const date = new Date(timeStr)
-
-  // 检查日期是否有效
-  if (isNaN(date.getTime())) return ''
-
-  const year = date.getFullYear()
-  const month = (date.getMonth() + 1).toString().padStart(2, '0')
-  const day = date.getDate().toString().padStart(2, '0')
-  const dateStr = `${year}-${month}-${day}`
-  const hours = date.getHours().toString().padStart(2, '0')
-  const minutes = date.getMinutes().toString().padStart(2, '0')
-  const timeFmt = `${hours}:${minutes}`
-
-  // 获取当天零点的时间戳用于比较"今天"
-  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
-  const dateStart = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
-  const diffDays = Math.floor((todayStart - dateStart) / (1000 * 60 * 60 * 24))
-
-  // 非 CJK 语言：今天显示 HH:mm，其他显示 YYYY-MM-DD
-  if (!isCJK.value) {
-    if (diffDays === 0) {
-      return timeFmt
-    }
-    return dateStr
-  }
-
-  // 计算时间差（毫秒）
-  const diffMs = now.getTime() - date.getTime()
-  const diffMinutes = Math.floor(diffMs / (1000 * 60))
-
-  // 一小时内：X分钟前
-  if (diffMinutes < 60) {
-    const mins = diffMinutes < 0 ? 0 : diffMinutes
-    if (mins <= 1) {
-      return t('card.timeMinuteAgo', { n: mins })
-    }
-    return t('card.timeMinutesAgo', { n: mins })
-  }
-
-  // 今天：今天 HH:mm
-  if (diffDays === 0) {
-    return t('card.timeToday', { time: timeFmt })
-  }
-
-  // 昨天：昨天 HH:mm
-  if (diffDays === 1) {
-    return t('card.timeYesterday', { time: timeFmt })
-  }
-
-  // 2-3天前：N天前 HH:mm
-  if (diffDays <= 3) {
-    return t('card.timeDaysAgo', { n: diffDays, time: timeFmt })
-  }
-
-  // 再往前：YYYY-MM-DD
-  return dateStr
-};
+// 卡片日期显示（今天 hh:mm；今年 日期+hh:mm；跨年 仅日期，中日韩按各自语言习惯）
+// 统一由 utils/dateFormat 处理
 
 // 计算属性用于格式化显示的数字
 const formattedViewNum = computed(() => formatNumber(props.data.viewNum ?? 0));
@@ -200,7 +141,7 @@ const formattedLongNum = computed(() => {
 });
 
 // 格式化后的时间显示
-const formattedTime = computed(() => formatTimeDisplay(props.data.time));
+const formattedTime = computed(() => formatCardDate(props.data.time, locale.value));
 
 // 处理图片源，初始状态如果有图片链接则显示空字符串，等待 API 加载
 const displayImg = ref(props.data.img && props.data.img !== 'file-loss'

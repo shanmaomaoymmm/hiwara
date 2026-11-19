@@ -414,7 +414,13 @@
     "retry": "انقر لإعادة المحاولة",
     "reachedBottom": "تم الوصول إلى النهاية",
     "views": " مشاهدة",
-    "likes": " إعجاب"
+    "likes": " إعجاب",
+    "clearTitle": "مسح السجلات",
+    "clearConfirm": "هل تريد مسح جميع سجلات التنزيل المكتملة والفاشلة؟ سيتم مسح السجلات فقط؛ لن يتم حذف الملفات التي تم تنزيلها.",
+    "confirmClear": "مسح",
+    "clearSuccess": "تم المسح",
+    "clearFailed": "فشل المسح",
+    "clearEmpty": "لا توجد سجلات للمسح"
   },
   "search": {
     "placeholder": "أدخل كلمات البحث",
@@ -550,7 +556,7 @@
     "failed": "فشل تحميل الصفحة~"
   },
   "card": {
-    "timeMinuteAgo": "قبل دقيقة",
+    "timeMinuteAgo": "قبل {n} دقيقة",
     "timeMinutesAgo": "قبل {n} دقائق",
     "timeToday": "اليوم {time}",
     "timeYesterday": "أمس {time}",

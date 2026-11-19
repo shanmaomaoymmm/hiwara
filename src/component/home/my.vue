@@ -172,7 +172,7 @@ function handleContentScroll(e: Event) {
 
 // 未实现功能
 function handleUnimplemented() {
-  showShortToast(t('功能未开放'));
+  showShortToast(t('home.my.notImplemented'));
 }
 </script>
 <template>

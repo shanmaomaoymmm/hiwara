@@ -23,9 +23,10 @@ import {
 } from '../../core/api';
 import { upsertDownloadCache, updateDownloadProgress } from '../../core/database';
 import { showShortToast } from '../../core/toast';
+import { formatDetailDate } from '../../utils/dateFormat';
 
 const aiStore = ai();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const router = useRouter();
 
 // 内容容器（用于 ResizeObserver 动态高度重算）
@@ -450,17 +451,8 @@ function searchByTag(tag: string) {
   });
 }
 
-// 格式化时间（支持多语言）
-const formatDate = (dateString: string) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  return `${year}/${month}/${day} ${hours}:${minutes}`;
-};
+// 详情页日期：中文 YYYY年M月D日 hh:mm，日韩按各自习惯，其余 YYYY-MM-DD hh:mm
+const formatDate = (dateString: string) => formatDetailDate(dateString, locale.value);
 
 // 暗色模式响应式检测
 const isDarkMode = ref(detectDarkMode());

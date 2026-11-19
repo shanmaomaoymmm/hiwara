@@ -414,7 +414,13 @@
     "retry": "Klicken zum Wiederholen",
     "reachedBottom": "Ende erreicht",
     "views": " Wiedergaben",
-    "likes": " Gefällt mir"
+    "likes": " Gefällt mir",
+    "clearTitle": "Einträge löschen",
+    "clearConfirm": "Alle abgeschlossenen und fehlgeschlagenen Download-Einträge löschen? Es werden nur die Einträge gelöscht; heruntergeladene Dateien bleiben erhalten.",
+    "confirmClear": "Löschen",
+    "clearSuccess": "Gelöscht",
+    "clearFailed": "Löschen fehlgeschlagen",
+    "clearEmpty": "Nichts zu löschen"
   },
   "search": {
     "placeholder": "Suchbegriff eingeben",

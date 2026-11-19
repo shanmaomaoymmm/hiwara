@@ -70,3 +70,4 @@ src-tauri/gen/android/keystore.properties
 
 discarded
 release
+.workbuddy/*

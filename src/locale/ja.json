@@ -414,7 +414,13 @@
     "retry": "クリックして再試行",
     "reachedBottom": "一番下まで到達しました",
     "views": "再生",
-    "likes": "いいね"
+    "likes": "いいね",
+    "clearTitle": "履歴を削除",
+    "clearConfirm": "完了および失敗したダウンロード履歴をすべて削除しますか？履歴のみが削除され、ダウンロード済みのファイルは削除されません。",
+    "confirmClear": "削除",
+    "clearSuccess": "削除しました",
+    "clearFailed": "削除に失敗しました",
+    "clearEmpty": "削除する履歴がありません"
   },
   "search": {
     "placeholder": "検索キーワードを入力",

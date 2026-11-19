@@ -414,7 +414,13 @@
     "retry": "לחץ כדי לנסות שוב",
     "reachedBottom": "הגעת לסוף",
     "views": " צפיות",
-    "likes": " לייקים"
+    "likes": " לייקים",
+    "clearTitle": "ניקוי רשומות",
+    "clearConfirm": "לנקות את כל רשומות ההורדה שהושלמו ונכשלו? רק הרשומות יימחקו; הקבצים שהורדו לא יימחקו.",
+    "confirmClear": "ניקוי",
+    "clearSuccess": "הרשומות נוקו",
+    "clearFailed": "הניקוי נכשל",
+    "clearEmpty": "אין רשומות לניקוי"
   },
   "search": {
     "placeholder": "הכנס מילות חיפוש",
@@ -502,7 +508,7 @@
   },
   "comment": {
     "justNow": "זה עתה",
-    "minuteAgo": "לפני דקה",
+    "minuteAgo": "לפני {n} דקה",
     "minutesAgo": "לפני {n} דקות",
     "hoursAgo": "לפני {n} שעות",
     "daysAgo": "לפני {n} ימים",
@@ -550,7 +556,7 @@
     "failed": "טעינת הדף נכשלה~"
   },
   "card": {
-    "timeMinuteAgo": "לפני דקה",
+    "timeMinuteAgo": "לפני {n} דקה",
     "timeMinutesAgo": "לפני {n} דקות",
     "timeToday": "היום {time}",
     "timeYesterday": "אתמול {time}",

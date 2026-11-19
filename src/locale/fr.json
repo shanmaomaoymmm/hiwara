@@ -414,7 +414,13 @@
     "retry": "Cliquez pour réessayer",
     "reachedBottom": "Vous avez atteint la fin",
     "views": " lectures",
-    "likes": " J'aime"
+    "likes": " J'aime",
+    "clearTitle": "Effacer l'historique",
+    "clearConfirm": "Effacer tous les téléchargements terminés et échoués ? Seuls les enregistrements sont supprimés ; les fichiers téléchargés ne seront pas supprimés.",
+    "confirmClear": "Effacer",
+    "clearSuccess": "Historique effacé",
+    "clearFailed": "Échec de l'effacement",
+    "clearEmpty": "Rien à effacer"
   },
   "search": {
     "placeholder": "Entrez des mots-clés",

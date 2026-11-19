@@ -414,7 +414,13 @@
     "retry": "Clicca per riprovare",
     "reachedBottom": "Fine raggiunta",
     "views": " riproduzioni",
-    "likes": " mi piace"
+    "likes": " mi piace",
+    "clearTitle": "Cancella record",
+    "clearConfirm": "Cancellare tutti i record di download completati e falliti? Verranno cancellati solo i record; i file scaricati non verranno eliminati.",
+    "confirmClear": "Cancella",
+    "clearSuccess": "Record cancellati",
+    "clearFailed": "Cancellazione non riuscita",
+    "clearEmpty": "Nessun record da cancellare"
   },
   "search": {
     "placeholder": "Inserisci parole chiave",

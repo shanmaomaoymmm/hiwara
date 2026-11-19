@@ -414,7 +414,13 @@
     "retry": "Nhấp để thử lại",
     "reachedBottom": "Đã đến cuối",
     "views": " Phát",
-    "likes": " Thích"
+    "likes": " Thích",
+    "clearTitle": "Xóa bản ghi",
+    "clearConfirm": "Xóa tất cả bản ghi tải xuống đã hoàn tất và thất bại? Chỉ xóa bản ghi; các tệp đã tải xuống sẽ không bị xóa.",
+    "confirmClear": "Xóa",
+    "clearSuccess": "Đã xóa",
+    "clearFailed": "Xóa thất bại",
+    "clearEmpty": "Không có bản ghi để xóa"
   },
   "search": {
     "placeholder": "Nhập từ khóa tìm kiếm",

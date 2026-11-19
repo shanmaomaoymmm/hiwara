@@ -36,11 +36,29 @@
 
 ## 当前已实现的语言文件
 
-位于 `src/locale/` 目录下：
+位于 `src/locale/` 目录下，共 24 种语言：
 - `en.json` - 英语
 - `zh-Hans.json` - 简体中文
 - `zh-Hant.json` - 繁体中文
 - `ja.json` - 日语
+- `ko.json` - 韩语
+- `fr.json` - 法语
+- `es.json` - 西班牙语
+- `pt.json` - 葡萄牙语
+- `de.json` - 德语
+- `it.json` - 意大利语
+- `ru.json` - 俄语
+- `uk.json` - 乌克兰语
+- `th.json` - 泰语
+- `vi.json` - 越南语
+- `km.json` - 高棉语
+- `hi.json` - 印地语
+- `ar.json` - 阿拉伯语
+- `he.json` - 希伯来语
+- `bo.json` - 藏文
+- `ug.json` - 维吾尔语
+- `kk-Cyrl.json` / `kk-Arab.json` - 哈萨克语（西里尔 / 阿拉伯字母）
+- `mn-Cyrl.json` / `mn-Mong.json` - 蒙古语（西里尔 / 传统蒙古文）
 
 > 其他语言可根据需要添加，只需创建对应的 JSON 文件并在 `i18n.ts` 中注册即可。
 
