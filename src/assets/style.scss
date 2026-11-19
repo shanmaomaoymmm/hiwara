@@ -152,3 +152,18 @@ body {
 .v-btn {
   letter-spacing: 0 !important;
 }
+
+/* ---- 西里尔字母语言：使用系统底层默认字体 ---- */
+/* 小米等设备上的系统级用户自定义字体对西里尔字形支持不佳，会导致文字宽度异常。
+   检测到西里尔语言时，App.vue 会在 <html> 上打 cyrillic-locale 标记，
+   这里显式指定系统无衬线字体栈覆盖全局（包括组件内硬编码的字体）。
+   排除 v-icon / mdi-* 字体图标，图标本身为 SVG 也不受 font-family 影响。 */
+:root {
+  --app-system-font: Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+html.cyrillic-locale,
+html.cyrillic-locale body,
+html.cyrillic-locale *:not(.v-icon):not([class*="mdi-"]) {
+  font-family: var(--app-system-font) !important;
+}

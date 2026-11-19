@@ -9,6 +9,16 @@ import { isTauri } from '@tauri-apps/api/core'
 import { moveTaskToBack } from './plugins/appControl'
 import { getCachedComponentNames } from './router/index'
 import { imageBackStore } from './core/store'
+import { useI18n } from 'vue-i18n'
+import { isCyrillicLocale } from './core/i18n'
+
+const { locale } = useI18n()
+
+// 西里尔字母语言使用系统底层默认字体，规避小米等设备用户自定义字体导致的字形宽度异常。
+// 用已解析的 i18n locale（auto 已被解析为具体语言），而非 store 中可能的 'auto'。
+watch(() => locale.value, (value) => {
+  document.documentElement.classList.toggle('cyrillic-locale', isCyrillicLocale(value))
+}, { immediate: true })
 
 const route = useRoute()
 const router = useRouter()

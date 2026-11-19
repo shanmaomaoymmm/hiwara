@@ -31,6 +31,14 @@ import mnMong from '../locale/mn-Mong.json';
 type SupportedLocale = 'auto' | 'en' | 'zh-Hans' | 'zh-Hant' | 'ja' | 'ko' | 'fr' | 'es' | 'pt' | 'de' | 'it' | 'ru' | 'uk' | 'th' | 'vi' | 'km' | 'hi' | 'ar' | 'he' | 'bo' | 'ug' | 'kk-Cyrl' | 'kk-Arab' | 'mn-Cyrl' | 'mn-Mong';
 type ResolvedLocale = 'en' | 'zh-Hans' | 'zh-Hant' | 'ja' | 'ko' | 'fr' | 'es' | 'pt' | 'de' | 'it' | 'ru' | 'uk' | 'th' | 'vi' | 'km' | 'hi' | 'ar' | 'he' | 'bo' | 'ug' | 'kk-Cyrl' | 'kk-Arab' | 'mn-Cyrl' | 'mn-Mong';
 
+// 使用西里尔字母的语言。这些语言下强制使用系统底层默认字体，
+// 避免部分安卓设备（如小米）的用户自定义字体导致西里尔字形宽度异常。
+export const CYRILLIC_LOCALES: readonly ResolvedLocale[] = ['ru', 'uk', 'kk-Cyrl', 'mn-Cyrl'];
+
+export function isCyrillicLocale(locale: string): boolean {
+  return (CYRILLIC_LOCALES as readonly string[]).includes(locale);
+}
+
 // 语言消息对象
 const messages = {
   'en': en,
